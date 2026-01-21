@@ -1,9 +1,10 @@
 import "./App.css";
+import "./styles/tailwind.css";
 
 function App() {
   return (
     <>
-      <h1>Logiccraft</h1>
+      <h1>LogicCraft</h1>
     </>
   );
 }
