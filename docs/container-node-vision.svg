@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 680" font-family="'Segoe UI', Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="condition-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5a623"/>
+      <stop offset="100%" style="stop-color:#e8940e"/>
+    </linearGradient>
+    <linearGradient id="maintenance-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2ecc71"/>
+      <stop offset="100%" style="stop-color:#27ae60"/>
+    </linearGradient>
+    
+    <!-- Drop shadows -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+    <filter id="shadow-sm" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.1"/>
+    </filter>
+    
+    <!-- Arrow markers -->
+    <marker id="arrow-and" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#5a6c7d"/>
+    </marker>
+    <marker id="arrow-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+    </marker>
+  </defs>
+
+  <!-- Background with subtle grid -->
+  <rect width="1300" height="680" fill="#f5f7fa"/>
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8ecf1" stroke-width="0.5"/>
+  </pattern>
+  <rect width="1300" height="680" fill="url(#grid)"/>
+
+  <!-- MAINTENANCE condition node -->
+  <g filter="url(#shadow)">
+    <rect x="25" y="290" width="130" height="48" rx="8" fill="url(#maintenance-grad)"/>
+    <text x="90" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">MAINTENANCE</text>
+  </g>
+
+  <!-- AND connection from MAINTENANCE -->
+  <line x1="155" y1="314" x2="195" y2="314" stroke="#5a6c7d" stroke-width="2" marker-end="url(#arrow-and)"/>
+  <rect x="162" y="302" width="32" height="18" rx="4" fill="#3498db" filter="url(#shadow-sm)"/>
+  <text x="178" y="315" text-anchor="middle" fill="white" font-size="10" font-weight="600">AND</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- OUTER OR GROUP (Blue) -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="205" y="25" width="1070" height="630" rx="16" fill="rgba(52, 152, 219, 0.06)" stroke="#3498db" stroke-width="2.5" stroke-dasharray="12 6"/>
+  <rect x="220" y="35" width="85" height="24" rx="4" fill="#3498db"/>
+  <text x="262" y="52" text-anchor="middle" fill="white" font-size="11" font-weight="700">OR GROUP</text>
+
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <!-- ALT 1 Container -->
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <g filter="url(#shadow-sm)">
+    <rect x="235" y="70" width="1010" height="270" rx="10" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  </g>
+  <rect x="250" y="80" width="50" height="20" rx="4" fill="#7f8c8d"/>
+  <text x="275" y="94" text-anchor="middle" fill="white" font-size="10" font-weight="600">ALT 1</text>
+
+  <!-- ALT 1: First condition -->
+  <g filter="url(#shadow-sm)">
+    <rect x="265" y="130" width="120" height="44" rx="6" fill="url(#condition-grad)"/>
+    <text x="325" y="157" text-anchor="middle" fill="white" font-size="11" font-weight="500">targets ≥ 2</text>
+  </g>
+
+  <!-- AND arrow -->
+  <line x1="385" y1="152" x2="425" y2="152" stroke="#5a6c7d" stroke-width="2" marker-end="url(#arrow-and)"/>
+  <rect x="392" y="140" width="32" height="18" rx="4" fill="#3498db"/>
+  <text x="408" y="153" text-anchor="middle" fill="white" font-size="10" font-weight="600">AND</text>
+
+  <!-- ALT 1: Second condition -->
+  <g filter="url(#shadow-sm)">
+    <rect x="435" y="130" width="150" height="44" rx="6" fill="url(#condition-grad)"/>
+    <text x="510" y="157" text-anchor="middle" fill="white" font-size="11" font-weight="500">deathstalkers_mark</text>
+  </g>
+
+  <!-- AND arrow to nested OR -->
+  <line x1="585" y1="152" x2="625" y2="152" stroke="#5a6c7d" stroke-width="2" marker-end="url(#arrow-and)"/>
+  <rect x="592" y="140" width="32" height="18" rx="4" fill="#3498db"/>
+  <text x="608" y="153" text-anchor="middle" fill="white" font-size="10" font-weight="600">AND</text>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- NESTED OR GROUP (Orange) - inside ALT 1 -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <rect x="640" y="100" width="575" height="220" rx="12" fill="rgba(230, 126, 34, 0.08)" stroke="#e67e22" stroke-width="2" stroke-dasharray="10 5"/>
+  <rect x="655" y="110" width="75" height="22" rx="4" fill="#e67e22"/>
+  <text x="692" y="125" text-anchor="middle" fill="white" font-size="10" font-weight="700">OR GROUP</text>
+
+  <!-- Nested ALT 1.1 -->
+  <g filter="url(#shadow-sm)">
+    <rect x="670" y="142" width="240" height="56" rx="8" fill="white" stroke="#d5d8dc" stroke-width="1"/>
+  </g>
+  <rect x="682" y="150" width="45" height="16" rx="3" fill="#95a5a6"/>
+  <text x="704" y="162" text-anchor="middle" fill="white" font-size="9" font-weight="600">Alt 1.1</text>
+  
+  <g filter="url(#shadow-sm)">
+    <rect x="690" y="170" width="200" height="24" rx="5" fill="url(#condition-grad)"/>
+    <text x="790" y="187" text-anchor="middle" fill="white" font-size="10" font-weight="500">NOT darkest_night.up</text>
+  </g>
+
+  <!-- OR arrow between nested alternatives -->
+  <line x1="790" y1="198" x2="790" y2="243" stroke="#e67e22" stroke-width="2" marker-end="url(#arrow-or)"/>
+  <rect x="774" y="210" width="26" height="16" rx="4" fill="#e67e22"/>
+  <text x="787" y="222" text-anchor="middle" fill="white" font-size="9" font-weight="700">OR</text>
+
+  <!-- Nested ALT 1.2 -->
+  <g filter="url(#shadow-sm)">
+    <rect x="670" y="250" width="520" height="56" rx="8" fill="white" stroke="#d5d8dc" stroke-width="1"/>
+  </g>
+  <rect x="682" y="258" width="45" height="16" rx="3" fill="#95a5a6"/>
+  <text x="704" y="270" text-anchor="middle" fill="white" font-size="9" font-weight="600">Alt 1.2</text>
+  
+  <g filter="url(#shadow-sm)">
+    <rect x="690" y="276" width="130" height="24" rx="5" fill="url(#condition-grad)"/>
+    <text x="755" y="293" text-anchor="middle" fill="white" font-size="10" font-weight="500">shadow_dance.up</text>
+  </g>
+  
+  <!-- AND inside nested alt -->
+  <line x1="820" y1="288" x2="855" y2="288" stroke="#5a6c7d" stroke-width="1.5" marker-end="url(#arrow-and)"/>
+  <rect x="826" y="278" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="840" y="289" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+
+  <g filter="url(#shadow-sm)">
+    <rect x="865" y="276" width="110" height="24" rx="5" fill="url(#condition-grad)"/>
+    <text x="920" y="293" text-anchor="middle" fill="white" font-size="10" font-weight="500">targets ≥ 5</text>
+  </g>
+
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <!-- OR arrow from ALT 1 to ALT 2 -->
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <line x1="740" y1="340" x2="740" y2="395" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arrow-or)"/>
+  <rect x="722" y="355" width="32" height="20" rx="5" fill="#e67e22" filter="url(#shadow-sm)"/>
+  <text x="738" y="369" text-anchor="middle" fill="white" font-size="11" font-weight="700">OR</text>
+
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <!-- ALT 2 Container -->
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <g filter="url(#shadow-sm)">
+    <rect x="235" y="400" width="1010" height="75" rx="10" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  </g>
+  <rect x="250" y="410" width="50" height="20" rx="4" fill="#7f8c8d"/>
+  <text x="275" y="424" text-anchor="middle" fill="white" font-size="10" font-weight="600">ALT 2</text>
+
+  <!-- ALT 2: Conditions -->
+  <g filter="url(#shadow-sm)">
+    <rect x="265" y="432" width="120" height="36" rx="6" fill="url(#condition-grad)"/>
+    <text x="325" y="455" text-anchor="middle" fill="white" font-size="11" font-weight="500">unseen_blade</text>
+  </g>
+
+  <line x1="385" y1="450" x2="425" y2="450" stroke="#5a6c7d" stroke-width="2" marker-end="url(#arrow-and)"/>
+  <rect x="392" y="438" width="32" height="18" rx="4" fill="#3498db"/>
+  <text x="408" y="451" text-anchor="middle" fill="white" font-size="10" font-weight="600">AND</text>
+
+  <g filter="url(#shadow-sm)">
+    <rect x="435" y="432" width="260" height="36" rx="6" fill="url(#condition-grad)"/>
+    <text x="565" y="455" text-anchor="middle" fill="white" font-size="11" font-weight="500">targets ≥ 4 + (10 × priority_rotation)</text>
+  </g>
+
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <!-- OR arrow from ALT 2 to ALT 3 -->
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <line x1="740" y1="475" x2="740" y2="530" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arrow-or)"/>
+  <rect x="722" y="490" width="32" height="20" rx="5" fill="#e67e22" filter="url(#shadow-sm)"/>
+  <text x="738" y="504" text-anchor="middle" fill="white" font-size="11" font-weight="700">OR</text>
+
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <!-- ALT 3 Container -->
+  <!-- ─────────────────────────────────────────────────────────────────── -->
+  <g filter="url(#shadow-sm)">
+    <rect x="235" y="535" width="1010" height="75" rx="10" fill="white" stroke="#bdc3c7" stroke-width="1.5"/>
+  </g>
+  <rect x="250" y="545" width="50" height="20" rx="4" fill="#7f8c8d"/>
+  <text x="275" y="559" text-anchor="middle" fill="white" font-size="10" font-weight="600">ALT 3</text>
+
+  <!-- ALT 3: Conditions -->
+  <g filter="url(#shadow-sm)">
+    <rect x="265" y="567" width="160" height="36" rx="6" fill="url(#condition-grad)"/>
+    <text x="345" y="590" text-anchor="middle" fill="white" font-size="11" font-weight="500">coup_de_grace.ready</text>
+  </g>
+
+  <line x1="425" y1="585" x2="465" y2="585" stroke="#5a6c7d" stroke-width="2" marker-end="url(#arrow-and)"/>
+  <rect x="432" y="573" width="32" height="18" rx="4" fill="#3498db"/>
+  <text x="448" y="586" text-anchor="middle" fill="white" font-size="10" font-weight="600">AND</text>
+
+  <g filter="url(#shadow-sm)">
+    <rect x="475" y="567" width="110" height="36" rx="6" fill="url(#condition-grad)"/>
+    <text x="530" y="590" text-anchor="middle" fill="white" font-size="11" font-weight="500">targets ≥ 3</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- Legend -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g filter="url(#shadow)">
+    <rect x="980" y="545" width="280" height="90" rx="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  </g>
+  <text x="1000" y="568" fill="#34495e" font-size="11" font-weight="700">LEGEND</text>
+  
+  <!-- OR Group -->
+  <rect x="1000" y="580" width="24" height="14" rx="4" fill="rgba(52, 152, 219, 0.15)" stroke="#3498db" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="1030" y="591" fill="#5a6c7d" font-size="10">OR Group (container)</text>
+  
+  <!-- Condition -->
+  <rect x="1145" y="580" width="24" height="14" rx="4" fill="url(#condition-grad)"/>
+  <text x="1175" y="591" fill="#5a6c7d" font-size="10">Condition</text>
+  
+  <!-- AND -->
+  <rect x="1000" y="602" width="24" height="12" rx="3" fill="#3498db"/>
+  <text x="1010" y="612" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+  <text x="1030" y="612" fill="#5a6c7d" font-size="10">Horizontal flow</text>
+  
+  <!-- OR -->
+  <rect x="1145" y="602" width="24" height="12" rx="3" fill="#e67e22"/>
+  <text x="1155" y="612" text-anchor="middle" fill="white" font-size="8" font-weight="600">OR</text>
+  <text x="1175" y="612" fill="#5a6c7d" font-size="10">Between groups</text>
+</svg>

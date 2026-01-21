@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 580">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="580" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">AST Structure</text>
+  
+  <!-- Document Node -->
+  <rect x="330" y="50" width="140" height="45" rx="6" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <text x="400" y="72" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="600">AplDocumentAst</text>
+  <text x="400" y="86" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#94a3b8">type: AplBlockAst[]</text>
+  
+  <!-- Lines to blocks -->
+  <line x1="360" y1="95" x2="200" y2="140" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="400" y1="95" x2="400" y2="140" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="440" y1="95" x2="600" y2="140" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- Block Nodes -->
+  <rect x="120" y="145" width="160" height="70" rx="6" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+  <text x="200" y="167" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="600">AplBlockAst</text>
+  <text x="200" y="182" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">block: "actions.cds"</text>
+  <text x="200" y="194" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">actions: AplActionAst[]</text>
+  <text x="200" y="206" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">append: boolean</text>
+  
+  <rect x="320" y="145" width="160" height="70" rx="6" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+  <text x="400" y="167" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="600">AplBlockAst</text>
+  <text x="400" y="182" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">block: "actions.finish"</text>
+  <text x="400" y="194" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">actions: AplActionAst[]</text>
+  <text x="400" y="206" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">append: boolean</text>
+  
+  <rect x="520" y="145" width="160" height="70" rx="6" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+  <text x="600" y="167" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="600">AplBlockAst</text>
+  <text x="600" y="182" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">block: "actions.build"</text>
+  <text x="600" y="194" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">actions: AplActionAst[]</text>
+  <text x="600" y="206" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#bfdbfe">append: boolean</text>
+  
+  <!-- Lines to actions -->
+  <line x1="200" y1="215" x2="200" y2="245" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- Action Node (detailed) -->
+  <rect x="70" y="250" width="260" height="70" rx="6" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="200" y="272" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="600">AplActionAst</text>
+  <text x="200" y="287" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#a7f3d0">name: "shadow_dance"</text>
+  <text x="200" y="299" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#a7f3d0">condition?: Expression</text>
+  <text x="200" y="311" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#a7f3d0">modifiers?: Record&lt;string, ActionModifierValue&gt;</text>
+  
+  <!-- Example condition label -->
+  <text x="200" y="340" text-anchor="middle" font-family="monospace" font-size="8" fill="#64748b">Example: !buff.stealth.up&amp;(cooldown.vanish.remains&lt;5+gcd)</text>
+  
+  <!-- Line to condition -->
+  <line x1="200" y1="350" x2="200" y2="375" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- Expression Tree - Level 1: BinaryExpression (AND) -->
+  <rect x="120" y="380" width="160" height="36" rx="5" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="200" y="398" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="600">BinaryExpression</text>
+  <text x="200" y="410" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" fill="#fef3c7">operator: "&amp;" (AND)</text>
+  
+  <!-- Lines to Level 2 -->
+  <line x1="160" y1="416" x2="80" y2="440" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="240" y1="416" x2="340" y2="440" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- Level 2 Left: UnaryExpression -->
+  <rect x="15" y="445" width="130" height="36" rx="5" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+  <text x="80" y="463" text-anchor="middle" font-family="monospace" font-size="9" fill="#78350f" font-weight="600">UnaryExpression</text>
+  <text x="80" y="475" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" fill="#92400e">operator: "!"</text>
+  
+  <!-- Line to Reference under Unary -->
+  <line x1="80" y1="481" x2="80" y2="505" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- Reference under UnaryExpression -->
+  <rect x="10" y="510" width="140" height="28" rx="4" fill="#fdba74" stroke="#fb923c" stroke-width="1.5"/>
+  <text x="80" y="524" text-anchor="middle" font-family="monospace" font-size="8" fill="#78350f" font-weight="600">Reference</text>
+  <text x="80" y="534" text-anchor="middle" font-family="system-ui, sans-serif" font-size="7" fill="#9a3412">buff.stealth.up</text>
+  
+  <!-- Level 2 Right: GroupExpression -->
+  <rect x="275" y="445" width="130" height="36" rx="5" fill="#fb7185" stroke="#f43f5e" stroke-width="2"/>
+  <text x="340" y="463" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="600">GroupExpression</text>
+  <text x="340" y="475" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" fill="#fecdd3">( ... )</text>
+  
+  <!-- Line to ComparisonExpression -->
+  <line x1="340" y1="481" x2="340" y2="505" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- Level 3: ComparisonExpression inside Group -->
+  <rect x="260" y="510" width="160" height="36" rx="5" fill="#fb923c" stroke="#ea580c" stroke-width="2"/>
+  <text x="340" y="528" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="600">ComparisonExpression</text>
+  <text x="340" y="540" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" fill="#ffedd5">operator: "&lt;"</text>
+  
+  <!-- Lines to Level 4 -->
+  <line x1="300" y1="546" x2="230" y2="565" stroke="#64748b" stroke-width="1"/>
+  <line x1="380" y1="546" x2="450" y2="565" stroke="#64748b" stroke-width="1"/>
+  
+  <!-- Level 4 Left: Reference -->
+  <rect x="160" y="555" width="140" height="20" rx="3" fill="#fdba74" stroke="#fb923c" stroke-width="1"/>
+  <text x="230" y="568" text-anchor="middle" font-family="monospace" font-size="7" fill="#78350f">cooldown.vanish.remains</text>
+  
+  <!-- Level 4 Right: ArithmeticExpression -->
+  <rect x="430" y="510" width="140" height="36" rx="5" fill="#a78bfa" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="500" y="528" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="600">ArithmeticExpression</text>
+  <text x="500" y="540" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" fill="#ede9fe">operator: "+"</text>
+  
+  <!-- Lines to Level 5 -->
+  <line x1="460" y1="546" x2="430" y2="565" stroke="#64748b" stroke-width="1"/>
+  <line x1="540" y1="546" x2="570" y2="565" stroke="#64748b" stroke-width="1"/>
+  
+  <!-- Level 5: NumberLiteral and Reference -->
+  <rect x="385" y="555" width="90" height="20" rx="3" fill="#c4b5fd" stroke="#a78bfa" stroke-width="1"/>
+  <text x="430" y="568" text-anchor="middle" font-family="monospace" font-size="7" fill="#4c1d95">NumberLiteral: 5</text>
+  
+  <rect x="525" y="555" width="90" height="20" rx="3" fill="#fdba74" stroke="#fb923c" stroke-width="1"/>
+  <text x="570" y="568" text-anchor="middle" font-family="monospace" font-size="7" fill="#78350f">Reference: gcd</text>
+  
+  <!-- Legend -->
+  <rect x="580" y="250" width="210" height="190" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="600" y="272" font-family="system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">Expression Types</text>
+  
+  <rect x="600" y="288" width="12" height="12" rx="2" fill="#f59e0b"/>
+  <text x="620" y="298" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">BinaryExpression (&amp;, |)</text>
+  
+  <rect x="600" y="308" width="12" height="12" rx="2" fill="#fbbf24"/>
+  <text x="620" y="318" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">UnaryExpression (!)</text>
+  
+  <rect x="600" y="328" width="12" height="12" rx="2" fill="#fb923c"/>
+  <text x="620" y="338" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">Comparison (&lt;, &lt;=, =, ==, &gt;=, &gt;)</text>
+  
+  <rect x="600" y="348" width="12" height="12" rx="2" fill="#a78bfa"/>
+  <text x="620" y="358" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">Arithmetic (+, -, *, /)</text>
+  
+  <rect x="600" y="368" width="12" height="12" rx="2" fill="#fb7185"/>
+  <text x="620" y="378" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">GroupExpression (parentheses)</text>
+  
+  <rect x="600" y="388" width="12" height="12" rx="2" fill="#fdba74"/>
+  <text x="620" y="398" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">Reference (e.g. buff.x.up)</text>
+  
+  <rect x="600" y="408" width="12" height="12" rx="2" fill="#c4b5fd"/>
+  <text x="620" y="418" font-family="system-ui, sans-serif" font-size="9" fill="#64748b">NumberLiteral (e.g. 5)</text>
+</svg>
