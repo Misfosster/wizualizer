@@ -1,12 +1,8 @@
-import "./App.css";
-import "./styles/tailwind.css";
+import "@/App.css";
+import AplInput from "@components/apl-input";
 
 function App() {
-  return (
-    <>
-      <h1>LogicCraft</h1>
-    </>
-  );
+  return <AplInput />;
 }
 
 export default App;
