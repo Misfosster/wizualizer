@@ -1,30 +1,31 @@
-import { useState, useCallback } from 'react';
-import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge } from "@xyflow/react";
-import type { Node, Edge, OnNodesChange, OnEdgesChange, OnConnect } from "@xyflow/react";
+import { useCallback } from "react";
+import { ReactFlow } from "@xyflow/react";
+import type { OnEdgesChange, OnConnect, OnNodesChange } from "@xyflow/react";
+import { useEditorStore } from "@/state/store";
 
-import '@xyflow/react/dist/style.css';
- 
-const initialNodes = [
-  { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
-  { id: 'n2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
-];
-const initialEdges = [{ id: 'n1-n2', source: 'n1', target: 'n2' }];
+import "@xyflow/react/dist/style.css";
  
 export default function Canvas() {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const nodes = useEditorStore((state) => state.nodes);
+  const edges = useEditorStore((state) => state.edges);
+  const applyNodesChange = useEditorStore((state) => state.applyNodesChange);
+  const applyEdgesChange = useEditorStore((state) => state.applyEdgesChange);
+  const addConnection = useEditorStore((state) => state.addConnection);
  
   const onNodesChange: OnNodesChange = useCallback(
-    (changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
-    [],
+    // react flow sends a change list (move/select/delete), we apply it to our zustand store (state)
+    (nodeChanges) => applyNodesChange(nodeChanges),
+    [applyNodesChange],
   );
   const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-    [],
+    // same idea for edges
+    (edgeChanges) => applyEdgesChange(edgeChanges),
+    [applyEdgesChange],
   );
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    [],
+    // user created a new connection between nodes
+    (newConnection) => addConnection(newConnection),
+    [addConnection],
   );
  
   return (
@@ -36,7 +37,8 @@ export default function Canvas() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        fitView
+        fitView={true}
+        onlyRenderVisibleElements={true}
       />
     </div>
   );
