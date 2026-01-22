@@ -13,6 +13,7 @@ Design documentation for upcoming features, organized by concern.
 | [05-collapse-expand.md](05-collapse-expand.md) | Folder collapse/expand behavior |
 | [06-data-interfaces.md](06-data-interfaces.md) | TypeScript interfaces for node data |
 | [07-undo-redo.md](07-undo-redo.md) | History tracking with zundo |
+| [08-ui-stack.md](08-ui-stack.md) | shadcn/ui, react-arborist, component structure |
 
 ## Visual References
 

@@ -84,7 +84,8 @@ src/
 
 - React 19 + TypeScript
 - React Flow for graph canvas
-- Radix UI + Tailwind for UI primitives and styling
+- shadcn/ui + Tailwind for UI components (built on Radix primitives)
+- react-arborist for explorer tree
 - Zustand for state management
 - Vite for dev/build
 - Playwright for E2E tests

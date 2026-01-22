@@ -2,6 +2,8 @@
 
 The explorer tree provides a file-system-like view that mirrors the graph hierarchy.
 
+**Implementation**: Using [react-arborist](https://github.com/brimdata/react-arborist) for tree rendering, keyboard navigation, and future drag-and-drop.
+
 ## Structure
 
 ```

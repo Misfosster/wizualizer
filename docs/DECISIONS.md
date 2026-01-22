@@ -2,12 +2,12 @@
 
 Record architecture and stack decisions with short context and rationale.
 
-## 2025-01-01 — UI Stack
+## 2025-01-01 — UI Stack (Updated 2026-01)
 
-- Decision: Use Radix UI + Tailwind for UI primitives and styling.
-- Context: BlueprintJS is not React 19 compatible and is heavier than needed.
-- Rationale: Headless components with full styling control and React 19 support.
-- Status: Accepted.
+- Decision: Use shadcn/ui + Tailwind for UI components, react-arborist for explorer tree.
+- Context: Originally chose raw Radix UI. shadcn/ui provides pre-styled Radix components with full customization (code is copied into your repo).
+- Rationale: Best of both worlds - Radix accessibility + beautiful defaults + owned code. react-arborist handles tree complexity (keyboard nav, drag-drop, virtualization).
+- Status: Accepted (supersedes raw Radix).
 
 ## 2025-01-01 — Canonical Text and Graph Repositioning
 

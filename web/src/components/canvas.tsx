@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { ReactFlow } from "@xyflow/react";
 import type { OnEdgesChange, OnConnect, OnNodesChange } from "@xyflow/react";
-import { useEditorStore } from "@/state/store";
+import { useEditorStore } from "@/state/editorStore";
 
 import "@xyflow/react/dist/style.css";
  
@@ -14,17 +14,17 @@ export default function Canvas() {
  
   const onNodesChange: OnNodesChange = useCallback(
     // react flow sends a change list (move/select/delete), we apply it to our zustand store (state)
-    (nodeChanges) => applyNodesChange(nodeChanges),
+    (nodeChanges) => {applyNodesChange(nodeChanges)},
     [applyNodesChange],
   );
   const onEdgesChange: OnEdgesChange = useCallback(
     // same idea for edges
-    (edgeChanges) => applyEdgesChange(edgeChanges),
+    (edgeChanges) => {applyEdgesChange(edgeChanges)},
     [applyEdgesChange],
   );
   const onConnect: OnConnect = useCallback(
     // user created a new connection between nodes
-    (newConnection) => addConnection(newConnection),
+    (newConnection) => {addConnection(newConnection)},
     [addConnection],
   );
  
@@ -39,6 +39,7 @@ export default function Canvas() {
         onConnect={onConnect}
         fitView={true}
         onlyRenderVisibleElements={true}
+        proOptions={{ hideAttribution: true }}
       />
     </div>
   );

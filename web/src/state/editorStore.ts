@@ -17,7 +17,7 @@ const initialNodes: Node[] = [
 
 const initialEdges: Edge[] = [{ id: "n1-n2", source: "n1", target: "n2" }];
 
-type EditorState = {
+interface EditorState {
   aplText: string;
   // update text from the textarea
   setAplText: (aplText: string) => void;
@@ -40,13 +40,18 @@ const getInitialAplText = () => {
 
 export const useEditorStore = create<EditorState>((set) => ({
   aplText: getInitialAplText(),
-  setAplText: (aplText) => set({ aplText }),
+  setAplText: (aplText) => {
+    set({ aplText });
+  },
   nodes: initialNodes,
   edges: initialEdges,
-  applyNodesChange: (nodeChanges) =>
-    set((state) => ({ nodes: applyNodeChanges(nodeChanges, state.nodes) })),
-  applyEdgesChange: (edgeChanges) =>
-    set((state) => ({ edges: applyEdgeChanges(edgeChanges, state.edges) })),
-  addConnection: (connection) =>
-    set((state) => ({ edges: addEdge(connection, state.edges) })),
+  applyNodesChange: (nodeChanges) => {
+    set((state) => ({ nodes: applyNodeChanges(nodeChanges, state.nodes) }));
+  },
+  applyEdgesChange: (edgeChanges) => {
+    set((state) => ({ edges: applyEdgeChanges(edgeChanges, state.edges) }));
+  },
+  addConnection: (connection) => {
+    set((state) => ({ edges: addEdge(connection, state.edges) }));
+  },
 }));

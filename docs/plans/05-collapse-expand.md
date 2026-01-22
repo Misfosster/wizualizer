@@ -44,15 +44,21 @@ When a folder is expanded:
 
 ## Global Controls
 
-Toolbar buttons above the canvas:
+Toolbar buttons above the canvas (using shadcn/ui Button):
 
 - **"Collapse All Folders"**: Collapses every folder
 - **"Expand All Folders"**: Expands every folder
 
 ```tsx
+import { Button } from '@/components/ui/button';
+
 <CollapseToolbar>
-  <button onClick={collapseAllFolders}>Collapse All Folders</button>
-  <button onClick={expandAllFolders}>Expand All Folders</button>
+  <Button variant="outline" size="sm" onClick={collapseAllFolders}>
+    Collapse All Folders
+  </Button>
+  <Button variant="outline" size="sm" onClick={expandAllFolders}>
+    Expand All Folders
+  </Button>
 </CollapseToolbar>
 ```
 
