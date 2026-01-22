@@ -212,3 +212,7 @@ psd
 thumb
 sketch
 
+
+.vscode/settings.json
+
+.cursor/
