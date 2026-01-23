@@ -3,6 +3,7 @@ import lexer from "./lexer";
 import type { ActionParsed, Condition, BinOp } from "./types";
 import { TokenStream } from "./token-stream";
 
+// tokenize line - whitespace is dropped
 function tokenizeLine(line: string): Token[] {
   lexer.reset(line);
   const tokens: Token[] = [];
@@ -17,6 +18,7 @@ function tokenizeLine(line: string): Token[] {
   return tokens;
 }
 
+// parse action line - raw structural shape
 export function parseAction(line: string): ActionParsed | null {
   const tokens = tokenizeLine(line);
 
@@ -28,6 +30,7 @@ export function parseAction(line: string): ActionParsed | null {
   const ts = new TokenStream(tokens);
   const category = ts.expect("ident").value;
 
+  // action operator - "=" or "+=/"
   const op: ActionParsed["op"] = ts.match("eq")
     ? "="
     : ts.match("plusEqSlash")
@@ -68,6 +71,7 @@ export function parseAction(line: string): ActionParsed | null {
   return { category, spell, op, segments };
 }
 
+// read raw value - stop at comma when paren depth is 0
 function readValueRaw(ts: TokenStream): string {
   const parts: string[] = [];
   let depth = 0;
@@ -90,6 +94,7 @@ function readValueRaw(ts: TokenStream): string {
   return parts.join("");
 }
 
+// parse condition string - ensure full consumption
 export function parseConditionFromText(text: string): Condition {
   const tokens = tokenizeLine(text);
   if (tokens.length === 0) {
@@ -154,6 +159,7 @@ function tokToBinOp(t: Token): BinOp | null {
 }
 
 // https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
+// pratt parser for binary expressions (left-associative)
 function parseCondition(ts: TokenStream, minPrec = 0): Condition {
   let left = parsePrefix(ts);
 
@@ -185,6 +191,7 @@ function parseCondition(ts: TokenStream, minPrec = 0): Condition {
   return left;
 }
 
+// parse prefix forms - unary, paren, number, ident
 function parsePrefix(ts: TokenStream): Condition {
   const t = ts.peek();
   if (!t) {

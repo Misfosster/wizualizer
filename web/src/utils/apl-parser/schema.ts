@@ -10,6 +10,7 @@ import type {
   ListItem,
 } from "./types";
 
+// default schema - only if/target_if are expressions
 export const DEFAULT_SCHEMA: Schema = {
   defaults: {
     options: {
@@ -24,11 +25,13 @@ interface ParseIssue {
   message: string;
 }
 
+// apply schema - interpret raw segments and collect diagnostics
 export function applySchema(
   action: ActionParsed,
   schema: Schema = DEFAULT_SCHEMA,
 ): ActionInterpreted {
   const diagnostics: Diagnostic[] = [];
+  // merge defaults - action-specific overrides
   const actionSchema = schema.actions?.[action.spell] ?? {};
   const mergedOptions = {
     ...(schema.defaults?.options ?? {}),
@@ -94,6 +97,7 @@ export function applySchema(
   };
 }
 
+// parse value - apply option schema
 function parseValue(
   raw: string,
   schema?: OptionSchema,
@@ -153,6 +157,7 @@ function parseValue(
   }
 }
 
+// parse list - split and coerce numbers
 function parseList(
   raw: string,
   schema: OptionSchema,

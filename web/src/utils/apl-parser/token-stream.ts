@@ -1,5 +1,6 @@
 import type { Token } from "moo";
 
+// token stream - cursor over token array
 export class TokenStream {
   private i = 0;
   private tokens: Token[];
