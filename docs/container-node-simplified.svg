@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" font-family="'Segoe UI', Inter, system-ui, sans-serif">
+  <defs>
+    <!-- Condition gradient (orange) -->
+    <linearGradient id="cond-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5a623"/>
+      <stop offset="100%" style="stop-color:#e8940e"/>
+    </linearGradient>
+    
+    <!-- Drop shadows -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+    <filter id="shadow-sm" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity="0.1"/>
+    </filter>
+    
+    <!-- Arrow markers -->
+    <marker id="arrow-and" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#3498db"/>
+    </marker>
+    <marker id="arrow-or" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+    </marker>
+  </defs>
+
+  <!-- Background with subtle grid -->
+  <rect width="1100" height="620" fill="#f5f7fa"/>
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8ecf1" stroke-width="0.5"/>
+  </pattern>
+  <rect width="1100" height="620" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="550" y="30" text-anchor="middle" fill="#2c3e50" font-size="16" font-weight="700">Simplified: Single ContainerNode Type (color by depth)</text>
+  <text x="550" y="50" text-anchor="middle" fill="#7f8c8d" font-size="11">Only Blocks are collapsible - containers just wrap parenthesized groups</text>
+
+  <!-- MAINTENANCE condition node -->
+  <g filter="url(#shadow)">
+    <rect x="25" y="280" width="110" height="40" rx="6" fill="url(#cond-grad)"/>
+    <text x="80" y="305" text-anchor="middle" fill="white" font-size="11" font-weight="500">MAINTENANCE</text>
+  </g>
+
+  <!-- AND arrow from MAINTENANCE to Container 1 -->
+  <line x1="135" y1="300" x2="175" y2="300" stroke="#3498db" stroke-width="2" marker-end="url(#arrow-and)"/>
+  <rect x="142" y="288" width="32" height="18" rx="4" fill="#3498db"/>
+  <text x="158" y="301" text-anchor="middle" fill="white" font-size="9" font-weight="600">AND</text>
+
+  <!-- CONTAINER LEVEL 1 (Blue - depth 0) - NO collapse button -->
+  <rect x="185" y="75" width="890" height="520" rx="12" fill="rgba(52, 152, 219, 0.08)" stroke="#3498db" stroke-width="2.5" stroke-dasharray="10 5"/>
+
+  <!-- Branch 1: targets >= 2 AND mark AND (...) -->
+  
+  <!-- targets >= 2 -->
+  <g filter="url(#shadow-sm)">
+    <rect x="220" y="110" width="100" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="270" y="133" text-anchor="middle" fill="white" font-size="10" font-weight="500">targets &gt;= 2</text>
+  </g>
+
+  <!-- AND arrow -->
+  <line x1="320" y1="128" x2="355" y2="128" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow-and)"/>
+  <rect x="325" y="118" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="339" y="128" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+
+  <!-- deathstalkers_mark -->
+  <g filter="url(#shadow-sm)">
+    <rect x="365" y="110" width="130" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="430" y="133" text-anchor="middle" fill="white" font-size="10" font-weight="500">deathstalkers_mark</text>
+  </g>
+
+  <!-- AND arrow to nested container -->
+  <line x1="495" y1="128" x2="530" y2="128" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow-and)"/>
+  <rect x="500" y="118" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="514" y="128" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+
+  <!-- CONTAINER LEVEL 2 (Orange - depth 1) - NO collapse button -->
+  <rect x="540" y="90" width="505" height="150" rx="10" fill="rgba(230, 126, 34, 0.1)" stroke="#e67e22" stroke-width="2" stroke-dasharray="8 4"/>
+
+  <!-- NOT darkest_night.up -->
+  <g filter="url(#shadow-sm)">
+    <rect x="570" y="110" width="150" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="645" y="133" text-anchor="middle" fill="white" font-size="10" font-weight="500">NOT darkest_night.up</text>
+  </g>
+
+  <!-- OR arrow down -->
+  <line x1="645" y1="146" x2="645" y2="185" stroke="#e67e22" stroke-width="2" marker-end="url(#arrow-or)"/>
+  <rect x="632" y="155" width="24" height="14" rx="3" fill="#e67e22"/>
+  <text x="644" y="165" text-anchor="middle" fill="white" font-size="8" font-weight="700">OR</text>
+
+  <!-- shadow_dance.up -->
+  <g filter="url(#shadow-sm)">
+    <rect x="570" y="195" width="120" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="630" y="218" text-anchor="middle" fill="white" font-size="10" font-weight="500">shadow_dance.up</text>
+  </g>
+
+  <!-- AND arrow -->
+  <line x1="690" y1="213" x2="725" y2="213" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow-and)"/>
+  <rect x="695" y="203" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="709" y="213" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+
+  <!-- targets >= 5 -->
+  <g filter="url(#shadow-sm)">
+    <rect x="735" y="195" width="100" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="785" y="218" text-anchor="middle" fill="white" font-size="10" font-weight="500">targets &gt;= 5</text>
+  </g>
+
+  <!-- OR arrow from Branch 1 to Branch 2 -->
+  <line x1="270" y1="146" x2="270" y2="295" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arrow-or)"/>
+  <rect x="254" y="210" width="28" height="18" rx="4" fill="#e67e22"/>
+  <text x="268" y="223" text-anchor="middle" fill="white" font-size="10" font-weight="700">OR</text>
+
+  <!-- Branch 2: unseen_blade AND targets >= 4 + (10 * priority_rotation) -->
+  <g filter="url(#shadow-sm)">
+    <rect x="220" y="305" width="120" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="280" y="328" text-anchor="middle" fill="white" font-size="10" font-weight="500">unseen_blade</text>
+  </g>
+
+  <!-- AND arrow -->
+  <line x1="340" y1="323" x2="375" y2="323" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow-and)"/>
+  <rect x="345" y="313" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="359" y="323" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+
+  <!-- targets >= 4 + (10 * priority_rotation) -->
+  <g filter="url(#shadow-sm)">
+    <rect x="385" y="305" width="220" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="495" y="328" text-anchor="middle" fill="white" font-size="10" font-weight="500">targets &gt;= 4 + (10 * priority)</text>
+  </g>
+
+  <!-- OR arrow from Branch 2 to Branch 3 -->
+  <line x1="270" y1="341" x2="270" y2="430" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arrow-or)"/>
+  <rect x="254" y="375" width="28" height="18" rx="4" fill="#e67e22"/>
+  <text x="268" y="388" text-anchor="middle" fill="white" font-size="10" font-weight="700">OR</text>
+
+  <!-- Branch 3: coup_de_grace.ready AND targets >= 3 -->
+  <g filter="url(#shadow-sm)">
+    <rect x="220" y="440" width="150" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="295" y="463" text-anchor="middle" fill="white" font-size="10" font-weight="500">coup_de_grace.ready</text>
+  </g>
+
+  <!-- AND arrow -->
+  <line x1="370" y1="458" x2="405" y2="458" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow-and)"/>
+  <rect x="375" y="448" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="389" y="458" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+
+  <!-- targets >= 3 -->
+  <g filter="url(#shadow-sm)">
+    <rect x="415" y="440" width="100" height="36" rx="6" fill="url(#cond-grad)"/>
+    <text x="465" y="463" text-anchor="middle" fill="white" font-size="10" font-weight="500">targets &gt;= 3</text>
+  </g>
+
+  <!-- Legend -->
+  <g filter="url(#shadow)">
+    <rect x="750" y="420" width="300" height="160" rx="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  </g>
+  <text x="770" y="445" fill="#2c3e50" font-size="12" font-weight="700">LEGEND</text>
+  
+  <!-- Container depth 0 -->
+  <rect x="770" y="460" width="30" height="18" rx="4" fill="rgba(52, 152, 219, 0.15)" stroke="#3498db" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="810" y="473" fill="#5a6c7d" font-size="10">Container (depth 0) - Blue</text>
+  
+  <!-- Container depth 1 -->
+  <rect x="770" y="485" width="30" height="18" rx="4" fill="rgba(230, 126, 34, 0.15)" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <text x="810" y="498" fill="#5a6c7d" font-size="10">Container (depth 1) - Orange</text>
+  
+  <!-- Condition -->
+  <rect x="770" y="510" width="30" height="18" rx="4" fill="url(#cond-grad)"/>
+  <text x="810" y="523" fill="#5a6c7d" font-size="10">Condition (leaf node)</text>
+  
+  <!-- AND -->
+  <rect x="770" y="535" width="28" height="14" rx="3" fill="#3498db"/>
+  <text x="782" y="545" text-anchor="middle" fill="white" font-size="8" font-weight="600">AND</text>
+  <text x="810" y="546" fill="#5a6c7d" font-size="10">Horizontal flow</text>
+  
+  <!-- OR -->
+  <rect x="770" y="555" width="28" height="14" rx="3" fill="#e67e22"/>
+  <text x="782" y="565" text-anchor="middle" fill="white" font-size="8" font-weight="700">OR</text>
+  <text x="810" y="566" fill="#5a6c7d" font-size="10">Vertical flow (between branches)</text>
+
+  <!-- Note -->
+  <text x="550" y="610" text-anchor="middle" fill="#7f8c8d" font-size="10" font-style="italic">Containers have NO collapse buttons - only BlockNodes (actions.precombat, etc.) are collapsible</text>
+</svg>
