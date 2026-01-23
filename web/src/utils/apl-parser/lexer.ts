@@ -6,9 +6,12 @@ const lexer = moo.compile({
   comment: /#[^\n]*/,
 
   // operators / punctuation
+  plusEqSlash: "+=/",
   plusEq: "+=",
   eq: "=",
   comma: ",",
+  plus: "+",
+  minus: "-",
   mult: "*",
   slash: "/",
   lparen: "(",
@@ -25,14 +28,20 @@ const lexer = moo.compile({
   lt: "<",
   gt: ">",
 
+  // Keywords
+  // ifKw: "if",
+  // tifKw: "target_if",
+
   // literals
   number: /[0-9]+(?:\.[0-9]+)?/,
-  ident: /[A-Za-z_][A-Za-z0-9_.]*/, // buff.hot_streak.up
+  ident: {
+    match: /[A-Za-z_][A-Za-z0-9_.\-]*/,
+    type: moo.keywords({
+      ifKw: "if",
+      tifKw: "target_if",
+    }),
+  },
 });
-
-lexer.reset(
-  `actions.ff_combustion=combustion,use_off_gcd=1,use_while_casting=1,if=buff.combustion.down&action.fireball.executing&(action.fireball.execute_remains<variable.cast_remains_time)|action.meteor.in_flight&(action.meteor.in_flight_remains<variable.cast_remains_time)|action.pyroblast.executing&(action.pyroblast.execute_remains<variable.cast_remains_time)|action.scorch.executing&(action.scorch.execute_remains<variable.cast_remains_time)`,
-);
 
 for (const tok of lexer) {
   if (tok.type === "ws") {
@@ -42,3 +51,5 @@ for (const tok of lexer) {
     `${String(tok.line)}:${String(tok.col)}  ${String(tok.type)}  ${tok.value}`,
   );
 }
+
+export default lexer;
