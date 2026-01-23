@@ -1,6 +1,6 @@
 import type { Token } from "moo";
 import lexer from "./lexer";
-import type { Action, Condition, BinOp } from "./types";
+import type { ActionParsed, Condition, BinOp } from "./types";
 import { TokenStream } from "./token-stream";
 
 function tokenizeLine(line: string): Token[] {
@@ -17,7 +17,7 @@ function tokenizeLine(line: string): Token[] {
   return tokens;
 }
 
-export function parseAction(line: string): Action | null {
+export function parseAction(line: string): ActionParsed | null {
   const tokens = tokenizeLine(line);
 
   // Empty or comments are not needed to parse
@@ -28,7 +28,7 @@ export function parseAction(line: string): Action | null {
   const ts = new TokenStream(tokens);
   const category = ts.expect("ident").value;
 
-  const op: Action["op"] = ts.match("eq")
+  const op: ActionParsed["op"] = ts.match("eq")
     ? "="
     : ts.match("plusEqSlash")
       ? "+="
@@ -40,15 +40,14 @@ export function parseAction(line: string): Action | null {
   ts.match("slash");
   const spell = ts.expect("ident").value;
 
-  const segments: Action["segments"] = [];
+  const segments: ActionParsed["segments"] = [];
 
   while (ts.match("comma")) {
     // segment can be:
-    // - key=<expr> (if, target_if, name, use_off_gcd, etc.)
-    // - <expr> (positional, e.g. sequence steps)
+    // - key=<value> (if, target_if, name, use_off_gcd, etc.)
+    // - <value> (positional, e.g. sequence steps)
     const keyTok = ts.peek();
-    const isKey =
-      keyTok?.type === "ident" && ts.peek(1)?.type === "eq";
+    const isKey = keyTok?.type === "ident" && ts.peek(1)?.type === "eq";
 
     if (isKey) {
       const keyTok = ts.next();
@@ -57,20 +56,61 @@ export function parseAction(line: string): Action | null {
       }
       const key = keyTok.value;
       ts.next(); // consume eq
-      segments.push({ kind: "arg", key, expr: parseCondition(ts) });
+      const valueRaw = readValueRaw(ts);
+      segments.push({ kind: "arg", key, valueRaw });
       continue;
     }
 
-    segments.push({ kind: "positional", expr: parseCondition(ts) });
+    const valueRaw = readValueRaw(ts);
+    segments.push({ kind: "positional", valueRaw });
   }
 
   return { category, spell, op, segments };
+}
+
+function readValueRaw(ts: TokenStream): string {
+  const parts: string[] = [];
+  let depth = 0;
+
+  while (!ts.eof()) {
+    const t = ts.peek();
+    if (!t) break;
+    if (t.type === "comma" && depth === 0) {
+      break;
+    }
+    if (t.type === "lparen") {
+      depth += 1;
+    } else if (t.type === "rparen" && depth > 0) {
+      depth -= 1;
+    }
+    ts.next();
+    parts.push(t.value);
+  }
+
+  return parts.join("");
+}
+
+export function parseConditionFromText(text: string): Condition {
+  const tokens = tokenizeLine(text);
+  if (tokens.length === 0) {
+    throw new Error("Expected condition");
+  }
+  const ts = new TokenStream(tokens);
+  const expr = parseCondition(ts, 0);
+  if (!ts.eof()) {
+    const t = ts.peek();
+    throw new Error(
+      `Unexpected token after condition: ${String(t?.type)} ${JSON.stringify(t?.value)}`,
+    );
+  }
+  return expr;
 }
 
 // For precedence in math
 const PREC: Partial<Record<string, number>> = {
   or: 1, // |
   and: 2, // &
+  eqEq: 3,
   eq: 3,
   lt: 3,
   gt: 3,
@@ -88,6 +128,8 @@ function tokToBinOp(t: Token): BinOp | null {
       return "|";
     case "and":
       return "&";
+    case "eqEq":
+      return "=";
     case "eq":
       return "=";
     case "lt":

@@ -8,6 +8,7 @@ const lexer = moo.compile({
   // operators / punctuation
   plusEqSlash: "+=/",
   plusEq: "+=",
+  eqEq: "==",
   eq: "=",
   comma: ",",
   plus: "+",

@@ -1,18 +1,18 @@
-import type { Action, Segment, Condition, BinExpr } from "./types";
+import type { ActionParsed, SegmentParsed, Condition, BinExpr } from "./types";
 
-export function prettyAction(a: Action): string {
+export function prettyAction(a: ActionParsed): string {
   const base = `${a.category}${a.op}${a.spell}`;
   if (a.segments.length === 0) return base;
 
   return base + "," + a.segments.map(prettySegment).join(",");
 }
 
-export function prettySegment(s: Segment): string {
+export function prettySegment(s: SegmentParsed): string {
   switch (s.kind) {
     case "arg":
-      return `${s.key}=${prettyCond(s.expr)}`;
+      return `${s.key}=${s.valueRaw}`;
     case "positional":
-      return prettyCond(s.expr);
+      return s.valueRaw;
   }
 }
 
