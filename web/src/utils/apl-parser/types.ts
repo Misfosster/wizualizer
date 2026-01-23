@@ -1,7 +1,6 @@
 export type Segment =
-  | { kind: "if"; expr: Condition }
-  | { kind: "target_if"; expr: Condition }
-  | { kind: "arg"; key: string; expr: Condition };
+  | { kind: "arg"; key: string; expr: Condition }
+  | { kind: "positional"; expr: Condition };
 
 export interface Action {
   category: string;
@@ -45,7 +44,7 @@ export interface Num {
 }
 
 // TODO: Maybe change to use words, such as "and" or "else" or "not" etc?
-export type BoolOp = "&" | "|" | "<" | "<=" | ">" | ">=" | "=" | "!=";
+export type BoolOp = "&" | "|" | "<" | "<=" | ">" | ">=" | "=";
 export type UnaryOp = "!";
 export type AritOp = "+" | "-" | "*" | "/";
 export type BinOp = BoolOp | AritOp;

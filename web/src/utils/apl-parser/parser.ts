@@ -44,46 +44,31 @@ export function parseAction(line: string): Action | null {
 
   while (ts.match("comma")) {
     // segment can be:
-    // - if=<expr>
-    // - target_if=<expr>
-    // - arbitrary tokens (name=presence_of_mind, use_off_gcd=1, chain=1)
-    // WARN:
-    // The latter is treated as conditions for now
-    // Not sure if we need to change it though?
+    // - key=<expr> (if, target_if, name, use_off_gcd, etc.)
+    // - <expr> (positional, e.g. sequence steps)
+    const keyTok = ts.peek();
+    const isKey =
+      keyTok?.type === "ident" && ts.peek(1)?.type === "eq";
 
-    // if=<expr>
-    if (ts.peek()?.type === "ifKw" && ts.peek(1)?.type === "eq") {
-      ts.next(); // consume ifKw
+    if (isKey) {
+      const keyTok = ts.next();
+      if (!keyTok) {
+        throw new Error("Expected segment key");
+      }
+      const key = keyTok.value;
       ts.next(); // consume eq
-      segments.push({ kind: "if", expr: parseCondition(ts) });
+      segments.push({ kind: "arg", key, expr: parseCondition(ts) });
       continue;
     }
 
-    // target_if=<expr>
-    if (ts.peek()?.type === "tifKw" && ts.peek(1)?.type === "eq") {
-      ts.next(); // consume tifKw
-      ts.next(); // consume eq
-      segments.push({ kind: "target_if", expr: parseCondition(ts) });
-      continue;
-    }
-
-    // otherwise parse the whole segment as a condition
-    const keyTok = ts.expect("ident");
-    const key = keyTok.value;
-
-    ts.expect("eq");
-
-    // value as Condition (for now)
-    const expr = parseCondition(ts);
-
-    segments.push({ kind: "arg", key, expr });
+    segments.push({ kind: "positional", expr: parseCondition(ts) });
   }
 
   return { category, spell, op, segments };
 }
 
 // For precedence in math
-const PREC: Record<string, number> = {
+const PREC: Partial<Record<string, number>> = {
   or: 1, // |
   and: 2, // &
   eq: 3,
@@ -181,7 +166,7 @@ function parsePrefix(ts: TokenStream): Condition {
     return { kind: "number", value: Number(t.value) };
   }
 
-  if (t.type === "ident" || t.type === "ifKw") {
+  if (t.type === "ident") {
     ts.next();
     return { kind: "ident", name: t.value };
   }

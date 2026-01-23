@@ -9,12 +9,10 @@ export function prettyAction(a: Action): string {
 
 export function prettySegment(s: Segment): string {
   switch (s.kind) {
-    case "if":
-      return `if=${prettyCond(s.expr)}`;
-    case "target_if":
-      return `target_if=${prettyCond(s.expr)}`;
     case "arg":
       return `${s.key}=${prettyCond(s.expr)}`;
+    case "positional":
+      return prettyCond(s.expr);
   }
 }
 
@@ -40,7 +38,6 @@ function prec(op: string): number {
     case "&":
       return 2;
     case "=":
-    case "!=":
     case "<":
     case "<=":
     case ">":
