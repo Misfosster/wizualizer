@@ -5,8 +5,7 @@ Later phases interpret selected option values.
 
 ## Overview
 
-Flow (left to right):
-
+Flow
 1) Lexer (tokens)
 2) Structural parse (ActionParsed, SegmentParsed)
 3) Schema pass (ActionInterpreted, SegmentInterpreted)
