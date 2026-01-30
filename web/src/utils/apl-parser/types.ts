@@ -1,7 +1,17 @@
-export type Segment =
-  | { kind: "if"; expr: Condition }
-  | { kind: "target_if"; expr: Condition }
-  | { kind: "arg"; key: string; expr: Condition };
+export type SegmentType = "if" | "target_if" | "sequence";
+
+export type Segment = SegmentBase | SegmentKeyed;
+
+export interface SegmentBase {
+  type: SegmentType;
+  expr: Condition;
+}
+
+export interface SegmentKeyed {
+  type: "other";
+  key: string; // For segments that are for example abc.gcd_remains=abc, that cannot be predicted
+  expr: Condition;
+}
 
 export interface Action {
   category: string;
@@ -10,7 +20,13 @@ export interface Action {
   segments: Segment[];
 }
 
-export type Condition = IdentRef | ParenExpr | UnaryExpr | BinExpr | Num;
+export type Condition =
+  | IdentRef
+  | ParenExpr
+  | UnaryExpr
+  | BinExpr
+  | SeqExpr
+  | Num;
 
 // Just one ident (buff.time_warp or something)
 export interface IdentRef {
@@ -39,13 +55,18 @@ export interface BinExpr {
   right: Condition;
 }
 
+export interface SeqExpr {
+  kind: "sequence";
+  expr: IdentRef[];
+}
+
 export interface Num {
   kind: "number";
   value: number;
 }
 
 // TODO: Maybe change to use words, such as "and" or "else" or "not" etc?
-export type BoolOp = "&" | "|" | "<" | "<=" | ">" | ">=" | "=" | "!=";
+export type BoolOp = "&" | "|" | "<" | "<=" | ">" | ">=" | "=" | "!=" | "==";
 export type UnaryOp = "!";
 export type AritOp = "+" | "-" | "*" | "/";
 export type BinOp = BoolOp | AritOp;

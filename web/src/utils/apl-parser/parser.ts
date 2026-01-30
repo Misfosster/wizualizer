@@ -1,6 +1,6 @@
 import type { Token } from "moo";
 import lexer from "./lexer";
-import type { Action, Condition, BinOp } from "./types";
+import type { Action, Condition, BinOp, IdentRef, SeqExpr } from "./types";
 import { TokenStream } from "./token-stream";
 
 function tokenizeLine(line: string): Token[] {
@@ -46,37 +46,56 @@ export function parseAction(line: string): Action | null {
     // segment can be:
     // - if=<expr>
     // - target_if=<expr>
+    // - sequence,spell,spell,spell ...
     // - arbitrary tokens (name=presence_of_mind, use_off_gcd=1, chain=1)
     // WARN:
     // The latter is treated as conditions for now
     // Not sure if we need to change it though?
 
+    // Sequences are spell names seperated by : following a comma
+    // We need to check above spell because they are not formatted like usual
+    if (spell === "sequence" && ts.peek(0)?.type === "ident") {
+      // Don't remove any because the first token is the first spell
+      segments.push({ type: "sequence", expr: parseSequence(ts) });
+      continue;
+    }
+
+
     // if=<expr>
-    if (ts.peek()?.type === "ifKw" && ts.peek(1)?.type === "eq") {
+    if (
+      ts.peek()?.type === "ident" &&
+      ts.peek()?.value == "if" &&
+      ts.peek(1)?.type === "eq"
+    ) {
       ts.next(); // consume ifKw
       ts.next(); // consume eq
-      segments.push({ kind: "if", expr: parseCondition(ts) });
+      segments.push({ type: "if", expr: parseCondition(ts) });
       continue;
     }
 
     // target_if=<expr>
-    if (ts.peek()?.type === "tifKw" && ts.peek(1)?.type === "eq") {
+    if (
+      ts.peek()?.type === "ident" &&
+      ts.peek()?.value === "target_if" &&
+      ts.peek(1)?.type === "eq"
+    ) {
       ts.next(); // consume tifKw
       ts.next(); // consume eq
-      segments.push({ kind: "target_if", expr: parseCondition(ts) });
+      segments.push({ type: "target_if", expr: parseCondition(ts) });
       continue;
     }
 
     // otherwise parse the whole segment as a condition
     const keyTok = ts.expect("ident");
     const key = keyTok.value;
+    // console.log(key);
 
     ts.expect("eq");
 
     // value as Condition (for now)
     const expr = parseCondition(ts);
 
-    segments.push({ kind: "arg", key, expr });
+    segments.push({ type: "other", key, expr });
   }
 
   return { category, spell, op, segments };
@@ -87,6 +106,7 @@ const PREC: Record<string, number> = {
   or: 1, // |
   and: 2, // &
   eq: 3,
+  eqq: 3,
   lt: 3,
   gt: 3,
   le: 3,
@@ -119,11 +139,48 @@ function tokToBinOp(t: Token): BinOp | null {
       return "-";
     case "mult":
       return "*";
+    case "eqq":
+      return "==";
     case "slash":
       return "/";
     default:
       return null;
   }
+}
+
+// Goes through an identified sequence and stores the idents for all
+function parseSequence(ts: TokenStream): SeqExpr {
+  const idents: IdentRef[] = [];
+  for (; ;) {
+    const t = ts.peek(); // Should always be a new ident
+    if (!t) {
+      break;
+    }
+
+    const type = t.type;
+    if (type != "ident") {
+      throw new Error(`Malformatted sequence: ${String(t.type)}`);
+    }
+
+    idents.push({ kind: "ident", name: t.value });
+    ts.next(); // Consume token
+    // console.log(t.value)
+
+    const sep = ts.peek();
+    if (sep?.type === "colon") {
+      ts.next(); // consume ':'
+      continue; // expect another ident next
+    }
+
+    // No colon, seq over
+    break;
+  }
+
+  if (idents.length === 0) {
+    throw new Error("Expected at least one ident in sequence");
+  }
+
+  return { kind: "sequence", expr: idents };
 }
 
 // https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
@@ -181,7 +238,7 @@ function parsePrefix(ts: TokenStream): Condition {
     return { kind: "number", value: Number(t.value) };
   }
 
-  if (t.type === "ident" || t.type === "ifKw") {
+  if (t.type === "ident") {
     ts.next();
     return { kind: "ident", name: t.value };
   }

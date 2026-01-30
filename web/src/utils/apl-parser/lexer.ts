@@ -8,9 +8,11 @@ const lexer = moo.compile({
   // operators / punctuation
   plusEqSlash: "+=/",
   plusEq: "+=",
+  eqq: "==",
   eq: "=",
   comma: ",",
   plus: "+",
+  colon: ":",
   minus: "-",
   mult: "*",
   slash: "/",
@@ -28,19 +30,9 @@ const lexer = moo.compile({
   lt: "<",
   gt: ">",
 
-  // Keywords
-  // ifKw: "if",
-  // tifKw: "target_if",
-
   // literals
   number: /[0-9]+(?:\.[0-9]+)?/,
-  ident: {
-    match: /[A-Za-z_][A-Za-z0-9_.\-]*/,
-    type: moo.keywords({
-      ifKw: "if",
-      tifKw: "target_if",
-    }),
-  },
+  ident: /[A-Za-z_][A-Za-z0-9_.\-]*/,
 });
 
 for (const tok of lexer) {

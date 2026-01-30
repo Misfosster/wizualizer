@@ -1,4 +1,4 @@
-import type { Action, Segment, Condition, BinExpr } from "./types";
+import type { Action, Segment, Condition, BinExpr, IdentRef } from "./types";
 
 export function prettyAction(a: Action): string {
   const base = `${a.category}${a.op}${a.spell}`;
@@ -8,13 +8,18 @@ export function prettyAction(a: Action): string {
 }
 
 export function prettySegment(s: Segment): string {
-  switch (s.kind) {
+  switch (s.type) {
     case "if":
       return `if=${prettyCond(s.expr)}`;
     case "target_if":
       return `target_if=${prettyCond(s.expr)}`;
-    case "arg":
+    case "sequence":
+      return prettyCond(s.expr); // NOTE: No need to print sequence= because that is handeled by pretty action
+    case "other":
+      // NOTE: Only other has key, this is general catchall
       return `${s.key}=${prettyCond(s.expr)}`;
+    default:
+      return "\n!!!ERROR IN PRINT!!!\n";
   }
 }
 
@@ -22,6 +27,8 @@ export function prettyCond(c: Condition): string {
   switch (c.kind) {
     case "ident":
       return c.name;
+    case "sequence":
+      return prettySequence(c.expr);
     case "number":
       return String(c.value);
     case "paren":
@@ -41,6 +48,7 @@ function prec(op: string): number {
       return 2;
     case "=":
     case "!=":
+    case "==":
     case "<":
     case "<=":
     case ">":
@@ -55,6 +63,17 @@ function prettyBinary(b: BinExpr): string {
   const l = wrap(b.left, b.op);
   const r = wrap(b.right, b.op);
   return `${l}${b.op}${r}`;
+}
+
+function prettySequence(e: IdentRef[]): string {
+  let str = "";
+  for (let i = 0; i < e.length; i++) {
+    str += e[i].name;
+    if (i != e.length - 1) {
+      str += ":";
+    }
+  }
+  return str;
 }
 
 function wrap(child: Condition, parentOp: string): string {
