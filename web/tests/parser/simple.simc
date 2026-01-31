@@ -1,0 +1,4 @@
+# lines starting with # are comments and should be ignored
+
+actions+=/spell_name,if=buff.foo&!buff.bar
+actions+=/sequence,spell_one:spell_two:spell_three
