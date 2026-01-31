@@ -100,6 +100,13 @@ export function parseAction(line: string): Action | null {
   return { category, spell, op, segments };
 }
 
+// Convert "low is tight" -> "high is tight" for Pratt
+function bp(tokType: string): number | undefined {
+  const p = PREC[tokType];
+  if (p === undefined) return undefined;
+  return 100 - p;
+}
+
 // For precedence (https://github.com/simulationcraft/simc/wiki/Action-List-Conditional-Expressions)
 const PREC: Record<string, number> = {
   // NOTE: Function calls will be 1, but not impl yet
@@ -226,9 +233,8 @@ function parseCondition(ts: TokenStream, minPrec = 0): Condition {
     if (!type) {
       break;
     }
-    const prec = PREC[type];
+    const prec = bp(type);
     if (prec === undefined || prec < minPrec) {
-      // Prec can be undefined despite what linter says, for example when parenthesis
       break;
     }
 
