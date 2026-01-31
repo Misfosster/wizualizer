@@ -44,8 +44,11 @@ function prec(op: string): number {
   switch (op) {
     case "|":
       return 1;
-    case "&":
+    case "^":
       return 2;
+    case "&":
+      return 3;
+
     case "=":
     case "!=":
     case "==":
@@ -53,7 +56,24 @@ function prec(op: string): number {
     case "<=":
     case ">":
     case ">=":
-      return 3;
+    case "~":
+    case "!~":
+      return 4;
+
+    case "<?":
+    case ">?":
+      return 5;
+
+    case "+":
+    case "-":
+      return 6;
+
+    case "*":
+    case "/":
+    case "%":
+    case "%%":
+      return 7;
+
     default:
       return 0;
   }

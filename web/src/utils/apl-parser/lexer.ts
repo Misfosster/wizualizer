@@ -8,7 +8,9 @@ const lexer = moo.compile({
   // operators / punctuation
   plusEqSlash: "+=/",
   plusEq: "+=",
-  eqq: "==",
+  neq: "!=", // NEW
+  eqq: "==", // Equiv to eq, used in some APLs for some reason, not documented
+  nottilde: "!~", // NEW
   eq: "=",
   comma: ",",
   plus: "+",
@@ -19,12 +21,20 @@ const lexer = moo.compile({
   lparen: "(",
   rparen: ")",
 
+  tilde: "~", // NEW
+  at: "@", // NEW
+
   // boolean / logic operators used in `if=...`
+  mod: "%%", // NEW
+  div: "%", // NEW
+  xor: "^", // NEW
   and: "&",
   or: "|",
   not: "!",
 
   // comparisons
+  max: "<?", // NEW
+  min: ">?", // NEW
   le: "<=",
   ge: ">=",
   lt: "<",

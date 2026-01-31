@@ -60,7 +60,6 @@ export function parseAction(line: string): Action | null {
       continue;
     }
 
-
     // if=<expr>
     if (
       ts.peek()?.type === "ident" &&
@@ -101,30 +100,56 @@ export function parseAction(line: string): Action | null {
   return { category, spell, op, segments };
 }
 
-// For precedence in math
+// For precedence (https://github.com/simulationcraft/simc/wiki/Action-List-Conditional-Expressions)
 const PREC: Record<string, number> = {
-  or: 1, // |
-  and: 2, // &
-  eq: 3,
-  eqq: 3,
-  lt: 3,
-  gt: 3,
-  le: 3,
-  ge: 3, // comparisons
+  // NOTE: Function calls will be 1, but not impl yet
+  at: 2,
+  not: 2,
+  mult: 3,
+  div: 3,
+  mod: 3,
   plus: 4,
   minus: 4,
-  mult: 5,
-  slash: 5,
+  max: 5,
+  min: 5,
+  eq: 6,
+  eqq: 6,
+  neq: 6,
+  lt: 6,
+  le: 6,
+  gt: 6,
+  ge: 6,
+  tilde: 6,
+  nottilde: 6,
+  and: 7,
+  xor: 7,
+  or: 7,
 };
 
 function tokToBinOp(t: Token): BinOp | null {
   switch (t.type) {
+    case "at":
+      return "@";
+    case "not":
+      return "!";
+    case "div":
+      return "%";
+    case "mod":
+      return "%%";
+    case "max":
+      return "<?";
+    case "min":
+      return ">?";
     case "or":
       return "|";
     case "and":
       return "&";
+    case "xor":
+      return "^";
     case "eq":
       return "=";
+    case "neq":
+      return "!=";
     case "lt":
       return "<";
     case "gt":
@@ -133,6 +158,10 @@ function tokToBinOp(t: Token): BinOp | null {
       return "<=";
     case "ge":
       return ">=";
+    case "tilde":
+      return "~";
+    case "nottilde":
+      return "!~";
     case "plus":
       return "+";
     case "minus":
@@ -199,6 +228,7 @@ function parseCondition(ts: TokenStream, minPrec = 0): Condition {
     }
     const prec = PREC[type];
     if (prec === undefined || prec < minPrec) {
+      // Prec can be undefined despite what linter says, for example when parenthesis
       break;
     }
 

@@ -66,7 +66,7 @@ export interface Num {
 }
 
 // TODO: Maybe change to use words, such as "and" or "else" or "not" etc?
-export type BoolOp = "&" | "|" | "<" | "<=" | ">" | ">=" | "=" | "!=" | "==";
-export type UnaryOp = "!";
-export type AritOp = "+" | "-" | "*" | "/";
-export type BinOp = BoolOp | AritOp;
+export type BoolOp = "&" | "|" | "^" | "<" | "<=" | ">" | ">=" | "=" | "!=" | "==" | "<?" | ">?" | "~" | "!~";
+export type UnaryOp = "!" | "@";
+export type AritOp = "+" | "-" | "*" | "/" | "%" | "%%";
+export type BinOp = BoolOp | AritOp | UnaryOp;
