@@ -1,7 +1,13 @@
 import type { Action, Segment, Condition, BinExpr, IdentRef } from "./types";
 
 export function prettyAction(a: Action): string {
-  const base = `${a.category}${a.op}${a.spell}`;
+  let op = "";
+  if (a.op === "+=") {
+    op = "+=/";
+  } else {
+    op = "=";
+  }
+  const base = `${a.category}${op}${a.spell}`;
   if (a.segments.length === 0) return base;
 
   return base + "," + a.segments.map(prettySegment).join(",");
