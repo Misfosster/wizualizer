@@ -212,6 +212,9 @@ psd
 thumb
 sketch
 
+test-results/
+playwright-report/
+
 
 .vscode/settings.json
 
