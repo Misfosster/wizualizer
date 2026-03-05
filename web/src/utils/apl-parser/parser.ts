@@ -108,7 +108,7 @@ function bp(tokType: string): number | undefined {
 }
 
 // For precedence (https://github.com/simulationcraft/simc/wiki/Action-List-Conditional-Expressions)
-const PREC: Record<string, number> = {
+const PREC: Partial<Record<string, number>> = {
   // NOTE: Function calls will be 1, but not impl yet
   at: 2,
   not: 2,
@@ -128,7 +128,7 @@ const PREC: Record<string, number> = {
   ge: 6,
   tilde: 6,
   nottilde: 6,
-  and: 7,
+  and: 6,
   xor: 7,
   or: 7,
 };
