@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "eslint-plugin-react-x": "^2.7.2",
     "lucide-react": "^0.562.0",
+    "moo": "^0.5.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.4.0",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.57.0",
+    "@types/moo": "^0.5.10",
     "@types/node": "^24.10.9",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
