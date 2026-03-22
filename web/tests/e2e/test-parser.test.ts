@@ -31,6 +31,11 @@ function context(lines: string[], i: number, r = 2): string {
  */
 function stripParensCondition(c: Condition): Condition {
   switch (c.kind) {
+    case "call":
+      return {
+        ...c,
+        args: c.args.map(stripParensCondition),
+      };
     case "paren":
       return stripParensCondition(c.expr);
     case "unary":
@@ -120,4 +125,75 @@ test("parser pretty-print roundtrip advanced (AST equality, ignore comments)", (
   const file = path.join("tests", "parser", "advanced.simc");
   const raw = fs.readFileSync(file, "utf8").split(/\r?\n/);
   assertRoundtrip(raw, "advanced.simc");
+});
+
+test("parser supports floor and ceil calls", () => {
+  const action = parseOrThrow(
+    "actions+=/spell_name,if=floor(3.2)&ceil(variable.foo%2)",
+    1,
+  );
+
+  expect(action.segments).toHaveLength(1);
+  const segment = action.segments[0];
+  expect(segment.type).toBe("if");
+  if (segment.type !== "if") {
+    return;
+  }
+
+  expect(segment.expr).toEqual({
+    kind: "binary",
+    op: "&",
+    left: {
+      kind: "call",
+      name: "floor",
+      args: [{ kind: "number", value: 3.2 }],
+    },
+    right: {
+      kind: "call",
+      name: "ceil",
+      args: [
+        {
+          kind: "binary",
+          op: "%",
+          left: { kind: "ident", name: "variable.foo" },
+          right: { kind: "number", value: 2 },
+        },
+      ],
+    },
+  });
+});
+
+test("parser supports prefix unary operators in conditions", () => {
+  const action = parseOrThrow(
+    "actions+=/spell_name,if=floor(-2.5)&@value&-(a+b)&+cooldown.foo.remains",
+    1,
+  );
+
+  expect(prettyAction(action)).toBe(
+    "actions+=/spell_name,if=floor(-2.5)&@value&-(a+b)&+cooldown.foo.remains",
+  );
+});
+
+test("parser rejects unsupported function calls", () => {
+  expect(() => {
+    parseAction("actions+=/spell_name,if=round(1.5)");
+  }).toThrow(/Unsupported function call: round/);
+});
+
+test("parser rejects empty function calls", () => {
+  expect(() => {
+    parseAction("actions+=/spell_name,if=floor()");
+  }).toThrow(/expects exactly one argument/);
+});
+
+test("parser rejects multi-argument function calls", () => {
+  expect(() => {
+    parseAction("actions+=/spell_name,if=floor(1,2)");
+  }).toThrow(/only supports a single argument/);
+});
+
+test("parser rejects trailing tokens after segment expressions", () => {
+  expect(() => {
+    parseAction("actions+=/spell_name,if=floor(1)ceil(2)");
+  }).toThrow(/Unexpected token after segment expression/);
 });

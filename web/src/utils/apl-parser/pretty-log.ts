@@ -1,4 +1,8 @@
-import type { Action, Segment, Condition, BinExpr, IdentRef } from "./types";
+import type { Action, BinExpr, BinOp, Condition, IdentRef, Segment } from "./types";
+
+function assertNever(value: never): never {
+  throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+}
 
 export function prettyAction(a: Action): string {
   let op = "";
@@ -25,7 +29,7 @@ export function prettySegment(s: Segment): string {
       // NOTE: Only other has key, this is general catchall
       return `${s.key}=${prettyCond(s.expr)}`;
     default:
-      return "\n!!!ERROR IN PRINT!!!\n";
+      return assertNever(s);
   }
 }
 
@@ -33,6 +37,8 @@ export function prettyCond(c: Condition): string {
   switch (c.kind) {
     case "ident":
       return c.name;
+    case "call":
+      return `${c.name}(${c.args.map(prettyCond).join(",")})`;
     case "sequence":
       return prettySequence(c.expr);
     case "number":
@@ -40,13 +46,15 @@ export function prettyCond(c: Condition): string {
     case "paren":
       return `(${prettyCond(c.expr)})`;
     case "unary":
-      return `!${c.expr.kind === "binary" ? `(${prettyCond(c.expr)})` : prettyCond(c.expr)}`;
+      return `${c.op}${c.expr.kind === "binary" ? `(${prettyCond(c.expr)})` : prettyCond(c.expr)}`;
     case "binary":
       return prettyBinary(c);
+    default:
+      return assertNever(c);
   }
 }
 
-function prec(op: string): number {
+function prec(op: BinOp): number {
   switch (op) {
     // parser: and/xor/or same precedence => printer must treat them equal
     case "|":
@@ -101,7 +109,7 @@ function prettySequence(e: IdentRef[]): string {
   return str;
 }
 
-function wrap(child: Condition, parentOp: string): string {
+function wrap(child: Condition, parentOp: BinOp): string {
   if (child.kind !== "binary") return prettyCond(child);
   return prec(child.op) < prec(parentOp)
     ? `(${prettyCond(child)})`

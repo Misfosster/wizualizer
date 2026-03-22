@@ -1,4 +1,69 @@
-import moo from "moo";
+import moo, { type Token } from "moo";
+
+const TOKEN_TYPES = [
+  "ws",
+  "nl",
+  "comment",
+  "plusEqSlash",
+  "plusEq",
+  "neq",
+  "eqq",
+  "nottilde",
+  "eq",
+  "comma",
+  "plus",
+  "colon",
+  "minus",
+  "mult",
+  "slash",
+  "lparen",
+  "rparen",
+  "tilde",
+  "at",
+  "mod",
+  "div",
+  "xor",
+  "and",
+  "or",
+  "not",
+  "max",
+  "min",
+  "le",
+  "ge",
+  "lt",
+  "gt",
+  "number",
+  "ident",
+] as const;
+
+export type TokenType = (typeof TOKEN_TYPES)[number];
+
+export type AplToken = Omit<Token, "type" | "value"> & {
+  type: TokenType;
+  value: string;
+};
+
+const TOKEN_TYPE_SET: ReadonlySet<string> = new Set(TOKEN_TYPES);
+
+function isTokenType(type: string | undefined): type is TokenType {
+  return type !== undefined && TOKEN_TYPE_SET.has(type);
+}
+
+export function toAplToken(t: Token): AplToken {
+  if (!isTokenType(t.type)) {
+    throw new Error(`Unexpected token type: ${String(t.type)}`);
+  }
+
+  if (typeof t.value !== "string") {
+    throw new Error(`Expected token value to be a string, got ${typeof t.value}`);
+  }
+
+  return {
+    ...t,
+    type: t.type,
+    value: t.value,
+  };
+}
 
 const lexer = moo.compile({
   ws: { match: /[ \t]+/, lineBreaks: false },
@@ -44,14 +109,5 @@ const lexer = moo.compile({
   number: /[0-9]+(?:\.[0-9]+)?/,
   ident: /[A-Za-z_][A-Za-z0-9_.\-]*/,
 });
-
-for (const tok of lexer) {
-  if (tok.type === "ws") {
-    continue;
-  }
-  console.log(
-    `${String(tok.line)}:${String(tok.col)}  ${String(tok.type)}  ${tok.value}`,
-  );
-}
 
 export default lexer;

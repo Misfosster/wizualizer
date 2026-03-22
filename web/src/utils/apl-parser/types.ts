@@ -1,4 +1,5 @@
 export type SegmentType = "if" | "target_if" | "sequence";
+export type CallName = "floor" | "ceil";
 
 export type Segment = SegmentBase | SegmentKeyed;
 
@@ -22,6 +23,7 @@ export interface Action {
 
 export type Condition =
   | IdentRef
+  | CallExpr
   | ParenExpr
   | UnaryExpr
   | BinExpr
@@ -32,6 +34,13 @@ export type Condition =
 export interface IdentRef {
   kind: "ident";
   name: string;
+}
+
+// Function call, floor(x) / ceil(x)
+export interface CallExpr {
+  kind: "call";
+  name: CallName;
+  args: Condition[];
 }
 
 // Grouping, (a | (b < c)) etc
@@ -67,6 +76,6 @@ export interface Num {
 
 // TODO: Maybe change to use words, such as "and" or "else" or "not" etc?
 export type BoolOp = "&" | "|" | "^" | "<" | "<=" | ">" | ">=" | "=" | "!=" | "==" | "<?" | ">?" | "~" | "!~";
-export type UnaryOp = "!" | "@";
+export type UnaryOp = "!" | "@" | "+" | "-";
 export type AritOp = "+" | "-" | "*" | "/" | "%" | "%%";
-export type BinOp = BoolOp | AritOp | UnaryOp;
+export type BinOp = BoolOp | AritOp;
