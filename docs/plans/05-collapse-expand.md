@@ -6,7 +6,7 @@ Blocks are the only collapsible structural nodes in the current graph.
 
 - `block` nodes can collapse and expand their child action list
 - collapsing a block hides its action nodes and all descendant condition/value nodes
-- root nodes, action nodes, item nodes, variable nodes, sequence nodes, and expression nodes remain always visible
+- other node kinds are not directly collapsible, but they disappear when their parent block is collapsed
 
 ## Current Behavior
 
@@ -38,15 +38,13 @@ The graph builder receives that set and marks each block node with `isCollapsed`
 
 ## Block Toggle UI
 
-- position: bottom-right of the block node footer
+- position: right side of the block node, centered vertically
 - icon: `-` when expanded, `+` when collapsed
 - action count remains visible while collapsed
-- the button uses the block name in its accessible label:
-  - `Collapse block actions`
-  - `Expand block actions`
+- the button uses the block name in its accessible label, for example `Collapse block actions` and `Expand block actions`
 
 ## Out Of Scope
 
-- global “collapse all” / “expand all” controls
+- global "collapse all" / "expand all" controls
 - persisting collapse state across reloads
 - collapsing anything other than blocks

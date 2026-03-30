@@ -83,6 +83,7 @@ Implemented in this phase:
 - graph-builder extraction for variable metadata, action-list targets, and sequence spell lists
 - purple `valueExpression` leaves for variables
 - stable `nodeTypes` wiring in the canvas
+- block collapse / expand behavior
 
 Deferred to later phases:
 
@@ -90,7 +91,6 @@ Deferred to later phases:
 - variable value tree expansion
 - container nodes for explicit parentheses
 - custom AND / OR edge types
-- block collapse / expand behavior
 - call-action-list linking to the destination block
 
 ## Future Layout Conventions
