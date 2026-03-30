@@ -1,0 +1,257 @@
+@layer components {
+  .lc-node-card {
+    --lc-node-background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    --lc-node-border: rgba(255, 255, 255, 0.18);
+    --lc-node-accent: rgba(226, 232, 240, 0.9);
+    --lc-node-note: rgba(226, 232, 240, 0.8);
+
+    position: relative;
+    min-width: 240px;
+    max-width: 280px;
+    border: 1px solid var(--lc-node-border);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.32);
+    backdrop-filter: blur(12px);
+    background: var(--lc-node-background);
+    pointer-events: all;
+  }
+
+  .lc-node-card--root {
+    --lc-node-background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --lc-node-accent: #cbd5e1;
+    --lc-node-note: rgba(226, 232, 240, 0.8);
+  }
+
+  .lc-node-card--block {
+    --lc-node-background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    --lc-node-accent: #cbd5e1;
+    --lc-node-note: rgba(226, 232, 240, 0.8);
+    padding-right: 3.75rem;
+  }
+
+  .lc-node-card--action {
+    --lc-node-background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    --lc-node-accent: #cbd5e1;
+    --lc-node-note: rgba(226, 232, 240, 0.8);
+  }
+
+  .lc-node-card--variable {
+    --lc-node-background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    --lc-node-accent: rgba(224, 231, 255, 0.85);
+    --lc-node-note: rgba(224, 231, 255, 0.8);
+  }
+
+  .lc-node-card--useItem {
+    --lc-node-background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+    --lc-node-accent: rgba(252, 231, 243, 0.9);
+    --lc-node-note: rgba(252, 231, 243, 0.82);
+  }
+
+  .lc-node-card--callActionList {
+    --lc-node-background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    --lc-node-accent: rgba(204, 251, 241, 0.85);
+    --lc-node-note: rgba(204, 251, 241, 0.8);
+  }
+
+  .lc-node-card--sequence {
+    --lc-node-background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    --lc-node-accent: rgba(209, 250, 229, 0.85);
+    --lc-node-note: rgba(209, 250, 229, 0.8);
+  }
+
+  .lc-node-card--condition {
+    --lc-node-background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --lc-node-accent: rgba(254, 243, 199, 0.9);
+  }
+
+  .lc-node-card--valueExpression {
+    --lc-node-background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --lc-node-accent: rgba(237, 233, 254, 0.9);
+  }
+
+  .lc-node-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .lc-node-copy {
+    min-width: 0;
+  }
+
+  .lc-node-eyebrow {
+    font-size: 11px;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--lc-node-accent);
+  }
+
+  .lc-node-title {
+    margin-top: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .lc-node-title--mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .lc-node-title--inline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .lc-node-chip-row {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .lc-node-count-row {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .lc-node-note {
+    margin-top: 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1rem;
+    color: var(--lc-node-note);
+  }
+
+  .lc-node-meta {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.125rem 0.5rem;
+    font-size: 11px;
+    line-height: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .lc-node-meta--soft {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .lc-node-meta--strong {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .lc-node-meta--mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .lc-node-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .lc-node-toggle {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.22);
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    pointer-events: all;
+    touch-action: manipulation;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      transform 120ms ease;
+  }
+
+  .lc-node-toggle--block {
+    position: absolute;
+    top: 50%;
+    right: 0.875rem;
+    transform: translateY(-50%);
+  }
+
+  .lc-node-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+
+  .lc-node-toggle:active {
+    transform: scale(0.96);
+  }
+
+  .lc-node-toggle--block:active {
+    transform: translateY(-50%) scale(0.96);
+  }
+
+  .lc-node-toggle:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 2px;
+  }
+
+  .lc-node-toggle-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .lc-node-handle {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    background: #0f172a;
+  }
+
+  .lc-node-handle--target {
+    left: -7px !important;
+  }
+
+  .lc-node-handle--source {
+    right: -7px !important;
+  }
+
+  .lc-node-handle--val {
+    top: 34% !important;
+  }
+
+  .lc-node-handle--if {
+    top: 72% !important;
+  }
+
+  @media (max-width: 640px) {
+    .lc-node-card {
+      min-width: 220px;
+      max-width: 240px;
+      padding: 0.6875rem 0.875rem;
+    }
+
+    .lc-node-card--block {
+      padding-right: 3.25rem;
+    }
+  }
+}

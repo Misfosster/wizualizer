@@ -1,0 +1,23 @@
+import type { NodeTypes } from "@xyflow/react";
+import "./nodes.css";
+import ActionNode from "./ActionNode";
+import BlockNode from "./BlockNode";
+import CallActionListNode from "./CallActionListNode";
+import ConditionNode from "./ConditionNode";
+import RootNode from "./RootNode";
+import SequenceNode from "./SequenceNode";
+import UseItemNode from "./UseItemNode";
+import ValueExpressionNode from "./ValueExpressionNode";
+import VariableNode from "./VariableNode";
+
+export const nodeTypes = {
+  root: RootNode,
+  block: BlockNode,
+  action: ActionNode,
+  variable: VariableNode,
+  useItem: UseItemNode,
+  callActionList: CallActionListNode,
+  sequence: SequenceNode,
+  condition: ConditionNode,
+  valueExpression: ValueExpressionNode,
+} satisfies NodeTypes;

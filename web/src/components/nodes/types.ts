@@ -1,0 +1,112 @@
+import type { Node } from "@xyflow/react";
+
+export type GraphNodeKind =
+  | "root"
+  | "block"
+  | "action"
+  | "variable"
+  | "useItem"
+  | "callActionList"
+  | "sequence"
+  | "condition"
+  | "valueExpression";
+
+export interface RootNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "root";
+  blockCount: number;
+  actionCount: number;
+}
+
+export interface BlockNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "block";
+  actionCount: number;
+  isCollapsed: boolean;
+}
+
+export interface ActionNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "action";
+  hasCondition: boolean;
+}
+
+export interface VariableNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "variable";
+  variableName: string;
+  op: string;
+  valueText: string;
+}
+
+export interface UseItemNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "useItem";
+  itemName: string;
+  hasCondition: boolean;
+}
+
+export interface CallActionListNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "callActionList";
+  targetList: string;
+}
+
+export interface SequenceNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "sequence";
+  spells: string[];
+}
+
+export interface ConditionNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "condition";
+}
+
+export interface ValueExpressionNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "valueExpression";
+}
+
+export type GraphNodeData =
+  | RootNodeData
+  | BlockNodeData
+  | ActionNodeData
+  | VariableNodeData
+  | UseItemNodeData
+  | CallActionListNodeData
+  | SequenceNodeData
+  | ConditionNodeData
+  | ValueExpressionNodeData;
+
+export type RootFlowNode = Node<RootNodeData, "root">;
+export type BlockFlowNode = Node<BlockNodeData, "block">;
+export type ActionFlowNode = Node<ActionNodeData, "action">;
+export type VariableFlowNode = Node<VariableNodeData, "variable">;
+export type UseItemFlowNode = Node<UseItemNodeData, "useItem">;
+export type CallActionListFlowNode = Node<
+  CallActionListNodeData,
+  "callActionList"
+>;
+export type SequenceFlowNode = Node<SequenceNodeData, "sequence">;
+export type ConditionFlowNode = Node<ConditionNodeData, "condition">;
+export type ValueExpressionFlowNode = Node<
+  ValueExpressionNodeData,
+  "valueExpression"
+>;
+
+export type GraphFlowNode =
+  | RootFlowNode
+  | BlockFlowNode
+  | ActionFlowNode
+  | VariableFlowNode
+  | UseItemFlowNode
+  | CallActionListFlowNode
+  | SequenceFlowNode
+  | ConditionFlowNode
+  | ValueExpressionFlowNode;
+
+export type ActionGraphNodeKind = Extract<
+  GraphNodeKind,
+  "action" | "variable" | "useItem" | "callActionList" | "sequence"
+>;
