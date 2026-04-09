@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -10 1540 1010" font-family="'Segoe UI', Inter, system-ui, sans-serif">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e7ebf0" stroke-width="1"/>
+    </pattern>
+
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+
+    <style>
+      .title { font-size: 28px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-size: 14px; fill: #475569; }
+      .lane { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; fill: #334155; }
+      .rowLabel { font-size: 12px; font-weight: 700; fill: #64748b; }
+      .note { font-size: 12px; fill: #475569; }
+      .tiny { font-size: 11px; fill: #64748b; }
+      .callout { font-size: 12px; font-weight: 600; fill: #1e293b; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; fill: rgba(255,255,255,0.78); }
+      .cardText { font-size: 16px; font-weight: 700; fill: #ffffff; }
+      .pill { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; fill: rgba(255,255,255,0.84); }
+      .metric { font-size: 12px; font-weight: 600; fill: #0f172a; }
+    </style>
+  </defs>
+
+  <rect x="-40" y="-10" width="1540" height="1010" fill="#f8fafc"/>
+  <rect x="-40" y="-10" width="1540" height="1010" fill="url(#grid)"/>
+
+  <text x="750" y="42" text-anchor="middle" class="title">Deterministic Grid Layout</text>
+  <text x="750" y="66" text-anchor="middle" class="subtitle">Semantic lanes with exact rowStart / rowSpan placement from the current builder</text>
+
+  <rect x="80" y="100" width="320" height="700" rx="18" fill="#e2e8f0" opacity="0.35"/>
+  <rect x="400" y="100" width="320" height="700" rx="18" fill="#dbeafe" opacity="0.28"/>
+  <rect x="720" y="100" width="320" height="700" rx="18" fill="#e2e8f0" opacity="0.24"/>
+  <rect x="1040" y="100" width="320" height="700" rx="18" fill="#ede9fe" opacity="0.28"/>
+  <rect x="1360" y="100" width="80" height="700" rx="18" fill="#f5f3ff" opacity="0.65" stroke="#a78bfa" stroke-dasharray="8 8"/>
+
+  <text x="240" y="94" text-anchor="middle" class="lane">ROOT</text>
+  <text x="560" y="94" text-anchor="middle" class="lane">BLOCK</text>
+  <text x="880" y="94" text-anchor="middle" class="lane">ACTION FAMILY</text>
+  <text x="1200" y="94" text-anchor="middle" class="lane">EXPRESSION FAMILY (3+)</text>
+  <text x="1400" y="94" text-anchor="middle" class="tiny">future tree columns</text>
+
+  <line x1="400" y1="100" x2="400" y2="800" stroke="#94a3b8" stroke-dasharray="6 6"/>
+  <line x1="720" y1="100" x2="720" y2="800" stroke="#94a3b8" stroke-dasharray="6 6"/>
+  <line x1="1040" y1="100" x2="1040" y2="800" stroke="#94a3b8" stroke-dasharray="6 6"/>
+
+  <g stroke="#cbd5e1" stroke-dasharray="4 6">
+    <line x1="80" y1="140" x2="1440" y2="140"/>
+    <line x1="80" y1="220" x2="1440" y2="220"/>
+    <line x1="80" y1="300" x2="1440" y2="300"/>
+    <line x1="80" y1="380" x2="1440" y2="380"/>
+    <line x1="80" y1="460" x2="1440" y2="460"/>
+    <line x1="80" y1="540" x2="1440" y2="540"/>
+    <line x1="80" y1="620" x2="1440" y2="620"/>
+    <line x1="80" y1="700" x2="1440" y2="700"/>
+    <line x1="80" y1="780" x2="1440" y2="780"/>
+  </g>
+
+  <text x="52" y="188" class="rowLabel">r0</text>
+  <text x="52" y="268" class="rowLabel">r1</text>
+  <text x="52" y="348" class="rowLabel">r2</text>
+  <text x="52" y="428" class="rowLabel">r3</text>
+  <text x="52" y="508" class="rowLabel">r4</text>
+  <text x="52" y="588" class="rowLabel">r5</text>
+  <text x="52" y="668" class="rowLabel">r6</text>
+  <text x="52" y="748" class="rowLabel">r7</text>
+
+  <text x="92" y="122" class="metric">laneWidth = 320</text>
+  <text x="1240" y="214" class="metric">rowHeight = 80</text>
+
+  <line x1="28" y1="148" x2="28" y2="772" stroke="#0f172a" stroke-width="3"/>
+  <line x1="28" y1="148" x2="40" y2="148" stroke="#0f172a" stroke-width="3"/>
+  <line x1="28" y1="772" x2="40" y2="772" stroke="#0f172a" stroke-width="3"/>
+  <text x="14" y="460" text-anchor="middle" class="callout" transform="rotate(-90, 14, 460)">profile span = 8 rows</text>
+
+  <line x1="388" y1="148" x2="388" y2="292" stroke="#334155" stroke-width="3"/>
+  <line x1="388" y1="148" x2="400" y2="148" stroke="#334155" stroke-width="3"/>
+  <line x1="388" y1="292" x2="400" y2="292" stroke="#334155" stroke-width="3"/>
+  <text x="378" y="226" text-anchor="end" class="callout">rowSpan 2</text>
+
+  <line x1="388" y1="308" x2="388" y2="772" stroke="#334155" stroke-width="3"/>
+  <line x1="388" y1="308" x2="400" y2="308" stroke="#334155" stroke-width="3"/>
+  <line x1="388" y1="772" x2="400" y2="772" stroke="#334155" stroke-width="3"/>
+  <text x="378" y="548" text-anchor="end" class="callout">rowSpan 6</text>
+
+  <line x1="1030" y1="388" x2="1030" y2="532" stroke="#4f46e5" stroke-width="3"/>
+  <line x1="1030" y1="388" x2="1040" y2="388" stroke="#4f46e5" stroke-width="3"/>
+  <line x1="1030" y1="532" x2="1040" y2="532" stroke="#4f46e5" stroke-width="3"/>
+  <text x="1020" y="464" text-anchor="end" class="callout">variable rowSpan 2</text>
+  <text x="1030" y="412" text-anchor="end" class="tiny mono">val handle</text>
+  <text x="1030" y="492" text-anchor="end" class="tiny mono">if handle</text>
+
+  <g fill="none" stroke="#6b7280" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 376 180 H 400 H 424"/>
+    <path d="M 376 180 H 400 V 340 H 424"/>
+
+    <path d="M 696 180 H 720 V 260 H 744"/>
+
+    <path d="M 696 340 H 720 V 420 H 744"/>
+    <path d="M 696 340 H 720 V 580 H 744"/>
+    <path d="M 696 340 H 720 V 660 H 744"/>
+    <path d="M 696 340 H 720 V 740 H 744"/>
+
+    <path d="M 1016 420 H 1040 V 500 H 1064"/>
+    <path d="M 1016 660 H 1040 V 660 H 1064"/>
+  </g>
+
+  <path d="M 1016 420 H 1064" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="104" y="148" width="272" height="72" rx="16" fill="#1f2937"/>
+    <text x="126" y="170" class="eyebrow">PROFILE</text>
+    <text x="126" y="194" class="cardText">Demo Profile</text>
+    <text x="126" y="208" class="pill">lane 0 | rowStart 0</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="424" y="148" width="272" height="72" rx="16" fill="#334155"/>
+    <text x="446" y="170" class="eyebrow">BLOCK</text>
+    <text x="446" y="194" class="cardText mono">actions.precombat</text>
+    <text x="446" y="208" class="pill">lane 1 | rowStart 0</text>
+
+    <rect x="424" y="308" width="272" height="72" rx="16" fill="#334155"/>
+    <text x="446" y="330" class="eyebrow">BLOCK</text>
+    <text x="446" y="354" class="cardText mono">actions</text>
+    <text x="446" y="368" class="pill">lane 1 | rowStart 2</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="744" y="228" width="272" height="72" rx="16" fill="#374151"/>
+    <text x="766" y="250" class="eyebrow">ACTION</text>
+    <text x="766" y="274" class="cardText mono">windfury_weapon</text>
+    <text x="766" y="288" class="pill">lane 2 | rowStart 1 | rowSpan 1</text>
+
+    <rect x="744" y="388" width="272" height="72" rx="16" fill="#4f46e5"/>
+    <text x="766" y="410" class="eyebrow">VARIABLE</text>
+    <text x="766" y="434" class="cardText mono">aoe_threshold</text>
+    <text x="766" y="448" class="pill">lane 2 | rowStart 3 | rowSpan 2</text>
+
+    <rect x="744" y="548" width="272" height="72" rx="16" fill="#0f766e"/>
+    <text x="766" y="570" class="eyebrow">CALL LIST</text>
+    <text x="766" y="594" class="cardText mono">cds</text>
+    <text x="766" y="608" class="pill">lane 2 | rowStart 5 | rowSpan 1</text>
+
+    <rect x="744" y="628" width="272" height="72" rx="16" fill="#be185d"/>
+    <text x="766" y="650" class="eyebrow">ITEM</text>
+    <text x="766" y="674" class="cardText mono">treacherous_transmitter</text>
+    <text x="766" y="688" class="pill">lane 2 | rowStart 6 | rowSpan 1</text>
+
+    <rect x="744" y="708" width="272" height="72" rx="16" fill="#047857"/>
+    <text x="766" y="730" class="eyebrow">SEQUENCE</text>
+    <text x="766" y="754" class="cardText mono" style="font-size:14px">stormstrike -> lavalash -> c…</text>
+    <text x="766" y="768" class="pill">lane 2 | rowStart 7 | rowSpan 1</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1064" y="392" width="272" height="64" rx="14" fill="#7c3aed"/>
+    <text x="1086" y="414" class="eyebrow">VALUE</text>
+    <text x="1086" y="436" class="cardText mono" style="font-size:14px">active_enemies</text>
+    <text x="1086" y="448" class="pill">lane 3 | rowStart 3</text>
+
+    <rect x="1064" y="472" width="272" height="64" rx="14" fill="#d97706"/>
+    <text x="1086" y="494" class="eyebrow">CONDITION</text>
+    <text x="1086" y="516" class="cardText mono" style="font-size:14px">active_enemies &gt; 1</text>
+    <text x="1086" y="528" class="pill">lane 3 | rowStart 4</text>
+
+    <rect x="1064" y="632" width="272" height="64" rx="14" fill="#d97706"/>
+    <text x="1086" y="654" class="eyebrow">CONDITION</text>
+    <text x="1086" y="676" class="cardText mono" style="font-size:14px">fight_remains &lt;= 20</text>
+    <text x="1086" y="688" class="pill">lane 3 | rowStart 6</text>
+  </g>
+
+  <g>
+    <rect x="80" y="828" width="700" height="102" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="104" y="855" class="callout">Builder grid math</text>
+    <text x="104" y="882" class="note mono">builder x = laneIndex * 320</text>
+    <text x="104" y="904" class="note mono">builder y = rowStart * 80</text>
+    <text x="360" y="904" class="note">this SVG adds visual padding inside each lane so the cards are easier to read</text>
+  </g>
+
+  <g>
+    <rect x="860" y="818" width="500" height="152" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="884" y="845" class="callout">Collapsed block example</text>
+    <text x="884" y="866" class="note">If the second block collapses, it becomes rowSpan 1 and later siblings move up immediately.</text>
+
+    <rect x="884" y="884" width="236" height="38" rx="12" fill="#334155"/>
+    <text x="902" y="900" class="eyebrow">BLOCK</text>
+    <text x="902" y="916" class="cardText mono" style="font-size:11px">actions | rowStart 2 | rowSpan 1</text>
+
+    <line x1="1144" y1="892" x2="1182" y2="892" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="1144" y1="910" x2="1182" y2="910" stroke="#94a3b8" stroke-width="2"/>
+    <text x="1192" y="896" class="tiny">no reserved rows</text>
+    <text x="1192" y="914" class="tiny">next sibling starts at row 3</text>
+
+    <rect x="1192" y="926" width="134" height="38" rx="10" fill="#374151" opacity="0.28"/>
+    <text x="1206" y="942" class="eyebrow">ACTION</text>
+    <text x="1206" y="956" class="cardText mono" style="font-size:12px" fill="rgba(255,255,255,0.72)">next sibling</text>
+  </g>
+</svg>
