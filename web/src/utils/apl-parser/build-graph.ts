@@ -1,6 +1,6 @@
 import { Position as FlowPosition, type Edge, type Node } from "@xyflow/react";
 import { prettyCond } from "./pretty-log";
-import type { Condition, IdentRef, Segment } from "./types";
+import type { Condition } from "./types";
 import type { AplBlock, AplDocument, ParsedActionLine } from "./document";
 import type {
   ActionGraphNodeKind,
@@ -16,30 +16,27 @@ import type {
   ValueExpressionNodeData,
   VariableNodeData,
 } from "@/components/nodes/types";
+import {
+  EXPRESSION_NODE_BOUNDS,
+  PROFILE_PADDING_ROWS,
+  gridPoint,
+  rowsFromBounds,
+  type Point,
+  type Size,
+} from "./grid-layout";
+import {
+  BOOLEAN_CHAIN_OPS,
+  extractCallTarget,
+  extractSequenceSpells,
+  extractUseItemName,
+  extractVariableData,
+  flattenBooleanChain,
+  getConditionSegments,
+} from "./action-data";
+export type { Point, Size } from "./grid-layout";
 
-// Each node type lives in its own column, left to right: profile -> blocks -> actions -> conditions
-// (exceptions exist, but per default this is the case)
-const COLUMN_WIDTH = 320;
-const ROW_HEIGHT = 80;
-const PROFILE_PADDING_ROWS = 2;
-const EXPRESSION_NODE_BOUNDS = { width: 280, height: 48 } as const;
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
 const VALUE_EDGE_STYLE = { stroke: "#8b5cf6" } as const;
-const DEFAULT_VARIABLE_OP = "set";
-const UNNAMED_VARIABLE = "(unnamed)";
-const MISSING_VALUE = "(no value)";
-const UNNAMED_ITEM = "(unnamed item)";
-const UNNAMED_ACTION_LIST = "(unnamed list)";
-
-export interface Size {
-  width: number;
-  height: number;
-}
-
-export interface Point {
-  x: number;
-  y: number;
-}
 
 interface GraphSectionResult {
   nodes: GraphFlowNode[];
@@ -55,29 +52,6 @@ export interface GraphResult {
 interface EdgeOptions {
   sourceHandle?: string;
   style?: Edge["style"];
-}
-
-interface ConditionSegment {
-  type: "if" | "target_if";
-  expr: Condition;
-}
-
-interface SequenceSegment {
-  type: "sequence";
-  expr: Condition;
-}
-
-interface ExtractedVariableData {
-  variableName: string;
-  op: string;
-  valueText: string;
-}
-
-function gridPoint(column: number, row: number): Point {
-  return {
-    x: column * COLUMN_WIDTH,
-    y: row * ROW_HEIGHT,
-  };
 }
 
 export function getBlockNodeId(profileIndex: number, blockName: string): string {
@@ -116,76 +90,8 @@ function createEdge(
   };
 }
 
-// Figures out how many rows tall a node is based on its pixel size (always at least 1)
-function rowsFromBounds(bounds: Size): number {
-  return Math.max(1, Math.ceil(bounds.height / ROW_HEIGHT));
-}
-
 function countActions(blocks: AplBlock[]): number {
   return blocks.reduce((total, block) => total + block.actions.length, 0);
-}
-
-function getConditionSegments(
-  segments: Segment[],
-): ConditionSegment[] {
-  return segments.filter(
-    (segment): segment is ConditionSegment =>
-      segment.type === "if" || segment.type === "target_if",
-  );
-}
-
-function findOtherSegment(
-  segments: Segment[],
-  key: string,
-): Extract<Segment, { type: "other" }> | undefined {
-  return segments.find(
-    (segment): segment is Extract<Segment, { type: "other" }> =>
-      segment.type === "other" && segment.key === key,
-  );
-}
-
-function extractVariableData(segments: Segment[]): ExtractedVariableData {
-  const nameSegment = findOtherSegment(segments, "name");
-  const opSegment = findOtherSegment(segments, "op");
-  const valueSegment = findOtherSegment(segments, "value");
-
-  return {
-    variableName: nameSegment ? prettyCond(nameSegment.expr) : UNNAMED_VARIABLE,
-    op: opSegment ? prettyCond(opSegment.expr) : DEFAULT_VARIABLE_OP,
-    valueText: valueSegment ? prettyCond(valueSegment.expr) : MISSING_VALUE,
-  };
-}
-
-function extractCallTarget(segments: Segment[]): string {
-  const targetSegment = findOtherSegment(segments, "name");
-  return targetSegment ? prettyCond(targetSegment.expr) : UNNAMED_ACTION_LIST;
-}
-
-function extractUseItemName(segments: Segment[]): string {
-  const nameSegment = findOtherSegment(segments, "name");
-  if (nameSegment) {
-    return prettyCond(nameSegment.expr);
-  }
-
-  const slotSegment =
-    findOtherSegment(segments, "slot") ?? findOtherSegment(segments, "slots");
-  if (slotSegment) {
-    return prettyCond(slotSegment.expr);
-  }
-
-  return UNNAMED_ITEM;
-}
-
-function extractSequenceSpells(segments: Segment[]): string[] {
-  const sequenceSegment = segments.find(
-    (segment): segment is SequenceSegment => segment.type === "sequence",
-  );
-
-  if (sequenceSegment?.expr.kind !== "sequence") {
-    return [];
-  }
-
-  return sequenceSegment.expr.expr.map((ident: IdentRef) => ident.name);
 }
 
 export function getActionNodeKind(spell: string): ActionGraphNodeKind {
@@ -288,17 +194,73 @@ function buildExpressionNode(
   };
 }
 
-/**
- * For now this just makes one node showing the condition as text.
- * Later this will break the condition apart into an AND/OR tree of smaller nodes,
- * but the function signature stays the same so nothing else needs to change.
- */
+interface ConditionTreeResult {
+  nodes: GraphFlowNode[];
+  edges: Edge[];
+  rowsUsed: number;
+}
+
+const BOOLEAN_OP_LABELS: Record<string, string> = {
+  "|": "OR",
+  "&": "AND",
+  "^": "XOR",
+};
+
 export function buildConditionGraph(
   condition: Condition,
   nodeId: string,
-  origin: Point,
-): { nodes: GraphFlowNode[]; edges: Edge[]; bounds: Size } {
-  return buildExpressionNode(prettyCond(condition), nodeId, origin, "condition");
+  row: number,
+  depth = 0,
+): ConditionTreeResult {
+  if (condition.kind === "paren") {
+    return buildConditionGraph(condition.expr, nodeId, row, depth);
+  }
+
+  if (condition.kind === "binary" && BOOLEAN_CHAIN_OPS.has(condition.op)) {
+    return buildConditionTreeGraph(condition, nodeId, row, depth);
+  }
+
+  const data: ConditionNodeData = { label: prettyCond(condition), kind: "condition" };
+  return {
+    nodes: [createGraphNode(nodeId, data, gridPoint("expression", row, depth))],
+    edges: [],
+    rowsUsed: 1,
+  };
+}
+
+function buildConditionTreeGraph(
+  condition: Condition,
+  nodeId: string,
+  row: number,
+  depth: number,
+): ConditionTreeResult {
+  const operands = flattenBooleanChain(condition);
+  const opLabel = condition.kind === "binary"
+    ? (BOOLEAN_OP_LABELS[condition.op] ?? condition.op)
+    : "?";
+
+  const operatorData: ConditionNodeData = { label: opLabel, kind: "condition" };
+  const operatorNode = createGraphNode(
+    nodeId, operatorData, gridPoint("expression", row, depth),
+  );
+
+  const nodes: GraphFlowNode[] = [operatorNode];
+  const edges: Edge[] = [];
+  let childRow = row;
+
+  for (let i = 0; i < operands.length; i++) {
+    const childId = `${nodeId}__${String(i)}`;
+    const childGraph = buildConditionGraph(operands[i], childId, childRow, depth + 1);
+
+    nodes.push(...childGraph.nodes);
+    edges.push(...childGraph.edges);
+    edges.push(
+      createEdge(`edge__${nodeId}__${String(i)}`, nodeId, childGraph.nodes[0].id),
+    );
+    childRow += childGraph.rowsUsed;
+  }
+
+  return { nodes, edges, rowsUsed: Math.max(1, childRow - row) };
 }
 
 function buildValueExpressionGraph(
@@ -320,7 +282,7 @@ function buildActionGraph(
   const actionId = `action__${profileId}__${blockName}__${String(actionIndex)}`;
   const actionNodeData = createActionNodeData(actionLine);
   const nodes: GraphFlowNode[] = [
-    createGraphNode(actionId, actionNodeData, gridPoint(2, row)),
+    createGraphNode(actionId, actionNodeData, gridPoint("action", row)),
   ];
   const edges: Edge[] = [];
   let rowsUsed = 1;
@@ -332,7 +294,7 @@ function buildActionGraph(
     const valueExpressionGraph = buildValueExpressionGraph(
       actionNodeData.valueText,
       valueExpressionId,
-      gridPoint(3, row),
+      gridPoint("expression", row),
     );
 
     nodes.push(...valueExpressionGraph.nodes);
@@ -351,32 +313,44 @@ function buildActionGraph(
   }
 
   const conditionSegments = getConditionSegments(actionLine.action.segments);
-  for (let index = 0; index < conditionSegments.length; index++) {
-    const segment = conditionSegments[index];
-    const conditionRow = conditionStartRow + index;
-    const conditionId =
-      `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
-    const conditionGraph = buildConditionGraph(
-      segment.expr,
-      conditionId,
-      gridPoint(3, conditionRow),
-    );
+  let conditionRowOffset = 0;
 
-    nodes.push(...conditionGraph.nodes);
-    edges.push(...conditionGraph.edges);
-    edges.push(
-      createEdge(
-        `edge__${actionId}__${segment.type}`,
-        actionId,
-        conditionGraph.nodes[0].id,
-        actionNodeData.kind === "variable" ? { sourceHandle: "if" } : {},
-      ),
-    );
+  for (const segment of conditionSegments) {
+    const operands = flattenBooleanChain(segment.expr);
+    const isChain = operands.length > 1;
 
-    rowsUsed = Math.max(
-      rowsUsed,
-      conditionRow - row + rowsFromBounds(conditionGraph.bounds),
-    );
+    for (let opIndex = 0; opIndex < operands.length; opIndex++) {
+      const conditionRow = conditionStartRow + conditionRowOffset;
+      const conditionId = isChain
+        ? `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}__${String(opIndex)}`
+        : `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
+      const conditionGraph = buildConditionGraph(
+        operands[opIndex],
+        conditionId,
+        conditionRow,
+      );
+
+      nodes.push(...conditionGraph.nodes);
+      edges.push(...conditionGraph.edges);
+
+      const edgeId = isChain
+        ? `edge__${actionId}__${segment.type}__${String(opIndex)}`
+        : `edge__${actionId}__${segment.type}`;
+      edges.push(
+        createEdge(
+          edgeId,
+          actionId,
+          conditionGraph.nodes[0].id,
+          actionNodeData.kind === "variable" ? { sourceHandle: "if" } : {},
+        ),
+      );
+
+      rowsUsed = Math.max(
+        rowsUsed,
+        conditionRow - row + conditionGraph.rowsUsed,
+      );
+      conditionRowOffset += conditionGraph.rowsUsed;
+    }
   }
 
   return { nodes, edges, rowsUsed };
@@ -397,7 +371,7 @@ function buildBlockGraph(
     isCollapsed: collapsedBlocks.has(blockId),
   };
   const nodes: GraphFlowNode[] = [
-    createGraphNode(blockId, blockNodeData, gridPoint(1, startRow)),
+    createGraphNode(blockId, blockNodeData, gridPoint("block", startRow)),
   ];
   const edges: Edge[] = [
     createEdge(`edge__${rootId}__${block.name}`, rootId, blockId),
@@ -448,7 +422,7 @@ function buildProfileGraph(
     actionCount: countActions(blocks),
   };
   const nodes: GraphFlowNode[] = [
-    createGraphNode(rootId, rootNodeData, gridPoint(0, startRow)),
+    createGraphNode(rootId, rootNodeData, gridPoint("root", startRow)),
   ];
   const edges: Edge[] = [];
 

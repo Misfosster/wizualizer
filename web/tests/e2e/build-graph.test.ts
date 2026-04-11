@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { buildGraph, getActionNodeKind } from "../../src/utils/apl-parser/build-graph";
 import { parseDocument, type AplDocument } from "../../src/utils/apl-parser/document";
+import { LANE_WIDTH, ROW_HEIGHT } from "../../src/utils/apl-parser/grid-layout";
 
 const STRUCTURAL_APL = [
   'shaman="Demo Profile"',
@@ -271,4 +272,156 @@ test("buildGraph falls back gracefully when structural metadata is missing", () 
     throw new Error("Expected callActionList node");
   }
   expect(callNode.data).toMatchObject({ targetList: "(unnamed list)" });
+});
+
+test("buildGraph places nodes at deterministic grid positions", () => {
+  const graph = buildGraphFromText(STRUCTURAL_APL);
+
+  const lane = (index: number) => index * LANE_WIDTH;
+  const row = (index: number) => index * ROW_HEIGHT;
+
+  expect(getNode(graph.nodes, "root__0").position).toEqual({ x: lane(0), y: row(0) });
+
+  expect(getNode(graph.nodes, "block__0__actions.precombat").position).toEqual({
+    x: lane(1), y: row(0),
+  });
+  expect(getNode(graph.nodes, "action__0__actions.precombat__0").position).toEqual({
+    x: lane(2), y: row(1),
+  });
+
+  expect(getNode(graph.nodes, "block__0__actions").position).toEqual({
+    x: lane(1), y: row(2),
+  });
+
+  expect(getNode(graph.nodes, "action__0__actions__0").position).toEqual({
+    x: lane(2), y: row(3),
+  });
+  expect(getNode(graph.nodes, "valueExpression__0__actions__0__value").position).toEqual({
+    x: lane(3), y: row(3),
+  });
+  expect(getNode(graph.nodes, "condition__0__actions__0__if").position).toEqual({
+    x: lane(3), y: row(4),
+  });
+
+  expect(getNode(graph.nodes, "action__0__actions__1").position).toEqual({
+    x: lane(2), y: row(5),
+  });
+  expect(getNode(graph.nodes, "action__0__actions__2").position).toEqual({
+    x: lane(2), y: row(6),
+  });
+  expect(getNode(graph.nodes, "condition__0__actions__2__if").position).toEqual({
+    x: lane(3), y: row(6),
+  });
+  expect(getNode(graph.nodes, "action__0__actions__3").position).toEqual({
+    x: lane(2), y: row(7),
+  });
+});
+
+test("collapsed block occupies one row and shifts following blocks upward", () => {
+  const graph = buildGraphFromText(
+    STRUCTURAL_APL,
+    new Set<string>(["block__0__actions"]),
+  );
+
+  const lane = (index: number) => index * LANE_WIDTH;
+  const row = (index: number) => index * ROW_HEIGHT;
+
+  const collapsedBlock = getNode(graph.nodes, "block__0__actions");
+  expect(collapsedBlock.position).toEqual({ x: lane(1), y: row(2) });
+  expect(collapsedBlock.data).toMatchObject({ isCollapsed: true });
+
+  expect(graph.nodes.find((n) => n.id === "action__0__actions__0")).toBeUndefined();
+  expect(graph.nodes.find((n) => n.id === "action__0__actions__1")).toBeUndefined();
+
+  expect(getNode(graph.nodes, "block__0__actions.precombat").position).toEqual({
+    x: lane(1), y: row(0),
+  });
+});
+
+test("buildGraph splits boolean chain conditions into separate nodes", () => {
+  const document: AplDocument = {
+    profiles: [
+      {
+        name: "Chain Demo",
+        className: "shaman",
+        blocks: [
+          {
+            name: "actions",
+            actions: [
+              {
+                rawLine:
+                  "actions+=/sundering,if=talent.surging_elements.enabled|buff.whirling_earth.up|talent.feral_spirit.enabled",
+                lineNumber: 1,
+                action: {
+                  category: "actions",
+                  spell: "sundering",
+                  op: "+=",
+                  segments: [
+                    {
+                      type: "if",
+                      expr: {
+                        kind: "binary",
+                        op: "|",
+                        left: {
+                          kind: "binary",
+                          op: "|",
+                          left: { kind: "ident", name: "talent.surging_elements.enabled" },
+                          right: { kind: "ident", name: "buff.whirling_earth.up" },
+                        },
+                        right: { kind: "ident", name: "talent.feral_spirit.enabled" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const graph = buildGraph(document);
+
+  const lane = (index: number) => index * LANE_WIDTH;
+  const row = (index: number) => index * ROW_HEIGHT;
+
+  const cond0 = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(cond0.type).toBe("condition");
+  expect(cond0.data).toMatchObject({ label: "talent.surging_elements.enabled" });
+  expect(cond0.position).toEqual({ x: lane(3), y: row(1) });
+
+  const cond1 = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(cond1.data).toMatchObject({ label: "buff.whirling_earth.up" });
+  expect(cond1.position).toEqual({ x: lane(3), y: row(2) });
+
+  const cond2 = getNode(graph.nodes, "condition__0__actions__0__if__2");
+  expect(cond2.data).toMatchObject({ label: "talent.feral_spirit.enabled" });
+  expect(cond2.position).toEqual({ x: lane(3), y: row(3) });
+
+  expect(graph.edges.find((e) => e.id === "edge__action__0__actions__0__if__0")).toBeTruthy();
+  expect(graph.edges.find((e) => e.id === "edge__action__0__actions__0__if__1")).toBeTruthy();
+  expect(graph.edges.find((e) => e.id === "edge__action__0__actions__0__if__2")).toBeTruthy();
+});
+
+test("buildGraph keeps simple comparison conditions as single nodes", () => {
+  const graph = buildGraphFromText(STRUCTURAL_APL);
+
+  const cond = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(cond.type).toBe("condition");
+  expect(cond.data).toMatchObject({ label: "active_enemies>1" });
+
+  expect(graph.nodes.find((n) => n.id === "condition__0__actions__0__if__0")).toBeUndefined();
+});
+
+test("buildGraph is deterministic across repeated calls", () => {
+  const snapshot = () => {
+    const graph = buildGraphFromText(STRUCTURAL_APL);
+    return graph.nodes.map((n) => ({ id: n.id, type: n.type, position: n.position }));
+  };
+
+  const first = snapshot();
+  const second = snapshot();
+
+  expect(first).toEqual(second);
 });

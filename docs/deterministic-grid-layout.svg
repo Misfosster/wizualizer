@@ -67,8 +67,8 @@
   <text x="52" y="668" class="rowLabel">r6</text>
   <text x="52" y="748" class="rowLabel">r7</text>
 
-  <text x="92" y="122" class="metric">laneWidth = 320</text>
-  <text x="1240" y="214" class="metric">rowHeight = 80</text>
+  <text x="92" y="122" class="metric">laneWidth = 400</text>
+  <text x="1240" y="214" class="metric">rowHeight = 120</text>
 
   <line x1="28" y1="148" x2="28" y2="772" stroke="#0f172a" stroke-width="3"/>
   <line x1="28" y1="148" x2="40" y2="148" stroke="#0f172a" stroke-width="3"/>
@@ -175,8 +175,8 @@
   <g>
     <rect x="80" y="828" width="700" height="102" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
     <text x="104" y="855" class="callout">Builder grid math</text>
-    <text x="104" y="882" class="note mono">builder x = laneIndex * 320</text>
-    <text x="104" y="904" class="note mono">builder y = rowStart * 80</text>
+    <text x="104" y="882" class="note mono">builder x = laneIndex * 400</text>
+    <text x="104" y="904" class="note mono">builder y = rowStart * 120</text>
     <text x="360" y="904" class="note">this SVG adds visual padding inside each lane so the cards are easier to read</text>
   </g>
 

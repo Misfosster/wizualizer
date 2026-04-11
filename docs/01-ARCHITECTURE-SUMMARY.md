@@ -3,7 +3,7 @@
 ## Core Data Flow
 
 ```
-APL Text → parseApl() → AST → buildSugiyamaLayeredDAG() → React Flow Graph
+APL Text → parseDocument() → AplDocument → buildGraph() → React Flow Graph
     ↑                                                          ↓
     └──────────── printApl() ←── AplDocumentManager ←──────────┘
                                ↑
@@ -59,25 +59,17 @@ type ApplyResult =
 ## Module Structure
 
 ```
-src/
-├── apl/                    # Core APL handling
-│   ├── parser.ts           # parseApl(), parseSimc()
-│   ├── printer.ts          # printApl(), printExpr()
-│   ├── ast.ts              # Type definitions
-│   └── AplDocumentManager.ts
-├── layout/                 # Graph building
-│   ├── buildGraph.ts       # Main orchestrator
-│   ├── conditionTree.ts    # Recursive tree builder
-│   ├── expressionHelpers.ts # flatten AND/OR
-│   ├── constants.ts        # Column assignments
-│   ├── grid.ts             # gridPoint(), GRID_METRICS
-│   └── types.ts            # LayoutNode, LayoutEdge
+web/src/
+├── utils/apl-parser/         # Core APL handling
+│   ├── document.ts            # parseDocument() → AplDocument
+│   ├── types.ts               # Action, Segment, Condition AST types
+│   ├── pretty-log.ts          # prettyCond() expression printer
+│   ├── grid-layout.ts         # GridLane, gridPoint(), LANE_WIDTH, ROW_HEIGHT
+│   └── build-graph.ts         # buildGraph() → React Flow nodes & edges
+├── components/nodes/          # Custom React Flow node components + types
 ├── state/
-│   └── store.ts            # Zustand store
-└── features/editor/
-    ├── EditorCanvas.tsx    # React Flow wrapper
-    ├── ExplorerTree.tsx    # Tree view
-    └── InspectorPanel.tsx  # Text editing
+│   └── editorStore.ts         # Zustand store (collapsedBlocks, APL text)
+└── App.tsx                    # Root layout with canvas + input tabs
 ```
 
 ## UI Stack
@@ -99,11 +91,11 @@ src/
 | 2 | Action nodes |
 | 3+ | Condition nodes |
 
-**Grid metrics**: 320px columns × 120px rows
+**Grid metrics**: `LANE_WIDTH = 400px`, `ROW_HEIGHT = 120px` (see `grid-layout.ts`)
 
-**Spatial logic**:
-- AND chains **horizontally** (same row, columns increment)
-- OR branches **vertically** (same column, rows increment)
+**Semantic lanes**: root (0), block (1), action (2), expression (3+)
+
+**Layout**: `gridPoint(lane, row)` maps each node to `{ x: laneIndex * 320, y: row * 80 }`
 
 ## Edge Types
 

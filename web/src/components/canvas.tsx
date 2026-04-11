@@ -1,14 +1,14 @@
-import { ConnectionLineType, ReactFlow } from "@xyflow/react";
+import { Background, BackgroundVariant, ConnectionLineType, ReactFlow } from "@xyflow/react";
 import { useEditorStore } from "@/state/editorStore";
 import { nodeTypes } from "@components/nodes";
 
 import "@xyflow/react/dist/style.css";
 
 const defaultEdgeOptions = {
-  type: "step",
+  type: "smoothstep",
   pathOptions: {
-    borderRadius: 10,
-    offset: 16,
+    borderRadius: 12,
+    offset: 20,
   },
 } as const;
 
@@ -31,7 +31,9 @@ export default function Canvas() {
         nodesConnectable={false}
         elementsSelectable={false}
         proOptions={{ hideAttribution: true }}
-      />
+      >
+        <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#d1d5db" />
+      </ReactFlow>
     </div>
   );
 }
