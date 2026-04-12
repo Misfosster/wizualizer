@@ -1,5 +1,12 @@
 import type { Node } from "@xyflow/react";
 
+export const CONDITION_HANDLE_IDS = {
+  targetLeft: "condition-target-left",
+  sourceRight: "condition-source-right",
+  targetTop: "condition-target-top",
+  sourceBottom: "condition-source-bottom",
+} as const;
+
 export type GraphNodeKind =
   | "root"
   | "block"
@@ -9,7 +16,8 @@ export type GraphNodeKind =
   | "callActionList"
   | "sequence"
   | "condition"
-  | "valueExpression";
+  | "valueExpression"
+  | "container";
 
 export interface RootNodeData extends Record<string, unknown> {
   label: string;
@@ -58,14 +66,30 @@ export interface SequenceNodeData extends Record<string, unknown> {
   spells: string[];
 }
 
+export interface ConditionHandleUsage extends Record<string, boolean | undefined> {
+  targetLeft?: boolean;
+  sourceRight?: boolean;
+  targetTop?: boolean;
+  sourceBottom?: boolean;
+}
+
 export interface ConditionNodeData extends Record<string, unknown> {
   label: string;
   kind: "condition";
+  handleUsage?: ConditionHandleUsage;
 }
 
 export interface ValueExpressionNodeData extends Record<string, unknown> {
   label: string;
   kind: "valueExpression";
+}
+
+export interface ContainerNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "container";
+  depth: number;
+  operator: string;
+  handleUsage?: ConditionHandleUsage;
 }
 
 export type GraphNodeData =
@@ -77,7 +101,8 @@ export type GraphNodeData =
   | CallActionListNodeData
   | SequenceNodeData
   | ConditionNodeData
-  | ValueExpressionNodeData;
+  | ValueExpressionNodeData
+  | ContainerNodeData;
 
 export type RootFlowNode = Node<RootNodeData, "root">;
 export type BlockFlowNode = Node<BlockNodeData, "block">;
@@ -94,6 +119,7 @@ export type ValueExpressionFlowNode = Node<
   ValueExpressionNodeData,
   "valueExpression"
 >;
+export type ContainerFlowNode = Node<ContainerNodeData, "container">;
 
 export type GraphFlowNode =
   | RootFlowNode
@@ -104,7 +130,8 @@ export type GraphFlowNode =
   | CallActionListFlowNode
   | SequenceFlowNode
   | ConditionFlowNode
-  | ValueExpressionFlowNode;
+  | ValueExpressionFlowNode
+  | ContainerFlowNode;
 
 export type ActionGraphNodeKind = Extract<
   GraphNodeKind,

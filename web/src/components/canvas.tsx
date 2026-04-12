@@ -19,6 +19,7 @@ export default function Canvas() {
   return (
     <div className="h-full w-full min-h-[300px] bg-white text-gray-900">
       <ReactFlow
+        className="lc-flow"
         style={{ width: "100%", height: "100%" }}
         nodes={nodes}
         edges={edges}

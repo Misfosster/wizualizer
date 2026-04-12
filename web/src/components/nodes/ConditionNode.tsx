@@ -1,23 +1,48 @@
 import { memo } from "react";
-import type { NodeProps } from "@xyflow/react";
-import type { ConditionFlowNode } from "./types";
-import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
+import { Position, type NodeProps } from "@xyflow/react";
+import { CONDITION_HANDLE_IDS, type ConditionFlowNode } from "./types";
+import { NodeCard, SourceHandle, TargetHandle } from "./shared";
 
 function ConditionNode({
   data,
   isConnectable,
 }: NodeProps<ConditionFlowNode>) {
+  const handleUsage = data.handleUsage ?? {};
+
   return (
     <NodeCard className="lc-node-card--condition">
-      <TargetHandle isConnectable={isConnectable} />
-      <SourceHandle isConnectable={isConnectable} />
+      {handleUsage.targetLeft ? (
+        <TargetHandle
+          isConnectable={isConnectable}
+          id={CONDITION_HANDLE_IDS.targetLeft}
+        />
+      ) : null}
+      {handleUsage.sourceRight ? (
+        <SourceHandle
+          isConnectable={isConnectable}
+          id={CONDITION_HANDLE_IDS.sourceRight}
+        />
+      ) : null}
+      {handleUsage.targetTop ? (
+        <TargetHandle
+          isConnectable={isConnectable}
+          id={CONDITION_HANDLE_IDS.targetTop}
+          position={Position.Top}
+        />
+      ) : null}
+      {handleUsage.sourceBottom ? (
+        <SourceHandle
+          isConnectable={isConnectable}
+          id={CONDITION_HANDLE_IDS.sourceBottom}
+          position={Position.Bottom}
+        />
+      ) : null}
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
           <div className="lc-node-eyebrow">Condition</div>
           <div className="lc-node-title lc-node-title--mono">{data.label}</div>
         </div>
-        <MetaPill>If</MetaPill>
       </div>
     </NodeCard>
   );

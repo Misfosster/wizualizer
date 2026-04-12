@@ -56,11 +56,12 @@ export function prettyCond(c: Condition): string {
 
 function prec(op: BinOp): number {
   switch (op) {
-    // parser: and/xor/or same precedence => printer must treat them equal
     case "|":
     case "^":
-    case "&":
       return 1;
+
+    case "&":
+      return 2;
 
     case "=":
     case "!=":
@@ -71,21 +72,21 @@ function prec(op: BinOp): number {
     case ">=":
     case "~":
     case "!~":
-      return 2;
+      return 3;
 
     case "<?":
     case ">?":
-      return 3;
+      return 4;
 
     case "+":
     case "-":
-      return 4;
+      return 5;
 
     case "*":
     case "/":
     case "%":
     case "%%":
-      return 5;
+      return 6;
 
     default:
       return 0;

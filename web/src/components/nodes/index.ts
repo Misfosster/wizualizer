@@ -4,6 +4,7 @@ import ActionNode from "./ActionNode";
 import BlockNode from "./BlockNode";
 import CallActionListNode from "./CallActionListNode";
 import ConditionNode from "./ConditionNode";
+import ContainerNode from "./ContainerNode";
 import RootNode from "./RootNode";
 import SequenceNode from "./SequenceNode";
 import UseItemNode from "./UseItemNode";
@@ -20,4 +21,5 @@ export const nodeTypes = {
   sequence: SequenceNode,
   condition: ConditionNode,
   valueExpression: ValueExpressionNode,
+  container: ContainerNode,
 } satisfies NodeTypes;

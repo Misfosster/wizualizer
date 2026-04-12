@@ -1,6 +1,6 @@
 # Container Nodes
 
-Containers wrap parenthesized expressions `(...)` in the APL, providing visual grouping for complex conditions.
+Containers represent `GroupExpression` nodes in the AST — explicit parentheses `(...)` in the APL source. They enable graph→APL round-trip fidelity by preserving grouping information.
 
 ## Purpose
 
@@ -8,6 +8,9 @@ When APL has explicit parentheses like `(a|b)&c`, the container:
 1. Shows the grouping visually with a dashed border
 2. Preserves the parentheses through graph round-trips
 3. Maps 1:1 with `GroupExpression` in the AST
+4. Produces `(...)` when exported back to APL text
+
+Unparenthesized OR-only expressions (e.g. `a|b|c`) do NOT get containers. Pure AND chains also stay bare. AND chains get an AND container only when they are an OR/XOR branch, such as `a&b|c`, where the container clarifies the competing operator group. Root-level parentheses around an OR/XOR stack are visually elided when they would only wrap the whole stack.
 
 ## Color by Depth
 
@@ -29,35 +32,65 @@ Nesting depth determines border/background color:
 - **Min size**: 320px width, 100px height
 - **No collapse button**: Containers are not collapsible
 
+## Condition Layout Rules
+
+| Expression Pattern | Visual Layout |
+|---|---|
+| Leaf (`a`) | Single condition node |
+| AND chain (`a&b&c`) | Nodes chained horizontally with AND edges, no container |
+| OR chain (`a\|b\|c`) | Nodes stacked vertically with OR edges, no container |
+| Mixed OR/AND (`a&b\|c`) | AND branch container wrapping `a&b`, then OR edge to `c` |
+| GroupExpression (`(a\|b)`) | Container wrapping inner expression, depth increments |
+| Root OR group (`(a&b\|c)`) | Outer group container is elided; only the `a&b` AND container remains |
+
 ## Example
 
 For: `MAINTENANCE & ((targets >= 2 & mark & (NOT darkest | dance)) | unseen | coup)`
 
 ```
-Container (blue, depth 0)
-├── Cond: targets>=2 ─AND→ Cond: mark ─AND→ Container (orange, depth 1)
-│                                          ├── Cond: NOT darkest
-│                                          │     OR
-│                                          └── Cond: dance
-│ OR
-├── Cond: unseen_blade
-│ OR
-└── Cond: coup_de_grace
+                         ┌─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┐  (blue, depth 0)
+                         │                         ┌─ ─ ─ ─ ─ ─ ─┐      │
+[MAINTENANCE] ──AND──▶   │  [tgt>=2] ─AND▶ [mark] ─AND▶ │[NOT darkest]│  │
+                         │                         │ OR            │      │
+                         │                         │[dance]        │      │
+                         │                         └─ ─ ─ ─ ─ ─ ─┘      │  (orange, depth 1)
+                         │  OR                                            │
+                         │  [unseen]                                      │
+                         │  OR                                            │
+                         │  [coup]                                        │
+                         └─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┘
 ```
+
+Two containers → two pairs of parentheses on export, matching the original source.
+
+Contrast — `unseen|coup` without parentheses (top-level condition on an action):
+
+```
+[Action] ──▶ [unseen]
+                 │
+                OR
+                 ▼
+              [coup]
+```
+
+No container. Export produces `unseen|coup` — no parentheses.
 
 ## AST Mapping
 
 | AST Node | Graph Node |
 |----------|------------|
-| `GroupExpression` | `ContainerNode` |
-| `BinaryExpression` (& or \|) | Edges (AND/OR) |
-| `ConditionRef` | `ConditionNode` |
+| `GroupExpression` | `ContainerNode` (1:1) |
+| `BinaryExpression` (`&`) | AND edges between adjacent terms; AND container only when the AND chain is an OR/XOR branch |
+| `BinaryExpression` (`\|`) | OR edges between adjacent branches |
+| `ConditionRef` / leaf | `ConditionNode` |
 
 ## Graph → Text
 
 When exporting graph to APL text:
 - ContainerNode → wrap children in `(...)`
-- Preserves explicit parentheses from original APL
+- AND edges → join with `&`
+- OR edges → join with `|`
+- OR-only and pure AND chains can have no container; AND containers are visual grouping unless they also represent explicit parentheses
 
 ## Visual Reference
 

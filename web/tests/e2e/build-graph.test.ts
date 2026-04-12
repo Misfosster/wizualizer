@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { CONDITION_HANDLE_IDS } from "../../src/components/nodes/types";
 import { buildGraph, getActionNodeKind } from "../../src/utils/apl-parser/build-graph";
 import { parseDocument, type AplDocument } from "../../src/utils/apl-parser/document";
 import { LANE_WIDTH, ROW_HEIGHT } from "../../src/utils/apl-parser/grid-layout";
@@ -338,7 +339,7 @@ test("collapsed block occupies one row and shifts following blocks upward", () =
   });
 });
 
-test("buildGraph splits boolean chain conditions into separate nodes", () => {
+test("bare OR chain produces leaf nodes with OR edges, no container", () => {
   const document: AplDocument = {
     profiles: [
       {
@@ -390,18 +391,398 @@ test("buildGraph splits boolean chain conditions into separate nodes", () => {
   expect(cond0.type).toBe("condition");
   expect(cond0.data).toMatchObject({ label: "talent.surging_elements.enabled" });
   expect(cond0.position).toEqual({ x: lane(3), y: row(1) });
+  expect(cond0.data).toMatchObject({
+    handleUsage: {
+      targetLeft: true,
+      sourceBottom: true,
+    },
+  });
+  expect(cond0.data).not.toMatchObject({
+    handleUsage: {
+      sourceRight: true,
+      targetTop: true,
+    },
+  });
 
   const cond1 = getNode(graph.nodes, "condition__0__actions__0__if__1");
   expect(cond1.data).toMatchObject({ label: "buff.whirling_earth.up" });
-  expect(cond1.position).toEqual({ x: lane(3), y: row(2) });
+  expect(cond1.position).toEqual({ x: lane(3) + 35, y: row(1) + 112 });
 
   const cond2 = getNode(graph.nodes, "condition__0__actions__0__if__2");
   expect(cond2.data).toMatchObject({ label: "talent.feral_spirit.enabled" });
-  expect(cond2.position).toEqual({ x: lane(3), y: row(3) });
+  expect(cond2.position).toEqual({ x: lane(3) + 15.5, y: row(1) + 224 });
 
-  expect(graph.edges.find((e) => e.id === "edge__action__0__actions__0__if__0")).toBeTruthy();
-  expect(graph.edges.find((e) => e.id === "edge__action__0__actions__0__if__1")).toBeTruthy();
-  expect(graph.edges.find((e) => e.id === "edge__action__0__actions__0__if__2")).toBeTruthy();
+  expect(graph.nodes.find((n) => n.type === "container")).toBeUndefined();
+
+  const actionToFirst = getNode(graph.edges, "edge__action__0__actions__0__if");
+  expect(actionToFirst.target).toBe("condition__0__actions__0__if__0");
+  expect(actionToFirst.targetHandle).toBe(CONDITION_HANDLE_IDS.targetLeft);
+
+  const orEdge1 = getNode(graph.edges, "edge__condition__0__actions__0__if__or__1");
+  expect(orEdge1).toMatchObject({
+    label: "OR",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
+    targetHandle: CONDITION_HANDLE_IDS.targetTop,
+    style: { stroke: "#2563eb" },
+    labelStyle: { fill: "#1d4ed8" },
+  });
+
+  const orEdge2 = getNode(graph.edges, "edge__condition__0__actions__0__if__or__2");
+  expect(orEdge2).toMatchObject({
+    label: "OR",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
+    targetHandle: CONDITION_HANDLE_IDS.targetTop,
+  });
+});
+
+test("redundant parentheses around an OR chain do not produce a group container", () => {
+  const graph = buildGraphFromText([
+    'shaman="Redundant Paren Demo"',
+    "actions+=/stormstrike,if=((A|B))",
+  ].join("\n"));
+
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(0);
+
+  const condA = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(condA.type).toBe("condition");
+  expect(condA.data).toMatchObject({ label: "A" });
+  expect(condA.data).toMatchObject({
+    handleUsage: {
+      targetLeft: true,
+      sourceBottom: true,
+    },
+  });
+
+  const condB = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(condB.type).toBe("condition");
+  expect(condB.data).toMatchObject({ label: "B" });
+  expect(condB.data).toMatchObject({
+    handleUsage: {
+      targetTop: true,
+    },
+  });
+
+  const orEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__or__1");
+  expect(orEdge).toMatchObject({
+    source: "condition__0__actions__0__if__0",
+    target: "condition__0__actions__0__if__1",
+    label: "OR",
+  });
+});
+
+test("pure AND chain produces horizontal condition nodes without a container", () => {
+  const graph = buildGraphFromText([
+    'shaman="AND Demo"',
+    "actions+=/stormstrike,if=buff.hot_hand.up&cooldown.lava_lash.remains>1",
+  ].join("\n"));
+
+  const lane = (index: number) => index * LANE_WIDTH;
+  const row = (index: number) => index * ROW_HEIGHT;
+
+  expect(graph.nodes.find((n) => n.type === "container")).toBeUndefined();
+
+  const cond0 = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(cond0.type).toBe("condition");
+  expect(cond0.data).toMatchObject({ label: "buff.hot_hand.up" });
+  expect(cond0.parentId).toBeUndefined();
+  expect(cond0.position).toEqual({ x: lane(3), y: row(1) });
+  expect(cond0.data).toMatchObject({
+    handleUsage: {
+      targetLeft: true,
+      sourceRight: true,
+    },
+  });
+  expect(cond0.data).not.toMatchObject({
+    handleUsage: {
+      targetTop: true,
+      sourceBottom: true,
+    },
+  });
+
+  const cond1 = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(cond1.type).toBe("condition");
+  expect(cond1.data).toMatchObject({ label: "cooldown.lava_lash.remains>1" });
+  expect(cond1.parentId).toBeUndefined();
+  expect(cond1.position).toEqual({ x: lane(3) + 316, y: row(1) });
+  expect(cond1.data).toMatchObject({
+    handleUsage: {
+      targetLeft: true,
+    },
+  });
+  expect(cond1.data).not.toMatchObject({
+    handleUsage: {
+      sourceRight: true,
+      targetTop: true,
+      sourceBottom: true,
+    },
+  });
+
+  const actionToFirst = getNode(graph.edges, "edge__action__0__actions__0__if");
+  expect(actionToFirst.target).toBe("condition__0__actions__0__if__0");
+  expect(actionToFirst.targetHandle).toBe(CONDITION_HANDLE_IDS.targetLeft);
+
+  const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__and__1");
+  expect(andEdge).toMatchObject({
+    label: "AND",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceRight,
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+    type: "straight",
+    style: { stroke: "#0f766e" },
+    labelStyle: { fill: "#115e59" },
+  });
+});
+
+test("long condition labels widen their condition node", () => {
+  const graph = buildGraphFromText([
+    'shaman="Long Condition Demo"',
+    "actions+=/stormstrike,if=very.long.condition.identifier.with.extra.parts.and_suffix.enabled",
+  ].join("\n"));
+
+  const condition = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(condition.type).toBe("condition");
+  expect(condition.style).toMatchObject({ width: expect.any(Number) });
+  expect(Number(condition.style?.width)).toBeGreaterThan(280);
+});
+
+test("AND branch contested by OR gets an AND container", () => {
+  const graph = buildGraphFromText([
+    'shaman="Contested AND Demo"',
+    "actions+=/stormstrike,if=(A&B|C)",
+  ].join("\n"));
+
+  const lane = (index: number) => index * LANE_WIDTH;
+  const row = (index: number) => index * ROW_HEIGHT;
+
+  const andContainer = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(andContainer.type).toBe("container");
+  expect(andContainer.data).toMatchObject({ kind: "container", operator: "and" });
+  expect(andContainer.position).toEqual({ x: lane(3), y: row(1) });
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(1);
+
+  const innerA = getNode(graph.nodes, "condition__0__actions__0__if__0__0");
+  expect(innerA.type).toBe("condition");
+  expect(innerA.data).toMatchObject({ label: "A" });
+  expect(innerA.parentId).toBe("condition__0__actions__0__if__0");
+  expect(innerA.position).toEqual({ x: 20, y: 20 });
+
+  const innerB = getNode(graph.nodes, "condition__0__actions__0__if__0__1");
+  expect(innerB.type).toBe("condition");
+  expect(innerB.data).toMatchObject({ label: "B" });
+  expect(innerB.parentId).toBe("condition__0__actions__0__if__0");
+  expect(innerB.position).toEqual({ x: 336, y: 20 });
+
+  const standaloneC = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(standaloneC.type).toBe("condition");
+  expect(standaloneC.data).toMatchObject({ label: "C" });
+  expect(standaloneC.position).toEqual({ x: lane(3) + 178, y: row(1) + 152 });
+
+  const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__0__and__1");
+  expect(andEdge).toMatchObject({
+    label: "AND",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceRight,
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+    type: "straight",
+  });
+
+  const orEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__or__1");
+  expect(orEdge).toMatchObject({
+    label: "OR",
+    source: "condition__0__actions__0__if__0",
+    target: "condition__0__actions__0__if__1",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
+    targetHandle: CONDITION_HANDLE_IDS.targetTop,
+    type: "straight",
+  });
+});
+
+test("parenthesized AND branch under OR elides the group container", () => {
+  const graph = buildGraphFromText([
+    'shaman="Parenthesized AND Demo"',
+    "actions+=/stormstrike,if=A|(B&C)",
+  ].join("\n"));
+
+  const andContainer = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(andContainer.type).toBe("container");
+  expect(andContainer.data).toMatchObject({ kind: "container", operator: "and" });
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(1);
+
+  const innerB = getNode(graph.nodes, "condition__0__actions__0__if__1__0");
+  expect(innerB.type).toBe("condition");
+  expect(innerB.data).toMatchObject({ label: "B" });
+  expect(innerB.parentId).toBe("condition__0__actions__0__if__1");
+
+  const innerC = getNode(graph.nodes, "condition__0__actions__0__if__1__1");
+  expect(innerC.type).toBe("condition");
+  expect(innerC.data).toMatchObject({ label: "C" });
+  expect(innerC.parentId).toBe("condition__0__actions__0__if__1");
+});
+
+test("parenthesized OR in AND chain produces container for the grouped part", () => {
+  const document: AplDocument = {
+    profiles: [
+      {
+        name: "Paren Demo",
+        className: "shaman",
+        blocks: [
+          {
+            name: "actions",
+            actions: [
+              {
+                rawLine: "actions+=/sundering,if=(A|B)&C",
+                lineNumber: 1,
+                action: {
+                  category: "actions",
+                  spell: "sundering",
+                  op: "+=",
+                  segments: [
+                    {
+                      type: "if",
+                      expr: {
+                        kind: "binary",
+                        op: "&",
+                        left: {
+                          kind: "paren",
+                          expr: {
+                            kind: "binary",
+                            op: "|",
+                            left: { kind: "ident", name: "A" },
+                            right: { kind: "ident", name: "B" },
+                          },
+                        },
+                        right: { kind: "ident", name: "C" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const graph = buildGraph(document);
+
+  const containerNode = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(containerNode.type).toBe("container");
+  expect(containerNode.data).toMatchObject({ kind: "container", depth: 0 });
+  expect(containerNode.parentId).toBeUndefined();
+
+  const innerA = getNode(graph.nodes, "condition__0__actions__0__if__0__inner__0");
+  expect(innerA.type).toBe("condition");
+  expect(innerA.data).toMatchObject({ label: "A" });
+  expect(innerA.parentId).toBe("condition__0__actions__0__if__0");
+
+  const innerB = getNode(graph.nodes, "condition__0__actions__0__if__0__inner__1");
+  expect(innerB.type).toBe("condition");
+  expect(innerB.data).toMatchObject({ label: "B" });
+  expect(innerB.parentId).toBe("condition__0__actions__0__if__0");
+
+  const standaloneC = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(standaloneC.type).toBe("condition");
+  expect(standaloneC.data).toMatchObject({ label: "C" });
+  expect(standaloneC.parentId).toBeUndefined();
+
+  const orEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__0__inner__or__1");
+  expect(orEdge).toMatchObject({
+    label: "OR",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
+    targetHandle: CONDITION_HANDLE_IDS.targetTop,
+    type: "straight",
+  });
+
+  const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__and__1");
+  expect(andEdge).toMatchObject({
+    label: "AND",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceRight,
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+    type: "straight",
+  });
+});
+
+test("AND with parenthesized OR on the right: A&(B|C)", () => {
+  const document: AplDocument = {
+    profiles: [
+      {
+        name: "Right Paren Demo",
+        className: "shaman",
+        blocks: [
+          {
+            name: "actions",
+            actions: [
+              {
+                rawLine: "actions+=/sundering,if=A&(B|C)",
+                lineNumber: 1,
+                action: {
+                  category: "actions",
+                  spell: "sundering",
+                  op: "+=",
+                  segments: [
+                    {
+                      type: "if",
+                      expr: {
+                        kind: "binary",
+                        op: "&",
+                        left: { kind: "ident", name: "A" },
+                        right: {
+                          kind: "paren",
+                          expr: {
+                            kind: "binary",
+                            op: "|",
+                            left: { kind: "ident", name: "B" },
+                            right: { kind: "ident", name: "C" },
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const graph = buildGraph(document);
+
+  const standaloneA = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(standaloneA.type).toBe("condition");
+  expect(standaloneA.data).toMatchObject({ label: "A" });
+  expect(standaloneA.parentId).toBeUndefined();
+
+  const containerNode = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(containerNode.type).toBe("container");
+  expect(containerNode.data).toMatchObject({ kind: "container", depth: 0 });
+  expect(containerNode.parentId).toBeUndefined();
+
+  const innerB = getNode(graph.nodes, "condition__0__actions__0__if__1__inner__0");
+  expect(innerB.type).toBe("condition");
+  expect(innerB.data).toMatchObject({ label: "B" });
+  expect(innerB.parentId).toBe("condition__0__actions__0__if__1");
+
+  const innerC = getNode(graph.nodes, "condition__0__actions__0__if__1__inner__1");
+  expect(innerC.type).toBe("condition");
+  expect(innerC.data).toMatchObject({ label: "C" });
+  expect(innerC.parentId).toBe("condition__0__actions__0__if__1");
+
+  const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__and__1");
+  expect(andEdge).toMatchObject({
+    label: "AND",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceRight,
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+    type: "straight",
+  });
+
+  const orEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__1__inner__or__1");
+  expect(orEdge).toMatchObject({
+    label: "OR",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
+    targetHandle: CONDITION_HANDLE_IDS.targetTop,
+    type: "straight",
+  });
 });
 
 test("buildGraph keeps simple comparison conditions as single nodes", () => {

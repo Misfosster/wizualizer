@@ -10,7 +10,7 @@ export interface Size {
 
 export type GridLane = "root" | "block" | "action" | "expression";
 
-export const LANE_WIDTH = 400;
+export const LANE_WIDTH = 520;
 export const ROW_HEIGHT = 120;
 export const PROFILE_PADDING_ROWS = 2;
 export const EXPRESSION_NODE_BOUNDS: Readonly<Size> = { width: 280, height: 48 };
@@ -22,7 +22,7 @@ const LANE_COLUMN: Record<GridLane, number> = {
   expression: 3,
 };
 
-export function gridPoint(lane: GridLane, row: number, depth: number = 0): Point {
+export function gridPoint(lane: GridLane, row: number, depth = 0): Point {
   return {
     x: (LANE_COLUMN[lane] + depth) * LANE_WIDTH,
     y: row * ROW_HEIGHT,

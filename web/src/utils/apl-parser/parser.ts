@@ -153,9 +153,9 @@ const PREC: Partial<Record<TokenType, number>> = {
   ge: 6,
   tilde: 6,
   nottilde: 6,
-  and: 6,
-  xor: 7,
-  or: 7,
+  and: 7,
+  xor: 8,
+  or: 8,
 };
 
 function tokToBinOp(t: AplToken): BinOp | null {

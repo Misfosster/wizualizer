@@ -1,20 +1,19 @@
 import { Position as FlowPosition, type Edge, type Node } from "@xyflow/react";
-import { prettyCond } from "./pretty-log";
-import type { Condition } from "./types";
 import type { AplBlock, AplDocument, ParsedActionLine } from "./document";
-import type {
-  ActionGraphNodeKind,
-  ActionNodeData,
-  BlockNodeData,
-  CallActionListNodeData,
-  ConditionNodeData,
-  GraphFlowNode,
-  GraphNodeData,
-  RootNodeData,
-  SequenceNodeData,
-  UseItemNodeData,
-  ValueExpressionNodeData,
-  VariableNodeData,
+import {
+  CONDITION_HANDLE_IDS,
+  type ActionGraphNodeKind,
+  type ActionNodeData,
+  type BlockNodeData,
+  type CallActionListNodeData,
+  type ConditionHandleUsage,
+  type GraphFlowNode,
+  type GraphNodeData,
+  type RootNodeData,
+  type SequenceNodeData,
+  type UseItemNodeData,
+  type ValueExpressionNodeData,
+  type VariableNodeData,
 } from "@/components/nodes/types";
 import {
   EXPRESSION_NODE_BOUNDS,
@@ -25,18 +24,26 @@ import {
   type Size,
 } from "./grid-layout";
 import {
-  BOOLEAN_CHAIN_OPS,
   extractCallTarget,
   extractSequenceSpells,
   extractUseItemName,
   extractVariableData,
-  flattenBooleanChain,
   getConditionSegments,
 } from "./action-data";
+import { placeConditionGraph } from "./condition-layout";
 export type { Point, Size } from "./grid-layout";
 
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
 const VALUE_EDGE_STYLE = { stroke: "#8b5cf6" } as const;
+const CONDITION_HANDLE_USAGE_KEYS = new Map<
+  string,
+  keyof ConditionHandleUsage
+>([
+  [CONDITION_HANDLE_IDS.targetLeft, "targetLeft"],
+  [CONDITION_HANDLE_IDS.sourceRight, "sourceRight"],
+  [CONDITION_HANDLE_IDS.targetTop, "targetTop"],
+  [CONDITION_HANDLE_IDS.sourceBottom, "sourceBottom"],
+]);
 
 interface GraphSectionResult {
   nodes: GraphFlowNode[];
@@ -51,6 +58,7 @@ export interface GraphResult {
 
 interface EdgeOptions {
   sourceHandle?: string;
+  targetHandle?: string;
   style?: Edge["style"];
 }
 
@@ -79,15 +87,70 @@ function createEdge(
   target: string,
   options: EdgeOptions = {},
 ): Edge {
-  const { sourceHandle, style } = options;
+  const { sourceHandle, targetHandle, style } = options;
 
   return {
     id,
     source,
     target,
     sourceHandle,
+    targetHandle,
     style: { ...DEFAULT_EDGE_STYLE, ...style },
   };
+}
+
+function markConditionHandleUsage(
+  handleUsageByNode: Map<string, ConditionHandleUsage>,
+  nodeId: string,
+  handleId: string | null | undefined,
+): void {
+  if (!handleId) {
+    return;
+  }
+
+  const key = CONDITION_HANDLE_USAGE_KEYS.get(handleId);
+  if (!key) {
+    return;
+  }
+
+  const handleUsage = handleUsageByNode.get(nodeId) ?? {};
+  handleUsage[key] = true;
+  handleUsageByNode.set(nodeId, handleUsage);
+}
+
+function withConditionHandleUsage(
+  nodes: GraphFlowNode[],
+  edges: Edge[],
+): GraphFlowNode[] {
+  const handleUsageByNode = new Map<string, ConditionHandleUsage>();
+
+  for (const edge of edges) {
+    markConditionHandleUsage(
+      handleUsageByNode,
+      edge.source,
+      edge.sourceHandle,
+    );
+    markConditionHandleUsage(
+      handleUsageByNode,
+      edge.target,
+      edge.targetHandle,
+    );
+  }
+
+  return nodes.map((node) => {
+    if (node.type !== "condition" && node.type !== "container") {
+      return node;
+    }
+
+    const handleUsage = handleUsageByNode.get(node.id);
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        ...(handleUsage ? { handleUsage } : {}),
+      },
+    } as GraphFlowNode;
+  });
 }
 
 function countActions(blocks: AplBlock[]): number {
@@ -176,99 +239,17 @@ function createGraphNode(
   return createNode(id, data, position) as GraphFlowNode;
 }
 
-function buildExpressionNode(
-  label: string,
-  nodeId: string,
-  origin: Point,
-  kind: "condition" | "valueExpression",
-): { nodes: GraphFlowNode[]; edges: Edge[]; bounds: Size } {
-  const data: ConditionNodeData | ValueExpressionNodeData =
-    kind === "condition"
-      ? { label, kind: "condition" }
-      : { label, kind: "valueExpression" };
-
-  return {
-    nodes: [createGraphNode(nodeId, data, origin)],
-    edges: [],
-    bounds: EXPRESSION_NODE_BOUNDS,
-  };
-}
-
-interface ConditionTreeResult {
-  nodes: GraphFlowNode[];
-  edges: Edge[];
-  rowsUsed: number;
-}
-
-const BOOLEAN_OP_LABELS: Record<string, string> = {
-  "|": "OR",
-  "&": "AND",
-  "^": "XOR",
-};
-
-export function buildConditionGraph(
-  condition: Condition,
-  nodeId: string,
-  row: number,
-  depth = 0,
-): ConditionTreeResult {
-  if (condition.kind === "paren") {
-    return buildConditionGraph(condition.expr, nodeId, row, depth);
-  }
-
-  if (condition.kind === "binary" && BOOLEAN_CHAIN_OPS.has(condition.op)) {
-    return buildConditionTreeGraph(condition, nodeId, row, depth);
-  }
-
-  const data: ConditionNodeData = { label: prettyCond(condition), kind: "condition" };
-  return {
-    nodes: [createGraphNode(nodeId, data, gridPoint("expression", row, depth))],
-    edges: [],
-    rowsUsed: 1,
-  };
-}
-
-function buildConditionTreeGraph(
-  condition: Condition,
-  nodeId: string,
-  row: number,
-  depth: number,
-): ConditionTreeResult {
-  const operands = flattenBooleanChain(condition);
-  const opLabel = condition.kind === "binary"
-    ? (BOOLEAN_OP_LABELS[condition.op] ?? condition.op)
-    : "?";
-
-  const operatorData: ConditionNodeData = { label: opLabel, kind: "condition" };
-  const operatorNode = createGraphNode(
-    nodeId, operatorData, gridPoint("expression", row, depth),
-  );
-
-  const nodes: GraphFlowNode[] = [operatorNode];
-  const edges: Edge[] = [];
-  let childRow = row;
-
-  for (let i = 0; i < operands.length; i++) {
-    const childId = `${nodeId}__${String(i)}`;
-    const childGraph = buildConditionGraph(operands[i], childId, childRow, depth + 1);
-
-    nodes.push(...childGraph.nodes);
-    edges.push(...childGraph.edges);
-    edges.push(
-      createEdge(`edge__${nodeId}__${String(i)}`, nodeId, childGraph.nodes[0].id),
-    );
-    childRow += childGraph.rowsUsed;
-  }
-
-  return { nodes, edges, rowsUsed: Math.max(1, childRow - row) };
-}
-
 function buildValueExpressionGraph(
   label: string,
   nodeId: string,
   origin: Point,
 ): { nodes: GraphFlowNode[]; edges: Edge[]; bounds: Size } {
-  return buildExpressionNode(label, nodeId, origin, "valueExpression");
+  const data: ValueExpressionNodeData = { label, kind: "valueExpression" };
+  return {
+    nodes: [createGraphNode(nodeId, data, origin)],
+    edges: [],
+    bounds: EXPRESSION_NODE_BOUNDS,
+  };
 }
 
 function buildActionGraph(
@@ -316,41 +297,33 @@ function buildActionGraph(
   let conditionRowOffset = 0;
 
   for (const segment of conditionSegments) {
-    const operands = flattenBooleanChain(segment.expr);
-    const isChain = operands.length > 1;
+    const conditionRow = conditionStartRow + conditionRowOffset;
+    const conditionId =
+      `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
+    const conditionOrigin = gridPoint("expression", conditionRow);
+    const conditionGraph = placeConditionGraph(
+      segment.expr, conditionId, conditionOrigin.x, conditionOrigin.y,
+    );
 
-    for (let opIndex = 0; opIndex < operands.length; opIndex++) {
-      const conditionRow = conditionStartRow + conditionRowOffset;
-      const conditionId = isChain
-        ? `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}__${String(opIndex)}`
-        : `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
-      const conditionGraph = buildConditionGraph(
-        operands[opIndex],
-        conditionId,
-        conditionRow,
-      );
+    nodes.push(...conditionGraph.nodes);
+    edges.push(...conditionGraph.edges);
+    edges.push(
+      createEdge(
+        `edge__${actionId}__${segment.type}`,
+        actionId,
+        conditionGraph.nodes[0].id,
+        {
+          ...(actionNodeData.kind === "variable" ? { sourceHandle: "if" } : {}),
+          targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+        },
+      ),
+    );
 
-      nodes.push(...conditionGraph.nodes);
-      edges.push(...conditionGraph.edges);
-
-      const edgeId = isChain
-        ? `edge__${actionId}__${segment.type}__${String(opIndex)}`
-        : `edge__${actionId}__${segment.type}`;
-      edges.push(
-        createEdge(
-          edgeId,
-          actionId,
-          conditionGraph.nodes[0].id,
-          actionNodeData.kind === "variable" ? { sourceHandle: "if" } : {},
-        ),
-      );
-
-      rowsUsed = Math.max(
-        rowsUsed,
-        conditionRow - row + conditionGraph.rowsUsed,
-      );
-      conditionRowOffset += conditionGraph.rowsUsed;
-    }
+    rowsUsed = Math.max(
+      rowsUsed,
+      conditionRow - row + conditionGraph.rowsUsed,
+    );
+    conditionRowOffset += conditionGraph.rowsUsed;
   }
 
   return { nodes, edges, rowsUsed };
@@ -466,5 +439,5 @@ export function buildGraph(
     profileStartRow += profileGraph.rowsUsed + PROFILE_PADDING_ROWS;
   }
 
-  return { nodes, edges };
+  return { nodes: withConditionHandleUsage(nodes, edges), edges };
 }
