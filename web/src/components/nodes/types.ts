@@ -44,6 +44,7 @@ export interface VariableNodeData extends Record<string, unknown> {
   kind: "variable";
   variableName: string;
   op: string;
+  hasExplicitOp: boolean;
   valueText: string;
 }
 
@@ -73,15 +74,23 @@ export interface ConditionHandleUsage extends Record<string, boolean | undefined
   sourceBottom?: boolean;
 }
 
+export type ConditionExpressionKind =
+  | "comparison"
+  | "arithmetic"
+  | "expression";
+
 export interface ConditionNodeData extends Record<string, unknown> {
   label: string;
   kind: "condition";
+  expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
 }
 
 export interface ValueExpressionNodeData extends Record<string, unknown> {
   label: string;
   kind: "valueExpression";
+  expressionKind?: ConditionExpressionKind;
+  handleUsage?: ConditionHandleUsage;
 }
 
 export interface ContainerNodeData extends Record<string, unknown> {

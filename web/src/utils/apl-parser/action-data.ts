@@ -20,7 +20,9 @@ interface SequenceSegment {
 export interface ExtractedVariableData {
   variableName: string;
   op: string;
+  hasExplicitOp: boolean;
   valueText: string;
+  valueExpr?: Condition;
 }
 
 export function getConditionSegments(segments: Segment[]): ConditionSegment[] {
@@ -67,7 +69,9 @@ export function extractVariableData(segments: Segment[]): ExtractedVariableData 
   return {
     variableName: nameSegment ? prettyCond(nameSegment.expr) : UNNAMED_VARIABLE,
     op: opSegment ? prettyCond(opSegment.expr) : DEFAULT_VARIABLE_OP,
+    hasExplicitOp: opSegment !== undefined,
     valueText: valueSegment ? prettyCond(valueSegment.expr) : MISSING_VALUE,
+    ...(valueSegment ? { valueExpr: valueSegment.expr } : {}),
   };
 }
 

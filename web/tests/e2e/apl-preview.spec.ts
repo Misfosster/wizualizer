@@ -47,7 +47,6 @@ test("renders custom structural node components in the preview graph", async ({ 
 
   await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("Variable");
   await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("aoe_threshold");
-  await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("active_enemies");
 
   await expect(
     page.getByTestId("rf__node-valueExpression__0__actions__0__value"),

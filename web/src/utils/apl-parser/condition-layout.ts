@@ -1,13 +1,16 @@
 import { Position as FlowPosition, type Edge, type Node } from "@xyflow/react";
+import { getConditionSource } from "./condition-source";
 import { prettyCond } from "./pretty-log";
-import type { Condition } from "./types";
+import type { BinOp, Condition } from "./types";
 import { BOOLEAN_CHAIN_OPS, flattenBooleanChain } from "./action-data";
 import { ROW_HEIGHT } from "./grid-layout";
 import type {
+  ConditionExpressionKind,
   ConditionNodeData,
   ContainerNodeData,
   GraphFlowNode,
   GraphNodeData,
+  ValueExpressionNodeData,
 } from "@/components/nodes/types";
 import { CONDITION_HANDLE_IDS } from "@/components/nodes/types";
 import type { Size } from "./grid-layout";
@@ -17,11 +20,32 @@ const CONDITION_CELL: Readonly<Size> = {
   width: CONDITION_MIN_WIDTH,
   height: 64,
 };
-const CONDITION_TEXT_PADDING = 64;
-const CONDITION_CHAR_WIDTH = 7.8;
+const CONDITION_TEXT_PADDING = 36;
+const CONDITION_CHAR_WIDTH = 7.6;
 const AND_GAP = 96;
 const OR_GAP = 48;
 const CONTAINER_PADDING = 20;
+const COMPARISON_OPS: ReadonlySet<BinOp> = new Set([
+  "<",
+  "<=",
+  ">",
+  ">=",
+  "=",
+  "==",
+  "!=",
+  "~",
+  "!~",
+]);
+const ARITHMETIC_OPS: ReadonlySet<BinOp> = new Set([
+  "+",
+  "-",
+  "*",
+  "/",
+  "%",
+  "%%",
+  "<?",
+  ">?",
+]);
 
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
 const BOOLEAN_EDGE_COLORS: Record<
@@ -34,6 +58,7 @@ const BOOLEAN_EDGE_COLORS: Record<
 };
 
 type BooleanEdgeOperator = "AND" | "OR" | "XOR";
+type ExpressionLeafKind = "condition" | "valueExpression";
 
 interface ConditionMeasure {
   width: number;
@@ -65,8 +90,18 @@ function measureCondition(
   elideOrGroup = false,
 ): ConditionMeasure {
   if (condition.kind === "paren") {
-    if (shouldElideGroupContainer(condition, wrapAndInContainer, elideOrGroup)) {
-      return measureCondition(condition.expr, wrapAndInContainer, elideOrGroup);
+    if (
+      shouldElideGroupContainer(
+        condition,
+        wrapAndInContainer,
+        elideOrGroup,
+      )
+    ) {
+      return measureCondition(
+        condition.expr,
+        wrapAndInContainer,
+        elideOrGroup,
+      );
     }
 
     const inner = measureCondition(condition.expr);
@@ -80,7 +115,9 @@ function measureCondition(
     const operands = flattenBooleanChain(condition);
 
     if (condition.op === "&") {
-      const childMeasures = operands.map((operand) => measureCondition(operand));
+      const childMeasures = operands.map((operand) =>
+        measureCondition(operand),
+      );
       const totalWidth =
         childMeasures.reduce((sum, m) => sum + m.width, 0) +
         AND_GAP * (childMeasures.length - 1);
@@ -108,7 +145,7 @@ function measureCondition(
 }
 
 function measureLeafCondition(condition: Condition): ConditionMeasure {
-  const label = prettyCond(condition);
+  const label = conditionLabel(condition);
   return {
     width: Math.ceil(
       Math.max(
@@ -125,7 +162,7 @@ function shouldElideGroupContainer(
   wrapAndInContainer: boolean,
   elideOrGroup: boolean,
 ): boolean {
-  if (condition.expr.kind !== "binary") {
+  if (!isLogicalCondition(condition.expr)) {
     return true;
   }
 
@@ -133,10 +170,31 @@ function shouldElideGroupContainer(
     return true;
   }
 
-  return (
-    elideOrGroup &&
-    (condition.expr.op === "|" || condition.expr.op === "^")
-  );
+  return elideOrGroup;
+}
+
+function isLogicalCondition(condition: Condition): condition is Condition & {
+  kind: "binary";
+} {
+  return condition.kind === "binary" && BOOLEAN_CHAIN_OPS.has(condition.op);
+}
+
+function conditionLabel(condition: Condition): string {
+  return getConditionSource(condition) ?? prettyCond(condition);
+}
+
+function conditionExpressionKind(
+  condition: Condition,
+): ConditionExpressionKind {
+  if (condition.kind === "binary" && COMPARISON_OPS.has(condition.op)) {
+    return "comparison";
+  }
+
+  if (condition.kind === "binary" && ARITHMETIC_OPS.has(condition.op)) {
+    return "arithmetic";
+  }
+
+  return "expression";
 }
 
 function createGraphNode(
@@ -221,12 +279,10 @@ function placeLeaf(
   globalX: number,
   globalY: number,
   parentId: string | undefined,
+  leafKind: ExpressionLeafKind,
 ): ConditionGraphResult {
   const size = measureLeafCondition(condition);
-  const data: ConditionNodeData = {
-    label: prettyCond(condition),
-    kind: "condition",
-  };
+  const data = createLeafNodeData(condition, leafKind);
 
   const node = createGraphNode(
     nodeId,
@@ -246,6 +302,27 @@ function placeLeaf(
   };
 }
 
+function createLeafNodeData(
+  condition: Condition,
+  leafKind: ExpressionLeafKind,
+): ConditionNodeData | ValueExpressionNodeData {
+  const expressionKind = conditionExpressionKind(condition);
+
+  if (leafKind === "condition") {
+    return {
+      label: conditionLabel(condition),
+      kind: "condition",
+      expressionKind,
+    };
+  }
+
+  return {
+    label: conditionLabel(condition),
+    kind: "valueExpression",
+    expressionKind,
+  };
+}
+
 function placeGroupContainer(
   condition: Condition & { kind: "paren" },
   nodeId: string,
@@ -255,8 +332,15 @@ function placeGroupContainer(
   parentId: string | undefined,
   wrapAndInContainer: boolean,
   elideOrGroup: boolean,
+  leafKind: ExpressionLeafKind,
 ): ConditionGraphResult {
-  if (shouldElideGroupContainer(condition, wrapAndInContainer, elideOrGroup)) {
+  if (
+    shouldElideGroupContainer(
+      condition,
+      wrapAndInContainer,
+      elideOrGroup,
+    )
+  ) {
     return placeCondition(
       condition.expr,
       nodeId,
@@ -266,10 +350,15 @@ function placeGroupContainer(
       parentId,
       wrapAndInContainer,
       elideOrGroup,
+      leafKind,
     );
   }
 
-  const containerMeasure = measureCondition(condition);
+  const containerMeasure = measureCondition(
+    condition,
+    false,
+    false,
+  );
 
   const containerData: ContainerNodeData = {
     label: "",
@@ -295,6 +384,9 @@ function placeGroupContainer(
     CONTAINER_PADDING,
     depth + 1,
     nodeId,
+    false,
+    false,
+    leafKind,
   );
 
   return {
@@ -313,6 +405,7 @@ function placeOrChain(
   depth: number,
   parentId: string | undefined,
   operator: "OR" | "XOR",
+  leafKind: ExpressionLeafKind,
 ): ConditionGraphResult {
   const operands = flattenBooleanChain(condition);
   const childMeasures = operands.map((operand) =>
@@ -336,6 +429,8 @@ function placeOrChain(
       depth,
       parentId,
       true,
+      false,
+      leafKind,
     );
 
     nodes.push(...childResult.nodes);
@@ -372,10 +467,17 @@ function placeAndChain(
   depth: number,
   parentId: string | undefined,
   wrapInContainer: boolean,
+  leafKind: ExpressionLeafKind,
 ): ConditionGraphResult {
   const operands = flattenBooleanChain(condition);
-  const childMeasures = operands.map((operand) => measureCondition(operand));
-  const totalMeasure = measureCondition(condition, wrapInContainer);
+  const childMeasures = operands.map((operand) =>
+    measureCondition(operand),
+  );
+  const totalMeasure = measureCondition(
+    condition,
+    wrapInContainer,
+    false,
+  );
 
   if (!wrapInContainer) {
     const nodes: GraphFlowNode[] = [];
@@ -393,6 +495,9 @@ function placeAndChain(
         globalY + childY,
         depth,
         parentId,
+        false,
+        false,
+        leafKind,
       );
 
       nodes.push(...childResult.nodes);
@@ -454,6 +559,9 @@ function placeAndChain(
       childY,
       depth + 1,
       nodeId,
+      false,
+      false,
+      leafKind,
     );
 
     nodes.push(...childResult.nodes);
@@ -491,6 +599,7 @@ function placeCondition(
   parentId: string | undefined,
   wrapAndInContainer = false,
   elideOrGroup = false,
+  leafKind: ExpressionLeafKind = "condition",
 ): ConditionGraphResult {
   if (condition.kind === "paren") {
     return placeGroupContainer(
@@ -502,6 +611,7 @@ function placeCondition(
       parentId,
       wrapAndInContainer,
       elideOrGroup,
+      leafKind,
     );
   }
 
@@ -515,6 +625,7 @@ function placeCondition(
         depth,
         parentId,
         wrapAndInContainer,
+        leafKind,
       );
     }
     return placeOrChain(
@@ -525,10 +636,11 @@ function placeCondition(
       depth,
       parentId,
       condition.op === "^" ? "XOR" : "OR",
+      leafKind,
     );
   }
 
-  return placeLeaf(condition, nodeId, globalX, globalY, parentId);
+  return placeLeaf(condition, nodeId, globalX, globalY, parentId, leafKind);
 }
 
 export function placeConditionGraph(
@@ -547,5 +659,26 @@ export function placeConditionGraph(
     undefined,
     false,
     true,
+    "condition",
+  );
+}
+
+export function placeValueExpressionGraph(
+  condition: Condition,
+  nodeId: string,
+  globalX: number,
+  globalY: number,
+  depth = 0,
+): ConditionGraphResult {
+  return placeCondition(
+    condition,
+    nodeId,
+    globalX,
+    globalY,
+    depth,
+    undefined,
+    false,
+    true,
+    "valueExpression",
   );
 }

@@ -97,6 +97,13 @@
   .lc-node-card--valueExpression {
     --lc-node-background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     --lc-node-accent: rgba(237, 233, 254, 0.9);
+    width: 100%;
+    min-width: 220px;
+    max-width: none;
+  }
+
+  .lc-node-card--valueExpression .lc-node-title--mono {
+    white-space: nowrap;
   }
 
   .lc-node-header {

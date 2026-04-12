@@ -20,6 +20,14 @@ export class TokenStream {
     return this.i >= this.tokens.length;
   }
 
+  position(): number {
+    return this.i;
+  }
+
+  tokenAt(index: number): AplToken | undefined {
+    return this.tokens[index];
+  }
+
   match(type: TokenType, value?: string): AplToken | undefined {
     const t = this.peek();
     if (!t) return;

@@ -7,9 +7,9 @@ import reactX from "eslint-plugin-react-x";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "test-results"]),
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx,mts}"],
     extends: [
       // Remove tseslint.configs.recommended and replace with this
       tseslint.configs.recommendedTypeChecked,
@@ -22,7 +22,7 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        project: ["./tsconfig.eslint.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       // other options...

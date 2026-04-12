@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { CONDITION_HANDLE_IDS } from "../../src/components/nodes/types";
-import { buildGraph, getActionNodeKind } from "../../src/utils/apl-parser/build-graph";
+import {
+  buildGraph,
+  getActionNodeKind,
+} from "../../src/utils/apl-parser/build-graph";
 import { parseDocument, type AplDocument } from "../../src/utils/apl-parser/document";
 import { LANE_WIDTH, ROW_HEIGHT } from "../../src/utils/apl-parser/grid-layout";
 
@@ -88,6 +91,7 @@ test("buildGraph emits typed structural node data and variable handles", () => {
     label: "variable",
     variableName: "aoe_threshold",
     op: "set",
+    hasExplicitOp: true,
     valueText: "active_enemies",
   });
 
@@ -105,6 +109,7 @@ test("buildGraph emits typed structural node data and variable handles", () => {
   expect(valueEdge.source).toBe("action__0__actions__0");
   expect(valueEdge.target).toBe("valueExpression__0__actions__0__value");
   expect(valueEdge.sourceHandle).toBe("val");
+  expect(valueEdge.targetHandle).toBe(CONDITION_HANDLE_IDS.targetLeft);
   expect(valueEdge.style).toMatchObject({ stroke: "#8b5cf6" });
 
   const variableConditionEdge = getNode(
@@ -145,6 +150,79 @@ test("buildGraph emits typed structural node data and variable handles", () => {
     kind: "sequence",
     label: "sequence",
     spells: ["stormstrike", "lavalash", "crashlightning"],
+  });
+});
+
+test("variable value OR expressions expand into value expression nodes", () => {
+  const graph = buildGraphFromText([
+    'shaman="Variable Value Demo"',
+    "actions.precombat+=/variable,name=trinket2_is_weird,value=trinket.2.is.algethar_puzzle_box|trinket.2.is.unyielding_netherprism",
+  ].join("\n"));
+
+  const variableNode = getNode(
+    graph.nodes,
+    "action__0__actions.precombat__0",
+  );
+  expect(variableNode.type).toBe("variable");
+  expect(variableNode.data).toMatchObject({
+    variableName: "trinket2_is_weird",
+    hasExplicitOp: false,
+    valueText:
+      "trinket.2.is.algethar_puzzle_box|trinket.2.is.unyielding_netherprism",
+  });
+
+  expect(
+    graph.nodes.find(
+      (node) => node.id === "valueExpression__0__actions.precombat__0__value",
+    ),
+  ).toBeUndefined();
+
+  const firstValue = getNode(
+    graph.nodes,
+    "valueExpression__0__actions.precombat__0__value__0",
+  );
+  expect(firstValue.type).toBe("valueExpression");
+  expect(firstValue.data).toMatchObject({
+    label: "trinket.2.is.algethar_puzzle_box",
+    handleUsage: {
+      targetLeft: true,
+      sourceBottom: true,
+    },
+  });
+
+  const secondValue = getNode(
+    graph.nodes,
+    "valueExpression__0__actions.precombat__0__value__1",
+  );
+  expect(secondValue.type).toBe("valueExpression");
+  expect(secondValue.data).toMatchObject({
+    label: "trinket.2.is.unyielding_netherprism",
+    handleUsage: {
+      targetTop: true,
+    },
+  });
+
+  const valueEdge = getNode(
+    graph.edges,
+    "edge__action__0__actions.precombat__0__value",
+  );
+  expect(valueEdge).toMatchObject({
+    source: "action__0__actions.precombat__0",
+    target: "valueExpression__0__actions.precombat__0__value__0",
+    sourceHandle: "val",
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+  });
+
+  const orEdge = getNode(
+    graph.edges,
+    "edge__valueExpression__0__actions.precombat__0__value__or__1",
+  );
+  expect(orEdge).toMatchObject({
+    label: "OR",
+    source: "valueExpression__0__actions.precombat__0__value__0",
+    target: "valueExpression__0__actions.precombat__0__value__1",
+    sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
+    targetHandle: CONDITION_HANDLE_IDS.targetTop,
   });
 });
 
@@ -246,6 +324,7 @@ test("buildGraph falls back gracefully when structural metadata is missing", () 
   expect(variableNode.data).toMatchObject({
     variableName: "(unnamed)",
     op: "set",
+    hasExplicitOp: false,
     valueText: "(no value)",
   });
 
@@ -406,11 +485,11 @@ test("bare OR chain produces leaf nodes with OR edges, no container", () => {
 
   const cond1 = getNode(graph.nodes, "condition__0__actions__0__if__1");
   expect(cond1.data).toMatchObject({ label: "buff.whirling_earth.up" });
-  expect(cond1.position).toEqual({ x: lane(3) + 35, y: row(1) + 112 });
+  expect(cond1.position).toEqual({ x: lane(3) + 26, y: row(1) + 112 });
 
   const cond2 = getNode(graph.nodes, "condition__0__actions__0__if__2");
   expect(cond2.data).toMatchObject({ label: "talent.feral_spirit.enabled" });
-  expect(cond2.position).toEqual({ x: lane(3) + 15.5, y: row(1) + 224 });
+  expect(cond2.position).toEqual({ x: lane(3) + 15, y: row(1) + 224 });
 
   expect(graph.nodes.find((n) => n.type === "container")).toBeUndefined();
 
@@ -793,6 +872,141 @@ test("buildGraph keeps simple comparison conditions as single nodes", () => {
   expect(cond.data).toMatchObject({ label: "active_enemies>1" });
 
   expect(graph.nodes.find((n) => n.id === "condition__0__actions__0__if__0")).toBeUndefined();
+});
+
+test("comparison with arithmetic on the right stays an atomic condition node", () => {
+  const expression =
+    "cooldown.lava_lash.remains < gcd.max + buff.maelstrom_weapon.stack * 0.3";
+  const graph = buildGraphFromText([
+    'shaman="Arithmetic RHS Demo"',
+    `actions+=/stormstrike,if=${expression}`,
+  ].join("\n"));
+
+  const condition = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(condition.type).toBe("condition");
+  expect(condition.data).toMatchObject({
+    label: expression,
+    expressionKind: "comparison",
+  });
+
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(0);
+  expect(
+    graph.nodes.find((node) => node.id === "condition__0__actions__0__if__0"),
+  ).toBeUndefined();
+});
+
+test("comparison with arithmetic on the left stays an atomic condition node", () => {
+  const expression =
+    "buff.maelstrom_weapon.stack*0.3+gcd.max<cooldown.lava_lash.remains";
+  const graph = buildGraphFromText([
+    'shaman="Arithmetic LHS Demo"',
+    `actions+=/stormstrike,if=${expression}`,
+  ].join("\n"));
+
+  const condition = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(condition.type).toBe("condition");
+  expect(condition.data).toMatchObject({
+    label: expression,
+    expressionKind: "comparison",
+  });
+
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(0);
+  expect(
+    graph.nodes.find((node) => node.id === "condition__0__actions__0__if__0"),
+  ).toBeUndefined();
+});
+
+test("parenthesized arithmetic-only comparison does not create a default group container", () => {
+  const expression = "cooldown.lava_lash.remains<gcd.max+(foo.bar*0.3)";
+  const graph = buildGraphFromText([
+    'shaman="Paren Arithmetic Demo"',
+    `actions+=/stormstrike,if=(${expression})`,
+  ].join("\n"));
+
+  const condition = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(condition.type).toBe("condition");
+  expect(condition.data).toMatchObject({
+    label: expression,
+    expressionKind: "comparison",
+  });
+
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(0);
+});
+
+test("explicit logical parentheses still create a grouped branch", () => {
+  const graph = buildGraphFromText([
+    'shaman="Logical Paren Demo"',
+    "actions+=/stormstrike,if=(a|b)&c",
+  ].join("\n"));
+
+  const container = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(container.type).toBe("container");
+  expect(container.data).toMatchObject({ operator: "group" });
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(1);
+
+  const innerA = getNode(graph.nodes, "condition__0__actions__0__if__0__inner__0");
+  const innerB = getNode(graph.nodes, "condition__0__actions__0__if__0__inner__1");
+  const standaloneC = getNode(graph.nodes, "condition__0__actions__0__if__1");
+
+  expect(innerA.data).toMatchObject({ label: "a" });
+  expect(innerB.data).toMatchObject({ label: "b" });
+  expect(standaloneC.data).toMatchObject({ label: "c" });
+});
+
+test("nested logical groups expand while arithmetic subexpressions stay atomic", () => {
+  const expression =
+    "(a|b)&cooldown.lava_lash.remains<gcd.max+(foo.bar*0.3)";
+  const graph = buildGraphFromText([
+    'shaman="Nested Logic Arithmetic Demo"',
+    `actions+=/stormstrike,if=${expression}`,
+  ].join("\n"));
+
+  expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(1);
+
+  const logicalContainer = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(logicalContainer.type).toBe("container");
+
+  const comparison = getNode(graph.nodes, "condition__0__actions__0__if__1");
+  expect(comparison.type).toBe("condition");
+  expect(comparison.data).toMatchObject({
+    label: "cooldown.lava_lash.remains<gcd.max+(foo.bar*0.3)",
+    expressionKind: "comparison",
+  });
+
+  expect(
+    graph.nodes.find((node) =>
+      node.id.startsWith("condition__0__actions__0__if__1__"),
+    ),
+  ).toBeUndefined();
+});
+
+test("AND binds tighter than OR in the default condition graph", () => {
+  const graph = buildGraphFromText([
+    'shaman="Precedence Demo"',
+    "actions+=/stormstrike,if=a&b|c",
+  ].join("\n"));
+
+  const andContainer = getNode(graph.nodes, "condition__0__actions__0__if__0");
+  expect(andContainer.type).toBe("container");
+  expect(andContainer.data).toMatchObject({ operator: "and" });
+
+  const innerA = getNode(graph.nodes, "condition__0__actions__0__if__0__0");
+  const innerB = getNode(graph.nodes, "condition__0__actions__0__if__0__1");
+  const standaloneC = getNode(graph.nodes, "condition__0__actions__0__if__1");
+
+  expect(innerA.data).toMatchObject({ label: "a" });
+  expect(innerB.data).toMatchObject({ label: "b" });
+  expect(standaloneC.data).toMatchObject({ label: "c" });
+
+  const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__0__and__1");
+  expect(andEdge).toMatchObject({ label: "AND" });
+
+  const orEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__or__1");
+  expect(orEdge).toMatchObject({
+    label: "OR",
+    source: "condition__0__actions__0__if__0",
+    target: "condition__0__actions__0__if__1",
+  });
 });
 
 test("buildGraph is deterministic across repeated calls", () => {

@@ -28,17 +28,15 @@ function VariableNode({
             {data.variableName}
           </div>
         </div>
-        <MetaPill>x =</MetaPill>
       </div>
 
-      <div className="lc-node-chip-row">
-        <MetaPill className="lc-node-meta--strong lc-node-meta--mono">
-          {data.op}
-        </MetaPill>
-        <MetaPill className="lc-node-meta--strong lc-node-meta--mono">
-          {data.valueText}
-        </MetaPill>
-      </div>
+      {data.hasExplicitOp ? (
+        <div className="lc-node-chip-row">
+          <MetaPill className="lc-node-meta--strong lc-node-meta--mono">
+            {data.op}
+          </MetaPill>
+        </div>
+      ) : null}
 
       <div className="lc-node-note">{data.label}</div>
     </NodeCard>

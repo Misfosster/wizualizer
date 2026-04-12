@@ -19,7 +19,7 @@ function context(lines: string[], i: number, r = 2): string {
     .slice(Math.max(0, i - r), i + r + 1)
     .map((l, k) => {
       const n = i - r + k;
-      return `${n === i ? ">>" : "  "} ${n + 1} | ${l}`;
+      return `${n === i ? ">>" : "  "} ${String(n + 1)} | ${l}`;
     })
     .join("\n");
 }
@@ -50,10 +50,6 @@ function stripParensCondition(c: Condition): Condition {
     case "ident":
     case "number":
       return c;
-    default: {
-      const _never: never = c;
-      return c;
-    }
   }
 }
 
@@ -69,7 +65,7 @@ function stripParensAction(a: Action): Action {
 
 function parseOrThrow(line: string, fileLine: number): Action {
   const a = parseAction(line);
-  if (!a) throw new Error(`parseAction returned null at line ${fileLine}`);
+  if (!a) throw new Error(`parseAction returned null at line ${String(fileLine)}`);
   return a;
 }
 
@@ -106,7 +102,7 @@ function assertRoundtrip(lines: string[], filename: string) {
       expect(ast2).toEqual(ast1);
     } catch {
       throw new Error(
-        `AST roundtrip mismatch in ${filename} at file line ${lineNo}:\n` +
+        `AST roundtrip mismatch in ${filename} at file line ${String(lineNo)}:\n` +
         `INPUT:   ${src}\n` +
         `PRINTED: ${printed}\n\n` +
         `Context:\n${context(expectedLines, i)}`,

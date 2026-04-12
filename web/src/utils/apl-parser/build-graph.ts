@@ -21,7 +21,6 @@ import {
   gridPoint,
   rowsFromBounds,
   type Point,
-  type Size,
 } from "./grid-layout";
 import {
   extractCallTarget,
@@ -30,7 +29,11 @@ import {
   extractVariableData,
   getConditionSegments,
 } from "./action-data";
-import { placeConditionGraph } from "./condition-layout";
+import {
+  placeConditionGraph,
+  placeValueExpressionGraph,
+  type ConditionGraphResult,
+} from "./condition-layout";
 export type { Point, Size } from "./grid-layout";
 
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
@@ -138,7 +141,11 @@ function withConditionHandleUsage(
   }
 
   return nodes.map((node) => {
-    if (node.type !== "condition" && node.type !== "container") {
+    if (
+      node.type !== "condition" &&
+      node.type !== "container" &&
+      node.type !== "valueExpression"
+    ) {
       return node;
     }
 
@@ -194,6 +201,7 @@ function createActionNodeData(actionLine: ParsedActionLine):
         kind: "variable",
         variableName: variableData.variableName,
         op: variableData.op,
+        hasExplicitOp: variableData.hasExplicitOp,
         valueText: variableData.valueText,
       };
     }
@@ -235,21 +243,46 @@ function createGraphNode(
   id: string,
   data: GraphNodeData,
   position: Point,
+  extra?: Partial<Node>,
 ): GraphFlowNode {
-  return createNode(id, data, position) as GraphFlowNode;
+  return { ...createNode(id, data, position), ...extra } as GraphFlowNode;
 }
 
 function buildValueExpressionGraph(
   label: string,
   nodeId: string,
   origin: Point,
-): { nodes: GraphFlowNode[]; edges: Edge[]; bounds: Size } {
+): ConditionGraphResult {
   const data: ValueExpressionNodeData = { label, kind: "valueExpression" };
   return {
-    nodes: [createGraphNode(nodeId, data, origin)],
+    nodes: [
+      createGraphNode(nodeId, data, origin, {
+        style: { width: EXPRESSION_NODE_BOUNDS.width },
+      }),
+    ],
     edges: [],
-    bounds: EXPRESSION_NODE_BOUNDS,
+    size: EXPRESSION_NODE_BOUNDS,
+    rowsUsed: rowsFromBounds(EXPRESSION_NODE_BOUNDS),
   };
+}
+
+function buildVariableValueExpressionGraph(
+  actionLine: ParsedActionLine,
+  actionNodeData: Extract<GraphNodeData, { kind: "variable" }>,
+  nodeId: string,
+  origin: Point,
+): ConditionGraphResult {
+  const variableData = extractVariableData(actionLine.action.segments);
+  if (!variableData.valueExpr) {
+    return buildValueExpressionGraph(actionNodeData.valueText, nodeId, origin);
+  }
+
+  return placeValueExpressionGraph(
+    variableData.valueExpr,
+    nodeId,
+    origin.x,
+    origin.y,
+  );
 }
 
 function buildActionGraph(
@@ -272,8 +305,9 @@ function buildActionGraph(
   if (actionNodeData.kind === "variable") {
     const valueExpressionId =
       `valueExpression__${profileId}__${blockName}__${String(actionIndex)}__value`;
-    const valueExpressionGraph = buildValueExpressionGraph(
-      actionNodeData.valueText,
+    const valueExpressionGraph = buildVariableValueExpressionGraph(
+      actionLine,
+      actionNodeData,
       valueExpressionId,
       gridPoint("expression", row),
     );
@@ -285,12 +319,16 @@ function buildActionGraph(
         `edge__${actionId}__value`,
         actionId,
         valueExpressionGraph.nodes[0].id,
-        { sourceHandle: "val", style: VALUE_EDGE_STYLE },
+        {
+          sourceHandle: "val",
+          targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+          style: VALUE_EDGE_STYLE,
+        },
       ),
     );
 
-    rowsUsed = Math.max(rowsUsed, rowsFromBounds(valueExpressionGraph.bounds));
-    conditionStartRow = row + rowsFromBounds(valueExpressionGraph.bounds);
+    rowsUsed = Math.max(rowsUsed, valueExpressionGraph.rowsUsed);
+    conditionStartRow = row + valueExpressionGraph.rowsUsed;
   }
 
   const conditionSegments = getConditionSegments(actionLine.action.segments);
@@ -302,7 +340,10 @@ function buildActionGraph(
       `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
     const conditionOrigin = gridPoint("expression", conditionRow);
     const conditionGraph = placeConditionGraph(
-      segment.expr, conditionId, conditionOrigin.x, conditionOrigin.y,
+      segment.expr,
+      conditionId,
+      conditionOrigin.x,
+      conditionOrigin.y,
     );
 
     nodes.push(...conditionGraph.nodes);

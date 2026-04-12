@@ -9,6 +9,7 @@ import type {
   SeqExpr,
   UnaryOp,
 } from "./types";
+import { setConditionSource } from "./condition-source";
 import { TokenStream } from "./token-stream";
 
 function isCallName(name: string): name is CallName {
@@ -89,7 +90,7 @@ export function parseAction(line: string): Action | null {
     ) {
       ts.next(); // consume ifKw
       ts.next(); // consume eq
-      segments.push({ type: "if", expr: parseSegmentCondition(ts) });
+      segments.push({ type: "if", expr: parseSegmentCondition(ts, line) });
       continue;
     }
 
@@ -101,7 +102,10 @@ export function parseAction(line: string): Action | null {
     ) {
       ts.next(); // consume tifKw
       ts.next(); // consume eq
-      segments.push({ type: "target_if", expr: parseSegmentCondition(ts) });
+      segments.push({
+        type: "target_if",
+        expr: parseSegmentCondition(ts, line),
+      });
       continue;
     }
 
@@ -113,7 +117,7 @@ export function parseAction(line: string): Action | null {
     ts.expect("eq");
 
     // value as Condition (for now)
-    const expr = parseSegmentCondition(ts);
+    const expr = parseSegmentCondition(ts, line);
 
     segments.push({ type: "other", key, expr });
   }
@@ -256,8 +260,13 @@ function parseSequence(ts: TokenStream): SeqExpr {
 }
 
 // https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
-function parseCondition(ts: TokenStream, minPrec = 0): Condition {
-  let left = parsePrefix(ts);
+function parseCondition(
+  ts: TokenStream,
+  minPrec = 0,
+  sourceLine?: string,
+): Condition {
+  const startIndex = ts.position();
+  let left = parsePrefix(ts, sourceLine);
 
   for (; ;) {
     const t = ts.peek(); // Check which operator
@@ -277,17 +286,40 @@ function parseCondition(ts: TokenStream, minPrec = 0): Condition {
       throw new Error(`Unhandled operator token: ${t.type}`);
     }
 
-    const right = parseCondition(ts, prec + 1); // left-assoc
+    const right = parseCondition(ts, prec + 1, sourceLine); // left-assoc
     left = { kind: "binary", op, left, right };
   }
 
-  return left;
+  return setSourceFromTokens(left, ts, startIndex, sourceLine);
 }
 
-function parseSegmentCondition(ts: TokenStream): Condition {
-  const expr = parseCondition(ts);
+function parseSegmentCondition(ts: TokenStream, sourceLine: string): Condition {
+  const expr = parseCondition(ts, 0, sourceLine);
   expectSegmentBoundary(ts);
   return expr;
+}
+
+function setSourceFromTokens<T extends Condition>(
+  condition: T,
+  ts: TokenStream,
+  startIndex: number,
+  sourceLine: string | undefined,
+): T {
+  if (!sourceLine) {
+    return condition;
+  }
+
+  const startToken = ts.tokenAt(startIndex);
+  const endToken = ts.tokenAt(ts.position() - 1);
+  if (!startToken || !endToken) {
+    return condition;
+  }
+
+  const endOffset = endToken.offset + endToken.text.length;
+  return setConditionSource(
+    condition,
+    sourceLine.slice(startToken.offset, endOffset),
+  );
 }
 
 function expectSegmentBoundary(ts: TokenStream): void {
@@ -301,7 +333,7 @@ function expectSegmentBoundary(ts: TokenStream): void {
   );
 }
 
-function parsePrefix(ts: TokenStream): Condition {
+function parsePrefix(ts: TokenStream, sourceLine?: string): Condition {
   const t = ts.peek();
   if (!t) {
     throw new Error("Unexpected EOF in condition");
@@ -310,13 +342,13 @@ function parsePrefix(ts: TokenStream): Condition {
   const op = tokToUnaryOp(t);
   if (op) {
     ts.next();
-    return { kind: "unary", op, expr: parsePrefix(ts) };
+    return { kind: "unary", op, expr: parsePrefix(ts, sourceLine) };
   }
 
-  return parsePrimary(ts);
+  return parsePrimary(ts, sourceLine);
 }
 
-function parsePrimary(ts: TokenStream): Condition {
+function parsePrimary(ts: TokenStream, sourceLine?: string): Condition {
   const t = ts.peek();
   if (!t) {
     throw new Error("Unexpected EOF in condition");
@@ -324,7 +356,7 @@ function parsePrimary(ts: TokenStream): Condition {
 
   if (t.type === "lparen") {
     ts.next();
-    const inner = parseCondition(ts, 0);
+    const inner = parseCondition(ts, 0, sourceLine);
     ts.expect("rparen");
     return { kind: "paren", expr: inner };
   }
@@ -339,7 +371,7 @@ function parsePrimary(ts: TokenStream): Condition {
     const name = t.value;
 
     if (ts.match("lparen")) {
-      return parseCall(ts, name);
+      return parseCall(ts, name, sourceLine);
     }
 
     return { kind: "ident", name };
@@ -350,7 +382,11 @@ function parsePrimary(ts: TokenStream): Condition {
   );
 }
 
-function parseCall(ts: TokenStream, name: string): CallExpr {
+function parseCall(
+  ts: TokenStream,
+  name: string,
+  sourceLine?: string,
+): CallExpr {
   if (!isCallName(name)) {
     throw new Error(`Unsupported function call: ${name}`);
   }
@@ -359,7 +395,7 @@ function parseCall(ts: TokenStream, name: string): CallExpr {
     throw new Error(`Function '${name}' expects exactly one argument`);
   }
 
-  const arg = parseCondition(ts);
+  const arg = parseCondition(ts, 0, sourceLine);
   if (ts.match("comma")) {
     throw new Error(`Function '${name}' only supports a single argument`);
   }
