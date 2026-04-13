@@ -38,6 +38,11 @@ export type { Point, Size } from "./grid-layout";
 
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
 const VALUE_EDGE_STYLE = { stroke: "#8b5cf6" } as const;
+const NODE_BORDER_HEIGHT = 2;
+const NODE_VERTICAL_PADDING = 24;
+const NODE_HEADER_HEIGHT = 40;
+const NODE_NOTE_GAP = 12;
+const NODE_NOTE_LINE_HEIGHT = 16;
 const CONDITION_HANDLE_USAGE_KEYS = new Map<
   string,
   keyof ConditionHandleUsage
@@ -239,6 +244,20 @@ function assertNever(value: never): never {
   throw new Error(`Unexpected value: ${String(value)}`);
 }
 
+function estimateDefaultSourceCenterY(data: GraphNodeData): number {
+  let height = NODE_BORDER_HEIGHT + NODE_VERTICAL_PADDING + NODE_HEADER_HEIGHT;
+
+  if (
+    data.kind === "useItem" ||
+    data.kind === "callActionList" ||
+    data.kind === "sequence"
+  ) {
+    height += NODE_NOTE_GAP + NODE_NOTE_LINE_HEIGHT;
+  }
+
+  return height / 2;
+}
+
 function createGraphNode(
   id: string,
   data: GraphNodeData,
@@ -263,6 +282,8 @@ function buildValueExpressionGraph(
     edges: [],
     size: EXPRESSION_NODE_BOUNDS,
     rowsUsed: rowsFromBounds(EXPRESSION_NODE_BOUNDS),
+    entryNodeId: nodeId,
+    entryCenterY: EXPRESSION_NODE_BOUNDS.height / 2,
   };
 }
 
@@ -301,6 +322,29 @@ function buildActionGraph(
   const edges: Edge[] = [];
   let rowsUsed = 1;
   let conditionStartRow = row;
+  let didAlignActionToCondition = false;
+
+  function alignActionToConditionEntry(
+    conditionOrigin: Point,
+    conditionGraph: ConditionGraphResult,
+  ): void {
+    if (actionNodeData.kind === "variable" || didAlignActionToCondition) {
+      return;
+    }
+
+    didAlignActionToCondition = true;
+    const currentAction = nodes[0];
+    nodes[0] = {
+      ...currentAction,
+      position: {
+        ...currentAction.position,
+        y:
+          conditionOrigin.y +
+          conditionGraph.entryCenterY -
+          estimateDefaultSourceCenterY(actionNodeData),
+      },
+    };
+  }
 
   if (actionNodeData.kind === "variable") {
     const valueExpressionId =
@@ -318,7 +362,7 @@ function buildActionGraph(
       createEdge(
         `edge__${actionId}__value`,
         actionId,
-        valueExpressionGraph.nodes[0].id,
+        valueExpressionGraph.entryNodeId,
         {
           sourceHandle: "val",
           targetHandle: CONDITION_HANDLE_IDS.targetLeft,
@@ -345,6 +389,7 @@ function buildActionGraph(
       conditionOrigin.x,
       conditionOrigin.y,
     );
+    alignActionToConditionEntry(conditionOrigin, conditionGraph);
 
     nodes.push(...conditionGraph.nodes);
     edges.push(...conditionGraph.edges);
@@ -352,7 +397,7 @@ function buildActionGraph(
       createEdge(
         `edge__${actionId}__${segment.type}`,
         actionId,
-        conditionGraph.nodes[0].id,
+        conditionGraph.entryNodeId,
         {
           ...(actionNodeData.kind === "variable" ? { sourceHandle: "if" } : {}),
           targetHandle: CONDITION_HANDLE_IDS.targetLeft,

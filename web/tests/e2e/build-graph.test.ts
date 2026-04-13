@@ -387,7 +387,7 @@ test("buildGraph places nodes at deterministic grid positions", () => {
     x: lane(2), y: row(5),
   });
   expect(getNode(graph.nodes, "action__0__actions__2").position).toEqual({
-    x: lane(2), y: row(6),
+    x: lane(2), y: row(6) - 14,
   });
   expect(getNode(graph.nodes, "condition__0__actions__2__if").position).toEqual({
     x: lane(3), y: row(6),
@@ -485,11 +485,11 @@ test("bare OR chain produces leaf nodes with OR edges, no container", () => {
 
   const cond1 = getNode(graph.nodes, "condition__0__actions__0__if__1");
   expect(cond1.data).toMatchObject({ label: "buff.whirling_earth.up" });
-  expect(cond1.position).toEqual({ x: lane(3) + 26, y: row(1) + 112 });
+  expect(cond1.position).toEqual({ x: lane(3) + 26, y: row(1) + 114 });
 
   const cond2 = getNode(graph.nodes, "condition__0__actions__0__if__2");
   expect(cond2.data).toMatchObject({ label: "talent.feral_spirit.enabled" });
-  expect(cond2.position).toEqual({ x: lane(3) + 15, y: row(1) + 224 });
+  expect(cond2.position).toEqual({ x: lane(3) + 15, y: row(1) + 228 });
 
   expect(graph.nodes.find((n) => n.type === "container")).toBeUndefined();
 
@@ -638,6 +638,9 @@ test("AND branch contested by OR gets an AND container", () => {
   expect(andContainer.position).toEqual({ x: lane(3), y: row(1) });
   expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(1);
 
+  const action = getNode(graph.nodes, "action__0__actions__0");
+  expect(action.position).toEqual({ x: lane(2), y: row(1) + 20 });
+
   const innerA = getNode(graph.nodes, "condition__0__actions__0__if__0__0");
   expect(innerA.type).toBe("condition");
   expect(innerA.data).toMatchObject({ label: "A" });
@@ -653,7 +656,7 @@ test("AND branch contested by OR gets an AND container", () => {
   const standaloneC = getNode(graph.nodes, "condition__0__actions__0__if__1");
   expect(standaloneC.type).toBe("condition");
   expect(standaloneC.data).toMatchObject({ label: "C" });
-  expect(standaloneC.position).toEqual({ x: lane(3) + 178, y: row(1) + 152 });
+  expect(standaloneC.position).toEqual({ x: lane(3) + 178, y: row(1) + 154 });
 
   const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__0__and__1");
   expect(andEdge).toMatchObject({
@@ -671,6 +674,12 @@ test("AND branch contested by OR gets an AND container", () => {
     sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
     targetHandle: CONDITION_HANDLE_IDS.targetTop,
     type: "straight",
+  });
+
+  const actionToContainer = getNode(graph.edges, "edge__action__0__actions__0__if");
+  expect(actionToContainer).toMatchObject({
+    target: "condition__0__actions__0__if__0",
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
   });
 });
 

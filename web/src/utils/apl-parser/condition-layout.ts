@@ -18,7 +18,7 @@ import type { Size } from "./grid-layout";
 const CONDITION_MIN_WIDTH = 220;
 const CONDITION_CELL: Readonly<Size> = {
   width: CONDITION_MIN_WIDTH,
-  height: 64,
+  height: 66,
 };
 const CONDITION_TEXT_PADDING = 36;
 const CONDITION_CHAR_WIDTH = 7.6;
@@ -82,6 +82,8 @@ export interface ConditionGraphResult {
   edges: Edge[];
   size: Size;
   rowsUsed: number;
+  entryNodeId: string;
+  entryCenterY: number;
 }
 
 function measureCondition(
@@ -299,6 +301,8 @@ function placeLeaf(
     edges: [],
     size,
     rowsUsed: 1,
+    entryNodeId: nodeId,
+    entryCenterY: size.height / 2,
   };
 }
 
@@ -394,6 +398,8 @@ function placeGroupContainer(
     edges: innerResult.edges,
     size: { width: containerMeasure.width, height: containerMeasure.height },
     rowsUsed: Math.max(1, Math.ceil(containerMeasure.height / ROW_HEIGHT)),
+    entryNodeId: nodeId,
+    entryCenterY: containerMeasure.height / 2,
   };
 }
 
@@ -418,6 +424,8 @@ function placeOrChain(
   const edgeOperatorId = operator.toLowerCase();
 
   let childY = 0;
+  let entryNodeId = "";
+  let entryCenterY = 0;
   for (let i = 0; i < operands.length; i++) {
     const childId = `${nodeId}__${String(i)}`;
     const childX = globalX + (totalMeasure.width - childMeasures[i].width) / 2;
@@ -435,6 +443,11 @@ function placeOrChain(
 
     nodes.push(...childResult.nodes);
     edges.push(...childResult.edges);
+
+    if (i === 0) {
+      entryNodeId = childResult.entryNodeId;
+      entryCenterY = childY + childResult.entryCenterY;
+    }
 
     if (i > 0) {
       const prevChildId = `${nodeId}__${String(i - 1)}`;
@@ -456,6 +469,8 @@ function placeOrChain(
     edges,
     size: { width: totalMeasure.width, height: totalMeasure.height },
     rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
+    entryNodeId,
+    entryCenterY,
   };
 }
 
@@ -485,6 +500,8 @@ function placeAndChain(
     const maxChildHeight = Math.max(...childMeasures.map((m) => m.height));
 
     let childX = 0;
+    let entryNodeId = "";
+    let entryCenterY = 0;
     for (let i = 0; i < operands.length; i++) {
       const childId = `${nodeId}__${String(i)}`;
       const childY = (maxChildHeight - childMeasures[i].height) / 2;
@@ -502,6 +519,11 @@ function placeAndChain(
 
       nodes.push(...childResult.nodes);
       edges.push(...childResult.edges);
+
+      if (i === 0) {
+        entryNodeId = childResult.entryNodeId;
+        entryCenterY = childY + childResult.entryCenterY;
+      }
 
       if (i > 0) {
         const prevChildId = `${nodeId}__${String(i - 1)}`;
@@ -523,6 +545,8 @@ function placeAndChain(
       edges,
       size: { width: totalMeasure.width, height: totalMeasure.height },
       rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
+      entryNodeId,
+      entryCenterY,
     };
   }
 
@@ -587,6 +611,8 @@ function placeAndChain(
     edges,
     size: { width: totalMeasure.width, height: totalMeasure.height },
     rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
+    entryNodeId: nodeId,
+    entryCenterY: totalMeasure.height / 2,
   };
 }
 
