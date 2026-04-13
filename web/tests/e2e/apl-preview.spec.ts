@@ -98,6 +98,25 @@ test("collapses and expands block children from the preview graph", async ({ pag
   await expect(page.getByTestId("rf__node-action__0__actions__3")).toBeVisible();
 });
 
+test("collapses and expands all block children from the canvas control", async ({ page }) => {
+  await page.goto("/");
+  await page.getByPlaceholder("Paste APL...").fill(STRUCTURAL_APL);
+  await page.getByRole("tab", { name: "Preview" }).click();
+
+  await expect(page.getByTestId("rf__node-action__0__actions.precombat__0")).toBeVisible();
+  await expect(page.getByTestId("rf__node-action__0__actions__0")).toBeVisible();
+
+  await page.getByRole("button", { name: "Collapse All" }).click();
+
+  await expect(page.getByRole("button", { name: "Expand All" })).toBeVisible();
+  await expect(page.getByTestId("rf__node-action__0__actions.precombat__0")).toHaveCount(0);
+  await expect(page.getByTestId("rf__node-action__0__actions__0")).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Expand All" }).click();
+
+  await expect(page.getByRole("button", { name: "Collapse All" })).toBeVisible();
+});
+
 test("keeps the last good graph when a parse error occurs", async ({ page }) => {
   await page.goto("/");
   await page.getByPlaceholder("Paste APL...").fill(VALID_APL);

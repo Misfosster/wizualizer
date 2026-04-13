@@ -23,6 +23,7 @@ interface EditorState {
   edges: Edge[];
   applyAplText: (text: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
+  toggleAllBlocksCollapse: () => void;
 }
 
 // Everything that changes when we re-parse the APL text.
@@ -52,18 +53,24 @@ function pruneCollapsedBlocks(
   document: AplDocument,
   collapsedBlocks: ReadonlySet<string>,
 ): Set<string> {
-  const validBlockIds = new Set<string>();
-
-  for (let profileIndex = 0; profileIndex < document.profiles.length; profileIndex++) {
-    const profile = document.profiles[profileIndex];
-    for (const block of profile.blocks) {
-      validBlockIds.add(getBlockNodeId(profileIndex, block.name));
-    }
-  }
+  const validBlockIds = getDocumentBlockIds(document);
 
   return new Set(
     Array.from(collapsedBlocks).filter((blockId) => validBlockIds.has(blockId)),
   );
+}
+
+function getDocumentBlockIds(document: AplDocument): Set<string> {
+  const blockIds = new Set<string>();
+
+  for (let profileIndex = 0; profileIndex < document.profiles.length; profileIndex++) {
+    const profile = document.profiles[profileIndex];
+    for (const block of profile.blocks) {
+      blockIds.add(getBlockNodeId(profileIndex, block.name));
+    }
+  }
+
+  return blockIds;
 }
 
 function buildDerivedState(
@@ -127,7 +134,7 @@ function getEmptyDerivedState(lastGoodText = ""): DerivedEditorState {
  */
 function getInitialEditorState(): Omit<
   EditorState,
-  "applyAplText" | "toggleBlockCollapse"
+  "applyAplText" | "toggleBlockCollapse" | "toggleAllBlocksCollapse"
 > {
   const aplText = readStoredText(APL_STORAGE_KEY);
   const lastGoodText = readStoredText(LAST_GOOD_APL_STORAGE_KEY);
@@ -197,6 +204,30 @@ export const useEditorStore = create<EditorState>((set) => ({
       }
 
       const graph = buildGraph(state.document, collapsedBlocks);
+      return {
+        collapsedBlocks,
+        nodes: graph.nodes,
+        edges: graph.edges,
+      };
+    });
+  },
+  toggleAllBlocksCollapse: () => {
+    set((state) => {
+      if (!state.document) {
+        return {};
+      }
+
+      const blockIds = getDocumentBlockIds(state.document);
+      const shouldExpandAll =
+        blockIds.size > 0 &&
+        Array.from(blockIds).every((blockId) =>
+          state.collapsedBlocks.has(blockId),
+        );
+      const collapsedBlocks = shouldExpandAll
+        ? new Set<string>()
+        : new Set(blockIds);
+      const graph = buildGraph(state.document, collapsedBlocks);
+
       return {
         collapsedBlocks,
         nodes: graph.nodes,
