@@ -1,7 +1,7 @@
 @layer components {
   .lc-node-card {
-    --lc-node-background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
-    --lc-node-border: rgba(255, 255, 255, 0.18);
+    --lc-node-background: linear-gradient(135deg, #2f3542 0%, #262b36 100%);
+    --lc-node-border: rgba(255, 255, 255, 0.08);
     --lc-node-accent: rgba(226, 232, 240, 0.9);
     --lc-node-note: rgba(226, 232, 240, 0.8);
 
@@ -14,7 +14,7 @@
     padding: 0.75rem 1rem;
     text-align: left;
     color: #ffffff;
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.32);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
     background: var(--lc-node-background);
     pointer-events: all;
   }
@@ -29,7 +29,8 @@
   }
 
   .lc-node-card--root {
-    --lc-node-background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --lc-node-background: linear-gradient(135deg, #252b36 0%, #171c25 100%);
+    --lc-node-border: rgba(255, 255, 255, 0.1);
     --lc-node-accent: #cbd5e1;
     --lc-node-note: rgba(226, 232, 240, 0.8);
     width: max-content;
@@ -38,7 +39,8 @@
   }
 
   .lc-node-card--block {
-    --lc-node-background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    --lc-node-background: linear-gradient(135deg, #2d3440 0%, #222935 100%);
+    --lc-node-border: rgba(255, 255, 255, 0.1);
     --lc-node-accent: #cbd5e1;
     --lc-node-note: rgba(226, 232, 240, 0.8);
     width: max-content;
@@ -47,7 +49,8 @@
   }
 
   .lc-node-card--action {
-    --lc-node-background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    --lc-node-background: linear-gradient(135deg, #2a2f3a 0%, #222733 100%);
+    --lc-node-border: rgba(255, 255, 255, 0.1);
     --lc-node-accent: #cbd5e1;
     --lc-node-note: rgba(226, 232, 240, 0.8);
     width: max-content;
@@ -87,18 +90,18 @@
   }
 
   .lc-node-card--condition {
-    --lc-node-background: linear-gradient(135deg, #ccfbf1 0%, #67e8f9 100%);
-    --lc-node-border: rgba(14, 116, 144, 0.36);
-    --lc-node-accent: #0f766e;
+    --lc-node-background: linear-gradient(135deg, #8ad8dc 0%, #6fc2c9 100%);
+    --lc-node-border: rgba(125, 211, 216, 0.5);
+    --lc-node-accent: #075b61;
     width: 100%;
     min-width: 220px;
     max-width: none;
-    color: #083344;
-    box-shadow: 0 10px 22px rgba(14, 116, 144, 0.18);
+    color: #042f36;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
   }
 
   .lc-node-card--condition .lc-node-title {
-    color: #083344;
+    color: #042f36;
   }
 
   .lc-node-card--condition .lc-node-title--mono {
@@ -106,7 +109,7 @@
   }
 
   .lc-node-card--condition .lc-node-eyebrow {
-    color: #0f766e;
+    color: #075b61;
   }
 
   .lc-node-card--valueExpression {

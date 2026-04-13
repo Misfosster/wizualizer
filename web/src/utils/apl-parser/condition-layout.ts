@@ -47,14 +47,14 @@ const ARITHMETIC_OPS: ReadonlySet<BinOp> = new Set([
   ">?",
 ]);
 
-const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
+const DEFAULT_EDGE_STYLE = { stroke: "#7b8494" } as const;
 const BOOLEAN_EDGE_COLORS: Record<
   BooleanEdgeOperator,
   { stroke: string; label: string; labelBg: string }
 > = {
-  AND: { stroke: "#0f766e", label: "#115e59", labelBg: "#ccfbf1" },
-  OR: { stroke: "#2563eb", label: "#1d4ed8", labelBg: "#dbeafe" },
-  XOR: { stroke: "#7c3aed", label: "#6d28d9", labelBg: "#ede9fe" },
+  AND: { stroke: "#6fc2c9", label: "#dff7f8", labelBg: "#263e44" },
+  OR: { stroke: "#7aa7ff", label: "#e8f0ff", labelBg: "#26344d" },
+  XOR: { stroke: "#b5a4ff", label: "#f0edff", labelBg: "#352d55" },
 };
 
 type BooleanEdgeOperator = "AND" | "OR" | "XOR";

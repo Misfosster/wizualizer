@@ -85,11 +85,15 @@ export default function Canvas() {
   return (
     <div
       ref={canvasRef}
-      className="h-full w-full min-h-[300px] bg-white text-gray-900"
+      className="h-full w-full min-h-[300px] bg-[#242933] text-slate-100"
     >
       <ReactFlow
         className="lc-flow"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#242933",
+        }}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
@@ -131,7 +135,12 @@ export default function Canvas() {
             {toggleAllLabel}
           </button>
         </Panel>
-        <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#d1d5db" />
+        <Background
+          variant={BackgroundVariant.Dots}
+          gap={24}
+          size={1}
+          color="rgba(255, 255, 255, 0.04)"
+        />
       </ReactFlow>
     </div>
   );
