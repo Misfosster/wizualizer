@@ -3,7 +3,12 @@ import { Position, type NodeProps } from "@xyflow/react";
 import { CONDITION_HANDLE_IDS, type ContainerFlowNode } from "./types";
 import { SourceHandle, TargetHandle } from "./shared";
 
-const DEPTH_COLORS = ["#3b82f6", "#f59e0b", "#8b5cf6", "#14b8a6"] as const;
+const DEPTH_COLORS = [
+  "rgba(96, 165, 250, 0.42)",
+  "rgba(245, 158, 11, 0.42)",
+  "rgba(167, 139, 250, 0.42)",
+  "rgba(45, 212, 191, 0.42)",
+] as const;
 
 function ContainerNode({ data, isConnectable }: NodeProps<ContainerFlowNode>) {
   const borderColor = DEPTH_COLORS[data.depth % DEPTH_COLORS.length];

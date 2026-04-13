@@ -48,13 +48,25 @@ const ARITHMETIC_OPS: ReadonlySet<BinOp> = new Set([
 ]);
 
 const DEFAULT_EDGE_STYLE = { stroke: "#7b8494" } as const;
+const NODE_Z_INDEX: Record<GraphNodeData["kind"], number> = {
+  root: 50,
+  block: 40,
+  action: 30,
+  variable: 30,
+  useItem: 30,
+  callActionList: 30,
+  sequence: 30,
+  condition: 20,
+  valueExpression: 20,
+  container: 10,
+};
 const BOOLEAN_EDGE_COLORS: Record<
   BooleanEdgeOperator,
   { stroke: string; label: string; labelBg: string }
 > = {
-  AND: { stroke: "#6fc2c9", label: "#dff7f8", labelBg: "#263e44" },
-  OR: { stroke: "#7aa7ff", label: "#e8f0ff", labelBg: "#26344d" },
-  XOR: { stroke: "#b5a4ff", label: "#f0edff", labelBg: "#352d55" },
+  AND: { stroke: "#6fc2c9", label: "rgba(223, 247, 248, 0.78)", labelBg: "#263e44" },
+  OR: { stroke: "rgba(122, 167, 255, 0.62)", label: "rgba(232, 240, 255, 0.68)", labelBg: "#26344d" },
+  XOR: { stroke: "rgba(181, 164, 255, 0.62)", label: "rgba(240, 237, 255, 0.68)", labelBg: "#352d55" },
 };
 
 type BooleanEdgeOperator = "AND" | "OR" | "XOR";
@@ -76,6 +88,11 @@ interface EdgeOptions {
   labelBgPadding?: Edge["labelBgPadding"];
   labelBgBorderRadius?: Edge["labelBgBorderRadius"];
 }
+
+type GraphNodeExtra = Pick<
+  Node,
+  "className" | "extent" | "parentId" | "style"
+>;
 
 export interface ConditionGraphResult {
   nodes: GraphFlowNode[];
@@ -199,12 +216,27 @@ function conditionExpressionKind(
   return "expression";
 }
 
+function graphNodeClassName(
+  data: GraphNodeData,
+  extra?: Partial<GraphNodeExtra>,
+): string | undefined {
+  const classNames = [
+    typeof extra?.className === "string" ? extra.className : undefined,
+    extra?.parentId ? "lc-flow-node--nested" : undefined,
+    data.kind === "container" ? "lc-flow-node--container" : undefined,
+  ].filter(Boolean);
+
+  return classNames.length > 0 ? classNames.join(" ") : undefined;
+}
+
 function createGraphNode(
   id: string,
   data: GraphNodeData,
   position: { x: number; y: number },
-  extra?: Partial<Node>,
+  extra?: Partial<GraphNodeExtra>,
 ): GraphFlowNode {
+  const className = graphNodeClassName(data, extra);
+
   return {
     id,
     type: data.kind,
@@ -212,7 +244,9 @@ function createGraphNode(
     data,
     sourcePosition: FlowPosition.Right,
     targetPosition: FlowPosition.Left,
+    zIndex: NODE_Z_INDEX[data.kind],
     ...extra,
+    ...(className ? { className } : {}),
   } as GraphFlowNode;
 }
 

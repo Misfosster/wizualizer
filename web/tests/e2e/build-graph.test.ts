@@ -384,16 +384,16 @@ test("buildGraph places nodes at deterministic grid positions", () => {
   });
 
   expect(getNode(graph.nodes, "action__0__actions__1").position).toEqual({
-    x: lane(2), y: row(5),
+    x: lane(2), y: row(6),
   });
   expect(getNode(graph.nodes, "action__0__actions__2").position).toEqual({
-    x: lane(2), y: row(6) - 14,
+    x: lane(2), y: row(8) - 14,
   });
   expect(getNode(graph.nodes, "condition__0__actions__2__if").position).toEqual({
-    x: lane(3), y: row(6),
+    x: lane(3), y: row(8),
   });
   expect(getNode(graph.nodes, "action__0__actions__3").position).toEqual({
-    x: lane(2), y: row(7),
+    x: lane(2), y: row(10),
   });
 });
 
@@ -502,8 +502,8 @@ test("bare OR chain produces leaf nodes with OR edges, no container", () => {
     label: "OR",
     sourceHandle: CONDITION_HANDLE_IDS.sourceBottom,
     targetHandle: CONDITION_HANDLE_IDS.targetTop,
-    style: { stroke: "#2563eb" },
-    labelStyle: { fill: "#1d4ed8" },
+    style: { stroke: "rgba(122, 167, 255, 0.62)" },
+    labelStyle: { fill: "rgba(232, 240, 255, 0.68)" },
   });
 
   const orEdge2 = getNode(graph.edges, "edge__condition__0__actions__0__if__or__2");
@@ -606,8 +606,8 @@ test("pure AND chain produces horizontal condition nodes without a container", (
     sourceHandle: CONDITION_HANDLE_IDS.sourceRight,
     targetHandle: CONDITION_HANDLE_IDS.targetLeft,
     type: "straight",
-    style: { stroke: "#0f766e" },
-    labelStyle: { fill: "#115e59" },
+    style: { stroke: "#6fc2c9" },
+    labelStyle: { fill: "rgba(223, 247, 248, 0.78)" },
   });
 });
 

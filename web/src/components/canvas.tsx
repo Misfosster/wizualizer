@@ -22,6 +22,8 @@ const defaultEdgeOptions = {
 } as const;
 const bulkToggleFitViewOptions = { padding: 0.35, maxZoom: 1 } as const;
 const firstNodeViewportAnchor = { x: 0.33, y: 0.25 } as const;
+const canvasBackground =
+  "radial-gradient(circle at 35% 10%, #343b4a 0%, #29303b 38%, #232936 78%)";
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
@@ -85,14 +87,15 @@ export default function Canvas() {
   return (
     <div
       ref={canvasRef}
-      className="h-full w-full min-h-[300px] bg-[#242933] text-slate-100"
+      className="h-full w-full min-h-[300px] text-slate-100"
+      style={{ background: canvasBackground }}
     >
       <ReactFlow
         className="lc-flow"
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: "#242933",
+          background: canvasBackground,
         }}
         nodes={nodes}
         edges={edges}
@@ -139,7 +142,7 @@ export default function Canvas() {
           variant={BackgroundVariant.Dots}
           gap={24}
           size={1}
-          color="rgba(255, 255, 255, 0.04)"
+          color="rgba(255, 255, 255, 0.035)"
         />
       </ReactFlow>
     </div>

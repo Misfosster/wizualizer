@@ -43,6 +43,19 @@ const NODE_VERTICAL_PADDING = 24;
 const NODE_HEADER_HEIGHT = 40;
 const NODE_NOTE_GAP = 12;
 const NODE_NOTE_LINE_HEIGHT = 16;
+const ACTION_SECTION_GAP_ROWS = 1;
+const NODE_Z_INDEX: Record<GraphNodeData["kind"], number> = {
+  root: 50,
+  block: 40,
+  action: 30,
+  variable: 30,
+  useItem: 30,
+  callActionList: 30,
+  sequence: 30,
+  condition: 20,
+  valueExpression: 20,
+  container: 10,
+};
 const CONDITION_HANDLE_USAGE_KEYS = new Map<
   string,
   keyof ConditionHandleUsage
@@ -86,6 +99,7 @@ function createNode<T extends GraphNodeData>(
     data,
     sourcePosition: FlowPosition.Right,
     targetPosition: FlowPosition.Left,
+    zIndex: NODE_Z_INDEX[data.kind],
   };
 }
 
@@ -461,6 +475,9 @@ function buildBlockGraph(
     );
     edges.push(...actionGraph.edges);
     rowCursor += actionGraph.rowsUsed;
+    if (actionIndex < block.actions.length - 1) {
+      rowCursor += ACTION_SECTION_GAP_ROWS;
+    }
   }
 
   return { nodes, edges, rowsUsed: Math.max(1, rowCursor - startRow) };
