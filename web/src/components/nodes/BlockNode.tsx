@@ -37,14 +37,21 @@ function BlockNode({
             : `Collapse block ${data.label}`
         }
         title={data.isCollapsed ? "Expand block" : "Collapse block"}
-        onMouseDown={(event) => {
-          event.stopPropagation();
-        }}
         onPointerDown={(event) => {
           event.stopPropagation();
+          if (event.button !== 0) {
+            return;
+          }
+
+          event.preventDefault();
+          toggleBlockCollapse(id);
         }}
         onClick={(event) => {
           event.stopPropagation();
+          if (event.detail > 0) {
+            return;
+          }
+
           toggleBlockCollapse(id);
         }}
       >
