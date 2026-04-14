@@ -10,7 +10,9 @@ function BlockNode({
   data,
   isConnectable,
 }: NodeProps<BlockFlowNode>) {
-  const toggleBlockCollapse = useEditorStore((state) => state.toggleBlockCollapse);
+  const toggleBlockCollapse = () => {
+    useEditorStore.getState().toggleBlockCollapse(id);
+  };
 
   return (
     <NodeCard className="lc-node-card--block">
@@ -44,7 +46,7 @@ function BlockNode({
           }
 
           event.preventDefault();
-          toggleBlockCollapse(id);
+          toggleBlockCollapse();
         }}
         onClick={(event) => {
           event.stopPropagation();
@@ -52,7 +54,7 @@ function BlockNode({
             return;
           }
 
-          toggleBlockCollapse(id);
+          toggleBlockCollapse();
         }}
       >
         {data.isCollapsed ? (

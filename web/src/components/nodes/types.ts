@@ -37,6 +37,8 @@ export interface ActionNodeData extends Record<string, unknown> {
   label: string;
   kind: "action";
   hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
 }
 
 export interface VariableNodeData extends Record<string, unknown> {
@@ -45,6 +47,9 @@ export interface VariableNodeData extends Record<string, unknown> {
   variableName: string;
   op: string;
   hasExplicitOp: boolean;
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
   valueText: string;
 }
 
@@ -53,18 +58,26 @@ export interface UseItemNodeData extends Record<string, unknown> {
   kind: "useItem";
   itemName: string;
   hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
 }
 
 export interface CallActionListNodeData extends Record<string, unknown> {
   label: string;
   kind: "callActionList";
   targetList: string;
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
 }
 
 export interface SequenceNodeData extends Record<string, unknown> {
   label: string;
   kind: "sequence";
   spells: string[];
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
 }
 
 export interface ConditionHandleUsage extends Record<string, boolean | undefined> {

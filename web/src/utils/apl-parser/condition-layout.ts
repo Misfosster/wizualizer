@@ -77,6 +77,8 @@ interface ConditionMeasure {
   height: number;
 }
 
+type ConditionMeasureCacheKey = `${0 | 1}:${0 | 1}`;
+
 interface EdgeOptions {
   label?: string;
   sourceHandle?: string;
@@ -103,10 +105,54 @@ export interface ConditionGraphResult {
   entryCenterY: number;
 }
 
+const conditionMeasureCache = new WeakMap<
+  Condition,
+  Map<ConditionMeasureCacheKey, ConditionMeasure>
+>();
+
+function getConditionMeasureCacheKey(
+  wrapAndInContainer: boolean,
+  elideOrGroup: boolean,
+): ConditionMeasureCacheKey {
+  if (wrapAndInContainer) {
+    return elideOrGroup ? "1:1" : "1:0";
+  }
+
+  return elideOrGroup ? "0:1" : "0:0";
+}
+
 function measureCondition(
   condition: Condition,
   wrapAndInContainer = false,
   elideOrGroup = false,
+): ConditionMeasure {
+  const cacheKey = getConditionMeasureCacheKey(
+    wrapAndInContainer,
+    elideOrGroup,
+  );
+  const cachedMeasure = conditionMeasureCache.get(condition)?.get(cacheKey);
+  if (cachedMeasure) {
+    return cachedMeasure;
+  }
+
+  const measured = measureConditionUncached(
+    condition,
+    wrapAndInContainer,
+    elideOrGroup,
+  );
+  const cachedMeasures =
+    conditionMeasureCache.get(condition) ??
+    new Map<ConditionMeasureCacheKey, ConditionMeasure>();
+  cachedMeasures.set(cacheKey, measured);
+  conditionMeasureCache.set(condition, cachedMeasures);
+
+  return measured;
+}
+
+function measureConditionUncached(
+  condition: Condition,
+  wrapAndInContainer: boolean,
+  elideOrGroup: boolean,
 ): ConditionMeasure {
   if (condition.kind === "paren") {
     if (

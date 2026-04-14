@@ -2,24 +2,32 @@ import { memo } from "react";
 import type { NodeProps } from "@xyflow/react";
 import type { VariableFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
+import { ActionCollapseToggle } from "./ActionCollapseToggle";
 
 function VariableNode({
+  id,
   data,
   isConnectable,
 }: NodeProps<VariableFlowNode>) {
   return (
-    <NodeCard className="lc-node-card--variable">
+    <NodeCard
+      className={`lc-node-card--variable ${data.hasChildren ? "lc-node-card--actionCollapsible" : ""}`}
+    >
       <TargetHandle isConnectable={isConnectable} />
-      <SourceHandle
-        isConnectable={isConnectable}
-        id="val"
-        className="lc-node-handle--val"
-      />
-      <SourceHandle
-        isConnectable={isConnectable}
-        id="if"
-        className="lc-node-handle--if"
-      />
+      {!data.isCollapsed ? (
+        <SourceHandle
+          isConnectable={isConnectable}
+          id="val"
+          className="lc-node-handle--val"
+        />
+      ) : null}
+      {data.hasCondition && !data.isCollapsed ? (
+        <SourceHandle
+          isConnectable={isConnectable}
+          id="if"
+          className="lc-node-handle--if"
+        />
+      ) : null}
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
@@ -28,6 +36,15 @@ function VariableNode({
             {data.variableName}
           </div>
         </div>
+        {data.hasChildren ? (
+          <div className="lc-node-action-controls">
+            <ActionCollapseToggle
+              actionId={id}
+              label={data.variableName}
+              isCollapsed={data.isCollapsed}
+            />
+          </div>
+        ) : null}
       </div>
 
       {data.hasExplicitOp ? (

@@ -1,6 +1,10 @@
 import type { Edge } from "@xyflow/react";
 import { create } from "zustand";
-import { buildGraph, getBlockNodeId } from "@/utils/apl-parser/build-graph";
+import {
+  buildGraph,
+  getActionNodeId,
+  getBlockNodeId,
+} from "@/utils/apl-parser/build-graph";
 import {
   parseDocument,
   type AplDocument,
@@ -19,9 +23,11 @@ interface EditorState {
   parseError: string | null;
   document: AplDocument | null;
   collapsedBlocks: Set<string>;
+  collapsedActions: Set<string>;
   nodes: GraphFlowNode[];
   edges: Edge[];
   applyAplText: (text: string) => void;
+  toggleActionCollapse: (actionId: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
 }
@@ -33,6 +39,7 @@ interface DerivedEditorState {
   parseError: string | null;
   document: AplDocument | null;
   collapsedBlocks: Set<string>;
+  collapsedActions: Set<string>;
   nodes: GraphFlowNode[];
   edges: Edge[];
 }
@@ -53,10 +60,31 @@ function pruneCollapsedBlocks(
   document: AplDocument,
   collapsedBlocks: ReadonlySet<string>,
 ): Set<string> {
+  if (collapsedBlocks.size === 0) {
+    return new Set<string>();
+  }
+
   const validBlockIds = getDocumentBlockIds(document);
 
   return new Set(
     Array.from(collapsedBlocks).filter((blockId) => validBlockIds.has(blockId)),
+  );
+}
+
+function pruneCollapsedActions(
+  document: AplDocument,
+  collapsedActions: ReadonlySet<string>,
+): Set<string> {
+  if (collapsedActions.size === 0) {
+    return new Set<string>();
+  }
+
+  const validActionIds = getDocumentActionIds(document);
+
+  return new Set(
+    Array.from(collapsedActions).filter((actionId) =>
+      validActionIds.has(actionId),
+    ),
   );
 }
 
@@ -73,18 +101,64 @@ function getDocumentBlockIds(document: AplDocument): Set<string> {
   return blockIds;
 }
 
+function getDocumentActionIds(document: AplDocument): Set<string> {
+  const actionIds = new Set<string>();
+
+  for (let profileIndex = 0; profileIndex < document.profiles.length; profileIndex++) {
+    const profile = document.profiles[profileIndex];
+    for (const block of profile.blocks) {
+      for (let actionIndex = 0; actionIndex < block.actions.length; actionIndex++) {
+        actionIds.add(getActionNodeId(profileIndex, block.name, actionIndex));
+      }
+    }
+  }
+
+  return actionIds;
+}
+
+function getBlockActionIds(
+  document: AplDocument,
+  blockId: string,
+): Set<string> {
+  const actionIds = new Set<string>();
+
+  for (let profileIndex = 0; profileIndex < document.profiles.length; profileIndex++) {
+    const profile = document.profiles[profileIndex];
+    for (const block of profile.blocks) {
+      if (getBlockNodeId(profileIndex, block.name) !== blockId) {
+        continue;
+      }
+
+      for (let actionIndex = 0; actionIndex < block.actions.length; actionIndex++) {
+        actionIds.add(getActionNodeId(profileIndex, block.name, actionIndex));
+      }
+
+      return actionIds;
+    }
+  }
+
+  return actionIds;
+}
+
 function buildDerivedState(
   text: string,
   document: AplDocument,
   collapsedBlocks: ReadonlySet<string>,
+  collapsedActions: ReadonlySet<string>,
 ): DerivedEditorState {
   const nextCollapsedBlocks = pruneCollapsedBlocks(document, collapsedBlocks);
-  const graph = buildGraph(document, nextCollapsedBlocks);
+  const nextCollapsedActions = pruneCollapsedActions(document, collapsedActions);
+  const graph = buildGraph(
+    document,
+    nextCollapsedBlocks,
+    nextCollapsedActions,
+  );
   return {
     lastGoodText: text,
     parseError: null,
     document,
     collapsedBlocks: nextCollapsedBlocks,
+    collapsedActions: nextCollapsedActions,
     nodes: graph.nodes,
     edges: graph.edges,
   };
@@ -105,10 +179,16 @@ function deriveStateFromText(
   text: string,
   fallback: DerivedEditorState,
   collapsedBlocks: ReadonlySet<string>,
+  collapsedActions: ReadonlySet<string>,
 ): DerivedEditorState {
   const parsed = parseDocument(text);
   if (parsed.ok) {
-    return buildDerivedState(text, parsed.document, collapsedBlocks);
+    return buildDerivedState(
+      text,
+      parsed.document,
+      collapsedBlocks,
+      collapsedActions,
+    );
   }
 
   return buildFailedState(parsed, fallback);
@@ -120,6 +200,7 @@ function getEmptyDerivedState(lastGoodText = ""): DerivedEditorState {
     parseError: null,
     document: null,
     collapsedBlocks: new Set<string>(),
+    collapsedActions: new Set<string>(),
     nodes: [],
     edges: [],
   };
@@ -134,16 +215,21 @@ function getEmptyDerivedState(lastGoodText = ""): DerivedEditorState {
  */
 function getInitialEditorState(): Omit<
   EditorState,
-  "applyAplText" | "toggleBlockCollapse" | "toggleAllBlocksCollapse"
+  | "applyAplText"
+  | "toggleActionCollapse"
+  | "toggleBlockCollapse"
+  | "toggleAllBlocksCollapse"
 > {
   const aplText = readStoredText(APL_STORAGE_KEY);
   const lastGoodText = readStoredText(LAST_GOOD_APL_STORAGE_KEY);
   const collapsedBlocks = new Set<string>();
+  const collapsedActions = new Set<string>();
   const initialFallback = getEmptyDerivedState(lastGoodText);
   const initialState = deriveStateFromText(
     aplText,
     initialFallback,
     collapsedBlocks,
+    collapsedActions,
   );
 
   // Happy path, or there is no backup to try.
@@ -156,6 +242,7 @@ function getInitialEditorState(): Omit<
     lastGoodText,
     initialFallback,
     collapsedBlocks,
+    collapsedActions,
   );
   if (fallbackState.parseError) {
     // Even the backup is broken.
@@ -183,17 +270,45 @@ export const useEditorStore = create<EditorState>((set) => ({
           parseError: state.parseError,
           document: state.document,
           collapsedBlocks: state.collapsedBlocks,
+          collapsedActions: state.collapsedActions,
           nodes: state.nodes,
           edges: state.edges,
         },
         state.collapsedBlocks,
+        state.collapsedActions,
       ),
     }));
+  },
+  toggleActionCollapse: (actionId) => {
+    set((state) => {
+      const collapsedActions = new Set(state.collapsedActions);
+      if (collapsedActions.has(actionId)) {
+        collapsedActions.delete(actionId);
+      } else {
+        collapsedActions.add(actionId);
+      }
+
+      if (!state.document) {
+        return { collapsedActions };
+      }
+
+      const graph = buildGraph(
+        state.document,
+        state.collapsedBlocks,
+        collapsedActions,
+      );
+      return {
+        collapsedActions,
+        nodes: graph.nodes,
+        edges: graph.edges,
+      };
+    });
   },
   toggleBlockCollapse: (blockId) => {
     set((state) => {
       const collapsedBlocks = new Set(state.collapsedBlocks);
-      if (collapsedBlocks.has(blockId)) {
+      const isExpandingBlock = collapsedBlocks.has(blockId);
+      if (isExpandingBlock) {
         collapsedBlocks.delete(blockId);
       } else {
         collapsedBlocks.add(blockId);
@@ -203,9 +318,23 @@ export const useEditorStore = create<EditorState>((set) => ({
         return { collapsedBlocks };
       }
 
-      const graph = buildGraph(state.document, collapsedBlocks);
+      const collapsedActions = isExpandingBlock
+        ? new Set(state.collapsedActions)
+        : state.collapsedActions;
+      if (isExpandingBlock) {
+        for (const actionId of getBlockActionIds(state.document, blockId)) {
+          collapsedActions.delete(actionId);
+        }
+      }
+
+      const graph = buildGraph(
+        state.document,
+        collapsedBlocks,
+        collapsedActions,
+      );
       return {
         collapsedBlocks,
+        collapsedActions,
         nodes: graph.nodes,
         edges: graph.edges,
       };
@@ -226,10 +355,18 @@ export const useEditorStore = create<EditorState>((set) => ({
       const collapsedBlocks = shouldExpandAll
         ? new Set<string>()
         : new Set(blockIds);
-      const graph = buildGraph(state.document, collapsedBlocks);
+      const collapsedActions = shouldExpandAll
+        ? new Set<string>()
+        : state.collapsedActions;
+      const graph = buildGraph(
+        state.document,
+        collapsedBlocks,
+        collapsedActions,
+      );
 
       return {
         collapsedBlocks,
+        collapsedActions,
         nodes: graph.nodes,
         edges: graph.edges,
       };

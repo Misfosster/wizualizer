@@ -1,11 +1,12 @@
 import "@styles/tailwind.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@components/ui/tabs";
+import { useShallow } from "zustand/react/shallow";
 import Canvas from "@components/canvas";
 import {
   APL_STORAGE_KEY,
@@ -14,12 +15,32 @@ import {
 } from "@/state/editorStore";
 
 const APL_STORAGE_DEBOUNCE_MS = 300; // the delay between the last keypress and the save to localStorage
+const ACTIVE_TAB_STORAGE_KEY = "logiccraft.activeAplTab";
+type AplInputTab = "write" | "preview";
+
+function isAplInputTab(value: string | null): value is AplInputTab {
+  return value === "write" || value === "preview";
+}
+
+function readStoredActiveTab(): AplInputTab {
+  if (typeof window === "undefined") {
+    return "write";
+  }
+
+  const storedTab = window.localStorage.getItem(ACTIVE_TAB_STORAGE_KEY);
+  return isAplInputTab(storedTab) ? storedTab : "write";
+}
 
 function AplInput() {
-  const aplText = useEditorStore((state) => state.aplText);
-  const lastGoodText = useEditorStore((state) => state.lastGoodText);
-  const parseError = useEditorStore((state) => state.parseError);
-  const applyAplText = useEditorStore((state) => state.applyAplText);
+  const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
+  const { aplText, lastGoodText, parseError, applyAplText } = useEditorStore(
+    useShallow((state) => ({
+      aplText: state.aplText,
+      lastGoodText: state.lastGoodText,
+      parseError: state.parseError,
+      applyAplText: state.applyAplText,
+    })),
+  );
 
   useEffect(() => {
     // debounce writes so we don't save to localStorage on every keypress
@@ -38,8 +59,19 @@ function AplInput() {
     return () => {window.clearTimeout(timeoutId)};
   }, [lastGoodText]);
 
+  useEffect(() => {
+    window.localStorage.setItem(ACTIVE_TAB_STORAGE_KEY, activeTab);
+  }, [activeTab]);
+
   return (
-    <Tabs defaultValue="write">
+    <Tabs
+      value={activeTab}
+      onValueChange={(value) => {
+        if (isAplInputTab(value)) {
+          setActiveTab(value);
+        }
+      }}
+    >
       <div className="flex items-center">
         <TabsList className="flex gap-2">
           <TabsTrigger

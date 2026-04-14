@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   Background,
   BackgroundVariant,
@@ -7,6 +7,7 @@ import {
   ReactFlow,
   type ReactFlowInstance,
 } from "@xyflow/react";
+import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
 import { nodeTypes } from "@components/nodes";
 import type { GraphFlowNode } from "@components/nodes/types";
@@ -23,28 +24,46 @@ const defaultEdgeOptions = {
 const bulkToggleFitViewOptions = { padding: 0.35, maxZoom: 1 } as const;
 const firstNodeViewportAnchor = { x: 0.33, y: 0.25 } as const;
 const canvasBackground =
-  "radial-gradient(circle at 35% 10%, #343b4a 0%, #29303b 38%, #232936 78%)";
+  "radial-gradient(circle at 35% 10%, #3b414f 0%, #2d313c 38%, #222733 78%)";
+const reactFlowStyle = {
+  width: "100%",
+  height: "100%",
+  background: canvasBackground,
+} as const;
+const reactFlowProOptions = { hideAttribution: true } as const;
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
   const shouldFitAfterBulkToggleRef = useRef(false);
-  const nodes = useEditorStore((state) => state.nodes);
-  const edges = useEditorStore((state) => state.edges);
-  const toggleAllBlocksCollapse = useEditorStore(
-    (state) => state.toggleAllBlocksCollapse,
+  const { nodes, edges, toggleAllBlocksCollapse } = useEditorStore(
+    useShallow((state) => ({
+      nodes: state.nodes,
+      edges: state.edges,
+      toggleAllBlocksCollapse: state.toggleAllBlocksCollapse,
+    })),
   );
-  const blockCount = nodes.reduce(
-    (count, node) => (node.type === "block" ? count + 1 : count),
-    0,
-  );
-  const collapsedBlockCount = nodes.reduce(
-    (count, node) =>
-      node.type === "block" && node.data.isCollapsed ? count + 1 : count,
-    0,
-  );
-  const shouldExpandAll =
-    blockCount > 0 && collapsedBlockCount === blockCount;
+  const { blockCount, shouldExpandAll } = useMemo(() => {
+    let nextBlockCount = 0;
+    let nextCollapsedBlockCount = 0;
+
+    for (const node of nodes) {
+      if (node.type !== "block") {
+        continue;
+      }
+
+      nextBlockCount += 1;
+      if (node.data.isCollapsed) {
+        nextCollapsedBlockCount += 1;
+      }
+    }
+
+    return {
+      blockCount: nextBlockCount,
+      shouldExpandAll:
+        nextBlockCount > 0 && nextCollapsedBlockCount === nextBlockCount,
+    };
+  }, [nodes]);
   const toggleAllLabel = shouldExpandAll ? "Expand All" : "Collapse All";
   const handleToggleAllBlocksCollapse = useCallback(() => {
     shouldFitAfterBulkToggleRef.current = !shouldExpandAll;
@@ -92,11 +111,7 @@ export default function Canvas() {
     >
       <ReactFlow
         className="lc-flow"
-        style={{
-          width: "100%",
-          height: "100%",
-          background: canvasBackground,
-        }}
+        style={reactFlowStyle}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
@@ -110,7 +125,7 @@ export default function Canvas() {
         nodesDraggable={false}
         nodesConnectable={false}
         elementsSelectable={false}
-        proOptions={{ hideAttribution: true }}
+        proOptions={reactFlowProOptions}
       >
         <Panel position="top-left" className="m-3">
           <button

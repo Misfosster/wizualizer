@@ -43,7 +43,7 @@ const NODE_VERTICAL_PADDING = 24;
 const NODE_HEADER_HEIGHT = 40;
 const NODE_NOTE_GAP = 12;
 const NODE_NOTE_LINE_HEIGHT = 16;
-const ACTION_SECTION_GAP_ROWS = 1;
+const ACTION_SECTION_GAP_ROWS = 0.5;
 const NODE_Z_INDEX: Record<GraphNodeData["kind"], number> = {
   root: 50,
   block: 40,
@@ -85,6 +85,14 @@ interface EdgeOptions {
 
 export function getBlockNodeId(profileIndex: number, blockName: string): string {
   return `block__${String(profileIndex)}__${blockName}`;
+}
+
+export function getActionNodeId(
+  profileIndex: number,
+  blockName: string,
+  actionIndex: number,
+): string {
+  return `action__${String(profileIndex)}__${blockName}__${String(actionIndex)}`;
 }
 
 function createNode<T extends GraphNodeData>(
@@ -202,7 +210,11 @@ export function getActionNodeKind(spell: string): ActionGraphNodeKind {
   }
 }
 
-function createActionNodeData(actionLine: ParsedActionLine):
+function createActionNodeData(
+  actionLine: ParsedActionLine,
+  conditionCount: number,
+  isCollapsed: boolean,
+):
   | ActionNodeData
   | VariableNodeData
   | UseItemNodeData
@@ -210,7 +222,13 @@ function createActionNodeData(actionLine: ParsedActionLine):
   | SequenceNodeData {
   const { action } = actionLine;
   const kind = getActionNodeKind(action.spell);
-  const hasCondition = getConditionSegments(action.segments).length > 0;
+  const hasCondition = conditionCount > 0;
+  const hasChildren = kind === "variable" || hasCondition;
+  const collapseData = {
+    hasCondition,
+    hasChildren,
+    isCollapsed: hasChildren && isCollapsed,
+  };
 
   switch (kind) {
     case "variable": {
@@ -218,6 +236,7 @@ function createActionNodeData(actionLine: ParsedActionLine):
       return {
         label: action.spell,
         kind: "variable",
+        ...collapseData,
         variableName: variableData.variableName,
         op: variableData.op,
         hasExplicitOp: variableData.hasExplicitOp,
@@ -228,26 +247,28 @@ function createActionNodeData(actionLine: ParsedActionLine):
       return {
         label: action.spell,
         kind: "callActionList",
+        ...collapseData,
         targetList: extractCallTarget(action.segments),
       };
     case "useItem":
       return {
         label: action.spell,
         kind: "useItem",
+        ...collapseData,
         itemName: extractUseItemName(action.segments),
-        hasCondition,
       };
     case "sequence":
       return {
         label: action.spell,
         kind: "sequence",
+        ...collapseData,
         spells: extractSequenceSpells(action.segments),
       };
     case "action":
       return {
         label: action.spell,
         kind: "action",
-        hasCondition,
+        ...collapseData,
       };
     default:
       return assertNever(kind);
@@ -326,10 +347,16 @@ function buildActionGraph(
   blockName: string,
   actionIndex: number,
   row: number,
+  collapsedActions: ReadonlySet<string>,
 ): GraphSectionResult {
+  const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
-  const actionId = `action__${profileId}__${blockName}__${String(actionIndex)}`;
-  const actionNodeData = createActionNodeData(actionLine);
+  const conditionSegments = getConditionSegments(actionLine.action.segments);
+  const actionNodeData = createActionNodeData(
+    actionLine,
+    conditionSegments.length,
+    collapsedActions.has(actionId),
+  );
   const nodes: GraphFlowNode[] = [
     createGraphNode(actionId, actionNodeData, gridPoint("action", row)),
   ];
@@ -337,6 +364,8 @@ function buildActionGraph(
   let rowsUsed = 1;
   let conditionStartRow = row;
   let didAlignActionToCondition = false;
+  const shouldBuildChildren =
+    actionNodeData.hasChildren && !actionNodeData.isCollapsed;
 
   function alignActionToConditionEntry(
     conditionOrigin: Point,
@@ -360,7 +389,7 @@ function buildActionGraph(
     };
   }
 
-  if (actionNodeData.kind === "variable") {
+  if (actionNodeData.kind === "variable" && shouldBuildChildren) {
     const valueExpressionId =
       `valueExpression__${profileId}__${blockName}__${String(actionIndex)}__value`;
     const valueExpressionGraph = buildVariableValueExpressionGraph(
@@ -389,10 +418,9 @@ function buildActionGraph(
     conditionStartRow = row + valueExpressionGraph.rowsUsed;
   }
 
-  const conditionSegments = getConditionSegments(actionLine.action.segments);
   let conditionRowOffset = 0;
 
-  for (const segment of conditionSegments) {
+  for (const segment of shouldBuildChildren ? conditionSegments : []) {
     const conditionRow = conditionStartRow + conditionRowOffset;
     const conditionId =
       `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
@@ -435,6 +463,7 @@ function buildBlockGraph(
   rootId: string,
   startRow: number,
   collapsedBlocks: ReadonlySet<string>,
+  collapsedActions: ReadonlySet<string>,
 ): GraphSectionResult {
   const blockId = getBlockNodeId(profileIndex, block.name);
   const blockNodeData: BlockNodeData = {
@@ -463,6 +492,7 @@ function buildBlockGraph(
       block.name,
       actionIndex,
       rowCursor,
+      collapsedActions,
     );
 
     nodes.push(...actionGraph.nodes);
@@ -489,6 +519,7 @@ function buildProfileGraph(
   blocks: AplBlock[],
   startRow: number,
   collapsedBlocks: ReadonlySet<string>,
+  collapsedActions: ReadonlySet<string>,
 ): GraphSectionResult {
   const rootId = `root__${String(profileIndex)}`;
   const rootNodeData: RootNodeData = {
@@ -510,6 +541,7 @@ function buildProfileGraph(
       rootId,
       rowCursor,
       collapsedBlocks,
+      collapsedActions,
     );
     nodes.push(...blockGraph.nodes);
     edges.push(...blockGraph.edges);
@@ -522,6 +554,7 @@ function buildProfileGraph(
 export function buildGraph(
   document: AplDocument,
   collapsedBlocks: ReadonlySet<string> = new Set<string>(),
+  collapsedActions: ReadonlySet<string> = new Set<string>(),
 ): GraphResult {
   const nodes: GraphFlowNode[] = [];
   const edges: Edge[] = [];
@@ -535,6 +568,7 @@ export function buildGraph(
       profile.blocks,
       profileStartRow,
       collapsedBlocks,
+      collapsedActions,
     );
 
     nodes.push(...profileGraph.nodes);

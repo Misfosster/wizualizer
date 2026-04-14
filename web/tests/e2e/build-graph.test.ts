@@ -5,7 +5,11 @@ import {
   getActionNodeKind,
 } from "../../src/utils/apl-parser/build-graph";
 import { parseDocument, type AplDocument } from "../../src/utils/apl-parser/document";
-import { LANE_WIDTH, ROW_HEIGHT } from "../../src/utils/apl-parser/grid-layout";
+import {
+  gridPoint,
+  LANE_WIDTH,
+  ROW_HEIGHT,
+} from "../../src/utils/apl-parser/grid-layout";
 
 const STRUCTURAL_APL = [
   'shaman="Demo Profile"',
@@ -23,9 +27,12 @@ const FALLBACK_APL = [
   "actions+=/call_action_list",
 ].join("\n");
 
+const expressionLaneX = gridPoint("expression", 0).x;
+
 function buildGraphFromText(
   text: string,
   collapsedBlocks: ReadonlySet<string> = new Set<string>(),
+  collapsedActions: ReadonlySet<string> = new Set<string>(),
 ) {
   const parsed = parseDocument(text);
   if (!parsed.ok) {
@@ -34,7 +41,7 @@ function buildGraphFromText(
     );
   }
 
-  return buildGraph(parsed.document, collapsedBlocks);
+  return buildGraph(parsed.document, collapsedBlocks, collapsedActions);
 }
 
 function getNode<T extends { id: string }>(items: T[], id: string): T {
@@ -377,23 +384,23 @@ test("buildGraph places nodes at deterministic grid positions", () => {
     x: lane(2), y: row(3),
   });
   expect(getNode(graph.nodes, "valueExpression__0__actions__0__value").position).toEqual({
-    x: lane(3), y: row(3),
+    x: expressionLaneX, y: row(3),
   });
   expect(getNode(graph.nodes, "condition__0__actions__0__if").position).toEqual({
-    x: lane(3), y: row(4),
+    x: expressionLaneX, y: row(4),
   });
 
   expect(getNode(graph.nodes, "action__0__actions__1").position).toEqual({
-    x: lane(2), y: row(6),
+    x: lane(2), y: row(5.5),
   });
   expect(getNode(graph.nodes, "action__0__actions__2").position).toEqual({
-    x: lane(2), y: row(8) - 14,
+    x: lane(2), y: row(7) - 14,
   });
   expect(getNode(graph.nodes, "condition__0__actions__2__if").position).toEqual({
-    x: lane(3), y: row(8),
+    x: expressionLaneX, y: row(7),
   });
   expect(getNode(graph.nodes, "action__0__actions__3").position).toEqual({
-    x: lane(2), y: row(10),
+    x: lane(2), y: row(8.5),
   });
 });
 
@@ -415,6 +422,52 @@ test("collapsed block occupies one row and shifts following blocks upward", () =
 
   expect(getNode(graph.nodes, "block__0__actions.precombat").position).toEqual({
     x: lane(1), y: row(0),
+  });
+});
+
+test("collapsed action hides only that action detail graph", () => {
+  const graph = buildGraphFromText(
+    STRUCTURAL_APL,
+    new Set<string>(),
+    new Set<string>(["action__0__actions__0"]),
+  );
+
+  const lane = (index: number) => index * LANE_WIDTH;
+  const row = (index: number) => index * ROW_HEIGHT;
+
+  const collapsedAction = getNode(graph.nodes, "action__0__actions__0");
+  expect(collapsedAction.type).toBe("variable");
+  expect(collapsedAction.data).toMatchObject({
+    isCollapsed: true,
+    hasChildren: true,
+  });
+
+  expect(
+    graph.nodes.find(
+      (node) => node.id === "valueExpression__0__actions__0__value",
+    ),
+  ).toBeUndefined();
+  expect(
+    graph.nodes.find((node) => node.id === "condition__0__actions__0__if"),
+  ).toBeUndefined();
+  expect(
+    graph.edges.find((edge) => edge.id === "edge__action__0__actions__0__value"),
+  ).toBeUndefined();
+  expect(
+    graph.edges.find((edge) => edge.id === "edge__action__0__actions__0__if"),
+  ).toBeUndefined();
+
+  expect(getNode(graph.nodes, "action__0__actions__1").position).toEqual({
+    x: lane(2),
+    y: row(4.5),
+  });
+  expect(getNode(graph.nodes, "action__0__actions__2").position).toEqual({
+    x: lane(2),
+    y: row(6) - 14,
+  });
+  expect(getNode(graph.nodes, "condition__0__actions__2__if").position).toEqual({
+    x: expressionLaneX,
+    y: row(6),
   });
 });
 
@@ -463,13 +516,12 @@ test("bare OR chain produces leaf nodes with OR edges, no container", () => {
 
   const graph = buildGraph(document);
 
-  const lane = (index: number) => index * LANE_WIDTH;
   const row = (index: number) => index * ROW_HEIGHT;
 
   const cond0 = getNode(graph.nodes, "condition__0__actions__0__if__0");
   expect(cond0.type).toBe("condition");
   expect(cond0.data).toMatchObject({ label: "talent.surging_elements.enabled" });
-  expect(cond0.position).toEqual({ x: lane(3), y: row(1) });
+  expect(cond0.position).toEqual({ x: expressionLaneX, y: row(1) });
   expect(cond0.data).toMatchObject({
     handleUsage: {
       targetLeft: true,
@@ -485,11 +537,17 @@ test("bare OR chain produces leaf nodes with OR edges, no container", () => {
 
   const cond1 = getNode(graph.nodes, "condition__0__actions__0__if__1");
   expect(cond1.data).toMatchObject({ label: "buff.whirling_earth.up" });
-  expect(cond1.position).toEqual({ x: lane(3) + 26, y: row(1) + 114 });
+  expect(cond1.position).toEqual({
+    x: expressionLaneX + 26,
+    y: row(1) + 114,
+  });
 
   const cond2 = getNode(graph.nodes, "condition__0__actions__0__if__2");
   expect(cond2.data).toMatchObject({ label: "talent.feral_spirit.enabled" });
-  expect(cond2.position).toEqual({ x: lane(3) + 15, y: row(1) + 228 });
+  expect(cond2.position).toEqual({
+    x: expressionLaneX + 15,
+    y: row(1) + 228,
+  });
 
   expect(graph.nodes.find((n) => n.type === "container")).toBeUndefined();
 
@@ -555,7 +613,6 @@ test("pure AND chain produces horizontal condition nodes without a container", (
     "actions+=/stormstrike,if=buff.hot_hand.up&cooldown.lava_lash.remains>1",
   ].join("\n"));
 
-  const lane = (index: number) => index * LANE_WIDTH;
   const row = (index: number) => index * ROW_HEIGHT;
 
   expect(graph.nodes.find((n) => n.type === "container")).toBeUndefined();
@@ -564,7 +621,7 @@ test("pure AND chain produces horizontal condition nodes without a container", (
   expect(cond0.type).toBe("condition");
   expect(cond0.data).toMatchObject({ label: "buff.hot_hand.up" });
   expect(cond0.parentId).toBeUndefined();
-  expect(cond0.position).toEqual({ x: lane(3), y: row(1) });
+  expect(cond0.position).toEqual({ x: expressionLaneX, y: row(1) });
   expect(cond0.data).toMatchObject({
     handleUsage: {
       targetLeft: true,
@@ -582,7 +639,7 @@ test("pure AND chain produces horizontal condition nodes without a container", (
   expect(cond1.type).toBe("condition");
   expect(cond1.data).toMatchObject({ label: "cooldown.lava_lash.remains>1" });
   expect(cond1.parentId).toBeUndefined();
-  expect(cond1.position).toEqual({ x: lane(3) + 316, y: row(1) });
+  expect(cond1.position).toEqual({ x: expressionLaneX + 316, y: row(1) });
   expect(cond1.data).toMatchObject({
     handleUsage: {
       targetLeft: true,
@@ -635,7 +692,7 @@ test("AND branch contested by OR gets an AND container", () => {
   const andContainer = getNode(graph.nodes, "condition__0__actions__0__if__0");
   expect(andContainer.type).toBe("container");
   expect(andContainer.data).toMatchObject({ kind: "container", operator: "and" });
-  expect(andContainer.position).toEqual({ x: lane(3), y: row(1) });
+  expect(andContainer.position).toEqual({ x: expressionLaneX, y: row(1) });
   expect(graph.nodes.filter((node) => node.type === "container")).toHaveLength(1);
 
   const action = getNode(graph.nodes, "action__0__actions__0");
@@ -656,7 +713,10 @@ test("AND branch contested by OR gets an AND container", () => {
   const standaloneC = getNode(graph.nodes, "condition__0__actions__0__if__1");
   expect(standaloneC.type).toBe("condition");
   expect(standaloneC.data).toMatchObject({ label: "C" });
-  expect(standaloneC.position).toEqual({ x: lane(3) + 178, y: row(1) + 154 });
+  expect(standaloneC.position).toEqual({
+    x: expressionLaneX + 178,
+    y: row(1) + 154,
+  });
 
   const andEdge = getNode(graph.edges, "edge__condition__0__actions__0__if__0__and__1");
   expect(andEdge).toMatchObject({
