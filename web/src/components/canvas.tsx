@@ -1,46 +1,165 @@
-import { useCallback } from "react";
-import { ReactFlow } from "@xyflow/react";
-import type { OnEdgesChange, OnConnect, OnNodesChange } from "@xyflow/react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  Background,
+  BackgroundVariant,
+  ConnectionLineType,
+  Panel,
+  ReactFlow,
+  type ReactFlowInstance,
+} from "@xyflow/react";
+import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
+import { nodeTypes } from "@components/nodes";
+import type { GraphFlowNode } from "@components/nodes/types";
 
 import "@xyflow/react/dist/style.css";
- 
+
+const defaultEdgeOptions = {
+  type: "smoothstep",
+  pathOptions: {
+    borderRadius: 12,
+    offset: 20,
+  },
+} as const;
+const bulkToggleFitViewOptions = { padding: 0.35, maxZoom: 1 } as const;
+const firstNodeViewportAnchor = { x: 0.33, y: 0.25 } as const;
+const canvasBackground =
+  "radial-gradient(circle at 35% 10%, #3b414f 0%, #2d313c 38%, #222733 78%)";
+const reactFlowStyle = {
+  width: "100%",
+  height: "100%",
+  background: canvasBackground,
+} as const;
+const reactFlowProOptions = { hideAttribution: true } as const;
+
 export default function Canvas() {
-  const nodes = useEditorStore((state) => state.nodes);
-  const edges = useEditorStore((state) => state.edges);
-  const applyNodesChange = useEditorStore((state) => state.applyNodesChange);
-  const applyEdgesChange = useEditorStore((state) => state.applyEdgesChange);
-  const addConnection = useEditorStore((state) => state.addConnection);
- 
-  const onNodesChange: OnNodesChange = useCallback(
-    // react flow sends a change list (move/select/delete), we apply it to our zustand store (state)
-    (nodeChanges) => {applyNodesChange(nodeChanges)},
-    [applyNodesChange],
+  const canvasRef = useRef<HTMLDivElement | null>(null);
+  const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
+  const shouldFitAfterBulkToggleRef = useRef(false);
+  const { nodes, edges, toggleAllBlocksCollapse } = useEditorStore(
+    useShallow((state) => ({
+      nodes: state.nodes,
+      edges: state.edges,
+      toggleAllBlocksCollapse: state.toggleAllBlocksCollapse,
+    })),
   );
-  const onEdgesChange: OnEdgesChange = useCallback(
-    // same idea for edges
-    (edgeChanges) => {applyEdgesChange(edgeChanges)},
-    [applyEdgesChange],
-  );
-  const onConnect: OnConnect = useCallback(
-    // user created a new connection between nodes
-    (newConnection) => {addConnection(newConnection)},
-    [addConnection],
-  );
- 
+  const { blockCount, shouldExpandAll } = useMemo(() => {
+    let nextBlockCount = 0;
+    let nextCollapsedBlockCount = 0;
+
+    for (const node of nodes) {
+      if (node.type !== "block") {
+        continue;
+      }
+
+      nextBlockCount += 1;
+      if (node.data.isCollapsed) {
+        nextCollapsedBlockCount += 1;
+      }
+    }
+
+    return {
+      blockCount: nextBlockCount,
+      shouldExpandAll:
+        nextBlockCount > 0 && nextCollapsedBlockCount === nextBlockCount,
+    };
+  }, [nodes]);
+  const toggleAllLabel = shouldExpandAll ? "Expand All" : "Collapse All";
+  const handleToggleAllBlocksCollapse = useCallback(() => {
+    shouldFitAfterBulkToggleRef.current = !shouldExpandAll;
+    toggleAllBlocksCollapse();
+  }, [shouldExpandAll, toggleAllBlocksCollapse]);
+
+  useEffect(() => {
+    if (!shouldFitAfterBulkToggleRef.current) {
+      return;
+    }
+
+    shouldFitAfterBulkToggleRef.current = false;
+    requestAnimationFrame(() => {
+      const flow = flowRef.current;
+      const canvas = canvasRef.current;
+      const firstNode = flow?.getNodes()[0];
+      if (!flow || !canvas || !firstNode) {
+        return;
+      }
+
+      void flow.fitView(bulkToggleFitViewOptions).then(() => {
+        const firstNodeBounds = flow.getNodesBounds([firstNode.id]);
+        const { zoom } = flow.getViewport();
+        const anchorX = canvas.clientWidth * firstNodeViewportAnchor.x;
+        const anchorY = canvas.clientHeight * firstNodeViewportAnchor.y;
+        const firstNodeCenterX =
+          firstNodeBounds.x + firstNodeBounds.width / 2;
+        const firstNodeCenterY =
+          firstNodeBounds.y + firstNodeBounds.height / 2;
+
+        void flow.setViewport({
+          x: anchorX - firstNodeCenterX * zoom,
+          y: anchorY - firstNodeCenterY * zoom,
+          zoom,
+        });
+      });
+    });
+  }, [nodes]);
+
   return (
-    <div className="h-full w-full min-h-[300px] bg-white text-gray-900">
+    <div
+      ref={canvasRef}
+      className="h-full w-full min-h-[300px] text-slate-100"
+      style={{ background: canvasBackground }}
+    >
       <ReactFlow
-        style={{ width: "100%", height: "100%" }}
+        className="lc-flow"
+        style={reactFlowStyle}
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        onInit={(instance) => {
+          flowRef.current = instance;
+        }}
+        connectionLineType={ConnectionLineType.Step}
+        defaultEdgeOptions={defaultEdgeOptions}
         fitView={true}
         onlyRenderVisibleElements={true}
-        proOptions={{ hideAttribution: true }}
-      />
+        nodesDraggable={false}
+        nodesConnectable={false}
+        elementsSelectable={false}
+        proOptions={reactFlowProOptions}
+      >
+        <Panel position="top-left" className="m-3">
+          <button
+            type="button"
+            className="nodrag nopan rounded-md border border-gray-300 bg-white/95 px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={blockCount === 0}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              if (event.button !== 0) {
+                return;
+              }
+
+              event.preventDefault();
+              handleToggleAllBlocksCollapse();
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              if (event.detail > 0) {
+                return;
+              }
+
+              handleToggleAllBlocksCollapse();
+            }}
+          >
+            {toggleAllLabel}
+          </button>
+        </Panel>
+        <Background
+          variant={BackgroundVariant.Dots}
+          gap={24}
+          size={1}
+          color="rgba(255, 255, 255, 0.035)"
+        />
+      </ReactFlow>
     </div>
   );
 }

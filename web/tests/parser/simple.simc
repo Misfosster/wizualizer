@@ -2,3 +2,8 @@
 
 actions+=/spell_name,if=buff.foo&!buff.bar
 actions+=/sequence,spell_one:spell_two:spell_three
+actions+=/spell_name,if=floor(3.2)
+actions+=/spell_name,if=ceil(variable.foo%2)
+actions+=/spell_name,if=floor(-2.5)
+actions+=/spell_name,if=@value
+actions+=/spell_name,if=-(a+b)

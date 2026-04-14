@@ -1,123 +1,103 @@
 # Node Types
 
-Custom React Flow node components for the graph canvas.
+Custom React Flow node components for the structural APL graph.
 
-## Overview
+## Summary
 
-5 node types, each with specific purpose and column placement.
+This phase adds 9 custom node types and wires them into the existing graph builder.
+Condition expressions and variable values still render as single text leaves in this phase.
 
-| Node Type | Purpose | Column | Collapsible |
-|-----------|---------|--------|-------------|
-| `RootNode` | Entry point ("Actions") | 0 | No |
-| `FolderNode` | Groups like `actions.precombat`, `actions.cds` | 1 | **Yes** |
-| `ActionNode` | Individual actions | 1 (root-level) or 2 (in folder) | No |
-| `ContainerNode` | Wraps parenthesized groups `(...)` | 3+ | No |
-| `ConditionNode` | Leaf condition expressions | 3+ | No |
+The graph currently uses a fixed left-to-right layout:
 
----
+- Column 0: root profile node
+- Column 1: block nodes
+- Column 2: structural action nodes
+- Column 3+: single condition/value leaves for now
 
-## Column Layout
+Current grid metrics in the builder:
 
-```
-Column 0    Column 1              Column 2         Column 3+
-─────────   ──────────────────    ─────────────    ────────────────
-Root        Folders               Actions in       Conditions
-            + root-level actions  folders          + Containers
-```
-
-**Grid metrics**:
 - Column width: 320px
-- Row height: 120px
+- Row height: 80px
 
----
+## Node Types
 
-## RootNode
+| Kind | Purpose | Key Data |
+|------|---------|----------|
+| `root` | Profile entry node | `label`, `blockCount`, `actionCount` |
+| `block` | Action-list block such as `actions.precombat` | `label`, `actionCount`, `isCollapsed` |
+| `action` | Default structural action | `label`, `hasCondition` |
+| `variable` | `variable` / `cycling_variable` action | `label`, `variableName`, `op`, `valueText` |
+| `useItem` | `use_item` / `use_items` action | `label`, `itemName`, `hasCondition` |
+| `callActionList` | `call_action_list` / `run_action_list` action | `label`, `targetList` |
+| `sequence` | `sequence` / `strict_sequence` action | `label`, `spells` |
+| `condition` | Single condition-expression leaf | `label` |
+| `valueExpression` | Single variable-value leaf | `label` |
 
-- **Column**: 0
-- **Collapsible**: No
-- **Content**: Label ("Actions"), folder count, total action count
-- **Handles**: Source (bottom) - edges flow down then branch to column 1 items
+Shared node data lives in `web/src/components/nodes/types.ts` so the graph builder and React Flow node components use the same discriminated union.
 
-```tsx
-// Shows: "Actions - 3 folders, 15 actions"
-// Handle on bottom avoids edges crossing through column 1 nodes
-```
+## Spell To Kind Mapping
 
----
+Action node kind comes from `action.spell` in `build-graph.ts`:
 
-## FolderNode
+- `variable`, `cycling_variable` -> `variable`
+- `use_item`, `use_items` -> `useItem`
+- `call_action_list`, `run_action_list` -> `callActionList`
+- `sequence`, `strict_sequence` -> `sequence`
+- everything else -> `action`
 
-- **Column**: 1
-- **Collapsible**: Yes (+/- button in bottom-right)
-- **Content**: Display name, action count, action list when expanded
-- **Handles**: Target (left), Source (bottom) - signifies "going down a level"
-- **Examples**: `actions.precombat` → "Precombat", `actions.cds` → "CDs"
+## Visual Language
 
-**Note**: No "Main" folder. Actions from `actions+=` are root-level, not wrapped in a folder.
+- `RootNode`: neutral dark `#1f2937`
+- `BlockNode`: slate/dark blue `#334155`
+- `ActionNode`: dark gray `#374151`
+- `VariableNode`: indigo gradient `#6366f1` to `#4f46e5`
+- `UseItemNode`: pink/magenta gradient `#db2777` to `#be185d`
+- `CallActionListNode`: teal gradient `#0d9488` to `#0f766e`
+- `SequenceNode`: emerald gradient `#059669` to `#047857`
+- `ConditionNode`: amber gradient `#f59e0b` to `#d97706`
+- `ValueExpressionNode`: violet `#8b5cf6`
 
-**Bottom handle**: Edges flow down then right to child actions (stacked vertically in column 2). Also semantically indicates descending into the folder.
+## Handle Placement
 
----
+Default handle layout for all nodes:
 
-## ActionNode
+- target handle on the left edge
+- source handle on the right edge
 
-- **Column**: 1 (root-level) or 2 (inside folder)
-- **Collapsible**: No
-- **Content**: Action name, "if" badge when condition exists
-- **Handles**: Target (left), Source (right)
+`VariableNode` is the only exception. It has two source handles on the right side:
 
-Root-level actions (from `actions+=`) are siblings of folders at column 1.
+- `val`: upper handle for variable value expansion
+- `if`: lower handle for variable condition expansion
 
----
+In this phase both handles still point to single text leaves:
 
-## ContainerNode
+- `val` -> one `valueExpression` node
+- `if` -> one `condition` node per `if` / `target_if` segment
 
-- **Column**: 3+ (inside condition tree)
-- **Collapsible**: No
-- **Content**: Dashed border container, color by nesting depth
-- **Handles**: Target (left), Source (right)
+## Current Scope
 
-See `02-container-nodes.md` for detailed behavior.
+Implemented in this phase:
 
----
+- custom React Flow components for all 9 node kinds
+- typed node data in `web/src/components/nodes/types.ts`
+- graph-builder extraction for variable metadata, action-list targets, and sequence spell lists
+- purple `valueExpression` leaves for variables
+- stable `nodeTypes` wiring in the canvas
+- block collapse / expand behavior
 
-## ConditionNode
+Deferred to later phases:
 
-- **Column**: 3+ (inside condition tree)
-- **Collapsible**: No
-- **Content**: Expression text (e.g., "buff.flask.up", "targets >= 2")
-- **Handles**: Target (left), Source (right)
-- **Style**: Orange/amber gradient background, white text
+- AND / OR condition tree expansion
+- variable value tree expansion
+- container nodes for explicit parentheses
+- custom AND / OR edge types
+- call-action-list linking to the destination block
 
----
+## Future Layout Conventions
 
-## File Structure
+These are documented now but not implemented in this phase:
 
-```
-src/components/nodes/
-├── index.ts              # nodeTypes export (memoized)
-├── types.ts              # All data interfaces
-├── CollapseButton.tsx    # +/- button (FolderNode only)
-├── RootNode.tsx
-├── FolderNode.tsx
-├── ActionNode.tsx
-├── ContainerNode.tsx
-└── ConditionNode.tsx
-```
-
----
-
-## Memoization
-
-Define `nodeTypes` outside component to avoid recreating on each render:
-
-```typescript
-// src/components/nodes/index.ts
-export const nodeTypes = {
-  root: RootNode,
-  folder: FolderNode,
-  action: ActionNode,
-  container: ContainerNode,
-  condition: ConditionNode,
-} as const;
-```
+- AND (`&`) flows horizontally from left to right on the same row
+- OR (`|`) branches vertically into separate rows
+- value expression trees use the purple node/edge family
+- condition trees use orange nodes with standard gray structural edges

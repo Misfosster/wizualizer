@@ -1,19 +1,46 @@
 import "@styles/tailwind.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@components/ui/tabs";
+import { useShallow } from "zustand/react/shallow";
 import Canvas from "@components/canvas";
-import { APL_STORAGE_KEY, useEditorStore } from "@/state/editorStore";
+import {
+  APL_STORAGE_KEY,
+  LAST_GOOD_APL_STORAGE_KEY,
+  useEditorStore,
+} from "@/state/editorStore";
 
 const APL_STORAGE_DEBOUNCE_MS = 300; // the delay between the last keypress and the save to localStorage
+const ACTIVE_TAB_STORAGE_KEY = "logiccraft.activeAplTab";
+type AplInputTab = "write" | "preview";
+
+function isAplInputTab(value: string | null): value is AplInputTab {
+  return value === "write" || value === "preview";
+}
+
+function readStoredActiveTab(): AplInputTab {
+  if (typeof window === "undefined") {
+    return "write";
+  }
+
+  const storedTab = window.localStorage.getItem(ACTIVE_TAB_STORAGE_KEY);
+  return isAplInputTab(storedTab) ? storedTab : "write";
+}
 
 function AplInput() {
-  const aplText = useEditorStore((state) => state.aplText);
-  const setAplText = useEditorStore((state) => state.setAplText);
+  const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
+  const { aplText, lastGoodText, parseError, applyAplText } = useEditorStore(
+    useShallow((state) => ({
+      aplText: state.aplText,
+      lastGoodText: state.lastGoodText,
+      parseError: state.parseError,
+      applyAplText: state.applyAplText,
+    })),
+  );
 
   useEffect(() => {
     // debounce writes so we don't save to localStorage on every keypress
@@ -24,8 +51,27 @@ function AplInput() {
     return () => {window.clearTimeout(timeoutId)}; 
   }, [aplText]);
 
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      window.localStorage.setItem(LAST_GOOD_APL_STORAGE_KEY, lastGoodText);
+    }, APL_STORAGE_DEBOUNCE_MS);
+
+    return () => {window.clearTimeout(timeoutId)};
+  }, [lastGoodText]);
+
+  useEffect(() => {
+    window.localStorage.setItem(ACTIVE_TAB_STORAGE_KEY, activeTab);
+  }, [activeTab]);
+
   return (
-    <Tabs defaultValue="write">
+    <Tabs
+      value={activeTab}
+      onValueChange={(value) => {
+        if (isAplInputTab(value)) {
+          setActiveTab(value);
+        }
+      }}
+    >
       <div className="flex items-center">
         <TabsList className="flex gap-2">
           <TabsTrigger
@@ -51,17 +97,25 @@ function AplInput() {
             <textarea
               id="comment"
               name="comment"
-              rows={5}
+              rows={16}
               placeholder="Paste APL..."
-              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+              className="block min-h-[40vh] w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
               value={aplText}
-              onChange={(event) => {setAplText(event.target.value)}} //update zustand store (state)
+              onChange={(event) => {applyAplText(event.target.value)}} //update zustand store (state)
             />
           </div>
+          {parseError ? (
+            <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
+              <p>{parseError}</p>
+              <p className="mt-1 text-amber-800/80 dark:text-amber-100/80">
+                Preview shows the last successful parse when available.
+              </p>
+            </div>
+          ) : null}
         </TabsContent>
         <TabsContent value="preview" className="-m-0.5 rounded-lg p-0.5">
           <div className="border-b border-gray-200 dark:border-white/10">
-            <div className="h-[60vh] w-full rounded-md border border-gray-200 overflow-hidden dark:border-white/10">
+            <div className="h-[72vh] w-full rounded-md border border-gray-200 overflow-hidden dark:border-white/10">
               <Canvas />
             </div>
           </div>

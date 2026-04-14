@@ -1,0 +1,161 @@
+import type { Node } from "@xyflow/react";
+
+export const CONDITION_HANDLE_IDS = {
+  targetLeft: "condition-target-left",
+  sourceRight: "condition-source-right",
+  targetTop: "condition-target-top",
+  sourceBottom: "condition-source-bottom",
+} as const;
+
+export type GraphNodeKind =
+  | "root"
+  | "block"
+  | "action"
+  | "variable"
+  | "useItem"
+  | "callActionList"
+  | "sequence"
+  | "condition"
+  | "valueExpression"
+  | "container";
+
+export interface RootNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "root";
+  blockCount: number;
+  actionCount: number;
+}
+
+export interface BlockNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "block";
+  actionCount: number;
+  isCollapsed: boolean;
+}
+
+export interface ActionNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "action";
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
+}
+
+export interface VariableNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "variable";
+  variableName: string;
+  op: string;
+  hasExplicitOp: boolean;
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
+  valueText: string;
+}
+
+export interface UseItemNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "useItem";
+  itemName: string;
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
+}
+
+export interface CallActionListNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "callActionList";
+  targetList: string;
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
+}
+
+export interface SequenceNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "sequence";
+  spells: string[];
+  hasCondition: boolean;
+  hasChildren: boolean;
+  isCollapsed: boolean;
+}
+
+export interface ConditionHandleUsage extends Record<string, boolean | undefined> {
+  targetLeft?: boolean;
+  sourceRight?: boolean;
+  targetTop?: boolean;
+  sourceBottom?: boolean;
+}
+
+export type ConditionExpressionKind =
+  | "comparison"
+  | "arithmetic"
+  | "expression";
+
+export interface ConditionNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "condition";
+  expressionKind?: ConditionExpressionKind;
+  handleUsage?: ConditionHandleUsage;
+}
+
+export interface ValueExpressionNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "valueExpression";
+  expressionKind?: ConditionExpressionKind;
+  handleUsage?: ConditionHandleUsage;
+}
+
+export interface ContainerNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "container";
+  depth: number;
+  operator: string;
+  handleUsage?: ConditionHandleUsage;
+}
+
+export type GraphNodeData =
+  | RootNodeData
+  | BlockNodeData
+  | ActionNodeData
+  | VariableNodeData
+  | UseItemNodeData
+  | CallActionListNodeData
+  | SequenceNodeData
+  | ConditionNodeData
+  | ValueExpressionNodeData
+  | ContainerNodeData;
+
+export type RootFlowNode = Node<RootNodeData, "root">;
+export type BlockFlowNode = Node<BlockNodeData, "block">;
+export type ActionFlowNode = Node<ActionNodeData, "action">;
+export type VariableFlowNode = Node<VariableNodeData, "variable">;
+export type UseItemFlowNode = Node<UseItemNodeData, "useItem">;
+export type CallActionListFlowNode = Node<
+  CallActionListNodeData,
+  "callActionList"
+>;
+export type SequenceFlowNode = Node<SequenceNodeData, "sequence">;
+export type ConditionFlowNode = Node<ConditionNodeData, "condition">;
+export type ValueExpressionFlowNode = Node<
+  ValueExpressionNodeData,
+  "valueExpression"
+>;
+export type ContainerFlowNode = Node<ContainerNodeData, "container">;
+
+export type GraphFlowNode =
+  | RootFlowNode
+  | BlockFlowNode
+  | ActionFlowNode
+  | VariableFlowNode
+  | UseItemFlowNode
+  | CallActionListFlowNode
+  | SequenceFlowNode
+  | ConditionFlowNode
+  | ValueExpressionFlowNode
+  | ContainerFlowNode;
+
+export type ActionGraphNodeKind = Extract<
+  GraphNodeKind,
+  "action" | "variable" | "useItem" | "callActionList" | "sequence"
+>;

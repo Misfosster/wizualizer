@@ -14,6 +14,7 @@ Design documentation for upcoming features, organized by concern.
 | [06-data-interfaces.md](06-data-interfaces.md) | TypeScript interfaces for node data |
 | [07-undo-redo.md](07-undo-redo.md) | History tracking with zundo |
 | [08-ui-stack.md](08-ui-stack.md) | shadcn/ui, react-arborist, component structure |
+| [09-variable-jump-to.md](09-variable-jump-to.md) | Variable reference navigation in the graph |
 
 ## Visual References
 

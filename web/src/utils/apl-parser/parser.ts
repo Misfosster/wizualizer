@@ -1,17 +1,37 @@
-import type { Token } from "moo";
-import lexer from "./lexer";
-import type { Action, Condition, BinOp, IdentRef, SeqExpr } from "./types";
+import lexer, { type AplToken, type TokenType, toAplToken } from "./lexer";
+import type {
+  Action,
+  BinOp,
+  CallName,
+  CallExpr,
+  Condition,
+  IdentRef,
+  SeqExpr,
+  UnaryOp,
+} from "./types";
+import { setConditionSource } from "./condition-source";
 import { TokenStream } from "./token-stream";
 
-function tokenizeLine(line: string): Token[] {
+function isCallName(name: string): name is CallName {
+  switch (name) {
+    case "floor":
+    case "ceil":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function tokenizeLine(line: string): AplToken[] {
   lexer.reset(line);
-  const tokens: Token[] = [];
+  const tokens: AplToken[] = [];
   for (const t of lexer) {
-    if (t.type === "ws") {
+    const token = toAplToken(t);
+    if (token.type === "ws") {
       continue;
     }
 
-    tokens.push(t);
+    tokens.push(token);
   }
 
   return tokens;
@@ -56,7 +76,9 @@ export function parseAction(line: string): Action | null {
     // We need to check above spell because they are not formatted like usual
     if (spell === "sequence" && ts.peek(0)?.type === "ident") {
       // Don't remove any because the first token is the first spell
-      segments.push({ type: "sequence", expr: parseSequence(ts) });
+      const expr = parseSequence(ts);
+      expectSegmentBoundary(ts);
+      segments.push({ type: "sequence", expr });
       continue;
     }
 
@@ -68,7 +90,7 @@ export function parseAction(line: string): Action | null {
     ) {
       ts.next(); // consume ifKw
       ts.next(); // consume eq
-      segments.push({ type: "if", expr: parseCondition(ts) });
+      segments.push({ type: "if", expr: parseSegmentCondition(ts, line) });
       continue;
     }
 
@@ -80,7 +102,10 @@ export function parseAction(line: string): Action | null {
     ) {
       ts.next(); // consume tifKw
       ts.next(); // consume eq
-      segments.push({ type: "target_if", expr: parseCondition(ts) });
+      segments.push({
+        type: "target_if",
+        expr: parseSegmentCondition(ts, line),
+      });
       continue;
     }
 
@@ -92,26 +117,30 @@ export function parseAction(line: string): Action | null {
     ts.expect("eq");
 
     // value as Condition (for now)
-    const expr = parseCondition(ts);
+    const expr = parseSegmentCondition(ts, line);
 
     segments.push({ type: "other", key, expr });
+  }
+
+  if (!ts.eof()) {
+    const t = ts.peek();
+    throw new Error(
+      `Unexpected trailing token: ${String(t?.type)} ${JSON.stringify(t?.value)}`,
+    );
   }
 
   return { category, spell, op, segments };
 }
 
 // Convert "low is tight" -> "high is tight" for Pratt
-function bp(tokType: string): number | undefined {
+function bp(tokType: TokenType): number | undefined {
   const p = PREC[tokType];
   if (p === undefined) return undefined;
   return 100 - p;
 }
 
 // For precedence (https://github.com/simulationcraft/simc/wiki/Action-List-Conditional-Expressions)
-const PREC: Partial<Record<string, number>> = {
-  // NOTE: Function calls will be 1, but not impl yet
-  at: 2,
-  not: 2,
+const PREC: Partial<Record<TokenType, number>> = {
   mult: 3,
   div: 3,
   mod: 3,
@@ -128,17 +157,13 @@ const PREC: Partial<Record<string, number>> = {
   ge: 6,
   tilde: 6,
   nottilde: 6,
-  and: 6,
-  xor: 7,
-  or: 7,
+  and: 7,
+  xor: 8,
+  or: 8,
 };
 
-function tokToBinOp(t: Token): BinOp | null {
+function tokToBinOp(t: AplToken): BinOp | null {
   switch (t.type) {
-    case "at":
-      return "@";
-    case "not":
-      return "!";
     case "div":
       return "%";
     case "mod":
@@ -184,6 +209,21 @@ function tokToBinOp(t: Token): BinOp | null {
   }
 }
 
+function tokToUnaryOp(t: AplToken): UnaryOp | null {
+  switch (t.type) {
+    case "not":
+      return "!";
+    case "at":
+      return "@";
+    case "plus":
+      return "+";
+    case "minus":
+      return "-";
+    default:
+      return null;
+  }
+}
+
 // Goes through an identified sequence and stores the idents for all
 function parseSequence(ts: TokenStream): SeqExpr {
   const idents: IdentRef[] = [];
@@ -195,7 +235,7 @@ function parseSequence(ts: TokenStream): SeqExpr {
 
     const type = t.type;
     if (type != "ident") {
-      throw new Error(`Malformatted sequence: ${String(t.type)}`);
+      throw new Error(`Malformatted sequence: ${t.type}`);
     }
 
     idents.push({ kind: "ident", name: t.value });
@@ -220,8 +260,13 @@ function parseSequence(ts: TokenStream): SeqExpr {
 }
 
 // https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
-function parseCondition(ts: TokenStream, minPrec = 0): Condition {
-  let left = parsePrefix(ts);
+function parseCondition(
+  ts: TokenStream,
+  minPrec = 0,
+  sourceLine?: string,
+): Condition {
+  const startIndex = ts.position();
+  let left = parsePrefix(ts, sourceLine);
 
   for (; ;) {
     const t = ts.peek(); // Check which operator
@@ -230,9 +275,6 @@ function parseCondition(ts: TokenStream, minPrec = 0): Condition {
     }
 
     const type = t.type;
-    if (!type) {
-      break;
-    }
     const prec = bp(type);
     if (prec === undefined || prec < minPrec) {
       break;
@@ -241,30 +283,80 @@ function parseCondition(ts: TokenStream, minPrec = 0): Condition {
     ts.next(); // Consumes operator
     const op = tokToBinOp(t);
     if (!op) {
-      throw new Error(`Unhandled operator token: ${String(t.type)}`);
+      throw new Error(`Unhandled operator token: ${t.type}`);
     }
 
-    const right = parseCondition(ts, prec + 1); // left-assoc
+    const right = parseCondition(ts, prec + 1, sourceLine); // left-assoc
     left = { kind: "binary", op, left, right };
   }
 
-  return left;
+  return setSourceFromTokens(left, ts, startIndex, sourceLine);
 }
 
-function parsePrefix(ts: TokenStream): Condition {
+function parseSegmentCondition(ts: TokenStream, sourceLine: string): Condition {
+  const expr = parseCondition(ts, 0, sourceLine);
+  expectSegmentBoundary(ts);
+  return expr;
+}
+
+function setSourceFromTokens<T extends Condition>(
+  condition: T,
+  ts: TokenStream,
+  startIndex: number,
+  sourceLine: string | undefined,
+): T {
+  if (!sourceLine) {
+    return condition;
+  }
+
+  const startToken = ts.tokenAt(startIndex);
+  const endToken = ts.tokenAt(ts.position() - 1);
+  if (!startToken || !endToken) {
+    return condition;
+  }
+
+  const endOffset = endToken.offset + endToken.text.length;
+  return setConditionSource(
+    condition,
+    sourceLine.slice(startToken.offset, endOffset),
+  );
+}
+
+function expectSegmentBoundary(ts: TokenStream): void {
+  const t = ts.peek();
+  if (!t || t.type === "comma") {
+    return;
+  }
+
+  throw new Error(
+    `Unexpected token after segment expression: ${t.type} ${JSON.stringify(t.value)}`,
+  );
+}
+
+function parsePrefix(ts: TokenStream, sourceLine?: string): Condition {
   const t = ts.peek();
   if (!t) {
     throw new Error("Unexpected EOF in condition");
   }
 
-  if (t.type === "not") {
+  const op = tokToUnaryOp(t);
+  if (op) {
     ts.next();
-    return { kind: "unary", op: "!", expr: parsePrefix(ts) };
+    return { kind: "unary", op, expr: parsePrefix(ts, sourceLine) };
+  }
+
+  return parsePrimary(ts, sourceLine);
+}
+
+function parsePrimary(ts: TokenStream, sourceLine?: string): Condition {
+  const t = ts.peek();
+  if (!t) {
+    throw new Error("Unexpected EOF in condition");
   }
 
   if (t.type === "lparen") {
     ts.next();
-    const inner = parseCondition(ts, 0);
+    const inner = parseCondition(ts, 0, sourceLine);
     ts.expect("rparen");
     return { kind: "paren", expr: inner };
   }
@@ -276,10 +368,39 @@ function parsePrefix(ts: TokenStream): Condition {
 
   if (t.type === "ident") {
     ts.next();
-    return { kind: "ident", name: t.value };
+    const name = t.value;
+
+    if (ts.match("lparen")) {
+      return parseCall(ts, name, sourceLine);
+    }
+
+    return { kind: "ident", name };
   }
 
   throw new Error(
-    `Unexpected token in condition: ${String(t.type)} ${JSON.stringify(t.value)}`,
+    `Unexpected token in condition: ${t.type} ${JSON.stringify(t.value)}`,
   );
+}
+
+function parseCall(
+  ts: TokenStream,
+  name: string,
+  sourceLine?: string,
+): CallExpr {
+  if (!isCallName(name)) {
+    throw new Error(`Unsupported function call: ${name}`);
+  }
+
+  if (ts.peek()?.type === "rparen") {
+    throw new Error(`Function '${name}' expects exactly one argument`);
+  }
+
+  const arg = parseCondition(ts, 0, sourceLine);
+  if (ts.match("comma")) {
+    throw new Error(`Function '${name}' only supports a single argument`);
+  }
+
+  ts.expect("rparen");
+
+  return { kind: "call", name, args: [arg] };
 }

@@ -1,18 +1,18 @@
-import type { Token } from "moo";
+import type { AplToken, TokenType } from "./lexer";
 
 export class TokenStream {
   private i = 0;
-  private tokens: Token[];
+  private tokens: AplToken[];
 
-  constructor(tokens: Token[]) {
+  constructor(tokens: AplToken[]) {
     this.tokens = tokens;
   }
 
-  peek(offset = 0): Token | undefined {
+  peek(offset = 0): AplToken | undefined {
     return this.tokens[this.i + offset];
   }
 
-  next(): Token | undefined {
+  next(): AplToken | undefined {
     return this.tokens[this.i++];
   }
 
@@ -20,7 +20,15 @@ export class TokenStream {
     return this.i >= this.tokens.length;
   }
 
-  match(type: string, value?: string): Token | undefined {
+  position(): number {
+    return this.i;
+  }
+
+  tokenAt(index: number): AplToken | undefined {
+    return this.tokens[index];
+  }
+
+  match(type: TokenType, value?: string): AplToken | undefined {
     const t = this.peek();
     if (!t) return;
     if (t.type === type && (value === undefined || t.value === value)) {
@@ -29,12 +37,12 @@ export class TokenStream {
     }
   }
 
-  expect(type: string, value?: string): Token {
+  expect(type: TokenType, value?: string): AplToken {
     const t = this.next();
     // console.log(t);
     if (t?.type !== type || (value !== undefined && t.value !== value)) {
       const got = t
-        ? `${t.type ?? "UNKNOWN"}(${JSON.stringify(t.value)})`
+        ? `${t.type}(${JSON.stringify(t.value)})`
         : "EOF";
       throw new Error(
         `Expected ${type}${value ? `(${value})` : ""}, got ${got}`,
