@@ -28,4 +28,5 @@ fast, reliable edits from text, tree, and graph interfaces.
 ## Related Docs
 
 - `docs/04-ROADMAP.md`
+- `docs/05-GRAPH-FEATURE.md`
 - `docs/DECISIONS.md`
