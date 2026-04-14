@@ -43,6 +43,7 @@ const NODE_VERTICAL_PADDING = 24;
 const NODE_HEADER_HEIGHT = 40;
 const NODE_NOTE_GAP = 12;
 const NODE_NOTE_LINE_HEIGHT = 16;
+const NODE_META_PILL_HEIGHT = 22;
 const ACTION_SECTION_GAP_ROWS = 0.5;
 const NODE_Z_INDEX: Record<GraphNodeData["kind"], number> = {
   root: 50,
@@ -293,6 +294,18 @@ function estimateDefaultSourceCenterY(data: GraphNodeData): number {
   return height / 2;
 }
 
+function estimateVariableValueSourceCenterY(
+  data: Extract<GraphNodeData, { kind: "variable" }>,
+): number {
+  let height = NODE_BORDER_HEIGHT + NODE_VERTICAL_PADDING + NODE_HEADER_HEIGHT;
+
+  if (data.hasExplicitOp) {
+    height += NODE_NOTE_GAP + NODE_META_PILL_HEIGHT;
+  }
+
+  return data.hasCondition ? height * 0.34 : height / 2;
+}
+
 function createGraphNode(
   id: string,
   data: GraphNodeData,
@@ -392,12 +405,26 @@ function buildActionGraph(
   if (actionNodeData.kind === "variable" && shouldBuildChildren) {
     const valueExpressionId =
       `valueExpression__${profileId}__${blockName}__${String(actionIndex)}__value`;
+    const valueExpressionOrigin = gridPoint("expression", row);
     const valueExpressionGraph = buildVariableValueExpressionGraph(
       actionLine,
       actionNodeData,
       valueExpressionId,
-      gridPoint("expression", row),
+      valueExpressionOrigin,
     );
+    const valueExpressionYOffset = Math.round(
+      estimateVariableValueSourceCenterY(actionNodeData) -
+      valueExpressionGraph.entryCenterY,
+    );
+    valueExpressionGraph.nodes = valueExpressionGraph.nodes.map((node) => ({
+      ...node,
+      position: {
+        ...node.position,
+        y: node.parentId
+          ? node.position.y
+          : node.position.y + valueExpressionYOffset,
+      },
+    }));
 
     nodes.push(...valueExpressionGraph.nodes);
     edges.push(...valueExpressionGraph.edges);

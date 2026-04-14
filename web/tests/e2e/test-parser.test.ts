@@ -170,6 +170,28 @@ test("parser supports prefix unary operators in conditions", () => {
   );
 });
 
+test("parser supports identifiers with numeric prefixes", () => {
+  const action = parseOrThrow(
+    "actions.precombat+=/variable,name=10ssteroid_trinket_equipped,op=set,value=equipped.ever_collapsing_void_fissure,if=buff.foo.stack>=10",
+    1,
+  );
+
+  expect(action.segments[0]).toMatchObject({
+    type: "other",
+    key: "name",
+    expr: { kind: "ident", name: "10ssteroid_trinket_equipped" },
+  });
+  expect(action.segments[3]).toMatchObject({
+    type: "if",
+    expr: {
+      kind: "binary",
+      op: ">=",
+      left: { kind: "ident", name: "buff.foo.stack" },
+      right: { kind: "number", value: 10 },
+    },
+  });
+});
+
 test("parser rejects unsupported function calls", () => {
   expect(() => {
     parseAction("actions+=/spell_name,if=round(1.5)");

@@ -384,7 +384,7 @@ test("buildGraph places nodes at deterministic grid positions", () => {
     x: lane(2), y: row(3),
   });
   expect(getNode(graph.nodes, "valueExpression__0__actions__0__value").position).toEqual({
-    x: expressionLaneX, y: row(3),
+    x: expressionLaneX, y: row(3) + 1,
   });
   expect(getNode(graph.nodes, "condition__0__actions__0__if").position).toEqual({
     x: expressionLaneX, y: row(4),

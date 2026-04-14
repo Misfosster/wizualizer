@@ -3,6 +3,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { VariableFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
 import { ActionCollapseToggle } from "./ActionCollapseToggle";
+import { cn } from "@/lib/utils";
 
 function VariableNode({
   id,
@@ -18,7 +19,7 @@ function VariableNode({
         <SourceHandle
           isConnectable={isConnectable}
           id="val"
-          className="lc-node-handle--val"
+          className={cn(data.hasCondition && "lc-node-handle--val")}
         />
       ) : null}
       {data.hasCondition && !data.isCollapsed ? (
@@ -55,7 +56,6 @@ function VariableNode({
         </div>
       ) : null}
 
-      <div className="lc-node-note">{data.label}</div>
     </NodeCard>
   );
 }
