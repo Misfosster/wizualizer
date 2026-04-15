@@ -5,5 +5,9 @@ test("loads editor tabs", async ({ page }) => {
 
   await expect(page.getByRole("tab", { name: "Write" })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Preview" })).toBeVisible();
-  await expect(page.getByPlaceholder("Paste APL...")).toBeVisible();
+  await expect(page.getByRole("textbox", { name: "APL editor" })).toBeVisible();
+  await expect(page.getByTestId("apl-code-editor")).toBeVisible();
+  await expect(
+    page.getByTestId("apl-code-editor").locator(".cm-lineNumbers"),
+  ).toBeVisible();
 });

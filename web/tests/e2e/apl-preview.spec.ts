@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const VALID_APL = [
   'shaman="Demo Profile"',
@@ -20,9 +20,13 @@ const INVALID_APL = [
   "actions+=/auto_attack,if=floor(",
 ].join("\n");
 
+async function fillAplEditor(page: Page, text: string): Promise<void> {
+  await page.getByRole("textbox", { name: "APL editor" }).fill(text);
+}
+
 test("renders parsed APL text in the preview graph", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(VALID_APL);
+  await fillAplEditor(page, VALID_APL);
   await page.getByRole("tab", { name: "Preview" }).click();
 
   await expect(page.getByTestId("rf__node-root__0")).toContainText("Demo Profile");
@@ -58,7 +62,7 @@ test("remembers the last active editor tab", async ({ page }) => {
 
 test("renders custom structural node components in the preview graph", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(STRUCTURAL_APL);
+  await fillAplEditor(page, STRUCTURAL_APL);
   await page.getByRole("tab", { name: "Preview" }).click();
 
   await expect(page.getByTestId("rf__node-block__0__actions")).toContainText("Block");
@@ -87,7 +91,7 @@ test("renders custom structural node components in the preview graph", async ({ 
 
 test("collapses and expands block children from the preview graph", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(STRUCTURAL_APL);
+  await fillAplEditor(page, STRUCTURAL_APL);
   await page.getByRole("tab", { name: "Preview" }).click();
 
   const actionsBlock = page.getByTestId("rf__node-block__0__actions");
@@ -114,7 +118,7 @@ test("collapses and expands block children from the preview graph", async ({ pag
 
 test("collapses and expands an action detail graph", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(STRUCTURAL_APL);
+  await fillAplEditor(page, STRUCTURAL_APL);
   await page.getByRole("tab", { name: "Preview" }).click();
 
   const variableAction = page.getByTestId("rf__node-action__0__actions__0");
@@ -145,7 +149,7 @@ test("collapses and expands an action detail graph", async ({ page }) => {
 
 test("expanding a block expands collapsed action details inside it", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(STRUCTURAL_APL);
+  await fillAplEditor(page, STRUCTURAL_APL);
   await page.getByRole("tab", { name: "Preview" }).click();
 
   const actionsBlock = page.getByTestId("rf__node-block__0__actions");
@@ -178,7 +182,7 @@ test("expanding a block expands collapsed action details inside it", async ({ pa
 
 test("collapses and expands all block children from the canvas control", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(STRUCTURAL_APL);
+  await fillAplEditor(page, STRUCTURAL_APL);
   await page.getByRole("tab", { name: "Preview" }).click();
 
   await expect(page.getByTestId("rf__node-action__0__actions.precombat__0")).toBeVisible();
@@ -197,10 +201,13 @@ test("collapses and expands all block children from the canvas control", async (
 
 test("keeps the last good graph when a parse error occurs", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Paste APL...").fill(VALID_APL);
-  await page.getByPlaceholder("Paste APL...").fill(INVALID_APL);
+  await fillAplEditor(page, VALID_APL);
+  await fillAplEditor(page, INVALID_APL);
 
   await expect(page.getByText("Line 2:")).toBeVisible();
+  await expect(
+    page.getByTestId("apl-code-editor").locator(".lc-apl-editor-error-line"),
+  ).toBeVisible();
   await expect(
     page.getByText("Preview shows the last successful parse", { exact: false }),
   ).toBeVisible();

@@ -21,6 +21,7 @@ interface EditorState {
   aplText: string;
   lastGoodText: string;
   parseError: string | null;
+  parseErrorLineNumber: number | null;
   document: AplDocument | null;
   collapsedBlocks: Set<string>;
   collapsedActions: Set<string>;
@@ -37,6 +38,7 @@ interface EditorState {
 interface DerivedEditorState {
   lastGoodText: string;
   parseError: string | null;
+  parseErrorLineNumber: number | null;
   document: AplDocument | null;
   collapsedBlocks: Set<string>;
   collapsedActions: Set<string>;
@@ -156,6 +158,7 @@ function buildDerivedState(
   return {
     lastGoodText: text,
     parseError: null,
+    parseErrorLineNumber: null,
     document,
     collapsedBlocks: nextCollapsedBlocks,
     collapsedActions: nextCollapsedActions,
@@ -172,6 +175,7 @@ function buildFailedState(
   return {
     ...fallback,
     parseError: formatParseError(result),
+    parseErrorLineNumber: result.lineNumber,
   };
 }
 
@@ -198,6 +202,7 @@ function getEmptyDerivedState(lastGoodText = ""): DerivedEditorState {
   return {
     lastGoodText,
     parseError: null,
+    parseErrorLineNumber: null,
     document: null,
     collapsedBlocks: new Set<string>(),
     collapsedActions: new Set<string>(),
@@ -268,6 +273,7 @@ export const useEditorStore = create<EditorState>((set) => ({
         {
           lastGoodText: state.lastGoodText,
           parseError: state.parseError,
+          parseErrorLineNumber: state.parseErrorLineNumber,
           document: state.document,
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions: state.collapsedActions,

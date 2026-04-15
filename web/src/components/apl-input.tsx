@@ -7,6 +7,7 @@ import {
   TabsTrigger,
 } from "@components/ui/tabs";
 import { useShallow } from "zustand/react/shallow";
+import { AplCodeEditor } from "@components/apl-editor/AplCodeEditor";
 import Canvas from "@components/canvas";
 import {
   APL_STORAGE_KEY,
@@ -33,11 +34,18 @@ function readStoredActiveTab(): AplInputTab {
 
 function AplInput() {
   const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
-  const { aplText, lastGoodText, parseError, applyAplText } = useEditorStore(
+  const {
+    aplText,
+    lastGoodText,
+    parseError,
+    parseErrorLineNumber,
+    applyAplText,
+  } = useEditorStore(
     useShallow((state) => ({
       aplText: state.aplText,
       lastGoodText: state.lastGoodText,
       parseError: state.parseError,
+      parseErrorLineNumber: state.parseErrorLineNumber,
       applyAplText: state.applyAplText,
     })),
   );
@@ -90,20 +98,11 @@ function AplInput() {
       </div>
       <div className="mt-2">
         <TabsContent value="write" className="-m-0.5 rounded-lg p-0.5">
-          <label htmlFor="comment" className="sr-only">
-            Comment
-          </label>
-          <div>
-            <textarea
-              id="comment"
-              name="comment"
-              rows={16}
-              placeholder="Paste APL..."
-              className="block min-h-[40vh] w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
-              value={aplText}
-              onChange={(event) => {applyAplText(event.target.value)}} //update zustand store (state)
-            />
-          </div>
+          <AplCodeEditor
+            value={aplText}
+            parseErrorLineNumber={parseErrorLineNumber}
+            onChange={applyAplText}
+          />
           {parseError ? (
             <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
               <p>{parseError}</p>
