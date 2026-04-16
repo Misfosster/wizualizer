@@ -34,8 +34,41 @@ const MULTIPLE_VARIABLE_DEFINITION_APL = [
   "actions+=/lava_lash,if=variable.foo>0",
 ].join("\n");
 
+const FOLDING_APL = [
+  'shaman="Demo Profile"',
+  "actions.precombat=windfury_weapon",
+  "actions.precombat+=/flametongue_weapon",
+  "actions=auto_attack",
+  "head=locus_of_the_primal_core,id=249979",
+  "neck=amulet_of_the_abyssal_hymn,id=250247",
+  "trinket1=gaze_of_the_alnseer,id=249343",
+  'profileset."AoE"+=talents=example_aoe',
+  'profileset."AoE"+=trinket1=example_trinket',
+  'copy="Second Profile"',
+  "actions=stormstrike",
+  "actions+=/lava_lash",
+].join("\n");
+
 async function fillAplEditor(page: Page, text: string): Promise<void> {
   await page.getByRole("textbox", { name: "APL editor" }).fill(text);
+}
+
+async function clickFoldMarkerForLine(
+  page: Page,
+  lineText: string,
+): Promise<void> {
+  const lineBox = await page.getByText(lineText).boundingBox();
+  const gutterBox = await page.locator(".cm-foldGutter").boundingBox();
+  expect(lineBox).toBeTruthy();
+  expect(gutterBox).toBeTruthy();
+  if (!lineBox || !gutterBox) {
+    throw new Error(`Expected fold marker for line: ${lineText}`);
+  }
+
+  await page.mouse.click(
+    gutterBox.x + gutterBox.width / 2,
+    lineBox.y + lineBox.height / 2,
+  );
 }
 
 test("renders parsed APL text in the preview graph", async ({ page }) => {
@@ -259,6 +292,35 @@ test("highlights a restored parse error when a saved fallback graph exists", asy
     page.getByTestId("apl-code-editor").locator(".lc-apl-editor-error-line"),
   ).toContainText("actions=asdasd/bloodlust,line_cd=600");
   await expect(page.getByRole("button", { name: "Go to line 1" })).toBeVisible();
+});
+
+test("folds action blocks and copied profile sections in the editor", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, FOLDING_APL);
+
+  await clickFoldMarkerForLine(page, "actions.precombat=windfury_weapon");
+  await expect(page.getByText("flametongue_weapon")).toHaveCount(0);
+  await expect(page.locator(".cm-foldPlaceholder")).toBeVisible();
+
+  await clickFoldMarkerForLine(page, "actions.precombat=windfury_weapon");
+  await expect(page.getByText("flametongue_weapon")).toBeVisible();
+
+  await clickFoldMarkerForLine(
+    page,
+    "head=locus_of_the_primal_core,id=249979",
+  );
+  await expect(page.getByText("amulet_of_the_abyssal_hymn")).toHaveCount(0);
+  await expect(page.getByText("gaze_of_the_alnseer")).toHaveCount(0);
+
+  await clickFoldMarkerForLine(
+    page,
+    'profileset."AoE"+=talents=example_aoe',
+  );
+  await expect(page.getByText("example_trinket")).toHaveCount(0);
+
+  await clickFoldMarkerForLine(page, 'copy="Second Profile"');
+  await expect(page.getByText("stormstrike")).toHaveCount(0);
+  await expect(page.getByText("lava_lash")).toHaveCount(0);
 });
 
 test("variable references are emphasized and show ctrl-hover affordance", async ({ page }) => {

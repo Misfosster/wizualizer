@@ -19,6 +19,7 @@ import {
 import { bracketMatching, syntaxHighlighting } from "@codemirror/language";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { createErrorLineExtension } from "./error-line";
+import { createAplFoldingExtension } from "./folding";
 import {
   clearJumpTargetLater,
   createEditorMouseDownHandler,
@@ -56,6 +57,7 @@ function createEditorExtensions(
     aplLanguage,
     syntaxHighlighting(aplHighlightStyle),
     aplEditorTheme,
+    createAplFoldingExtension(),
     createVariableReferenceMarksExtension(),
     placeholder("Paste APL..."),
     EditorState.tabSize.of(2),

@@ -171,6 +171,55 @@ test("parser supports prefix unary operators in conditions", () => {
   );
 });
 
+test("parser treats unspaced minus before boolean unary not as arithmetic", () => {
+  const action = parseOrThrow(
+    "actions+=/call_action_list,name=finish,if=combo_points>cp_max_spend-!darkest_night",
+    1,
+  );
+
+  const ifSegment = action.segments.find((segment) => segment.type === "if");
+  expect(ifSegment).toMatchObject({
+    type: "if",
+    expr: {
+      kind: "binary",
+      op: ">",
+      left: { kind: "ident", name: "combo_points" },
+      right: {
+        kind: "binary",
+        op: "-",
+        left: { kind: "ident", name: "cp_max_spend" },
+        right: {
+          kind: "unary",
+          op: "!",
+          expr: { kind: "ident", name: "darkest_night" },
+        },
+      },
+    },
+  });
+});
+
+test("parser treats unspaced minus between identifiers as arithmetic", () => {
+  const action = parseOrThrow(
+    "actions+=/rupture,if=target.time_to_die-remains>6",
+    1,
+  );
+
+  expect(action.segments[0]).toMatchObject({
+    type: "if",
+    expr: {
+      kind: "binary",
+      op: ">",
+      left: {
+        kind: "binary",
+        op: "-",
+        left: { kind: "ident", name: "target.time_to_die" },
+        right: { kind: "ident", name: "remains" },
+      },
+      right: { kind: "number", value: 6 },
+    },
+  });
+});
+
 test("parser supports identifiers with numeric prefixes", () => {
   const action = parseOrThrow(
     "actions.precombat+=/variable,name=10ssteroid_trinket_equipped,op=set,value=equipped.ever_collapsing_void_fissure,if=buff.foo.stack>=10",

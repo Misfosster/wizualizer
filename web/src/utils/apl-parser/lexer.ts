@@ -106,7 +106,7 @@ const lexer = moo.compile({
   gt: ">",
 
   // literals
-  ident: /(?:[A-Za-z_][A-Za-z0-9_.\-]*|[0-9]+[A-Za-z_][A-Za-z0-9_.\-]*)/,
+  ident: /(?:[A-Za-z_][A-Za-z0-9_.]*|[0-9]+[A-Za-z_][A-Za-z0-9_.]*)/,
   number: /[0-9]+(?:\.[0-9]+)?(?![A-Za-z_])/,
 });
 

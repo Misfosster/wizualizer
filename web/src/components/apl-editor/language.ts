@@ -41,7 +41,7 @@ const SEGMENT_KEYS = new Set([
 ]);
 
 const IDENT_RE =
-  /(?:[A-Za-z_][A-Za-z0-9_.-]*|[0-9]+[A-Za-z_][A-Za-z0-9_.-]*)/;
+  /(?:[A-Za-z_][A-Za-z0-9_.]*|[0-9]+[A-Za-z_][A-Za-z0-9_.]*)/;
 const ACTION_CATEGORY_RE = /actions(?:\.[A-Za-z0-9_.-]+)?(?=(?:\+=\/|=))/;
 const NUMBER_RE = /[0-9]+(?:\.[0-9]+)?(?![A-Za-z_])/;
 
