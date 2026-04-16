@@ -53,8 +53,9 @@ export const aplEditorTheme = EditorView.theme(
       backgroundColor: "#172032",
       color: "#AAB8CB",
     },
-    ".cm-selectionBackground": {
-      backgroundColor: "rgba(125, 211, 252, 0.22) !important",
+    ".cm-content ::selection": {
+      background: "rgba(96, 165, 250, 0.42)",
+      color: "#F8FAFC",
     },
     ".cm-cursor": {
       borderLeftColor: "#A5F3FC",
@@ -68,6 +69,48 @@ export const aplEditorTheme = EditorView.theme(
     ".lc-apl-editor-error-gutter": {
       backgroundColor: "rgba(248, 113, 113, 0.18)",
       color: "#FCA5A5",
+    },
+    ".lc-apl-editor-variable-ref": {
+      color: "#A7C7FF",
+      fontWeight: "650",
+    },
+    ".lc-apl-editor-variable-ref *": {
+      color: "#A7C7FF",
+      fontWeight: "650",
+    },
+    ".lc-apl-editor-variable-ref--hover": {
+      position: "relative",
+      zIndex: "2",
+      borderRadius: "4px",
+      backgroundColor: "rgba(125, 211, 252, 0.14)",
+      boxShadow:
+        "0 0 0 1px rgba(125, 211, 252, 0.26), 0 8px 18px rgba(2, 8, 23, 0.32)",
+      color: "#F8FAFC",
+      cursor: "pointer",
+      fontWeight: "700",
+      textDecoration: "underline",
+      textDecorationColor: "rgba(125, 211, 252, 0.9)",
+      textUnderlineOffset: "0.18em",
+    },
+    ".lc-apl-editor-variable-ref--hover *": {
+      color: "#F8FAFC",
+      fontWeight: "700",
+    },
+    ".lc-apl-editor-jump-target-line": {
+      animation: "lc-apl-jump-target-fade 1.5s ease-out forwards",
+      backgroundColor: "rgba(255, 255, 255, 0.62)",
+    },
+    "@keyframes lc-apl-jump-target-fade": {
+      "0%": {
+        backgroundColor: "rgba(255, 255, 255, 0.62)",
+        boxShadow:
+          "inset 0 0 0 1px rgba(255, 255, 255, 0.48), 0 0 24px rgba(255, 255, 255, 0.18)",
+      },
+      "100%": {
+        backgroundColor: "rgba(255, 255, 255, 0)",
+        boxShadow:
+          "inset 0 0 0 1px rgba(255, 255, 255, 0), 0 0 0 rgba(255, 255, 255, 0)",
+      },
     },
   },
   { dark: true },

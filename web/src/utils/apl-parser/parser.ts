@@ -56,8 +56,6 @@ export function parseAction(line: string): Action | null {
         throw new Error("Expected '=' or '+=/' after category");
       })();
 
-  // Incase of uncaught slash (this fixes a bug)
-  ts.match("slash");
   const spell = ts.expect("ident").value;
 
   const segments: Action["segments"] = [];

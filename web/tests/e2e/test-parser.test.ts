@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { parseAction } from "../../src/utils/apl-parser/parser";
+import { parseDocument } from "../../src/utils/apl-parser/document";
 import { prettyAction } from "../../src/utils/apl-parser/pretty-log";
 import type { Action, Condition } from "../../src/utils/apl-parser/types";
 
@@ -214,4 +215,46 @@ test("parser rejects trailing tokens after segment expressions", () => {
   expect(() => {
     parseAction("actions+=/spell_name,if=floor(1)ceil(2)");
   }).toThrow(/Unexpected token after segment expression/);
+});
+
+test("parser rejects extra slash after an action name", () => {
+  expect(() => {
+    parseAction("actions=asdasd/bloodlust,line_cd=600");
+  }).toThrow(/Unexpected trailing token: slash/);
+});
+
+test("parser rejects slash-prefixed action names on base assignments", () => {
+  expect(() => {
+    parseAction("actions=/bloodlust,line_cd=600");
+  }).toThrow(/Expected ident/);
+});
+
+test("document parser rejects malformed base action append operators", () => {
+  const result = parseDocument(
+    [
+      'shaman="Demo Profile"',
+      "actions++/call_action_list,name=single_totemic",
+    ].join("\n"),
+  );
+
+  expect(result).toMatchObject({
+    ok: false,
+    lineNumber: 2,
+    error: "Expected '=' or '+=/' after category",
+  });
+});
+
+test("document parser rejects append actions missing their slash", () => {
+  const result = parseDocument(
+    [
+      'shaman="Demo Profile"',
+      "actions+=call_action_list,name=single_totemic",
+    ].join("\n"),
+  );
+
+  expect(result).toMatchObject({
+    ok: false,
+    lineNumber: 2,
+    error: "Expected '=' or '+=/' after category",
+  });
 });

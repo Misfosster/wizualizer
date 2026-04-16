@@ -20,6 +20,20 @@ const INVALID_APL = [
   "actions+=/auto_attack,if=floor(",
 ].join("\n");
 
+const VARIABLE_JUMP_APL = [
+  'shaman="Demo Profile"',
+  "actions+=/variable,name=aoe_threshold,value=active_enemies",
+  "actions+=/stormstrike,if=variable.aoe_threshold>1",
+].join("\n");
+
+const MULTIPLE_VARIABLE_DEFINITION_APL = [
+  'shaman="Demo Profile"',
+  "actions+=/variable,name=foo,value=1",
+  "actions+=/stormstrike,if=variable.foo>0",
+  "actions+=/variable,name=foo,value=2",
+  "actions+=/lava_lash,if=variable.foo>0",
+].join("\n");
+
 async function fillAplEditor(page: Page, text: string): Promise<void> {
   await page.getByRole("textbox", { name: "APL editor" }).fill(text);
 }
@@ -211,8 +225,121 @@ test("keeps the last good graph when a parse error occurs", async ({ page }) => 
   await expect(
     page.getByText("Preview shows the last successful parse", { exact: false }),
   ).toBeVisible();
+  await page.getByRole("button", { name: "Go to line 2" }).click();
+  await expect(page.locator(".lc-apl-editor-jump-target-line")).toContainText(
+    "actions+=/auto_attack,if=floor(",
+  );
 
   await page.getByRole("tab", { name: "Preview" }).click();
+  await expect(page.getByTestId("rf__node-root__0")).toContainText("Demo Profile");
+  await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("auto_attack");
+});
+
+test("highlights a restored parse error when a saved fallback graph exists", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, VALID_APL);
+  await fillAplEditor(
+    page,
+    [
+      "actions=asdasd/bloodlust,line_cd=600",
+      "actions+=/auto_attack",
+    ].join("\n"),
+  );
+
+  await expect(page.getByText("Line 1:")).toBeVisible();
+  await page.waitForFunction(
+    () =>
+      window.localStorage.getItem("logiccraft.aplText")?.includes("asdasd"),
+  );
+
+  await page.reload();
+
+  await expect(page.getByText("Line 1:")).toBeVisible();
+  await expect(
+    page.getByTestId("apl-code-editor").locator(".lc-apl-editor-error-line"),
+  ).toContainText("actions=asdasd/bloodlust,line_cd=600");
+  await expect(page.getByRole("button", { name: "Go to line 1" })).toBeVisible();
+});
+
+test("variable references are emphasized and show ctrl-hover affordance", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, VARIABLE_JUMP_APL);
+
+  await expect(page.locator(".lc-apl-editor-variable-ref")).toContainText(
+    "variable.aoe_threshold",
+  );
+
+  await page.keyboard.down("Control");
+  await page.getByText("variable.aoe_threshold").hover();
+  await expect(page.locator(".lc-apl-editor-variable-ref--hover")).toContainText(
+    "variable.aoe_threshold",
+  );
+  await page.keyboard.up("Control");
+});
+
+test("ctrl-clicking a variable reference jumps to its definition", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, VARIABLE_JUMP_APL);
+
+  await page.getByText("variable.aoe_threshold").click({
+    modifiers: ["Control"],
+  });
+
+  await expect(page.locator(".lc-apl-editor-jump-target-line")).toContainText(
+    "name=aoe_threshold",
+  );
+});
+
+test("ctrl-clicking a variable reference uses the nearest earlier definition", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, MULTIPLE_VARIABLE_DEFINITION_APL);
+
+  await page.getByText("variable.foo").nth(1).click({
+    modifiers: ["Control"],
+  });
+
+  await expect(page.locator(".lc-apl-editor-jump-target-line")).toContainText(
+    "value=2",
+  );
+});
+
+test("ctrl-clicking an unresolved variable reference does not jump", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(
+    page,
+    'shaman="Demo Profile"\nactions+=/stormstrike,if=variable.missing>0',
+  );
+
+  await page.getByText("variable.missing").click({
+    modifiers: ["Control"],
+  });
+
+  await expect(page.locator(".lc-apl-editor-jump-target-line")).toHaveCount(0);
+});
+
+test("clicking below the last editor line moves the cursor to document end", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, 'shaman="Demo Profile"');
+
+  const editor = page.getByRole("textbox", { name: "APL editor" });
+  await editor.press("Home");
+
+  const scrollerBox = await page
+    .getByTestId("apl-code-editor")
+    .locator(".cm-scroller")
+    .boundingBox();
+  expect(scrollerBox).toBeTruthy();
+  if (!scrollerBox) {
+    throw new Error("Expected CodeMirror scroller to be visible");
+  }
+
+  await page.mouse.click(
+    scrollerBox.x + 120,
+    scrollerBox.y + scrollerBox.height - 24,
+  );
+  await page.keyboard.type("\nactions+=/auto_attack");
+  await page.getByRole("tab", { name: "Preview" }).click();
+
   await expect(page.getByTestId("rf__node-root__0")).toContainText("Demo Profile");
   await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("auto_attack");
 });

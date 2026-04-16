@@ -23,8 +23,11 @@ const CLASS_PROFILE_RE = new RegExp(
 );
 // copy="Name" starts a new profile that inherits from the previous one
 const COPY_PROFILE_RE = /^copy="([^"]+)"$/;
-// We only care about lines that start with actions — everything else (gear, config, etc.) is skipped
-const ACTION_LINE_RE = /^actions(?:\.|=|\+=\/)/;
+// Temporary scope boundary: graph building currently understands action lines.
+// Gear/config lines should become first-class parsed document data later.
+// For now they pass through untouched, while malformed action-like lines still
+// reach the parser so validation can report them.
+const ACTION_LINE_RE = /^actions(?:\.[A-Za-z0-9_.-]*)?(?=$|[=+/])/;
 
 export interface ParsedActionLine {
   action: Action;

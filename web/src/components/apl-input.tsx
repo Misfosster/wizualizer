@@ -8,6 +8,7 @@ import {
 } from "@components/ui/tabs";
 import { useShallow } from "zustand/react/shallow";
 import { AplCodeEditor } from "@components/apl-editor/AplCodeEditor";
+import type { AplEditorLineJumpRequest } from "@components/apl-editor/types";
 import Canvas from "@components/canvas";
 import {
   APL_STORAGE_KEY,
@@ -34,6 +35,8 @@ function readStoredActiveTab(): AplInputTab {
 
 function AplInput() {
   const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
+  const [lineJumpRequest, setLineJumpRequest] =
+    useState<AplEditorLineJumpRequest | null>(null);
   const {
     aplText,
     lastGoodText,
@@ -56,7 +59,9 @@ function AplInput() {
       window.localStorage.setItem(APL_STORAGE_KEY, aplText);
     }, APL_STORAGE_DEBOUNCE_MS);
 
-    return () => {window.clearTimeout(timeoutId)}; 
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, [aplText]);
 
   useEffect(() => {
@@ -64,12 +69,26 @@ function AplInput() {
       window.localStorage.setItem(LAST_GOOD_APL_STORAGE_KEY, lastGoodText);
     }, APL_STORAGE_DEBOUNCE_MS);
 
-    return () => {window.clearTimeout(timeoutId)};
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, [lastGoodText]);
 
   useEffect(() => {
     window.localStorage.setItem(ACTIVE_TAB_STORAGE_KEY, activeTab);
   }, [activeTab]);
+
+  function handleGoToParseErrorLine(): void {
+    if (!parseErrorLineNumber) {
+      return;
+    }
+
+    setActiveTab("write");
+    setLineJumpRequest((request) => ({
+      lineNumber: parseErrorLineNumber,
+      requestId: (request?.requestId ?? 0) + 1,
+    }));
+  }
 
   return (
     <Tabs
@@ -101,14 +120,26 @@ function AplInput() {
           <AplCodeEditor
             value={aplText}
             parseErrorLineNumber={parseErrorLineNumber}
+            lineJumpRequest={lineJumpRequest}
             onChange={applyAplText}
           />
           {parseError ? (
-            <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
-              <p>{parseError}</p>
-              <p className="mt-1 text-amber-800/80 dark:text-amber-100/80">
-                Preview shows the last successful parse when available.
-              </p>
+            <div className="mt-3 flex items-start justify-between gap-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
+              <div>
+                <p>{parseError}</p>
+                <p className="mt-1 text-amber-800/80 dark:text-amber-100/80">
+                  Preview shows the last successful parse when available.
+                </p>
+              </div>
+              {parseErrorLineNumber ? (
+                <button
+                  type="button"
+                  className="shrink-0 rounded-md border border-amber-300/70 bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-950 shadow-sm transition hover:bg-amber-200 dark:border-amber-300/25 dark:bg-amber-300/10 dark:text-amber-100 dark:hover:bg-amber-300/20"
+                  onClick={handleGoToParseErrorLine}
+                >
+                  Go to line {parseErrorLineNumber}
+                </button>
+              ) : null}
             </div>
           ) : null}
         </TabsContent>

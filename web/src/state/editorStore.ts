@@ -260,6 +260,7 @@ function getInitialEditorState(): Omit<
     ...fallbackState,
     lastGoodText,
     parseError: initialState.parseError,
+    parseErrorLineNumber: initialState.parseErrorLineNumber,
   };
 }
 

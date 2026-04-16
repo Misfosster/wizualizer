@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Compartment, EditorState, type Extension } from "@codemirror/state";
+import {
+  Compartment,
+  EditorSelection,
+  EditorState,
+  type Extension,
+} from "@codemirror/state";
 import {
   EditorView,
-  drawSelection,
   dropCursor,
   highlightActiveLine,
   highlightActiveLineGutter,
@@ -15,9 +19,19 @@ import {
 import { bracketMatching, syntaxHighlighting } from "@codemirror/language";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { createErrorLineExtension } from "./error-line";
+import {
+  clearJumpTargetLater,
+  createEditorMouseDownHandler,
+  createVariableHoverHandlers,
+} from "./interactions";
+import { createJumpTargetLineExtension } from "./jump-target";
 import { aplLanguage } from "./language";
 import { aplEditorTheme, aplHighlightStyle } from "./theme";
 import type { AplCodeEditorProps } from "./types";
+import {
+  createVariableReferenceHoverExtension,
+  createVariableReferenceMarksExtension,
+} from "./variable-reference-mark";
 
 interface ChangeRef {
   current: (value: string) => void;
@@ -25,6 +39,8 @@ interface ChangeRef {
 
 function createEditorExtensions(
   errorLineCompartment: Compartment,
+  jumpTargetCompartment: Compartment,
+  variableHoverCompartment: Compartment,
   onChangeRef: ChangeRef,
   parseErrorLineNumber: number | null,
 ): Extension[] {
@@ -33,7 +49,6 @@ function createEditorExtensions(
     highlightActiveLineGutter(),
     highlightSpecialChars(),
     history(),
-    drawSelection(),
     dropCursor(),
     rectangularSelection(),
     highlightActiveLine(),
@@ -41,6 +56,7 @@ function createEditorExtensions(
     aplLanguage,
     syntaxHighlighting(aplHighlightStyle),
     aplEditorTheme,
+    createVariableReferenceMarksExtension(),
     placeholder("Paste APL..."),
     EditorState.tabSize.of(2),
     EditorView.contentAttributes.of({
@@ -59,12 +75,17 @@ function createEditorExtensions(
     errorLineCompartment.of(
       createErrorLineExtension(parseErrorLineNumber),
     ),
+    jumpTargetCompartment.of(createJumpTargetLineExtension(null)),
+    variableHoverCompartment.of(
+      createVariableReferenceHoverExtension(null),
+    ),
   ];
 }
 
 export function AplCodeEditor({
   value,
   parseErrorLineNumber,
+  lineJumpRequest,
   onChange,
 }: AplCodeEditorProps) {
   const parentRef = useRef<HTMLDivElement | null>(null);
@@ -72,7 +93,10 @@ export function AplCodeEditor({
   const initialValueRef = useRef(value);
   const onChangeRef = useRef(onChange);
   const parseErrorLineNumberRef = useRef(parseErrorLineNumber);
+  const jumpTargetTimeoutRef = useRef<number | null>(null);
   const errorLineCompartment = useMemo(() => new Compartment(), []);
+  const jumpTargetCompartment = useMemo(() => new Compartment(), []);
+  const variableHoverCompartment = useMemo(() => new Compartment(), []);
 
   useEffect(() => {
     onChangeRef.current = onChange;
@@ -94,19 +118,52 @@ export function AplCodeEditor({
         doc: initialValueRef.current,
         extensions: createEditorExtensions(
           errorLineCompartment,
+          jumpTargetCompartment,
+          variableHoverCompartment,
           onChangeRef,
           parseErrorLineNumberRef.current,
         ),
       }),
     });
+    const handleMouseDown = createEditorMouseDownHandler({
+      view,
+      jumpTargetCompartment,
+      jumpTargetTimeoutRef,
+    });
+    const variableHoverHandlers = createVariableHoverHandlers({
+      view,
+      variableHoverCompartment,
+    });
+    view.dom.addEventListener("mousedown", handleMouseDown);
+    view.dom.addEventListener("mouseleave", variableHoverHandlers.handleMouseLeave);
+    view.dom.addEventListener("mousemove", variableHoverHandlers.handleMouseMove);
+    window.addEventListener("blur", variableHoverHandlers.reset);
+    window.addEventListener("keydown", variableHoverHandlers.handleKeyDown);
+    window.addEventListener("keyup", variableHoverHandlers.handleKeyUp);
 
     viewRef.current = view;
 
     return () => {
+      view.dom.removeEventListener("mousedown", handleMouseDown);
+      view.dom.removeEventListener(
+        "mouseleave",
+        variableHoverHandlers.handleMouseLeave,
+      );
+      view.dom.removeEventListener(
+        "mousemove",
+        variableHoverHandlers.handleMouseMove,
+      );
+      window.removeEventListener("blur", variableHoverHandlers.reset);
+      window.removeEventListener("keydown", variableHoverHandlers.handleKeyDown);
+      window.removeEventListener("keyup", variableHoverHandlers.handleKeyUp);
+      if (jumpTargetTimeoutRef.current !== null) {
+        window.clearTimeout(jumpTargetTimeoutRef.current);
+        jumpTargetTimeoutRef.current = null;
+      }
       view.destroy();
       viewRef.current = null;
     };
-  }, [errorLineCompartment]);
+  }, [errorLineCompartment, jumpTargetCompartment, variableHoverCompartment]);
 
   useEffect(() => {
     const view = viewRef.current;
@@ -140,6 +197,35 @@ export function AplCodeEditor({
       ),
     });
   }, [errorLineCompartment, parseErrorLineNumber]);
+
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view || !lineJumpRequest) {
+      return;
+    }
+
+    const lineNumber = Math.min(
+      Math.max(1, lineJumpRequest.lineNumber),
+      view.state.doc.lines,
+    );
+    const targetLine = view.state.doc.line(lineNumber);
+
+    view.focus();
+    view.dispatch({
+      selection: EditorSelection.cursor(targetLine.from),
+      effects: [
+        EditorView.scrollIntoView(targetLine.from, { y: "center" }),
+        jumpTargetCompartment.reconfigure(
+          createJumpTargetLineExtension(lineNumber),
+        ),
+      ],
+    });
+    clearJumpTargetLater(
+      view,
+      jumpTargetCompartment,
+      jumpTargetTimeoutRef,
+    );
+  }, [jumpTargetCompartment, lineJumpRequest]);
 
   return <div ref={parentRef} data-testid="apl-code-editor" />;
 }
