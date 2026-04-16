@@ -9,7 +9,7 @@
   <rect width="800" height="400" fill="#f8fafc"/>
   
   <!-- Title -->
-  <text x="400" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Logiccraft System Architecture</text>
+  <text x="400" y="30" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Wizualizer System Architecture</text>
   
   <!-- APL Text Box -->
   <rect x="30" y="70" width="120" height="60" rx="8" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>

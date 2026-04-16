@@ -1,4 +1,4 @@
-# Logiccraft — Lessons Learned & Future Work
+# Wizualizer - Lessons Learned & Future Work
 
 ## What Worked Well
 

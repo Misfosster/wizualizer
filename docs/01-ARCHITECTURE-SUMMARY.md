@@ -1,4 +1,4 @@
-# Logiccraft — Architecture Summary
+# Wizualizer - Architecture Summary
 
 ## Core Data Flow
 

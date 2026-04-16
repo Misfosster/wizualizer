@@ -1,4 +1,4 @@
-# logiccraft
+# Wizualizer
 
 ## Docs
 

@@ -1,4 +1,4 @@
-# Logiccraft — Design Patterns
+# Wizualizer - Design Patterns
 
 ## 1. Recursive Descent Parser
 

@@ -1,6 +1,6 @@
 # UI Stack
 
-Component libraries and styling approach for Logiccraft.
+Component libraries and styling approach for Wizualizer.
 
 ## Stack Overview
 

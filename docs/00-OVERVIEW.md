@@ -1,4 +1,4 @@
-# Logiccraft — Overview
+# Wizualizer - Overview
 
 ## Goal
 

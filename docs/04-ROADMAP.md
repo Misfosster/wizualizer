@@ -1,4 +1,4 @@
-# Logiccraft — Roadmap
+# Wizualizer - Roadmap
 
 ## Phase 1: Foundations
 

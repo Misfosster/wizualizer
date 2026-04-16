@@ -1,4 +1,4 @@
-# Logiccraft — Decisions
+# Wizualizer - Decisions
 
 Record architecture and stack decisions with short context and rationale.
 
