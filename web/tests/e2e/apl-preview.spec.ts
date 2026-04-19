@@ -49,6 +49,22 @@ const FOLDING_APL = [
   "actions+=/lava_lash",
 ].join("\n");
 
+// Real-world layout: each action subgroup is preceded by a header comment
+// and separated from the previous subgroup by blank lines. Folding the
+// `aoe` section should keep the trailing whitespace and the `# Buff …`
+// header visible because they belong to the next section.
+const FOLDING_APL_WITH_COMMENTS = [
+  'shaman="Demo Profile"',
+  "# Multi target action priority list",
+  "actions.aoe=voltaic_blaze,if=active_enemies>1",
+  "actions.aoe+=/surging_totem",
+  "",
+  "",
+  "# Buff action priority list",
+  "actions.buffs=use_item,name=algethar_puzzle_box",
+  "actions.buffs+=/blood_fury",
+].join("\n");
+
 async function fillAplEditor(page: Page, text: string): Promise<void> {
   await page.getByRole("textbox", { name: "APL editor" }).fill(text);
 }
@@ -321,6 +337,23 @@ test("folds action blocks and copied profile sections in the editor", async ({ p
   await clickFoldMarkerForLine(page, 'copy="Second Profile"');
   await expect(page.getByText("stormstrike")).toHaveCount(0);
   await expect(page.getByText("lava_lash")).toHaveCount(0);
+});
+
+test("folding a section keeps trailing comments and blank lines for the next section visible", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, FOLDING_APL_WITH_COMMENTS);
+
+  await clickFoldMarkerForLine(page, "actions.aoe=voltaic_blaze,if=active_enemies>1");
+
+  // The other action inside the aoe block is hidden and a placeholder is shown.
+  await expect(page.getByText("surging_totem")).toHaveCount(0);
+  await expect(page.locator(".cm-foldPlaceholder")).toBeVisible();
+
+  // The header comment for the next section and the next section's actions
+  // belong to that next section, not to the folded one, so they remain visible.
+  await expect(page.getByText("# Buff action priority list")).toBeVisible();
+  await expect(page.getByText("algethar_puzzle_box")).toBeVisible();
+  await expect(page.getByText("blood_fury")).toBeVisible();
 });
 
 test("variable references are emphasized and show ctrl-hover affordance", async ({ page }) => {

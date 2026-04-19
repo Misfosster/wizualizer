@@ -1,0 +1,3296 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "byClassSpec": {
+    "evoker/devastation": {
+      "classId": 13,
+      "specId": 1467,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 115614,
+          "displayName": "Landslide",
+          "simcKey": "landslide",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115613,
+          "displayName": "Obsidian Scales",
+          "simcKey": "obsidian_scales",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115615,
+          "displayName": "Expunge",
+          "simcKey": "expunge",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115621,
+          "displayName": "Natural Convergence",
+          "simcKey": "natural_convergence",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128216,
+          "displayName": "Heavy Wingbeats",
+          "simcKey": "heavy_wingbeats",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115655,
+          "displayName": "Verdant Embrace",
+          "simcKey": "verdant_embrace",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115576,
+          "displayName": "Forger of Mountains",
+          "simcKey": "forger_of_mountains",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115611,
+          "displayName": "Innate Magic",
+          "simcKey": "innate_magic",
+          "maxRank": 2,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115597,
+          "displayName": "Obsidian Bulwark",
+          "simcKey": "obsidian_bulwark",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115603,
+          "displayName": "Enkindled",
+          "simcKey": "enkindled",
+          "maxRank": 2,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115654,
+          "displayName": "Scarlet Adaptation",
+          "simcKey": "scarlet_adaptation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115620,
+          "displayName": "Inner Radiance",
+          "simcKey": "inner_radiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115610,
+          "displayName": "Recall",
+          "simcKey": "recall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128217,
+          "displayName": "Clobbering Sweep",
+          "simcKey": "clobbering_sweep",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115598,
+          "displayName": "Tailwind",
+          "simcKey": "tailwind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115602,
+          "displayName": "Cauterizing Flame",
+          "simcKey": "cauterizing_flame",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115577,
+          "displayName": "Ancient Flame",
+          "simcKey": "ancient_flame",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115619,
+          "displayName": "Instinctive Arcana",
+          "simcKey": "instinctive_arcana",
+          "maxRank": 2,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115665,
+          "displayName": "Tip the Scales",
+          "simcKey": "tip_the_scales",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115600,
+          "displayName": "Attuned to the Dream",
+          "simcKey": "attuned_to_the_dream",
+          "maxRank": 2,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115601,
+          "displayName": "Sleep Walk",
+          "simcKey": "sleep_walk",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136559,
+          "displayName": "Protracted Talons",
+          "simcKey": "protracted_talons",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115670,
+          "displayName": "Inherent Resistance",
+          "simcKey": "inherent_resistance",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115609,
+          "displayName": "Draconic Legacy",
+          "simcKey": "draconic_legacy",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115664,
+          "displayName": "Extended Flight",
+          "simcKey": "extended_flight",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115599,
+          "displayName": "Bountiful Bloom",
+          "simcKey": "bountiful_bloom",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115668,
+          "displayName": "Regenerative Magic",
+          "simcKey": "regenerative_magic",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115618,
+          "displayName": "Blast Furnace",
+          "simcKey": "blast_furnace",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115608,
+          "displayName": "Exuberance",
+          "simcKey": "exuberance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115669,
+          "displayName": "Renewing Blaze",
+          "simcKey": "renewing_blaze",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115594,
+          "displayName": "Walloping Blow",
+          "simcKey": "walloping_blow",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115663,
+          "displayName": "Panacea",
+          "simcKey": "panacea",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115617,
+          "displayName": "Stretch Time",
+          "simcKey": "stretch_time",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115616,
+          "displayName": "Unravel",
+          "simcKey": "unravel",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115607,
+          "displayName": "Oppressing Roar",
+          "simcKey": "oppressing_roar",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115660,
+          "displayName": "Foci of Life",
+          "simcKey": "foci_of_life",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115596,
+          "displayName": "Rescue",
+          "simcKey": "rescue",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115662,
+          "displayName": "Lush Growth",
+          "simcKey": "lush_growth",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115658,
+          "displayName": "Source of Magic",
+          "simcKey": "source_of_magic",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136560,
+          "displayName": "Strike from Above",
+          "simcKey": "strike_from_above",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115657,
+          "displayName": "Leaping Flames",
+          "simcKey": "leaping_flames",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115606,
+          "displayName": "Overawe",
+          "simcKey": "overawe",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115667,
+          "displayName": "Aerial Mastery",
+          "simcKey": "aerial_mastery",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115595,
+          "displayName": "Twin Guardian",
+          "simcKey": "twin_guardian",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 116103,
+          "displayName": "Potent Mana",
+          "simcKey": "potent_mana",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115656,
+          "displayName": "Terror of the Skies",
+          "simcKey": "terror_of_the_skies",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115666,
+          "displayName": "Time Spiral",
+          "simcKey": "time_spiral",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115666,
+              "displayName": "Time Spiral",
+              "simcKey": "time_spiral"
+            },
+            {
+              "talentId": 125610,
+              "displayName": "Spatial Paradox",
+              "simcKey": "spatial_paradox"
+            }
+          ]
+        },
+        {
+          "talentId": 115661,
+          "displayName": "Zephyr",
+          "simcKey": "zephyr",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115494,
+          "displayName": "0",
+          "simcKey": "0",
+          "maxRank": 1,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 115647,
+          "displayName": "Pyre",
+          "simcKey": "pyre",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115593,
+          "displayName": "Ruby Essence Burst",
+          "simcKey": "ruby_essence_burst",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115646,
+          "displayName": "Azure Essence Burst",
+          "simcKey": "azure_essence_burst",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115592,
+          "displayName": "Lay Waste",
+          "simcKey": "lay_waste",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115645,
+          "displayName": "Quell",
+          "simcKey": "quell",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115581,
+          "displayName": "Eternity Surge",
+          "simcKey": "eternity_surge",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115591,
+          "displayName": "Volatility",
+          "simcKey": "volatility",
+          "maxRank": 2,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115582,
+          "displayName": "Power Nexus",
+          "simcKey": "power_nexus",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115643,
+          "displayName": "Dragonrage",
+          "simcKey": "dragonrage",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115579,
+          "displayName": "Azure Sweep",
+          "simcKey": "azure_sweep",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115580,
+          "displayName": "Arcane Intensity",
+          "simcKey": "arcane_intensity",
+          "maxRank": 2,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115590,
+          "displayName": "Ruby Embers",
+          "simcKey": "ruby_embers",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115642,
+          "displayName": "Animosity",
+          "simcKey": "animosity",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115631,
+          "displayName": "Essence Attunement",
+          "simcKey": "essence_attunement",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115585,
+          "displayName": "Engulfing Blaze",
+          "simcKey": "engulfing_blaze",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115588,
+          "displayName": "Heat Wave",
+          "simcKey": "heat_wave",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115641,
+          "displayName": "Honed Aggression",
+          "simcKey": "honed_aggression",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115632,
+          "displayName": "Eternity's Span",
+          "simcKey": "eternitys_span",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115629,
+          "displayName": "Event Horizon",
+          "simcKey": "event_horizon",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115629,
+              "displayName": "Event Horizon",
+              "simcKey": "event_horizon"
+            },
+            {
+              "talentId": 115630,
+              "displayName": "Eye of Infinity",
+              "simcKey": "eye_of_infinity"
+            }
+          ]
+        },
+        {
+          "talentId": 115587,
+          "displayName": "Catalyze",
+          "simcKey": "catalyze",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115640,
+          "displayName": "Tyranny",
+          "simcKey": "tyranny",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115628,
+          "displayName": "Charged Blast",
+          "simcKey": "charged_blast",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115627,
+          "displayName": "Shattering Stars",
+          "simcKey": "shattering_stars",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115584,
+          "displayName": "Feed the Flames",
+          "simcKey": "feed_the_flames",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115624,
+          "displayName": "Burnout",
+          "simcKey": "burnout",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115639,
+          "displayName": "Onyx Legacy",
+          "simcKey": "onyx_legacy",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115635,
+          "displayName": "Spellweaver's Dominance",
+          "simcKey": "spellweavers_dominance",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115626,
+          "displayName": "Star Salvo",
+          "simcKey": "star_salvo",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115638,
+          "displayName": "Imminent Destruction",
+          "simcKey": "imminent_destruction",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115586,
+          "displayName": "Font of Magic",
+          "simcKey": "font_of_magic",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115578,
+          "displayName": "Titanic Wrath",
+          "simcKey": "titanic_wrath",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115637,
+          "displayName": "Azure Celerity",
+          "simcKey": "azure_celerity",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115634,
+          "displayName": "Power Swell",
+          "simcKey": "power_swell",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115623,
+          "displayName": "Strafing Run",
+          "simcKey": "strafing_run",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115622,
+          "displayName": "Scorching Embers",
+          "simcKey": "scorching_embers",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115683,
+          "displayName": "Causality",
+          "simcKey": "causality",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115636,
+          "displayName": "Scintillation",
+          "simcKey": "scintillation",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115633,
+          "displayName": "Iridescence",
+          "simcKey": "iridescence",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137008,
+          "displayName": "Rising Fury",
+          "simcKey": "rising_fury",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117536,
+          "displayName": "Mass Disintegrate",
+          "simcKey": "mass_disintegrate",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117547,
+          "displayName": "Legacy of the Lifebinder",
+          "simcKey": "legacy_of_the_lifebinder",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117549,
+          "displayName": "Might of the Black Dragonflight",
+          "simcKey": "might_of_the_black_dragonflight",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123404,
+          "displayName": "Shape of Flame",
+          "simcKey": "shape_of_flame",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123404,
+              "displayName": "Shape of Flame",
+              "simcKey": "shape_of_flame"
+            },
+            {
+              "talentId": 117534,
+              "displayName": "Trailblazer",
+              "simcKey": "trailblazer"
+            }
+          ]
+        },
+        {
+          "talentId": 117533,
+          "displayName": "Bombardments",
+          "simcKey": "bombardments",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123416,
+          "displayName": "Ashes in Motion",
+          "simcKey": "ashes_in_motion",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117541,
+          "displayName": "Onslaught",
+          "simcKey": "onslaught",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128713,
+          "displayName": "Expanded Lungs",
+          "simcKey": "expanded_lungs",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128713,
+              "displayName": "Expanded Lungs",
+              "simcKey": "expanded_lungs"
+            },
+            {
+              "talentId": 117553,
+              "displayName": "Enkindle",
+              "simcKey": "enkindle"
+            }
+          ]
+        },
+        {
+          "talentId": 136053,
+          "displayName": "Command Squadron",
+          "simcKey": "command_squadron",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136055,
+          "displayName": "Essence Well",
+          "simcKey": "essence_well",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117518,
+          "displayName": "Melt Armor",
+          "simcKey": "melt_armor",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117546,
+          "displayName": "Conduit of Flame",
+          "simcKey": "conduit_of_flame",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117543,
+          "displayName": "Burning Adrenaline",
+          "simcKey": "burning_adrenaline",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117550,
+          "displayName": "Wingleader",
+          "simcKey": "wingleader",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117520,
+          "displayName": "Fulminous Roar",
+          "simcKey": "fulminous_roar",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117531,
+          "displayName": "Unrelenting Siege",
+          "simcKey": "unrelenting_siege",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136052,
+          "displayName": "Concentrated Power",
+          "simcKey": "concentrated_power",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136056,
+          "displayName": "Twin Flame",
+          "simcKey": "twin_flame",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117517,
+          "displayName": "Titanic Precision",
+          "simcKey": "titanic_precision",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 120125,
+          "displayName": "Menacing Presence",
+          "simcKey": "menacing_presence",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 120125,
+              "displayName": "Menacing Presence",
+              "simcKey": "menacing_presence"
+            },
+            {
+              "talentId": 117530,
+              "displayName": "Hardened Scales",
+              "simcKey": "hardened_scales"
+            }
+          ]
+        },
+        {
+          "talentId": 117542,
+          "displayName": "Deep Exhalation",
+          "simcKey": "deep_exhalation",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 120124,
+          "displayName": "Diverted Power",
+          "simcKey": "diverted_power",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 120124,
+              "displayName": "Diverted Power",
+              "simcKey": "diverted_power"
+            },
+            {
+              "talentId": 117525,
+              "displayName": "Extended Battle",
+              "simcKey": "extended_battle"
+            }
+          ]
+        },
+        {
+          "talentId": 120123,
+          "displayName": "Slipstream",
+          "simcKey": "slipstream",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 120123,
+              "displayName": "Slipstream",
+              "simcKey": "slipstream"
+            },
+            {
+              "talentId": 117540,
+              "displayName": "Nimble Flyer",
+              "simcKey": "nimble_flyer"
+            }
+          ]
+        },
+        {
+          "talentId": 123405,
+          "displayName": "Draconic Instincts",
+          "simcKey": "draconic_instincts",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123405,
+              "displayName": "Draconic Instincts",
+              "simcKey": "draconic_instincts"
+            },
+            {
+              "talentId": 117528,
+              "displayName": "Lifecinders",
+              "simcKey": "lifecinders"
+            }
+          ]
+        },
+        {
+          "talentId": 136051,
+          "displayName": "Refined Essence",
+          "simcKey": "refined_essence",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136054,
+          "displayName": "Fire Torrent",
+          "simcKey": "fire_torrent",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117519,
+          "displayName": "Consume Flame",
+          "simcKey": "consume_flame",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117538,
+          "displayName": "Maneuverability",
+          "simcKey": "maneuverability",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "evoker/preservation": {
+      "classId": 13,
+      "specId": 1468,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 115614,
+          "displayName": "Landslide",
+          "simcKey": "landslide",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115613,
+          "displayName": "Obsidian Scales",
+          "simcKey": "obsidian_scales",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115615,
+          "displayName": "Expunge",
+          "simcKey": "expunge",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115621,
+          "displayName": "Natural Convergence",
+          "simcKey": "natural_convergence",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128216,
+          "displayName": "Heavy Wingbeats",
+          "simcKey": "heavy_wingbeats",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115655,
+          "displayName": "Verdant Embrace",
+          "simcKey": "verdant_embrace",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115576,
+          "displayName": "Forger of Mountains",
+          "simcKey": "forger_of_mountains",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115611,
+          "displayName": "Innate Magic",
+          "simcKey": "innate_magic",
+          "maxRank": 2,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115597,
+          "displayName": "Obsidian Bulwark",
+          "simcKey": "obsidian_bulwark",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115603,
+          "displayName": "Enkindled",
+          "simcKey": "enkindled",
+          "maxRank": 2,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115654,
+          "displayName": "Scarlet Adaptation",
+          "simcKey": "scarlet_adaptation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115620,
+          "displayName": "Inner Radiance",
+          "simcKey": "inner_radiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115610,
+          "displayName": "Recall",
+          "simcKey": "recall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128217,
+          "displayName": "Clobbering Sweep",
+          "simcKey": "clobbering_sweep",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115598,
+          "displayName": "Tailwind",
+          "simcKey": "tailwind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115602,
+          "displayName": "Cauterizing Flame",
+          "simcKey": "cauterizing_flame",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115577,
+          "displayName": "Ancient Flame",
+          "simcKey": "ancient_flame",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115619,
+          "displayName": "Instinctive Arcana",
+          "simcKey": "instinctive_arcana",
+          "maxRank": 2,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115665,
+          "displayName": "Tip the Scales",
+          "simcKey": "tip_the_scales",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115600,
+          "displayName": "Attuned to the Dream",
+          "simcKey": "attuned_to_the_dream",
+          "maxRank": 2,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115601,
+          "displayName": "Sleep Walk",
+          "simcKey": "sleep_walk",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136559,
+          "displayName": "Protracted Talons",
+          "simcKey": "protracted_talons",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115670,
+          "displayName": "Inherent Resistance",
+          "simcKey": "inherent_resistance",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115609,
+          "displayName": "Draconic Legacy",
+          "simcKey": "draconic_legacy",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115664,
+          "displayName": "Extended Flight",
+          "simcKey": "extended_flight",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115599,
+          "displayName": "Bountiful Bloom",
+          "simcKey": "bountiful_bloom",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115668,
+          "displayName": "Regenerative Magic",
+          "simcKey": "regenerative_magic",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115618,
+          "displayName": "Blast Furnace",
+          "simcKey": "blast_furnace",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115608,
+          "displayName": "Exuberance",
+          "simcKey": "exuberance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115669,
+          "displayName": "Renewing Blaze",
+          "simcKey": "renewing_blaze",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115594,
+          "displayName": "Walloping Blow",
+          "simcKey": "walloping_blow",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115663,
+          "displayName": "Panacea",
+          "simcKey": "panacea",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115617,
+          "displayName": "Stretch Time",
+          "simcKey": "stretch_time",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115616,
+          "displayName": "Unravel",
+          "simcKey": "unravel",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115607,
+          "displayName": "Oppressing Roar",
+          "simcKey": "oppressing_roar",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115660,
+          "displayName": "Foci of Life",
+          "simcKey": "foci_of_life",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115596,
+          "displayName": "Rescue",
+          "simcKey": "rescue",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115662,
+          "displayName": "Lush Growth",
+          "simcKey": "lush_growth",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115658,
+          "displayName": "Source of Magic",
+          "simcKey": "source_of_magic",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136560,
+          "displayName": "Strike from Above",
+          "simcKey": "strike_from_above",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115657,
+          "displayName": "Leaping Flames",
+          "simcKey": "leaping_flames",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115606,
+          "displayName": "Overawe",
+          "simcKey": "overawe",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115667,
+          "displayName": "Aerial Mastery",
+          "simcKey": "aerial_mastery",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115595,
+          "displayName": "Twin Guardian",
+          "simcKey": "twin_guardian",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 116103,
+          "displayName": "Potent Mana",
+          "simcKey": "potent_mana",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115656,
+          "displayName": "Terror of the Skies",
+          "simcKey": "terror_of_the_skies",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115666,
+          "displayName": "Time Spiral",
+          "simcKey": "time_spiral",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115666,
+              "displayName": "Time Spiral",
+              "simcKey": "time_spiral"
+            },
+            {
+              "talentId": 125610,
+              "displayName": "Spatial Paradox",
+              "simcKey": "spatial_paradox"
+            }
+          ]
+        },
+        {
+          "talentId": 115661,
+          "displayName": "Zephyr",
+          "simcKey": "zephyr",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115494,
+          "displayName": "0",
+          "simcKey": "0",
+          "maxRank": 1,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 115653,
+          "displayName": "Echo",
+          "simcKey": "echo",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115542,
+          "displayName": "Dream Breath",
+          "simcKey": "dream_breath",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115652,
+          "displayName": "Reversion",
+          "simcKey": "reversion",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115543,
+          "displayName": "Temporal Compression",
+          "simcKey": "temporal_compression",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115541,
+          "displayName": "Essence Burst",
+          "simcKey": "essence_burst",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115651,
+          "displayName": "Rewind",
+          "simcKey": "rewind",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115557,
+          "displayName": "Lifebind",
+          "simcKey": "lifebind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115540,
+          "displayName": "Essence Attunement",
+          "simcKey": "essence_attunement",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115650,
+          "displayName": "Time Dilation",
+          "simcKey": "time_dilation",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115549,
+          "displayName": "Unshakable",
+          "simcKey": "unshakable",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115551,
+          "displayName": "Fluttering Seedlings",
+          "simcKey": "fluttering_seedlings",
+          "maxRank": 2,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115556,
+          "displayName": "Font of Magic",
+          "simcKey": "font_of_magic",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115559,
+          "displayName": "Golden Hour",
+          "simcKey": "golden_hour",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115648,
+          "displayName": "Just in Time",
+          "simcKey": "just_in_time",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115648,
+              "displayName": "Just in Time",
+              "simcKey": "just_in_time"
+            },
+            {
+              "talentId": 115649,
+              "displayName": "Delay Harm",
+              "simcKey": "delay_harm"
+            }
+          ]
+        },
+        {
+          "talentId": 115561,
+          "displayName": "Temporal Anomaly",
+          "simcKey": "temporal_anomaly",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115544,
+          "displayName": "Spiritual Clarity",
+          "simcKey": "spiritual_clarity",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115544,
+              "displayName": "Spiritual Clarity",
+              "simcKey": "spiritual_clarity"
+            },
+            {
+              "talentId": 115545,
+              "displayName": "Empath",
+              "simcKey": "empath"
+            }
+          ]
+        },
+        {
+          "talentId": 115550,
+          "displayName": "Exhilarating Burst",
+          "simcKey": "exhilarating_burst",
+          "maxRank": 2,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115552,
+          "displayName": "Field of Dreams",
+          "simcKey": "field_of_dreams",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115553,
+          "displayName": "Power Nexus",
+          "simcKey": "power_nexus",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115558,
+          "displayName": "Time Lord",
+          "simcKey": "time_lord",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115560,
+          "displayName": "Flow State",
+          "simcKey": "flow_state",
+          "maxRank": 2,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115562,
+          "displayName": "Nozdormu's Teachings",
+          "simcKey": "nozdormus_teachings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115562,
+              "displayName": "Nozdormu's Teachings",
+              "simcKey": "nozdormus_teachings"
+            },
+            {
+              "talentId": 115563,
+              "displayName": "Resonating Sphere",
+              "simcKey": "resonating_sphere"
+            }
+          ]
+        },
+        {
+          "talentId": 115554,
+          "displayName": "Call of Ysera",
+          "simcKey": "call_of_ysera",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133527,
+          "displayName": "Stasis",
+          "simcKey": "stasis",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133527,
+              "displayName": "Stasis",
+              "simcKey": "stasis"
+            },
+            {
+              "talentId": 115573,
+              "displayName": "Dream Flight",
+              "simcKey": "dream_flight"
+            }
+          ]
+        },
+        {
+          "talentId": 115565,
+          "displayName": "Grace Period",
+          "simcKey": "grace_period",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115575,
+          "displayName": "Spark of Insight",
+          "simcKey": "spark_of_insight",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115555,
+          "displayName": "Ouroboros",
+          "simcKey": "ouroboros",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115539,
+          "displayName": "Life-Giver's Flame",
+          "simcKey": "life_givers_flame",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115572,
+          "displayName": "Inner Flame",
+          "simcKey": "inner_flame",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115570,
+          "displayName": "Temporal Artificer",
+          "simcKey": "temporal_artificer",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115566,
+          "displayName": "Energy Loop",
+          "simcKey": "energy_loop",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115564,
+          "displayName": "Time of Need",
+          "simcKey": "time_of_need",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115574,
+          "displayName": "Renewing Breath",
+          "simcKey": "renewing_breath",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115538,
+          "displayName": "Lifeforce Mender",
+          "simcKey": "lifeforce_mender",
+          "maxRank": 2,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115568,
+          "displayName": "Timeless Magic",
+          "simcKey": "timeless_magic",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133503,
+          "displayName": "Wings of Liberty",
+          "simcKey": "wings_of_liberty",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133503,
+              "displayName": "Wings of Liberty",
+              "simcKey": "wings_of_liberty"
+            },
+            {
+              "talentId": 115546,
+              "displayName": "Dream Simulacrum",
+              "simcKey": "dream_simulacrum"
+            }
+          ]
+        },
+        {
+          "talentId": 123293,
+          "displayName": "Titan's Gift",
+          "simcKey": "titans_gift",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123294,
+          "displayName": "Lifespark",
+          "simcKey": "lifespark",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115571,
+          "displayName": "Twin Echoes",
+          "simcKey": "twin_echoes",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115567,
+          "displayName": "Tempo Charged",
+          "simcKey": "tempo_charged",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137005,
+          "displayName": "Merithra's Blessing",
+          "simcKey": "merithras_blessing",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117547,
+          "displayName": "Legacy of the Lifebinder",
+          "simcKey": "legacy_of_the_lifebinder",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117551,
+          "displayName": "Chrono Flame",
+          "simcKey": "chrono_flame",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117545,
+          "displayName": "Warp",
+          "simcKey": "warp",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123404,
+          "displayName": "Shape of Flame",
+          "simcKey": "shape_of_flame",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123404,
+              "displayName": "Shape of Flame",
+              "simcKey": "shape_of_flame"
+            },
+            {
+              "talentId": 117534,
+              "displayName": "Trailblazer",
+              "simcKey": "trailblazer"
+            }
+          ]
+        },
+        {
+          "talentId": 117552,
+          "displayName": "Temporal Burst",
+          "simcKey": "temporal_burst",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123416,
+          "displayName": "Ashes in Motion",
+          "simcKey": "ashes_in_motion",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128713,
+          "displayName": "Expanded Lungs",
+          "simcKey": "expanded_lungs",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128713,
+              "displayName": "Expanded Lungs",
+              "simcKey": "expanded_lungs"
+            },
+            {
+              "talentId": 117553,
+              "displayName": "Enkindle",
+              "simcKey": "enkindle"
+            }
+          ]
+        },
+        {
+          "talentId": 135743,
+          "displayName": "Chronoboon",
+          "simcKey": "chronoboon",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117522,
+          "displayName": "Reverberations",
+          "simcKey": "reverberations",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136055,
+          "displayName": "Essence Well",
+          "simcKey": "essence_well",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117546,
+          "displayName": "Conduit of Flame",
+          "simcKey": "conduit_of_flame",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117784,
+          "displayName": "Motes of Acceleration",
+          "simcKey": "motes_of_acceleration",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117784,
+              "displayName": "Motes of Acceleration",
+              "simcKey": "motes_of_acceleration"
+            },
+            {
+              "talentId": 117532,
+              "displayName": "Temporality",
+              "simcKey": "temporality"
+            }
+          ]
+        },
+        {
+          "talentId": 117543,
+          "displayName": "Burning Adrenaline",
+          "simcKey": "burning_adrenaline",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117544,
+          "displayName": "Nozdormu Adept",
+          "simcKey": "nozdormu_adept",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117520,
+          "displayName": "Fulminous Roar",
+          "simcKey": "fulminous_roar",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135742,
+          "displayName": "Energy Cycles",
+          "simcKey": "energy_cycles",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117548,
+          "displayName": "Primacy",
+          "simcKey": "primacy",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136056,
+          "displayName": "Twin Flame",
+          "simcKey": "twin_flame",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117517,
+          "displayName": "Titanic Precision",
+          "simcKey": "titanic_precision",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117786,
+          "displayName": "Time Convergence",
+          "simcKey": "time_convergence",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117786,
+              "displayName": "Time Convergence",
+              "simcKey": "time_convergence"
+            },
+            {
+              "talentId": 117529,
+              "displayName": "Double-time",
+              "simcKey": "double_time"
+            }
+          ]
+        },
+        {
+          "talentId": 117542,
+          "displayName": "Deep Exhalation",
+          "simcKey": "deep_exhalation",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126310,
+          "displayName": "Instability Matrix",
+          "simcKey": "instability_matrix",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123405,
+          "displayName": "Draconic Instincts",
+          "simcKey": "draconic_instincts",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123405,
+              "displayName": "Draconic Instincts",
+              "simcKey": "draconic_instincts"
+            },
+            {
+              "talentId": 117528,
+              "displayName": "Lifecinders",
+              "simcKey": "lifecinders"
+            }
+          ]
+        },
+        {
+          "talentId": 135741,
+          "displayName": "Overclock",
+          "simcKey": "overclock",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117539,
+          "displayName": "Golden Opportunity",
+          "simcKey": "golden_opportunity",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136054,
+          "displayName": "Fire Torrent",
+          "simcKey": "fire_torrent",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117519,
+          "displayName": "Consume Flame",
+          "simcKey": "consume_flame",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117526,
+          "displayName": "Afterimage",
+          "simcKey": "afterimage",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "evoker/augmentation": {
+      "classId": 13,
+      "specId": 1473,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 115614,
+          "displayName": "Landslide",
+          "simcKey": "landslide",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115613,
+          "displayName": "Obsidian Scales",
+          "simcKey": "obsidian_scales",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115615,
+          "displayName": "Expunge",
+          "simcKey": "expunge",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115621,
+          "displayName": "Natural Convergence",
+          "simcKey": "natural_convergence",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128216,
+          "displayName": "Heavy Wingbeats",
+          "simcKey": "heavy_wingbeats",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115655,
+          "displayName": "Verdant Embrace",
+          "simcKey": "verdant_embrace",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115576,
+          "displayName": "Forger of Mountains",
+          "simcKey": "forger_of_mountains",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115611,
+          "displayName": "Innate Magic",
+          "simcKey": "innate_magic",
+          "maxRank": 2,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115597,
+          "displayName": "Obsidian Bulwark",
+          "simcKey": "obsidian_bulwark",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115603,
+          "displayName": "Enkindled",
+          "simcKey": "enkindled",
+          "maxRank": 2,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115654,
+          "displayName": "Scarlet Adaptation",
+          "simcKey": "scarlet_adaptation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115620,
+          "displayName": "Inner Radiance",
+          "simcKey": "inner_radiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115610,
+          "displayName": "Recall",
+          "simcKey": "recall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128217,
+          "displayName": "Clobbering Sweep",
+          "simcKey": "clobbering_sweep",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115598,
+          "displayName": "Tailwind",
+          "simcKey": "tailwind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115602,
+          "displayName": "Cauterizing Flame",
+          "simcKey": "cauterizing_flame",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115577,
+          "displayName": "Ancient Flame",
+          "simcKey": "ancient_flame",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115619,
+          "displayName": "Instinctive Arcana",
+          "simcKey": "instinctive_arcana",
+          "maxRank": 2,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115665,
+          "displayName": "Tip the Scales",
+          "simcKey": "tip_the_scales",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115600,
+          "displayName": "Attuned to the Dream",
+          "simcKey": "attuned_to_the_dream",
+          "maxRank": 2,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115601,
+          "displayName": "Sleep Walk",
+          "simcKey": "sleep_walk",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136559,
+          "displayName": "Protracted Talons",
+          "simcKey": "protracted_talons",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115670,
+          "displayName": "Inherent Resistance",
+          "simcKey": "inherent_resistance",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115609,
+          "displayName": "Draconic Legacy",
+          "simcKey": "draconic_legacy",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115664,
+          "displayName": "Extended Flight",
+          "simcKey": "extended_flight",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115599,
+          "displayName": "Bountiful Bloom",
+          "simcKey": "bountiful_bloom",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115668,
+          "displayName": "Regenerative Magic",
+          "simcKey": "regenerative_magic",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115618,
+          "displayName": "Blast Furnace",
+          "simcKey": "blast_furnace",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115608,
+          "displayName": "Exuberance",
+          "simcKey": "exuberance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115669,
+          "displayName": "Renewing Blaze",
+          "simcKey": "renewing_blaze",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115594,
+          "displayName": "Walloping Blow",
+          "simcKey": "walloping_blow",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115663,
+          "displayName": "Panacea",
+          "simcKey": "panacea",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115617,
+          "displayName": "Stretch Time",
+          "simcKey": "stretch_time",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115616,
+          "displayName": "Unravel",
+          "simcKey": "unravel",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115607,
+          "displayName": "Oppressing Roar",
+          "simcKey": "oppressing_roar",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115660,
+          "displayName": "Foci of Life",
+          "simcKey": "foci_of_life",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115596,
+          "displayName": "Rescue",
+          "simcKey": "rescue",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115662,
+          "displayName": "Lush Growth",
+          "simcKey": "lush_growth",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115658,
+          "displayName": "Source of Magic",
+          "simcKey": "source_of_magic",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136560,
+          "displayName": "Strike from Above",
+          "simcKey": "strike_from_above",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115657,
+          "displayName": "Leaping Flames",
+          "simcKey": "leaping_flames",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115606,
+          "displayName": "Overawe",
+          "simcKey": "overawe",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115667,
+          "displayName": "Aerial Mastery",
+          "simcKey": "aerial_mastery",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115595,
+          "displayName": "Twin Guardian",
+          "simcKey": "twin_guardian",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 116103,
+          "displayName": "Potent Mana",
+          "simcKey": "potent_mana",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115656,
+          "displayName": "Terror of the Skies",
+          "simcKey": "terror_of_the_skies",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115666,
+          "displayName": "Time Spiral",
+          "simcKey": "time_spiral",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115666,
+              "displayName": "Time Spiral",
+              "simcKey": "time_spiral"
+            },
+            {
+              "talentId": 125610,
+              "displayName": "Spatial Paradox",
+              "simcKey": "spatial_paradox"
+            }
+          ]
+        },
+        {
+          "talentId": 115661,
+          "displayName": "Zephyr",
+          "simcKey": "zephyr",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115494,
+          "displayName": "0",
+          "simcKey": "0",
+          "maxRank": 1,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 115496,
+          "displayName": "Ebon Might",
+          "simcKey": "ebon_might",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115498,
+          "displayName": "Eruption",
+          "simcKey": "eruption",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115520,
+          "displayName": "Essence Burst",
+          "simcKey": "essence_burst",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115690,
+          "displayName": "Quell",
+          "simcKey": "quell",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115507,
+          "displayName": "Ricocheting Pyroclast",
+          "simcKey": "ricocheting_pyroclast",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115519,
+          "displayName": "Essence Attunement",
+          "simcKey": "essence_attunement",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115680,
+          "displayName": "Echoing Strike",
+          "simcKey": "echoing_strike",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115680,
+              "displayName": "Echoing Strike",
+              "simcKey": "echoing_strike"
+            },
+            {
+              "talentId": 115521,
+              "displayName": "Pupil of Alexstrasza",
+              "simcKey": "pupil_of_alexstrasza"
+            }
+          ]
+        },
+        {
+          "talentId": 115502,
+          "displayName": "Upheaval",
+          "simcKey": "upheaval",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115536,
+          "displayName": "Breath of Eons",
+          "simcKey": "breath_of_eons",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115522,
+          "displayName": "Defy Fate",
+          "simcKey": "defy_fate",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115688,
+          "displayName": "Ignition Rush",
+          "simcKey": "ignition_rush",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115499,
+          "displayName": "Power Nexus",
+          "simcKey": "power_nexus",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115505,
+          "displayName": "Volcanism",
+          "simcKey": "volcanism",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115706,
+          "displayName": "Chrono Ward",
+          "simcKey": "chrono_ward",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115706,
+              "displayName": "Chrono Ward",
+              "simcKey": "chrono_ward"
+            },
+            {
+              "talentId": 115537,
+              "displayName": "Perilous Fate",
+              "simcKey": "perilous_fate"
+            }
+          ]
+        },
+        {
+          "talentId": 115534,
+          "displayName": "Bestow Weyrnstone",
+          "simcKey": "bestow_weyrnstone",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115679,
+          "displayName": "Timelessness",
+          "simcKey": "timelessness",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115493,
+          "displayName": "Improved Defy Fate",
+          "simcKey": "improved_defy_fate",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115508,
+          "displayName": "Blistering Scales",
+          "simcKey": "blistering_scales",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115518,
+          "displayName": "Draconic Attunements",
+          "simcKey": "draconic_attunements",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115675,
+          "displayName": "Prescience",
+          "simcKey": "prescience",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115500,
+          "displayName": "Tectonic Locus",
+          "simcKey": "tectonic_locus",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115500,
+              "displayName": "Tectonic Locus",
+              "simcKey": "tectonic_locus"
+            },
+            {
+              "talentId": 115501,
+              "displayName": "Unyielding Domain",
+              "simcKey": "unyielding_domain"
+            }
+          ]
+        },
+        {
+          "talentId": 115510,
+          "displayName": "Molten Blood",
+          "simcKey": "molten_blood",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115510,
+              "displayName": "Molten Blood",
+              "simcKey": "molten_blood"
+            },
+            {
+              "talentId": 115511,
+              "displayName": "Regenerative Chitin",
+              "simcKey": "regenerative_chitin"
+            }
+          ]
+        },
+        {
+          "talentId": 115506,
+          "displayName": "Momentum Shift",
+          "simcKey": "momentum_shift",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115517,
+          "displayName": "Aspects' Favor",
+          "simcKey": "aspects_favor",
+          "maxRank": 2,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115526,
+          "displayName": "Arcane Reach",
+          "simcKey": "arcane_reach",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115685,
+          "displayName": "Fate Mirror",
+          "simcKey": "fate_mirror",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115515,
+          "displayName": "Symbiotic Bloom",
+          "simcKey": "symbiotic_bloom",
+          "maxRank": 2,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115509,
+          "displayName": "Reactive Hide",
+          "simcKey": "reactive_hide",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115532,
+          "displayName": "Font of Magic",
+          "simcKey": "font_of_magic",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115512,
+          "displayName": "Hoarded Power",
+          "simcKey": "hoarded_power",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115531,
+          "displayName": "Motes of Possibility",
+          "simcKey": "motes_of_possibility",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115523,
+          "displayName": "Anachronism",
+          "simcKey": "anachronism",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115881,
+          "displayName": "Dream of Spring",
+          "simcKey": "dream_of_spring",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115881,
+              "displayName": "Dream of Spring",
+              "simcKey": "dream_of_spring"
+            },
+            {
+              "talentId": 115678,
+              "displayName": "Prolong Life",
+              "simcKey": "prolong_life"
+            }
+          ]
+        },
+        {
+          "talentId": 115530,
+          "displayName": "Accretion",
+          "simcKey": "accretion",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126304,
+          "displayName": "Imminent Destruction",
+          "simcKey": "imminent_destruction",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115533,
+          "displayName": "Time Skip",
+          "simcKey": "time_skip",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115528,
+          "displayName": "Clairvoyant",
+          "simcKey": "clairvoyant",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115495,
+          "displayName": "Inferno's Blessing",
+          "simcKey": "infernos_blessing",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115504,
+          "displayName": "Rumbling Earth",
+          "simcKey": "rumbling_earth",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115527,
+          "displayName": "Plot the Future",
+          "simcKey": "plot_the_future",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115686,
+          "displayName": "Interwoven Threads",
+          "simcKey": "interwoven_threads",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115686,
+              "displayName": "Interwoven Threads",
+              "simcKey": "interwoven_threads"
+            },
+            {
+              "talentId": 115687,
+              "displayName": "Tomorrow, Today",
+              "simcKey": "tomorrow_today"
+            }
+          ]
+        },
+        {
+          "talentId": 115513,
+          "displayName": "Overlord",
+          "simcKey": "overlord",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126305,
+          "displayName": "Molten Embers",
+          "simcKey": "molten_embers",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137011,
+          "displayName": "Duplicate",
+          "simcKey": "duplicate",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 122279,
+          "displayName": "Mass Eruption",
+          "simcKey": "mass_eruption",
+          "maxRank": 1,
+          "row": 1,
+          "col": 1,
+          "nodeType": "normal"
+        }
+      ]
+    }
+  }
+}

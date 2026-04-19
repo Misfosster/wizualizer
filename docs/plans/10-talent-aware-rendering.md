@@ -204,11 +204,12 @@ interface TalentCatalog {
 interface TalentSelectionResult {
   status: TalentStatus;
   selections: Record<string, number>; // simcKey → rank
-  hiddenActionCount: number;          // populated by graph build for the panel
 }
 ```
 
 `absent` is not an error and does not produce a UI warning. The other failure kinds map to specific messages.
+
+`TalentSelectionResult` is the pure decoder output and stays decoupled from "what the graph did with it". The per-profile hidden-action count is owned by `buildGraph`'s output instead, so the decoder layer never has to be re-invoked when the render mode changes.
 
 Extend graph options:
 
@@ -216,6 +217,18 @@ Extend graph options:
 interface BuildGraphOptions {
   talentRenderMode?: TalentRenderMode;
   talentSelectionsByProfile?: ReadonlyMap<number, TalentSelectionResult>;
+}
+
+interface TalentRenderSummary {
+  hiddenActionCountByProfile: ReadonlyMap<number, number>;
+}
+
+interface GraphResult {
+  nodes: GraphFlowNode[];
+  edges: Edge[];
+  // Present only when buildGraph ran with a non-Off mode. The editor surface
+  // merges this with TalentSelectionResult to render the panel rows.
+  talentSummary?: TalentRenderSummary;
 }
 
 function buildGraph(
@@ -320,7 +333,9 @@ Stable IDs across modes:
 - hidden actions do not shift the indices of surviving actions
 - Block IDs and action IDs are therefore stable across mode switches, so user collapse state survives Off → Hide → Off
 
-After the graph is built, populate `hiddenActionCount` on each profile's `TalentSelectionResult` so the panel can show the per-profile hidden count.
+After the graph is built, `buildGraph` returns a `talentSummary.hiddenActionCountByProfile` map. The editor store joins it with `TalentSelectionResult` for display in the panel, instead of mutating decoder output.
+
+Block-name normalization for the referenced-block exemption: `extractCallTarget` returns the bare SimC list name (e.g. `"cds"`) but blocks are stored on the document with the `actions.` prefix (e.g. `"actions.cds"`). The reference set is built using the prefixed form so `Set.has(block.name)` works directly. This keeps the survival pass O(1) per block instead of O(n) name comparisons.
 
 Determinism: same input now means same `(document, collapsedBlocks, collapsedActions, talentRenderMode, talentSelectionsByProfile)`. Within a single mode, coordinates remain stable.
 

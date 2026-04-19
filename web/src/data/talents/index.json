@@ -1,0 +1,18 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "classes": [
+    "warrior",
+    "paladin",
+    "hunter",
+    "rogue",
+    "priest",
+    "death_knight",
+    "shaman",
+    "mage",
+    "warlock",
+    "monk",
+    "druid",
+    "demon_hunter",
+    "evoker"
+  ]
+}

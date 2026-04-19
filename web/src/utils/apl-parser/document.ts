@@ -23,8 +23,12 @@ const CLASS_PROFILE_RE = new RegExp(
 );
 // copy="Name" starts a new profile that inherits from the previous one
 const COPY_PROFILE_RE = /^copy="([^"]+)"$/;
+// spec=<spec_name>, e.g. spec=enhancement
+const SPEC_LINE_RE = /^spec=(\S+)$/;
+// talents=<export_string>, e.g. talents=CIcAAAAA...
+const TALENTS_LINE_RE = /^talents=(\S+)$/;
 // Temporary scope boundary: graph building currently understands action lines.
-// Gear/config lines should become first-class parsed document data later.
+// Gear/config lines should be equally important parsed document data later.
 // For now they pass through untouched, while malformed action-like lines still
 // reach the parser so validation can report them.
 const ACTION_LINE_RE = /^actions(?:\.[A-Za-z0-9_.-]*)?(?=$|[=+/])/;
@@ -44,6 +48,10 @@ export interface AplProfile {
   name: string;
   className: string;
   blocks: AplBlock[];
+  // Free-form syntactic metadata captured from SimC profile lines. Decoded
+  // talent selections live in derived editor state, not here.
+  specName?: string;
+  talentExport?: string;
 }
 
 export interface AplDocument {
@@ -91,7 +99,16 @@ function parseCopyDefinition(
   }
 
   const className = previousProfile?.className ?? "unknown";
-  return createProfile(profileName, className);
+  const profile = createProfile(profileName, className);
+  // Snapshot syntactic metadata by value. Later spec=/talents= lines on the
+  // copy override only the copy; the source profile is unaffected.
+  if (previousProfile?.specName !== undefined) {
+    profile.specName = previousProfile.specName;
+  }
+  if (previousProfile?.talentExport !== undefined) {
+    profile.talentExport = previousProfile.talentExport;
+  }
+  return profile;
 }
 
 function ensureProfile(
@@ -105,6 +122,32 @@ function ensureProfile(
   const defaultProfile = createProfile("Untitled", "unknown");
   profiles.push(defaultProfile);
   return defaultProfile;
+}
+
+// Returns true when the line was recognized as profile metadata (spec=, talents=)
+// and applied to the current profile. Implicitly creates a default profile when
+// metadata appears before any class profile line, so the data is not silently
+// dropped.
+function applyProfileMetadata(
+  line: string,
+  currentProfile: AplProfile | null,
+  profiles: AplProfile[],
+): boolean {
+  const specMatch = SPEC_LINE_RE.exec(line);
+  if (specMatch) {
+    const profile = ensureProfile(currentProfile, profiles);
+    profile.specName = specMatch[1];
+    return true;
+  }
+
+  const talentsMatch = TALENTS_LINE_RE.exec(line);
+  if (talentsMatch) {
+    const profile = ensureProfile(currentProfile, profiles);
+    profile.talentExport = talentsMatch[1];
+    return true;
+  }
+
+  return false;
 }
 
 function getOrCreateBlock(
@@ -184,6 +227,12 @@ export function parseDocument(text: string): ParseDocumentResult {
       currentProfile = copiedProfile;
       document.profiles.push(currentProfile);
       blocksByName = new Map<string, AplBlock>();
+      continue;
+    }
+
+    if (applyProfileMetadata(line, currentProfile, document.profiles)) {
+      // Metadata may have implicitly created the default profile.
+      currentProfile = document.profiles[document.profiles.length - 1] ?? null;
       continue;
     }
 

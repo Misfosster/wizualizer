@@ -13,10 +13,16 @@ const DEPTH_COLORS = [
 function ContainerNode({ data, isConnectable }: NodeProps<ContainerFlowNode>) {
   const borderColor = DEPTH_COLORS[data.depth % DEPTH_COLORS.length];
   const handleUsage = data.handleUsage ?? {};
+  const isImpossible = data.talentState === "impossible";
 
   return (
     <div
-      className="lc-node-container"
+      className={
+        isImpossible
+          ? "lc-node-container lc-node-container--impossible"
+          : "lc-node-container"
+      }
+      data-talent-state={data.talentState ?? "normal"}
       style={{ width: "100%", height: "100%", borderColor }}
     >
       {handleUsage.targetLeft ? (

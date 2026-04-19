@@ -11,6 +11,8 @@ import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
 import { nodeTypes } from "@components/nodes";
 import type { GraphFlowNode } from "@components/nodes/types";
+import { TalentModePanel } from "./canvas/talent-mode-panel";
+import { EmptyGraphPlaceholder } from "./canvas/empty-graph-placeholder";
 
 import "@xyflow/react/dist/style.css";
 
@@ -36,11 +38,21 @@ export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
   const shouldFitAfterBulkToggleRef = useRef(false);
-  const { nodes, edges, toggleAllBlocksCollapse } = useEditorStore(
+  const {
+    nodes,
+    edges,
+    toggleAllBlocksCollapse,
+    talentRenderMode,
+    setTalentRenderMode,
+    document,
+  } = useEditorStore(
     useShallow((state) => ({
       nodes: state.nodes,
       edges: state.edges,
       toggleAllBlocksCollapse: state.toggleAllBlocksCollapse,
+      talentRenderMode: state.talentRenderMode,
+      setTalentRenderMode: state.setTalentRenderMode,
+      document: state.document,
     })),
   );
   const { blockCount, shouldExpandAll } = useMemo(() => {
@@ -69,6 +81,17 @@ export default function Canvas() {
     shouldFitAfterBulkToggleRef.current = !shouldExpandAll;
     toggleAllBlocksCollapse();
   }, [shouldExpandAll, toggleAllBlocksCollapse]);
+
+  // Hide-mode wipeout: parsed document has at least one profile, but the
+  // filter pass dropped every node. Distinguishes "user has not pasted any
+  // APL yet" (document is null) from "filter ate everything" (document
+  // exists but the graph is empty).
+  const hasParsedProfiles = (document?.profiles.length ?? 0) > 0;
+  const isHideWipeout =
+    talentRenderMode === "hide" && hasParsedProfiles && nodes.length === 0;
+  const handleSwitchToDim = useCallback(() => {
+    setTalentRenderMode("dim");
+  }, [setTalentRenderMode]);
 
   useEffect(() => {
     if (!shouldFitAfterBulkToggleRef.current) {
@@ -106,7 +129,7 @@ export default function Canvas() {
   return (
     <div
       ref={canvasRef}
-      className="h-full w-full min-h-[300px] text-slate-100"
+      className="relative h-full w-full min-h-[300px] text-slate-100"
       style={{ background: canvasBackground }}
     >
       <ReactFlow
@@ -153,6 +176,9 @@ export default function Canvas() {
             {toggleAllLabel}
           </button>
         </Panel>
+        <Panel position="top-right" className="m-3">
+          <TalentModePanel />
+        </Panel>
         <Background
           variant={BackgroundVariant.Dots}
           gap={24}
@@ -160,6 +186,10 @@ export default function Canvas() {
           color="rgba(255, 255, 255, 0.035)"
         />
       </ReactFlow>
+      <EmptyGraphPlaceholder
+        mode={isHideWipeout ? "hide" : "off"}
+        onSwitchToDim={handleSwitchToDim}
+      />
     </div>
   );
 }

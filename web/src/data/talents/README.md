@@ -1,0 +1,47 @@
+# Generated talent catalog
+
+This folder is **generated**. Do not hand-edit.
+
+Each `<class>.json` file is a `TalentCatalog` for a single class with one
+entry per spec in `byClassSpec`. `index.json` lists which class slugs
+have a committed file. See `web/src/utils/talents/types.ts` for the
+runtime type; see `web/scripts/generate-talents/` for the producer.
+
+## Regenerate
+
+```powershell
+# Point the script at a local SimulationCraft checkout
+$env:SIMC_PATH = "C:\path\to\simc"
+cd web
+npm run generate:talents
+
+# Or pass the path explicitly
+npm run generate:talents -- --simc C:\path\to\simc
+
+# Or point at trait_data.inc directly
+npm run generate:talents -- --source C:\path\to\simc\engine\dbc\generated\trait_data.inc
+```
+
+The committed catalogs in this folder were produced from SimC's
+`midnight` branch reporting WoW build **`12.0.1.66838`** (11.2 /
+Midnight pre-patch). Regenerate whenever the live game advances past
+that build or when SimC pushes a new `trait_data.inc`.
+
+Runtime impact while the catalog is stale: `decode-export.ts` will
+refuse to decode talent strings whose spec is absent or whose tree hash
+fails to match, surfacing `unsupported_spec` / `version_mismatch`
+statuses in the Preview panel. Nothing fails silently - actions are
+simply not filtered for those profiles.
+
+## When to regenerate
+
+- A new talent is added or removed upstream in SimC's `trait_data.inc`.
+- Display names change (SimC's `util::tokenize` produces different
+  `simcKey`s for different names, so a rename is effectively a new
+  talent from our perspective).
+- SimC renumbers `id_trait_node_entry` or `id_node`. This is rare but
+  happens at major revamps; if export strings stop decoding after a
+  content patch, regenerate first.
+
+The generator writes the full folder from scratch on each run, so stale
+class files never linger across regenerations.

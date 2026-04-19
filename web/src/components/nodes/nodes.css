@@ -421,4 +421,44 @@
       padding-right: 3.25rem;
     }
   }
+
+  /*
+   * Dim-mode treatment for actions (and their descendant condition /
+   * value / container nodes) that the condition filter has proved
+   * impossible.
+   *
+   * Notes:
+   *   - The "filtered" pill carries the meaning textually so the state
+   *     does not depend on colour or opacity alone (WCAG 1.4.1).
+   *   - 0.42 / saturate(0.55) were picked empirically to stay readable
+   *     while clearly separating filtered nodes from live ones; revisit
+   *     with a contrast checker if the canvas palette changes.
+   *   - `pointer-events: none` is intentionally NOT set - the user can
+   *     still collapse / expand dimmed branches to inspect them.
+   */
+  .lc-node-card--impossible {
+    opacity: 0.42;
+    filter: saturate(0.55);
+  }
+
+  .lc-node-card--impossible::after {
+    content: "filtered";
+    position: absolute;
+    top: -0.5rem;
+    right: 0.75rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1f2937;
+    background: #fbbf24;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .lc-node-container--impossible {
+    opacity: 0.42;
+    filter: saturate(0.55);
+  }
 }

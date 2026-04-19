@@ -1,0 +1,3758 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "byClassSpec": {
+    "priest/discipline": {
+      "classId": 5,
+      "specId": 256,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 103869,
+          "displayName": "Improved Flash Heal",
+          "simcKey": "improved_flash_heal",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103853,
+          "displayName": "Angelic Feather",
+          "simcKey": "angelic_feather",
+          "maxRank": 1,
+          "row": 1,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103865,
+          "displayName": "Mind Blast",
+          "simcKey": "mind_blast",
+          "maxRank": 1,
+          "row": 1,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103870,
+          "displayName": "Holy Nova",
+          "simcKey": "holy_nova",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103677,
+          "displayName": "Dispel Magic",
+          "simcKey": "dispel_magic",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103818,
+          "displayName": "Spiritual Guidance",
+          "simcKey": "spiritual_guidance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103851,
+          "displayName": "Psychic Scream",
+          "simcKey": "psychic_scream",
+          "maxRank": 1,
+          "row": 2,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103871,
+          "displayName": "Lightburst",
+          "simcKey": "lightburst",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103867,
+          "displayName": "Leap of Faith",
+          "simcKey": "leap_of_faith",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103855,
+          "displayName": "Improved Purify",
+          "simcKey": "improved_purify",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103834,
+          "displayName": "Power Infusion",
+          "simcKey": "power_infusion",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103841,
+          "displayName": "Painful Invocation",
+          "simcKey": "painful_invocation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114588,
+          "displayName": "Petrifying Scream",
+          "simcKey": "petrifying_scream",
+          "maxRank": 1,
+          "row": 3,
+          "col": 9,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 114588,
+              "displayName": "Petrifying Scream",
+              "simcKey": "petrifying_scream"
+            },
+            {
+              "talentId": 103845,
+              "displayName": "Sheer Terror",
+              "simcKey": "sheer_terror"
+            }
+          ]
+        },
+        {
+          "talentId": 103868,
+          "displayName": "Surge of Light",
+          "simcKey": "surge_of_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136185,
+          "displayName": "Body and Soul",
+          "simcKey": "body_and_soul",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136157,
+          "displayName": "Mass Dispel",
+          "simcKey": "mass_dispel",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134284,
+          "displayName": "Twins of the Sun Priestess",
+          "simcKey": "twins_of_the_sun_priestess",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103837,
+          "displayName": "Strength of Soul",
+          "simcKey": "strength_of_soul",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103678,
+          "displayName": "Dominate Mind",
+          "simcKey": "dominate_mind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 8,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103678,
+              "displayName": "Dominate Mind",
+              "simcKey": "dominate_mind"
+            },
+            {
+              "talentId": 103862,
+              "displayName": "Mind Control",
+              "simcKey": "mind_control"
+            }
+          ]
+        },
+        {
+          "talentId": 103859,
+          "displayName": "Void Tendrils",
+          "simcKey": "void_tendrils",
+          "maxRank": 1,
+          "row": 4,
+          "col": 9,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103859,
+              "displayName": "Void Tendrils",
+              "simcKey": "void_tendrils"
+            },
+            {
+              "talentId": 103860,
+              "displayName": "Psychic Voice",
+              "simcKey": "psychic_voice"
+            }
+          ]
+        },
+        {
+          "talentId": 103852,
+          "displayName": "Everlasting Light",
+          "simcKey": "everlasting_light",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103849,
+          "displayName": "Move with Grace",
+          "simcKey": "move_with_grace",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134852,
+          "displayName": "Mental Agility",
+          "simcKey": "mental_agility",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103840,
+          "displayName": "Twin Disciplines",
+          "simcKey": "twin_disciplines",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134859,
+          "displayName": "Dark Enlightenment",
+          "simcKey": "dark_enlightenment",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134841,
+          "displayName": "False Autonomy",
+          "simcKey": "false_autonomy",
+          "maxRank": 1,
+          "row": 5,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103843,
+          "displayName": "Shackle Horror",
+          "simcKey": "shackle_horror",
+          "maxRank": 1,
+          "row": 5,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103846,
+          "displayName": "Inspiration",
+          "simcKey": "inspiration",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103825,
+          "displayName": "Binding Heals",
+          "simcKey": "binding_heals",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103864,
+          "displayName": "Shadow Word: Death",
+          "simcKey": "shadow_word_death",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134860,
+          "displayName": "Sanguine Teachings",
+          "simcKey": "sanguine_teachings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134846,
+          "displayName": "Desperate Prayer",
+          "simcKey": "desperate_prayer",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103833,
+          "displayName": "Twist of Fate",
+          "simcKey": "twist_of_fate",
+          "maxRank": 2,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103863,
+          "displayName": "Tithe Evasion",
+          "simcKey": "tithe_evasion",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134849,
+          "displayName": "Fade",
+          "simcKey": "fade",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103831,
+          "displayName": "Angel's Mercy",
+          "simcKey": "angels_mercy",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103823,
+          "displayName": "Protective Light",
+          "simcKey": "protective_light",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134845,
+          "displayName": "Mindpierce",
+          "simcKey": "mindpierce",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134848,
+          "displayName": "Spectral Illusion",
+          "simcKey": "spectral_illusion",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103836,
+          "displayName": "Improved Fade",
+          "simcKey": "improved_fade",
+          "maxRank": 2,
+          "row": 8,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103826,
+          "displayName": "Light's Inspiration",
+          "simcKey": "lights_inspiration",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103847,
+          "displayName": "Unwavering Will",
+          "simcKey": "unwavering_will",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134844,
+          "displayName": "Spell Warding",
+          "simcKey": "spell_warding",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115883,
+          "displayName": "Phantasm",
+          "simcKey": "phantasm",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103821,
+          "displayName": "Angelic Bulwark",
+          "simcKey": "angelic_bulwark",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135091,
+          "displayName": "Focused Power",
+          "simcKey": "focused_power",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135091,
+              "displayName": "Focused Power",
+              "simcKey": "focused_power"
+            },
+            {
+              "talentId": 115884,
+              "displayName": "Benevolence",
+              "simcKey": "benevolence"
+            }
+          ]
+        },
+        {
+          "talentId": 103819,
+          "displayName": "Phantom Reach",
+          "simcKey": "phantom_reach",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103835,
+          "displayName": "Translucent Image",
+          "simcKey": "translucent_image",
+          "maxRank": 1,
+          "row": 10,
+          "col": 8,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 103723,
+          "displayName": "Atonement",
+          "simcKey": "atonement",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103722,
+          "displayName": "Power Word: Radiance",
+          "simcKey": "power_word_radiance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103713,
+          "displayName": "Pain Suppression",
+          "simcKey": "pain_suppression",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103724,
+          "displayName": "Power of the Dark Side",
+          "simcKey": "power_of_the_dark_side",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103721,
+          "displayName": "Light's Promise",
+          "simcKey": "lights_promise",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 108225,
+          "displayName": "Sanctuary",
+          "simcKey": "sanctuary",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103714,
+          "displayName": "Protector of the Frail",
+          "simcKey": "protector_of_the_frail",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103714,
+              "displayName": "Protector of the Frail",
+              "simcKey": "protector_of_the_frail"
+            },
+            {
+              "talentId": 103715,
+              "displayName": "Pain Transformation",
+              "simcKey": "pain_transformation"
+            }
+          ]
+        },
+        {
+          "talentId": 103725,
+          "displayName": "Dark Indulgence",
+          "simcKey": "dark_indulgence",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103704,
+          "displayName": "Encroaching Shadows",
+          "simcKey": "encroaching_shadows",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103719,
+          "displayName": "Enduring Luminescence",
+          "simcKey": "enduring_luminescence",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103719,
+              "displayName": "Enduring Luminescence",
+              "simcKey": "enduring_luminescence"
+            },
+            {
+              "talentId": 103720,
+              "displayName": "Bright Pupil",
+              "simcKey": "bright_pupil"
+            }
+          ]
+        },
+        {
+          "talentId": 103717,
+          "displayName": "Shield Discipline",
+          "simcKey": "shield_discipline",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103687,
+          "displayName": "Power Word: Barrier",
+          "simcKey": "power_word_barrier",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103687,
+              "displayName": "Power Word: Barrier",
+              "simcKey": "power_word_barrier"
+            },
+            {
+              "talentId": 116182,
+              "displayName": "Ultimate Penitence",
+              "simcKey": "ultimate_penitence"
+            }
+          ]
+        },
+        {
+          "talentId": 103726,
+          "displayName": "Painful Punishment",
+          "simcKey": "painful_punishment",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103705,
+          "displayName": "Revel in Darkness",
+          "simcKey": "revel_in_darkness",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103718,
+          "displayName": "Holy Ray",
+          "simcKey": "holy_ray",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103727,
+          "displayName": "Lenience",
+          "simcKey": "lenience",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103706,
+          "displayName": "Shadow Tap",
+          "simcKey": "shadow_tap",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103690,
+          "displayName": "Purge the Wicked",
+          "simcKey": "purge_the_wicked",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103700,
+          "displayName": "Castigation",
+          "simcKey": "castigation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 108226,
+          "displayName": "Indemnity",
+          "simcKey": "indemnity",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103703,
+          "displayName": "Pain and Suffering",
+          "simcKey": "pain_and_suffering",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103708,
+          "displayName": "Occultist",
+          "simcKey": "occultist",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103729,
+          "displayName": "Harsh Discipline",
+          "simcKey": "harsh_discipline",
+          "maxRank": 2,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103702,
+          "displayName": "Evangelism",
+          "simcKey": "evangelism",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103709,
+          "displayName": "Abyssal Reverie",
+          "simcKey": "abyssal_reverie",
+          "maxRank": 2,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103728,
+          "displayName": "Divine Procession",
+          "simcKey": "divine_procession",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103731,
+          "displayName": "Inner Focus",
+          "simcKey": "inner_focus",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136829,
+          "displayName": "Mindbender",
+          "simcKey": "mindbender",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136829,
+              "displayName": "Mindbender",
+              "simcKey": "mindbender"
+            },
+            {
+              "talentId": 103696,
+              "displayName": "Archangel",
+              "simcKey": "archangel"
+            }
+          ]
+        },
+        {
+          "talentId": 103692,
+          "displayName": "Shadow Mend",
+          "simcKey": "shadow_mend",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103695,
+          "displayName": "Shadowfiend",
+          "simcKey": "shadowfiend",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103694,
+          "displayName": "Greater Smite",
+          "simcKey": "greater_smite",
+          "maxRank": 2,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103732,
+          "displayName": "Divine Aegis",
+          "simcKey": "divine_aegis",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103697,
+          "displayName": "Borrowed Time",
+          "simcKey": "borrowed_time",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103693,
+          "displayName": "Blaze of Light",
+          "simcKey": "blaze_of_light",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136828,
+          "displayName": "Death's Torment",
+          "simcKey": "deaths_torment",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136830,
+          "displayName": "Inescapable Torment",
+          "simcKey": "inescapable_torment",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103688,
+          "displayName": "Eternal Barrier",
+          "simcKey": "eternal_barrier",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103698,
+          "displayName": "Weal and Woe",
+          "simcKey": "weal_and_woe",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103712,
+          "displayName": "Searing Light",
+          "simcKey": "searing_light",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103711,
+          "displayName": "Expiation",
+          "simcKey": "expiation",
+          "maxRank": 2,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136996,
+          "displayName": "Master the Darkness",
+          "simcKey": "master_the_darkness",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117286,
+          "displayName": "Guiding Light",
+          "simcKey": "guiding_light",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136498,
+          "displayName": "Entropic Rift",
+          "simcKey": "entropic_rift",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117301,
+          "displayName": "Preventive Measures",
+          "simcKey": "preventive_measures",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123845,
+          "displayName": "Dark Energy",
+          "simcKey": "dark_energy",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123845,
+              "displayName": "Dark Energy",
+              "simcKey": "dark_energy"
+            },
+            {
+              "talentId": 117296,
+              "displayName": "No Escape",
+              "simcKey": "no_escape"
+            }
+          ]
+        },
+        {
+          "talentId": 117277,
+          "displayName": "Preemptive Care",
+          "simcKey": "preemptive_care",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117306,
+          "displayName": "Void Blast",
+          "simcKey": "void_blast",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117273,
+          "displayName": "Inner Quietus",
+          "simcKey": "inner_quietus",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117282,
+          "displayName": "Waste No Time",
+          "simcKey": "waste_no_time",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136038,
+          "displayName": "Voidheart",
+          "simcKey": "voidheart",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136040,
+          "displayName": "Words of the Wise",
+          "simcKey": "words_of_the_wise",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117271,
+          "displayName": "Devour Matter",
+          "simcKey": "devour_matter",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117294,
+          "displayName": "Assured Safety",
+          "simcKey": "assured_safety",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 119331,
+          "displayName": "Save the Day",
+          "simcKey": "save_the_day",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 119331,
+              "displayName": "Save the Day",
+              "simcKey": "save_the_day"
+            },
+            {
+              "talentId": 117278,
+              "displayName": "Divine Feathers",
+              "simcKey": "divine_feathers"
+            }
+          ]
+        },
+        {
+          "talentId": 125982,
+          "displayName": "Darkening Horizon",
+          "simcKey": "darkening_horizon",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125982,
+              "displayName": "Darkening Horizon",
+              "simcKey": "darkening_horizon"
+            },
+            {
+              "talentId": 125821,
+              "displayName": "Void Empowerment",
+              "simcKey": "void_empowerment"
+            }
+          ]
+        },
+        {
+          "talentId": 117292,
+          "displayName": "Foreseen Circumstances",
+          "simcKey": "foreseen_circumstances",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123841,
+          "displayName": "Voidwraith",
+          "simcKey": "voidwraith",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136037,
+          "displayName": "Touch of the Void",
+          "simcKey": "touch_of_the_void",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136041,
+          "displayName": "Prophet's Insight",
+          "simcKey": "prophets_insight",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117295,
+          "displayName": "Quickened Pulse",
+          "simcKey": "quickened_pulse",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126068,
+          "displayName": "Desperate Measures",
+          "simcKey": "desperate_measures",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 126068,
+              "displayName": "Desperate Measures",
+              "simcKey": "desperate_measures"
+            },
+            {
+              "talentId": 117293,
+              "displayName": "Prophet's Will",
+              "simcKey": "prophets_will"
+            }
+          ]
+        },
+        {
+          "talentId": 117272,
+          "displayName": "Void Infusion",
+          "simcKey": "void_infusion",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117276,
+          "displayName": "Prompt Prognosis",
+          "simcKey": "prompt_prognosis",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117303,
+          "displayName": "Piety",
+          "simcKey": "piety",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123844,
+          "displayName": "Embrace the Shadow",
+          "simcKey": "embrace_the_shadow",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123844,
+              "displayName": "Embrace the Shadow",
+              "simcKey": "embrace_the_shadow"
+            },
+            {
+              "talentId": 117299,
+              "displayName": "Void Leech",
+              "simcKey": "void_leech"
+            }
+          ]
+        },
+        {
+          "talentId": 136036,
+          "displayName": "Overwhelming Shadows",
+          "simcKey": "overwhelming_shadows",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136039,
+          "displayName": "Unfolding Vision",
+          "simcKey": "unfolding_vision",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117290,
+          "displayName": "Twinsight",
+          "simcKey": "twinsight",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117297,
+          "displayName": "Collapsing Void",
+          "simcKey": "collapsing_void",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "priest/holy": {
+      "classId": 5,
+      "specId": 257,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 103869,
+          "displayName": "Improved Flash Heal",
+          "simcKey": "improved_flash_heal",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103853,
+          "displayName": "Angelic Feather",
+          "simcKey": "angelic_feather",
+          "maxRank": 1,
+          "row": 1,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134283,
+          "displayName": "Holy Fire",
+          "simcKey": "holy_fire",
+          "maxRank": 1,
+          "row": 1,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103870,
+          "displayName": "Holy Nova",
+          "simcKey": "holy_nova",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103677,
+          "displayName": "Dispel Magic",
+          "simcKey": "dispel_magic",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103818,
+          "displayName": "Spiritual Guidance",
+          "simcKey": "spiritual_guidance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103851,
+          "displayName": "Psychic Scream",
+          "simcKey": "psychic_scream",
+          "maxRank": 1,
+          "row": 2,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103871,
+          "displayName": "Lightburst",
+          "simcKey": "lightburst",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103867,
+          "displayName": "Leap of Faith",
+          "simcKey": "leap_of_faith",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103855,
+          "displayName": "Improved Purify",
+          "simcKey": "improved_purify",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103834,
+          "displayName": "Power Infusion",
+          "simcKey": "power_infusion",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103841,
+          "displayName": "Painful Invocation",
+          "simcKey": "painful_invocation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114588,
+          "displayName": "Petrifying Scream",
+          "simcKey": "petrifying_scream",
+          "maxRank": 1,
+          "row": 3,
+          "col": 9,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 114588,
+              "displayName": "Petrifying Scream",
+              "simcKey": "petrifying_scream"
+            },
+            {
+              "talentId": 103845,
+              "displayName": "Sheer Terror",
+              "simcKey": "sheer_terror"
+            }
+          ]
+        },
+        {
+          "talentId": 103868,
+          "displayName": "Surge of Light",
+          "simcKey": "surge_of_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136185,
+          "displayName": "Body and Soul",
+          "simcKey": "body_and_soul",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136157,
+          "displayName": "Mass Dispel",
+          "simcKey": "mass_dispel",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134284,
+          "displayName": "Twins of the Sun Priestess",
+          "simcKey": "twins_of_the_sun_priestess",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103837,
+          "displayName": "Strength of Soul",
+          "simcKey": "strength_of_soul",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103678,
+          "displayName": "Dominate Mind",
+          "simcKey": "dominate_mind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 8,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103678,
+              "displayName": "Dominate Mind",
+              "simcKey": "dominate_mind"
+            },
+            {
+              "talentId": 103862,
+              "displayName": "Mind Control",
+              "simcKey": "mind_control"
+            }
+          ]
+        },
+        {
+          "talentId": 103859,
+          "displayName": "Void Tendrils",
+          "simcKey": "void_tendrils",
+          "maxRank": 1,
+          "row": 4,
+          "col": 9,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103859,
+              "displayName": "Void Tendrils",
+              "simcKey": "void_tendrils"
+            },
+            {
+              "talentId": 103860,
+              "displayName": "Psychic Voice",
+              "simcKey": "psychic_voice"
+            }
+          ]
+        },
+        {
+          "talentId": 103852,
+          "displayName": "Everlasting Light",
+          "simcKey": "everlasting_light",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103849,
+          "displayName": "Move with Grace",
+          "simcKey": "move_with_grace",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134852,
+          "displayName": "Mental Agility",
+          "simcKey": "mental_agility",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103840,
+          "displayName": "Twin Disciplines",
+          "simcKey": "twin_disciplines",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134859,
+          "displayName": "Dark Enlightenment",
+          "simcKey": "dark_enlightenment",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134841,
+          "displayName": "False Autonomy",
+          "simcKey": "false_autonomy",
+          "maxRank": 1,
+          "row": 5,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103843,
+          "displayName": "Shackle Horror",
+          "simcKey": "shackle_horror",
+          "maxRank": 1,
+          "row": 5,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103846,
+          "displayName": "Inspiration",
+          "simcKey": "inspiration",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103825,
+          "displayName": "Binding Heals",
+          "simcKey": "binding_heals",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103864,
+          "displayName": "Shadow Word: Death",
+          "simcKey": "shadow_word_death",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134860,
+          "displayName": "Sanguine Teachings",
+          "simcKey": "sanguine_teachings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134846,
+          "displayName": "Desperate Prayer",
+          "simcKey": "desperate_prayer",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103833,
+          "displayName": "Twist of Fate",
+          "simcKey": "twist_of_fate",
+          "maxRank": 2,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103863,
+          "displayName": "Tithe Evasion",
+          "simcKey": "tithe_evasion",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134849,
+          "displayName": "Fade",
+          "simcKey": "fade",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103831,
+          "displayName": "Angel's Mercy",
+          "simcKey": "angels_mercy",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103823,
+          "displayName": "Protective Light",
+          "simcKey": "protective_light",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134845,
+          "displayName": "Mindpierce",
+          "simcKey": "mindpierce",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134848,
+          "displayName": "Spectral Illusion",
+          "simcKey": "spectral_illusion",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103836,
+          "displayName": "Improved Fade",
+          "simcKey": "improved_fade",
+          "maxRank": 2,
+          "row": 8,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103826,
+          "displayName": "Light's Inspiration",
+          "simcKey": "lights_inspiration",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103847,
+          "displayName": "Unwavering Will",
+          "simcKey": "unwavering_will",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134844,
+          "displayName": "Spell Warding",
+          "simcKey": "spell_warding",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115883,
+          "displayName": "Phantasm",
+          "simcKey": "phantasm",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103821,
+          "displayName": "Angelic Bulwark",
+          "simcKey": "angelic_bulwark",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135091,
+          "displayName": "Focused Power",
+          "simcKey": "focused_power",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135091,
+              "displayName": "Focused Power",
+              "simcKey": "focused_power"
+            },
+            {
+              "talentId": 115884,
+              "displayName": "Benevolence",
+              "simcKey": "benevolence"
+            }
+          ]
+        },
+        {
+          "talentId": 103819,
+          "displayName": "Phantom Reach",
+          "simcKey": "phantom_reach",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103835,
+          "displayName": "Translucent Image",
+          "simcKey": "translucent_image",
+          "maxRank": 1,
+          "row": 10,
+          "col": 8,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 103775,
+          "displayName": "Holy Word: Serenity",
+          "simcKey": "holy_word_serenity",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103766,
+          "displayName": "Holy Word: Sanctify",
+          "simcKey": "holy_word_sanctify",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103774,
+          "displayName": "Guardian Spirit",
+          "simcKey": "guardian_spirit",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103776,
+          "displayName": "Holy Word: Chastise",
+          "simcKey": "holy_word_chastise",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103767,
+          "displayName": "Prayer of Healing",
+          "simcKey": "prayer_of_healing",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128315,
+          "displayName": "Guardian Angel",
+          "simcKey": "guardian_angel",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128315,
+              "displayName": "Guardian Angel",
+              "simcKey": "guardian_angel"
+            },
+            {
+              "talentId": 103773,
+              "displayName": "Restitution",
+              "simcKey": "restitution"
+            }
+          ]
+        },
+        {
+          "talentId": 103753,
+          "displayName": "Censure",
+          "simcKey": "censure",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103777,
+          "displayName": "Empyreal Blaze",
+          "simcKey": "empyreal_blaze",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103769,
+          "displayName": "Prayerful Litany",
+          "simcKey": "prayerful_litany",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103765,
+          "displayName": "Cosmic Ripple",
+          "simcKey": "cosmic_ripple",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103771,
+          "displayName": "Afterlife",
+          "simcKey": "afterlife",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103754,
+          "displayName": "Voice of Harmony",
+          "simcKey": "voice_of_harmony",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103739,
+          "displayName": "Burning Vehemence",
+          "simcKey": "burning_vehemence",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103756,
+          "displayName": "Uplifting Words",
+          "simcKey": "uplifting_words",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128333,
+          "displayName": "Cosmic Wave",
+          "simcKey": "cosmic_wave",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103755,
+          "displayName": "Divine Hymn",
+          "simcKey": "divine_hymn",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103752,
+          "displayName": "Enlightenment",
+          "simcKey": "enlightenment",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103779,
+          "displayName": "Light's Resurgence",
+          "simcKey": "lights_resurgence",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103757,
+          "displayName": "Efficient Prayers",
+          "simcKey": "efficient_prayers",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103770,
+          "displayName": "Healing Focus",
+          "simcKey": "healing_focus",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128316,
+          "displayName": "Gales of Song",
+          "simcKey": "gales_of_song",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128316,
+              "displayName": "Gales of Song",
+              "simcKey": "gales_of_song"
+            },
+            {
+              "talentId": 103747,
+              "displayName": "Seraphic Crescendo",
+              "simcKey": "seraphic_crescendo"
+            }
+          ]
+        },
+        {
+          "talentId": 103751,
+          "displayName": "Divine Service",
+          "simcKey": "divine_service",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103780,
+          "displayName": "Renewed Faith",
+          "simcKey": "renewed_faith",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103762,
+          "displayName": "Angelic Touch",
+          "simcKey": "angelic_touch",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103748,
+          "displayName": "Apotheosis",
+          "simcKey": "apotheosis",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103750,
+          "displayName": "Prayers of the Virtuous",
+          "simcKey": "prayers_of_the_virtuous",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128613,
+          "displayName": "Trail of Light",
+          "simcKey": "trail_of_light",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128613,
+              "displayName": "Trail of Light",
+              "simcKey": "trail_of_light"
+            },
+            {
+              "talentId": 103735,
+              "displayName": "Dispersing Light",
+              "simcKey": "dispersing_light"
+            }
+          ]
+        },
+        {
+          "talentId": 103743,
+          "displayName": "Miracle Worker",
+          "simcKey": "miracle_worker",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128611,
+          "displayName": "Divinity",
+          "simcKey": "divinity",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128611,
+              "displayName": "Divinity",
+              "simcKey": "divinity"
+            },
+            {
+              "talentId": 128612,
+              "displayName": "Eternal Sanctity",
+              "simcKey": "eternal_sanctity"
+            }
+          ]
+        },
+        {
+          "talentId": 103745,
+          "displayName": "Holy Celerity",
+          "simcKey": "holy_celerity",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103749,
+          "displayName": "Say Your Prayers",
+          "simcKey": "say_your_prayers",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103763,
+          "displayName": "Crisis Management",
+          "simcKey": "crisis_management",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103764,
+          "displayName": "Light of the Naaru",
+          "simcKey": "light_of_the_naaru",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128331,
+          "displayName": "Light in the Darkness",
+          "simcKey": "light_in_the_darkness",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103744,
+          "displayName": "Prismatic Echoes",
+          "simcKey": "prismatic_echoes",
+          "maxRank": 2,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103741,
+          "displayName": "Desperate Times",
+          "simcKey": "desperate_times",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103738,
+          "displayName": "Radiant Plea",
+          "simcKey": "radiant_plea",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103734,
+          "displayName": "Lightweaver",
+          "simcKey": "lightweaver",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103733,
+          "displayName": "Ultimate Serenity",
+          "simcKey": "ultimate_serenity",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103675,
+          "displayName": "Divine Image",
+          "simcKey": "divine_image",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103676,
+          "displayName": "Lasting Words",
+          "simcKey": "lasting_words",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103740,
+          "displayName": "Epiphany",
+          "simcKey": "epiphany",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136993,
+          "displayName": "Benediction",
+          "simcKey": "benediction",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117286,
+          "displayName": "Guiding Light",
+          "simcKey": "guiding_light",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134273,
+          "displayName": "Halo",
+          "simcKey": "halo",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117280,
+          "displayName": "Perfected Form",
+          "simcKey": "perfected_form",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117301,
+          "displayName": "Preventive Measures",
+          "simcKey": "preventive_measures",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117277,
+          "displayName": "Preemptive Care",
+          "simcKey": "preemptive_care",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117284,
+          "displayName": "Power Surge",
+          "simcKey": "power_surge",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117282,
+          "displayName": "Waste No Time",
+          "simcKey": "waste_no_time",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117302,
+          "displayName": "Manifested Power",
+          "simcKey": "manifested_power",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136035,
+          "displayName": "Focused Outburst",
+          "simcKey": "focused_outburst",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136040,
+          "displayName": "Words of the Wise",
+          "simcKey": "words_of_the_wise",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117294,
+          "displayName": "Assured Safety",
+          "simcKey": "assured_safety",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125083,
+          "displayName": "Incessant Screams",
+          "simcKey": "incessant_screams",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125083,
+              "displayName": "Incessant Screams",
+              "simcKey": "incessant_screams"
+            },
+            {
+              "talentId": 117289,
+              "displayName": "Shock Pulse",
+              "simcKey": "shock_pulse"
+            }
+          ]
+        },
+        {
+          "talentId": 117283,
+          "displayName": "Energy Conservation",
+          "simcKey": "energy_conservation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 119331,
+          "displayName": "Save the Day",
+          "simcKey": "save_the_day",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 119331,
+              "displayName": "Save the Day",
+              "simcKey": "save_the_day"
+            },
+            {
+              "talentId": 117278,
+              "displayName": "Divine Feathers",
+              "simcKey": "divine_feathers"
+            }
+          ]
+        },
+        {
+          "talentId": 117291,
+          "displayName": "Empowered Surges",
+          "simcKey": "empowered_surges",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117292,
+          "displayName": "Foreseen Circumstances",
+          "simcKey": "foreseen_circumstances",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136041,
+          "displayName": "Prophet's Insight",
+          "simcKey": "prophets_insight",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136687,
+          "displayName": "Heightened Alteration",
+          "simcKey": "heightened_alteration",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136687,
+              "displayName": "Heightened Alteration",
+              "simcKey": "heightened_alteration"
+            },
+            {
+              "talentId": 136034,
+              "displayName": "Word of Supremacy",
+              "simcKey": "word_of_supremacy"
+            }
+          ]
+        },
+        {
+          "talentId": 125085,
+          "displayName": "Sustained Potency",
+          "simcKey": "sustained_potency",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125085,
+              "displayName": "Sustained Potency",
+              "simcKey": "sustained_potency"
+            },
+            {
+              "talentId": 117281,
+              "displayName": "Energy Compression",
+              "simcKey": "energy_compression"
+            }
+          ]
+        },
+        {
+          "talentId": 126068,
+          "displayName": "Desperate Measures",
+          "simcKey": "desperate_measures",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 126068,
+              "displayName": "Desperate Measures",
+              "simcKey": "desperate_measures"
+            },
+            {
+              "talentId": 117293,
+              "displayName": "Prophet's Will",
+              "simcKey": "prophets_will"
+            }
+          ]
+        },
+        {
+          "talentId": 117276,
+          "displayName": "Prompt Prognosis",
+          "simcKey": "prompt_prognosis",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117279,
+          "displayName": "Resonant Energy",
+          "simcKey": "resonant_energy",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117288,
+          "displayName": "Energy Cycle",
+          "simcKey": "energy_cycle",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117303,
+          "displayName": "Piety",
+          "simcKey": "piety",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136039,
+          "displayName": "Unfolding Vision",
+          "simcKey": "unfolding_vision",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136688,
+          "displayName": "Spiritwell",
+          "simcKey": "spiritwell",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136688,
+              "displayName": "Spiritwell",
+              "simcKey": "spiritwell"
+            },
+            {
+              "talentId": 136033,
+              "displayName": "Realized Potential",
+              "simcKey": "realized_potential"
+            }
+          ]
+        },
+        {
+          "talentId": 117290,
+          "displayName": "Twinsight",
+          "simcKey": "twinsight",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117305,
+          "displayName": "Divine Halo",
+          "simcKey": "divine_halo",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "priest/shadow": {
+      "classId": 5,
+      "specId": 258,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 103869,
+          "displayName": "Improved Flash Heal",
+          "simcKey": "improved_flash_heal",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103853,
+          "displayName": "Angelic Feather",
+          "simcKey": "angelic_feather",
+          "maxRank": 1,
+          "row": 1,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103865,
+          "displayName": "Mind Blast",
+          "simcKey": "mind_blast",
+          "maxRank": 1,
+          "row": 1,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103870,
+          "displayName": "Holy Nova",
+          "simcKey": "holy_nova",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103677,
+          "displayName": "Dispel Magic",
+          "simcKey": "dispel_magic",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103818,
+          "displayName": "Spiritual Guidance",
+          "simcKey": "spiritual_guidance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103851,
+          "displayName": "Psychic Scream",
+          "simcKey": "psychic_scream",
+          "maxRank": 1,
+          "row": 2,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103871,
+          "displayName": "Lightburst",
+          "simcKey": "lightburst",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103867,
+          "displayName": "Leap of Faith",
+          "simcKey": "leap_of_faith",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103854,
+          "displayName": "Purify Disease",
+          "simcKey": "purify_disease",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103834,
+          "displayName": "Power Infusion",
+          "simcKey": "power_infusion",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103841,
+          "displayName": "Painful Invocation",
+          "simcKey": "painful_invocation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114588,
+          "displayName": "Petrifying Scream",
+          "simcKey": "petrifying_scream",
+          "maxRank": 1,
+          "row": 3,
+          "col": 9,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 114588,
+              "displayName": "Petrifying Scream",
+              "simcKey": "petrifying_scream"
+            },
+            {
+              "talentId": 103845,
+              "displayName": "Sheer Terror",
+              "simcKey": "sheer_terror"
+            }
+          ]
+        },
+        {
+          "talentId": 103868,
+          "displayName": "Surge of Light",
+          "simcKey": "surge_of_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136185,
+          "displayName": "Body and Soul",
+          "simcKey": "body_and_soul",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136157,
+          "displayName": "Mass Dispel",
+          "simcKey": "mass_dispel",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134284,
+          "displayName": "Twins of the Sun Priestess",
+          "simcKey": "twins_of_the_sun_priestess",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103837,
+          "displayName": "Strength of Soul",
+          "simcKey": "strength_of_soul",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103678,
+          "displayName": "Dominate Mind",
+          "simcKey": "dominate_mind",
+          "maxRank": 1,
+          "row": 4,
+          "col": 8,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103678,
+              "displayName": "Dominate Mind",
+              "simcKey": "dominate_mind"
+            },
+            {
+              "talentId": 103862,
+              "displayName": "Mind Control",
+              "simcKey": "mind_control"
+            }
+          ]
+        },
+        {
+          "talentId": 103859,
+          "displayName": "Void Tendrils",
+          "simcKey": "void_tendrils",
+          "maxRank": 1,
+          "row": 4,
+          "col": 9,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 103859,
+              "displayName": "Void Tendrils",
+              "simcKey": "void_tendrils"
+            },
+            {
+              "talentId": 103860,
+              "displayName": "Psychic Voice",
+              "simcKey": "psychic_voice"
+            }
+          ]
+        },
+        {
+          "talentId": 103852,
+          "displayName": "Everlasting Light",
+          "simcKey": "everlasting_light",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103849,
+          "displayName": "Move with Grace",
+          "simcKey": "move_with_grace",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134852,
+          "displayName": "Mental Agility",
+          "simcKey": "mental_agility",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103840,
+          "displayName": "Twin Disciplines",
+          "simcKey": "twin_disciplines",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134859,
+          "displayName": "Dark Enlightenment",
+          "simcKey": "dark_enlightenment",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134841,
+          "displayName": "False Autonomy",
+          "simcKey": "false_autonomy",
+          "maxRank": 1,
+          "row": 5,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103843,
+          "displayName": "Shackle Horror",
+          "simcKey": "shackle_horror",
+          "maxRank": 1,
+          "row": 5,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103846,
+          "displayName": "Inspiration",
+          "simcKey": "inspiration",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103825,
+          "displayName": "Binding Heals",
+          "simcKey": "binding_heals",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103864,
+          "displayName": "Shadow Word: Death",
+          "simcKey": "shadow_word_death",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134860,
+          "displayName": "Sanguine Teachings",
+          "simcKey": "sanguine_teachings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134846,
+          "displayName": "Desperate Prayer",
+          "simcKey": "desperate_prayer",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103833,
+          "displayName": "Twist of Fate",
+          "simcKey": "twist_of_fate",
+          "maxRank": 2,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103863,
+          "displayName": "Tithe Evasion",
+          "simcKey": "tithe_evasion",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134849,
+          "displayName": "Fade",
+          "simcKey": "fade",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103828,
+          "displayName": "Angel's Mercy",
+          "simcKey": "angels_mercy",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103823,
+          "displayName": "Protective Light",
+          "simcKey": "protective_light",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134845,
+          "displayName": "Mindpierce",
+          "simcKey": "mindpierce",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134848,
+          "displayName": "Spectral Illusion",
+          "simcKey": "spectral_illusion",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103836,
+          "displayName": "Improved Fade",
+          "simcKey": "improved_fade",
+          "maxRank": 2,
+          "row": 8,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103826,
+          "displayName": "Light's Inspiration",
+          "simcKey": "lights_inspiration",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103847,
+          "displayName": "Unwavering Will",
+          "simcKey": "unwavering_will",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134844,
+          "displayName": "Spell Warding",
+          "simcKey": "spell_warding",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115883,
+          "displayName": "Phantasm",
+          "simcKey": "phantasm",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103821,
+          "displayName": "Angelic Bulwark",
+          "simcKey": "angelic_bulwark",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135091,
+          "displayName": "Focused Power",
+          "simcKey": "focused_power",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135091,
+              "displayName": "Focused Power",
+              "simcKey": "focused_power"
+            },
+            {
+              "talentId": 115884,
+              "displayName": "Benevolence",
+              "simcKey": "benevolence"
+            }
+          ]
+        },
+        {
+          "talentId": 103819,
+          "displayName": "Phantom Reach",
+          "simcKey": "phantom_reach",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103835,
+          "displayName": "Translucent Image",
+          "simcKey": "translucent_image",
+          "maxRank": 1,
+          "row": 10,
+          "col": 8,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 103808,
+          "displayName": "Shadow Word: Madness",
+          "simcKey": "shadow_word_madness",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103806,
+          "displayName": "Psychic Link",
+          "simcKey": "psychic_link",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136811,
+          "displayName": "Invoked Nightmare",
+          "simcKey": "invoked_nightmare",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136811,
+              "displayName": "Invoked Nightmare",
+              "simcKey": "invoked_nightmare"
+            },
+            {
+              "talentId": 103809,
+              "displayName": "Misery",
+              "simcKey": "misery"
+            }
+          ]
+        },
+        {
+          "talentId": 136223,
+          "displayName": "Mental Fortitude",
+          "simcKey": "mental_fortitude",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136223,
+              "displayName": "Mental Fortitude",
+              "simcKey": "mental_fortitude"
+            },
+            {
+              "talentId": 134850,
+              "displayName": "Intangibility",
+              "simcKey": "intangibility"
+            }
+          ]
+        },
+        {
+          "talentId": 103795,
+          "displayName": "Thought Harvester",
+          "simcKey": "thought_harvester",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115448,
+          "displayName": "Tentacle Slam",
+          "simcKey": "tentacle_slam",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103792,
+          "displayName": "Shadowy Apparitions",
+          "simcKey": "shadowy_apparitions",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103801,
+          "displayName": "Tormenting Whispers",
+          "simcKey": "tormenting_whispers",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103814,
+          "displayName": "Descending Darkness",
+          "simcKey": "descending_darkness",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103812,
+          "displayName": "Surge of Insanity",
+          "simcKey": "surge_of_insanity",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103813,
+          "displayName": "Shadowy Insight",
+          "simcKey": "shadowy_insight",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133542,
+          "displayName": "Voidtouched",
+          "simcKey": "voidtouched",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103674,
+          "displayName": "Voidform",
+          "simcKey": "voidform",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103799,
+          "displayName": "Haunting Shadows",
+          "simcKey": "haunting_shadows",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133378,
+          "displayName": "Mental Decay",
+          "simcKey": "mental_decay",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134851,
+          "displayName": "Shadowfiend",
+          "simcKey": "shadowfiend",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103802,
+          "displayName": "Dark Thoughts",
+          "simcKey": "dark_thoughts",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103805,
+          "displayName": "Maddening Touch",
+          "simcKey": "maddening_touch",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134052,
+          "displayName": "Ancient Madness",
+          "simcKey": "ancient_madness",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 134052,
+              "displayName": "Ancient Madness",
+              "simcKey": "ancient_madness"
+            },
+            {
+              "talentId": 103798,
+              "displayName": "Improved Voidform",
+              "simcKey": "improved_voidform"
+            }
+          ]
+        },
+        {
+          "talentId": 103785,
+          "displayName": "Phantom Menace",
+          "simcKey": "phantom_menace",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134051,
+          "displayName": "Dark Evangelism",
+          "simcKey": "dark_evangelism",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133400,
+          "displayName": "Shattered Psyche",
+          "simcKey": "shattered_psyche",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103682,
+          "displayName": "Subservient Shadows",
+          "simcKey": "subservient_shadows",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103784,
+          "displayName": "Mastermind",
+          "simcKey": "mastermind",
+          "maxRank": 2,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115671,
+          "displayName": "Distorted Reality",
+          "simcKey": "distorted_reality",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115671,
+              "displayName": "Distorted Reality",
+              "simcKey": "distorted_reality"
+            },
+            {
+              "talentId": 103786,
+              "displayName": "Mind's Eye",
+              "simcKey": "minds_eye"
+            }
+          ]
+        },
+        {
+          "talentId": 103686,
+          "displayName": "Spectral Horrors",
+          "simcKey": "spectral_horrors",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133549,
+          "displayName": "Instilled Doubt",
+          "simcKey": "instilled_doubt",
+          "maxRank": 2,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103788,
+          "displayName": "Mindbender",
+          "simcKey": "mindbender",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134274,
+          "displayName": "Death and Madness",
+          "simcKey": "death_and_madness",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 134274,
+              "displayName": "Death and Madness",
+              "simcKey": "death_and_madness"
+            },
+            {
+              "talentId": 103681,
+              "displayName": "Deathspeaker",
+              "simcKey": "deathspeaker"
+            }
+          ]
+        },
+        {
+          "talentId": 133550,
+          "displayName": "Mind Devourer",
+          "simcKey": "mind_devourer",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103811,
+          "displayName": "Auspicious Spirits",
+          "simcKey": "auspicious_spirits",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103796,
+          "displayName": "Maddening Tentacles",
+          "simcKey": "maddening_tentacles",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103783,
+          "displayName": "Inescapable Torment",
+          "simcKey": "inescapable_torment",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103816,
+          "displayName": "Madness Weaving",
+          "simcKey": "madness_weaving",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133377,
+          "displayName": "Death's Torment",
+          "simcKey": "deaths_torment",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103789,
+          "displayName": "Screams of the Void",
+          "simcKey": "screams_of_the_void",
+          "maxRank": 2,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103810,
+          "displayName": "Tormented Spirits",
+          "simcKey": "tormented_spirits",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103683,
+          "displayName": "Insidious Ire",
+          "simcKey": "insidious_ire",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103797,
+          "displayName": "Crushing Void",
+          "simcKey": "crushing_void",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103787,
+          "displayName": "Idol of Y'Shaarj",
+          "simcKey": "idol_of_yshaarj",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103781,
+          "displayName": "Idol of N'Zoth",
+          "simcKey": "idol_of_nzoth",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103817,
+          "displayName": "Idol of Yogg-Saron",
+          "simcKey": "idol_of_yogg_saron",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 103782,
+          "displayName": "Idol of C'Thun",
+          "simcKey": "idol_of_cthun",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136990,
+          "displayName": "Void Apparitions",
+          "simcKey": "void_apparitions",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117287,
+          "displayName": "Void Torrent",
+          "simcKey": "void_torrent",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117300,
+          "displayName": "Halo",
+          "simcKey": "halo",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117280,
+          "displayName": "Perfected Form",
+          "simcKey": "perfected_form",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123845,
+          "displayName": "Dark Energy",
+          "simcKey": "dark_energy",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123845,
+              "displayName": "Dark Energy",
+              "simcKey": "dark_energy"
+            },
+            {
+              "talentId": 117296,
+              "displayName": "No Escape",
+              "simcKey": "no_escape"
+            }
+          ]
+        },
+        {
+          "talentId": 117284,
+          "displayName": "Power Surge",
+          "simcKey": "power_surge",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117306,
+          "displayName": "Void Blast",
+          "simcKey": "void_blast",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117273,
+          "displayName": "Inner Quietus",
+          "simcKey": "inner_quietus",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117302,
+          "displayName": "Manifested Power",
+          "simcKey": "manifested_power",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136035,
+          "displayName": "Focused Outburst",
+          "simcKey": "focused_outburst",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136038,
+          "displayName": "Voidheart",
+          "simcKey": "voidheart",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117271,
+          "displayName": "Devour Matter",
+          "simcKey": "devour_matter",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125083,
+          "displayName": "Incessant Screams",
+          "simcKey": "incessant_screams",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125083,
+              "displayName": "Incessant Screams",
+              "simcKey": "incessant_screams"
+            },
+            {
+              "talentId": 117289,
+              "displayName": "Shock Pulse",
+              "simcKey": "shock_pulse"
+            }
+          ]
+        },
+        {
+          "talentId": 117283,
+          "displayName": "Energy Conservation",
+          "simcKey": "energy_conservation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125982,
+          "displayName": "Darkening Horizon",
+          "simcKey": "darkening_horizon",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125982,
+              "displayName": "Darkening Horizon",
+              "simcKey": "darkening_horizon"
+            },
+            {
+              "talentId": 125821,
+              "displayName": "Void Empowerment",
+              "simcKey": "void_empowerment"
+            }
+          ]
+        },
+        {
+          "talentId": 117291,
+          "displayName": "Empowered Surges",
+          "simcKey": "empowered_surges",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123841,
+          "displayName": "Voidwraith",
+          "simcKey": "voidwraith",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136037,
+          "displayName": "Touch of the Void",
+          "simcKey": "touch_of_the_void",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136687,
+          "displayName": "Heightened Alteration",
+          "simcKey": "heightened_alteration",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136687,
+              "displayName": "Heightened Alteration",
+              "simcKey": "heightened_alteration"
+            },
+            {
+              "talentId": 136034,
+              "displayName": "Word of Supremacy",
+              "simcKey": "word_of_supremacy"
+            }
+          ]
+        },
+        {
+          "talentId": 117295,
+          "displayName": "Quickened Pulse",
+          "simcKey": "quickened_pulse",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125085,
+          "displayName": "Sustained Potency",
+          "simcKey": "sustained_potency",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125085,
+              "displayName": "Sustained Potency",
+              "simcKey": "sustained_potency"
+            },
+            {
+              "talentId": 117281,
+              "displayName": "Energy Compression",
+              "simcKey": "energy_compression"
+            }
+          ]
+        },
+        {
+          "talentId": 117272,
+          "displayName": "Void Infusion",
+          "simcKey": "void_infusion",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117279,
+          "displayName": "Resonant Energy",
+          "simcKey": "resonant_energy",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117288,
+          "displayName": "Energy Cycle",
+          "simcKey": "energy_cycle",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123844,
+          "displayName": "Embrace the Shadow",
+          "simcKey": "embrace_the_shadow",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123844,
+              "displayName": "Embrace the Shadow",
+              "simcKey": "embrace_the_shadow"
+            },
+            {
+              "talentId": 117299,
+              "displayName": "Void Leech",
+              "simcKey": "void_leech"
+            }
+          ]
+        },
+        {
+          "talentId": 136036,
+          "displayName": "Overwhelming Shadows",
+          "simcKey": "overwhelming_shadows",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136688,
+          "displayName": "Spiritwell",
+          "simcKey": "spiritwell",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136688,
+              "displayName": "Spiritwell",
+              "simcKey": "spiritwell"
+            },
+            {
+              "talentId": 136033,
+              "displayName": "Realized Potential",
+              "simcKey": "realized_potential"
+            }
+          ]
+        },
+        {
+          "talentId": 117297,
+          "displayName": "Collapsing Void",
+          "simcKey": "collapsing_void",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117305,
+          "displayName": "Divine Halo",
+          "simcKey": "divine_halo",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    }
+  }
+}

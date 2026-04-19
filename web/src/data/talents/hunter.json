@@ -1,0 +1,3644 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "byClassSpec": {
+    "hunter/beast_mastery": {
+      "classId": 3,
+      "specId": 253,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 126444,
+          "displayName": "Rejuvenating Wind",
+          "simcKey": "rejuvenating_wind",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126488,
+          "displayName": "Survival of the Fittest",
+          "simcKey": "survival_of_the_fittest",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126475,
+          "displayName": "Posthaste",
+          "simcKey": "posthaste",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126465,
+          "displayName": "Natural Mending",
+          "simcKey": "natural_mending",
+          "maxRank": 2,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126470,
+          "displayName": "Padded Armor",
+          "simcKey": "padded_armor",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126489,
+          "displayName": "Hunter's Avoidance",
+          "simcKey": "hunters_avoidance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126446,
+          "displayName": "Wilderness Medicine",
+          "simcKey": "wilderness_medicine",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136677,
+          "displayName": "Combat Experience",
+          "simcKey": "combat_experience",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135708,
+          "displayName": "Improved Aspect of the Cheetah",
+          "simcKey": "improved_aspect_of_the_cheetah",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126471,
+          "displayName": "Concussive Shot",
+          "simcKey": "concussive_shot",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126443,
+          "displayName": "Precision Strikes",
+          "simcKey": "precision_strikes",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126352,
+          "displayName": "Counter Shot",
+          "simcKey": "counter_shot",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126447,
+          "displayName": "Serrated Tips",
+          "simcKey": "serrated_tips",
+          "maxRank": 2,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135712,
+          "displayName": "Tranquilizing Shot",
+          "simcKey": "tranquilizing_shot",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126468,
+          "displayName": "Pathfinding",
+          "simcKey": "pathfinding",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126459,
+          "displayName": "Disruptive Rounds",
+          "simcKey": "disruptive_rounds",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135706,
+          "displayName": "Improved Feign Death",
+          "simcKey": "improved_feign_death",
+          "maxRank": 2,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126484,
+          "displayName": "Misdirection",
+          "simcKey": "misdirection",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126479,
+          "displayName": "Devilsaur Tranquilizer",
+          "simcKey": "devilsaur_tranquilizer",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 126479,
+              "displayName": "Devilsaur Tranquilizer",
+              "simcKey": "devilsaur_tranquilizer"
+            },
+            {
+              "talentId": 126480,
+              "displayName": "Kodo Tranquilizer",
+              "simcKey": "kodo_tranquilizer"
+            }
+          ]
+        },
+        {
+          "talentId": 126491,
+          "displayName": "Kindling Flare",
+          "simcKey": "kindling_flare",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126460,
+          "displayName": "Trigger Finger",
+          "simcKey": "trigger_finger",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135707,
+          "displayName": "Scare Beast",
+          "simcKey": "scare_beast",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135707,
+              "displayName": "Scare Beast",
+              "simcKey": "scare_beast"
+            },
+            {
+              "talentId": 126457,
+              "displayName": "Tar Trap",
+              "simcKey": "tar_trap"
+            }
+          ]
+        },
+        {
+          "talentId": 135710,
+          "displayName": "Touch of Grass",
+          "simcKey": "touch_of_grass",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136676,
+          "displayName": "Camouflage",
+          "simcKey": "camouflage",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126476,
+          "displayName": "No Hard Feelings",
+          "simcKey": "no_hard_feelings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126490,
+          "displayName": "Improved Aspect of the Turtle",
+          "simcKey": "improved_aspect_of_the_turtle",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126453,
+          "displayName": "Specialized Arsenal",
+          "simcKey": "specialized_arsenal",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135705,
+          "displayName": "Scout's Instincts",
+          "simcKey": "scouts_instincts",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136673,
+          "displayName": "Shell Wall",
+          "simcKey": "shell_wall",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126461,
+          "displayName": "Intimidation",
+          "simcKey": "intimidation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126478,
+          "displayName": "Improved Snaring",
+          "simcKey": "improved_snaring",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126454,
+          "displayName": "Lone Survivor",
+          "simcKey": "lone_survivor",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135709,
+          "displayName": "Catlike Reflexes",
+          "simcKey": "catlike_reflexes",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135711,
+          "displayName": "Binding Shot",
+          "simcKey": "binding_shot",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136674,
+          "displayName": "Moment of Opportunity",
+          "simcKey": "moment_of_opportunity",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136674,
+              "displayName": "Moment of Opportunity",
+              "simcKey": "moment_of_opportunity"
+            },
+            {
+              "talentId": 136675,
+              "displayName": "Trailblazer",
+              "simcKey": "trailblazer"
+            }
+          ]
+        },
+        {
+          "talentId": 136672,
+          "displayName": "Cold Feet",
+          "simcKey": "cold_feet",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135704,
+          "displayName": "Guttural Roar",
+          "simcKey": "guttural_roar",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135704,
+              "displayName": "Guttural Roar",
+              "simcKey": "guttural_roar"
+            },
+            {
+              "talentId": 126458,
+              "displayName": "Territorial Instincts",
+              "simcKey": "territorial_instincts"
+            }
+          ]
+        },
+        {
+          "talentId": 126481,
+          "displayName": "Born To Be Wild",
+          "simcKey": "born_to_be_wild",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126473,
+          "displayName": "Keen Eyesight",
+          "simcKey": "keen_eyesight",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136670,
+          "displayName": "Horsehair Tether",
+          "simcKey": "horsehair_tether",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136670,
+              "displayName": "Horsehair Tether",
+              "simcKey": "horsehair_tether"
+            },
+            {
+              "talentId": 136671,
+              "displayName": "Tar-Coated Bindings",
+              "simcKey": "tar_coated_bindings"
+            }
+          ]
+        },
+        {
+          "talentId": 126483,
+          "displayName": "Improved Traps",
+          "simcKey": "improved_traps",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126452,
+          "displayName": "Emergency Salve",
+          "simcKey": "emergency_salve",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136685,
+          "displayName": "Guardian's Hide",
+          "simcKey": "guardians_hide",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136685,
+              "displayName": "Guardian's Hide",
+              "simcKey": "guardians_hide"
+            },
+            {
+              "talentId": 136686,
+              "displayName": "Roar of Sacrifice",
+              "simcKey": "roar_of_sacrifice"
+            }
+          ]
+        },
+        {
+          "talentId": 126450,
+          "displayName": "Unnatural Causes",
+          "simcKey": "unnatural_causes",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 126408,
+          "displayName": "Kill Command",
+          "simcKey": "kill_command",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136678,
+          "displayName": "Solitary Companion",
+          "simcKey": "solitary_companion",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136678,
+              "displayName": "Solitary Companion",
+              "simcKey": "solitary_companion"
+            },
+            {
+              "talentId": 136679,
+              "displayName": "Animal Companion",
+              "simcKey": "animal_companion"
+            }
+          ]
+        },
+        {
+          "talentId": 126440,
+          "displayName": "Barbed Shot",
+          "simcKey": "barbed_shot",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126431,
+          "displayName": "Alpha Predator",
+          "simcKey": "alpha_predator",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126439,
+          "displayName": "Dire Beast",
+          "simcKey": "dire_beast",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126409,
+          "displayName": "Stomp",
+          "simcKey": "stomp",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126405,
+          "displayName": "War Orders",
+          "simcKey": "war_orders",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126425,
+          "displayName": "Wild Thrash",
+          "simcKey": "wild_thrash",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126402,
+          "displayName": "Bestial Wrath",
+          "simcKey": "bestial_wrath",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126416,
+          "displayName": "Cobra Shot",
+          "simcKey": "cobra_shot",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126403,
+          "displayName": "Beast Cleave",
+          "simcKey": "beast_cleave",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126404,
+          "displayName": "Scent of Blood",
+          "simcKey": "scent_of_blood",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126433,
+          "displayName": "Thundering Hooves",
+          "simcKey": "thundering_hooves",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126419,
+          "displayName": "Go for the Throat",
+          "simcKey": "go_for_the_throat",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126432,
+          "displayName": "Laceration",
+          "simcKey": "laceration",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126417,
+          "displayName": "Kill Cleave",
+          "simcKey": "kill_cleave",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126399,
+          "displayName": "Training Expert",
+          "simcKey": "training_expert",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126436,
+          "displayName": "The Beast Within",
+          "simcKey": "the_beast_within",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126407,
+          "displayName": "Thrill of the Hunt",
+          "simcKey": "thrill_of_the_hunt",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126437,
+          "displayName": "Pack Tactics",
+          "simcKey": "pack_tactics",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126415,
+          "displayName": "Barbed Scales",
+          "simcKey": "barbed_scales",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126413,
+          "displayName": "Aspect of the Beast",
+          "simcKey": "aspect_of_the_beast",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126398,
+          "displayName": "Dire Cleave",
+          "simcKey": "dire_cleave",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126427,
+          "displayName": "Dire Command",
+          "simcKey": "dire_command",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126420,
+          "displayName": "Jagged Wounds",
+          "simcKey": "jagged_wounds",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126435,
+          "displayName": "Serpentine Strikes",
+          "simcKey": "serpentine_strikes",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128265,
+          "displayName": "Cobra Senses",
+          "simcKey": "cobra_senses",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128265,
+              "displayName": "Cobra Senses",
+              "simcKey": "cobra_senses"
+            },
+            {
+              "talentId": 126406,
+              "displayName": "Snakeskin Quiver",
+              "simcKey": "snakeskin_quiver"
+            }
+          ]
+        },
+        {
+          "talentId": 126430,
+          "displayName": "Dire Frenzy",
+          "simcKey": "dire_frenzy",
+          "maxRank": 2,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126397,
+          "displayName": "Frenzy",
+          "simcKey": "frenzy",
+          "maxRank": 2,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126426,
+          "displayName": "Killer Instinct",
+          "simcKey": "killer_instinct",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126412,
+          "displayName": "Brutal Companion",
+          "simcKey": "brutal_companion",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 132189,
+          "displayName": "Huntmaster's Call",
+          "simcKey": "huntmasters_call",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126422,
+          "displayName": "Heart of the Pack",
+          "simcKey": "heart_of_the_pack",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126424,
+          "displayName": "Bloodshed",
+          "simcKey": "bloodshed",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126418,
+          "displayName": "Savagery",
+          "simcKey": "savagery",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126438,
+          "displayName": "Killer Cobra",
+          "simcKey": "killer_cobra",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126421,
+          "displayName": "Master Handler",
+          "simcKey": "master_handler",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 132188,
+          "displayName": "Wildspeaker",
+          "simcKey": "wildspeaker",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126400,
+          "displayName": "Bloody Frenzy",
+          "simcKey": "bloody_frenzy",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 126400,
+              "displayName": "Bloody Frenzy",
+              "simcKey": "bloody_frenzy"
+            },
+            {
+              "talentId": 126401,
+              "displayName": "Wild Instincts",
+              "simcKey": "wild_instincts"
+            }
+          ]
+        },
+        {
+          "talentId": 126434,
+          "displayName": "Piercing Fangs",
+          "simcKey": "piercing_fangs",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137050,
+          "displayName": "Nature's Ally",
+          "simcKey": "natures_ally",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117588,
+          "displayName": "Howl of the Pack Leader",
+          "simcKey": "howl_of_the_pack_leader",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136446,
+          "displayName": "Black Arrow",
+          "simcKey": "black_arrow",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117558,
+          "displayName": "Bleak Arrows",
+          "simcKey": "bleak_arrows",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117582,
+          "displayName": "Pack Mentality",
+          "simcKey": "pack_mentality",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117565,
+          "displayName": "Soul Drinker",
+          "simcKey": "soul_drinker",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117589,
+          "displayName": "Dire Summons",
+          "simcKey": "dire_summons",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117559,
+          "displayName": "Better Together",
+          "simcKey": "better_together",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117571,
+          "displayName": "Bleak Powder",
+          "simcKey": "bleak_powder",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123781,
+          "displayName": "Masterful Call",
+          "simcKey": "masterful_call",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123781,
+              "displayName": "Masterful Call",
+              "simcKey": "masterful_call"
+            },
+            {
+              "talentId": 117576,
+              "displayName": "Slicked Shoes",
+              "simcKey": "slicked_shoes"
+            }
+          ]
+        },
+        {
+          "talentId": 136059,
+          "displayName": "Corpsecaller",
+          "simcKey": "corpsecaller",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128358,
+          "displayName": "Sharpened Claws",
+          "simcKey": "sharpened_claws",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128358,
+              "displayName": "Sharpened Claws",
+              "simcKey": "sharpened_claws"
+            },
+            {
+              "talentId": 117569,
+              "displayName": "Ursine Fury",
+              "simcKey": "ursine_fury"
+            }
+          ]
+        },
+        {
+          "talentId": 136742,
+          "displayName": "Through the Eyes",
+          "simcKey": "through_the_eyes",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136742,
+              "displayName": "Through the Eyes",
+              "simcKey": "through_the_eyes"
+            },
+            {
+              "talentId": 117583,
+              "displayName": "Ebon Bowstring",
+              "simcKey": "ebon_bowstring"
+            }
+          ]
+        },
+        {
+          "talentId": 117581,
+          "displayName": "Fury of the Wyvern",
+          "simcKey": "fury_of_the_wyvern",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123779,
+          "displayName": "Smoke Screen",
+          "simcKey": "smoke_screen",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117585,
+          "displayName": "Hogstrider",
+          "simcKey": "hogstrider",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128219,
+          "displayName": "Shadow Dagger",
+          "simcKey": "shadow_dagger",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128219,
+              "displayName": "Shadow Dagger",
+              "simcKey": "shadow_dagger"
+            },
+            {
+              "talentId": 117557,
+              "displayName": "Dark Chains",
+              "simcKey": "dark_chains"
+            }
+          ]
+        },
+        {
+          "talentId": 136058,
+          "displayName": "Wailing Dead",
+          "simcKey": "wailing_dead",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136061,
+          "displayName": "Lethal Barbs",
+          "simcKey": "lethal_barbs",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117566,
+          "displayName": "No Mercy",
+          "simcKey": "no_mercy",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128238,
+          "displayName": "Blighted Quiver",
+          "simcKey": "blighted_quiver",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117564,
+          "displayName": "Shell Cover",
+          "simcKey": "shell_cover",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136231,
+          "displayName": "The Bell Tolls",
+          "simcKey": "the_bell_tolls",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136231,
+              "displayName": "The Bell Tolls",
+              "simcKey": "the_bell_tolls"
+            },
+            {
+              "talentId": 117554,
+              "displayName": "Banshee's Mark",
+              "simcKey": "banshees_mark"
+            }
+          ]
+        },
+        {
+          "talentId": 132888,
+          "displayName": "Umbral Reach",
+          "simcKey": "umbral_reach",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136236,
+          "displayName": "Wyvern's Gaze",
+          "simcKey": "wyverns_gaze",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136236,
+              "displayName": "Wyvern's Gaze",
+              "simcKey": "wyverns_gaze"
+            },
+            {
+              "talentId": 136062,
+              "displayName": "Hoof and Blade",
+              "simcKey": "hoof_and_blade"
+            }
+          ]
+        },
+        {
+          "talentId": 136057,
+          "displayName": "Pact of the Hollow",
+          "simcKey": "pact_of_the_hollow",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136060,
+          "displayName": "Sharpened Fangs",
+          "simcKey": "sharpened_fangs",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117563,
+          "displayName": "Stampede!",
+          "simcKey": "stampede",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117590,
+          "displayName": "Withering Fire",
+          "simcKey": "withering_fire",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "hunter/marksmanship": {
+      "classId": 3,
+      "specId": 254,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 126444,
+          "displayName": "Rejuvenating Wind",
+          "simcKey": "rejuvenating_wind",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126488,
+          "displayName": "Survival of the Fittest",
+          "simcKey": "survival_of_the_fittest",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126475,
+          "displayName": "Posthaste",
+          "simcKey": "posthaste",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126465,
+          "displayName": "Natural Mending",
+          "simcKey": "natural_mending",
+          "maxRank": 2,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126470,
+          "displayName": "Padded Armor",
+          "simcKey": "padded_armor",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126489,
+          "displayName": "Hunter's Avoidance",
+          "simcKey": "hunters_avoidance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126446,
+          "displayName": "Wilderness Medicine",
+          "simcKey": "wilderness_medicine",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136677,
+          "displayName": "Combat Experience",
+          "simcKey": "combat_experience",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135708,
+          "displayName": "Improved Aspect of the Cheetah",
+          "simcKey": "improved_aspect_of_the_cheetah",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126471,
+          "displayName": "Concussive Shot",
+          "simcKey": "concussive_shot",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126443,
+          "displayName": "Precision Strikes",
+          "simcKey": "precision_strikes",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126466,
+          "displayName": "Counter Shot",
+          "simcKey": "counter_shot",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126447,
+          "displayName": "Serrated Tips",
+          "simcKey": "serrated_tips",
+          "maxRank": 2,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135712,
+          "displayName": "Tranquilizing Shot",
+          "simcKey": "tranquilizing_shot",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126468,
+          "displayName": "Pathfinding",
+          "simcKey": "pathfinding",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126459,
+          "displayName": "Disruptive Rounds",
+          "simcKey": "disruptive_rounds",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135706,
+          "displayName": "Improved Feign Death",
+          "simcKey": "improved_feign_death",
+          "maxRank": 2,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126484,
+          "displayName": "Misdirection",
+          "simcKey": "misdirection",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126479,
+          "displayName": "Devilsaur Tranquilizer",
+          "simcKey": "devilsaur_tranquilizer",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 126479,
+              "displayName": "Devilsaur Tranquilizer",
+              "simcKey": "devilsaur_tranquilizer"
+            },
+            {
+              "talentId": 126480,
+              "displayName": "Kodo Tranquilizer",
+              "simcKey": "kodo_tranquilizer"
+            }
+          ]
+        },
+        {
+          "talentId": 126491,
+          "displayName": "Kindling Flare",
+          "simcKey": "kindling_flare",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126460,
+          "displayName": "Trigger Finger",
+          "simcKey": "trigger_finger",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135707,
+          "displayName": "Scare Beast",
+          "simcKey": "scare_beast",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135707,
+              "displayName": "Scare Beast",
+              "simcKey": "scare_beast"
+            },
+            {
+              "talentId": 126457,
+              "displayName": "Tar Trap",
+              "simcKey": "tar_trap"
+            }
+          ]
+        },
+        {
+          "talentId": 135710,
+          "displayName": "Touch of Grass",
+          "simcKey": "touch_of_grass",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136676,
+          "displayName": "Camouflage",
+          "simcKey": "camouflage",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126476,
+          "displayName": "No Hard Feelings",
+          "simcKey": "no_hard_feelings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126490,
+          "displayName": "Improved Aspect of the Turtle",
+          "simcKey": "improved_aspect_of_the_turtle",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126453,
+          "displayName": "Specialized Arsenal",
+          "simcKey": "specialized_arsenal",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135705,
+          "displayName": "Scout's Instincts",
+          "simcKey": "scouts_instincts",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136673,
+          "displayName": "Shell Wall",
+          "simcKey": "shell_wall",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128413,
+          "displayName": "Intimidation",
+          "simcKey": "intimidation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126478,
+          "displayName": "Improved Snaring",
+          "simcKey": "improved_snaring",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126454,
+          "displayName": "Lone Survivor",
+          "simcKey": "lone_survivor",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135709,
+          "displayName": "Catlike Reflexes",
+          "simcKey": "catlike_reflexes",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135711,
+          "displayName": "Binding Shot",
+          "simcKey": "binding_shot",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136674,
+          "displayName": "Moment of Opportunity",
+          "simcKey": "moment_of_opportunity",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136674,
+              "displayName": "Moment of Opportunity",
+              "simcKey": "moment_of_opportunity"
+            },
+            {
+              "talentId": 136675,
+              "displayName": "Trailblazer",
+              "simcKey": "trailblazer"
+            }
+          ]
+        },
+        {
+          "talentId": 136672,
+          "displayName": "Cold Feet",
+          "simcKey": "cold_feet",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135704,
+          "displayName": "Guttural Roar",
+          "simcKey": "guttural_roar",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135704,
+              "displayName": "Guttural Roar",
+              "simcKey": "guttural_roar"
+            },
+            {
+              "talentId": 126458,
+              "displayName": "Territorial Instincts",
+              "simcKey": "territorial_instincts"
+            }
+          ]
+        },
+        {
+          "talentId": 126481,
+          "displayName": "Born To Be Wild",
+          "simcKey": "born_to_be_wild",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126473,
+          "displayName": "Keen Eyesight",
+          "simcKey": "keen_eyesight",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136670,
+          "displayName": "Horsehair Tether",
+          "simcKey": "horsehair_tether",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136670,
+              "displayName": "Horsehair Tether",
+              "simcKey": "horsehair_tether"
+            },
+            {
+              "talentId": 136671,
+              "displayName": "Tar-Coated Bindings",
+              "simcKey": "tar_coated_bindings"
+            }
+          ]
+        },
+        {
+          "talentId": 126483,
+          "displayName": "Improved Traps",
+          "simcKey": "improved_traps",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126452,
+          "displayName": "Emergency Salve",
+          "simcKey": "emergency_salve",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136685,
+          "displayName": "Guardian's Hide",
+          "simcKey": "guardians_hide",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136685,
+              "displayName": "Guardian's Hide",
+              "simcKey": "guardians_hide"
+            },
+            {
+              "talentId": 136686,
+              "displayName": "Roar of Sacrifice",
+              "simcKey": "roar_of_sacrifice"
+            }
+          ]
+        },
+        {
+          "talentId": 126450,
+          "displayName": "Unnatural Causes",
+          "simcKey": "unnatural_causes",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 128404,
+          "displayName": "Aimed Shot",
+          "simcKey": "aimed_shot",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128383,
+          "displayName": "Rapid Fire",
+          "simcKey": "rapid_fire",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128399,
+          "displayName": "Precise Shots",
+          "simcKey": "precise_shots",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128397,
+          "displayName": "Quick Draw",
+          "simcKey": "quick_draw",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 132193,
+          "displayName": "Lock and Load",
+          "simcKey": "lock_and_load",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128717,
+          "displayName": "Surging Shots",
+          "simcKey": "surging_shots",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 129619,
+          "displayName": "Unbreakable Bond",
+          "simcKey": "unbreakable_bond",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 129619,
+              "displayName": "Unbreakable Bond",
+              "simcKey": "unbreakable_bond"
+            },
+            {
+              "talentId": 128710,
+              "displayName": "Avian Specialization",
+              "simcKey": "avian_specialization"
+            }
+          ]
+        },
+        {
+          "talentId": 128377,
+          "displayName": "Aspect of the Hydra",
+          "simcKey": "aspect_of_the_hydra",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128377,
+              "displayName": "Aspect of the Hydra",
+              "simcKey": "aspect_of_the_hydra"
+            },
+            {
+              "talentId": 128378,
+              "displayName": "Trick Shots",
+              "simcKey": "trick_shots"
+            }
+          ]
+        },
+        {
+          "talentId": 128368,
+          "displayName": "In the Rhythm",
+          "simcKey": "in_the_rhythm",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128386,
+          "displayName": "Penetrating Shots",
+          "simcKey": "penetrating_shots",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128411,
+          "displayName": "Cunning",
+          "simcKey": "cunning",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128411,
+              "displayName": "Cunning",
+              "simcKey": "cunning"
+            },
+            {
+              "talentId": 128408,
+              "displayName": "Tenacious",
+              "simcKey": "tenacious"
+            }
+          ]
+        },
+        {
+          "talentId": 128396,
+          "displayName": "Master Marksman",
+          "simcKey": "master_marksman",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 132192,
+          "displayName": "Light Ammo",
+          "simcKey": "light_ammo",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128714,
+          "displayName": "On Target",
+          "simcKey": "on_target",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128714,
+              "displayName": "On Target",
+              "simcKey": "on_target"
+            },
+            {
+              "talentId": 128380,
+              "displayName": "Obsidian Arrowhead",
+              "simcKey": "obsidian_arrowhead"
+            }
+          ]
+        },
+        {
+          "talentId": 128400,
+          "displayName": "Small Game Hunter",
+          "simcKey": "small_game_hunter",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128367,
+          "displayName": "Trueshot",
+          "simcKey": "trueshot",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128709,
+          "displayName": "Lethality",
+          "simcKey": "lethality",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135713,
+          "displayName": "Kill Shot",
+          "simcKey": "kill_shot",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128390,
+          "displayName": "Target Acquisition",
+          "simcKey": "target_acquisition",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136741,
+          "displayName": "Critical Precision",
+          "simcKey": "critical_precision",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128375,
+          "displayName": "No Scope",
+          "simcKey": "no_scope",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128406,
+          "displayName": "Feathered Frenzy",
+          "simcKey": "feathered_frenzy",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128407,
+          "displayName": "Bullseye",
+          "simcKey": "bullseye",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128715,
+          "displayName": "Deadeye",
+          "simcKey": "deadeye",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128715,
+              "displayName": "Deadeye",
+              "simcKey": "deadeye"
+            },
+            {
+              "talentId": 128394,
+              "displayName": "Headshot",
+              "simcKey": "headshot"
+            }
+          ]
+        },
+        {
+          "talentId": 135714,
+          "displayName": "Deathblow",
+          "simcKey": "deathblow",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128370,
+          "displayName": "Unmatched Precision",
+          "simcKey": "unmatched_precision",
+          "maxRank": 2,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 132194,
+          "displayName": "Unerring Vision",
+          "simcKey": "unerring_vision",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 132194,
+              "displayName": "Unerring Vision",
+              "simcKey": "unerring_vision"
+            },
+            {
+              "talentId": 128379,
+              "displayName": "Calling the Shots",
+              "simcKey": "calling_the_shots"
+            }
+          ]
+        },
+        {
+          "talentId": 128395,
+          "displayName": "Eagle's Accuracy",
+          "simcKey": "eagles_accuracy",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128716,
+          "displayName": "Focused Aim",
+          "simcKey": "focused_aim",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128384,
+          "displayName": "Bulletstorm",
+          "simcKey": "bulletstorm",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128388,
+          "displayName": "Tensile Bowstring",
+          "simcKey": "tensile_bowstring",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128376,
+          "displayName": "Volley",
+          "simcKey": "volley",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128401,
+          "displayName": "Focus Fire",
+          "simcKey": "focus_fire",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128372,
+          "displayName": "Windrunner Quiver",
+          "simcKey": "windrunner_quiver",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 132195,
+          "displayName": "Incendiary Ammunition",
+          "simcKey": "incendiary_ammunition",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136232,
+          "displayName": "Double Tap",
+          "simcKey": "double_tap",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128381,
+          "displayName": "Salvo",
+          "simcKey": "salvo",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135735,
+          "displayName": "Shrapnel Shot",
+          "simcKey": "shrapnel_shot",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135735,
+              "displayName": "Shrapnel Shot",
+              "simcKey": "shrapnel_shot"
+            },
+            {
+              "talentId": 128403,
+              "displayName": "Bullet Hell",
+              "simcKey": "bullet_hell"
+            }
+          ]
+        },
+        {
+          "talentId": 128609,
+          "displayName": "Unload",
+          "simcKey": "unload",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137056,
+          "displayName": "Take Aim",
+          "simcKey": "take_aim",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117573,
+          "displayName": "Sentinel",
+          "simcKey": "sentinel",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117584,
+          "displayName": "Black Arrow",
+          "simcKey": "black_arrow",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117558,
+          "displayName": "Bleak Arrows",
+          "simcKey": "bleak_arrows",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117586,
+          "displayName": "Don't Look Back",
+          "simcKey": "dont_look_back",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117565,
+          "displayName": "Soul Drinker",
+          "simcKey": "soul_drinker",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117570,
+          "displayName": "Moon's Blessing",
+          "simcKey": "moons_blessing",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117571,
+          "displayName": "Bleak Powder",
+          "simcKey": "bleak_powder",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117578,
+          "displayName": "Sanctified Armaments",
+          "simcKey": "sanctified_armaments",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136059,
+          "displayName": "Corpsecaller",
+          "simcKey": "corpsecaller",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136065,
+          "displayName": "Moonlight Chakram",
+          "simcKey": "moonlight_chakram",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135589,
+          "displayName": "Open Fire",
+          "simcKey": "open_fire",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135589,
+              "displayName": "Open Fire",
+              "simcKey": "open_fire"
+            },
+            {
+              "talentId": 117555,
+              "displayName": "Stargazer",
+              "simcKey": "stargazer"
+            }
+          ]
+        },
+        {
+          "talentId": 136742,
+          "displayName": "Through the Eyes",
+          "simcKey": "through_the_eyes",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136742,
+              "displayName": "Through the Eyes",
+              "simcKey": "through_the_eyes"
+            },
+            {
+              "talentId": 117583,
+              "displayName": "Ebon Bowstring",
+              "simcKey": "ebon_bowstring"
+            }
+          ]
+        },
+        {
+          "talentId": 117587,
+          "displayName": "Can't Miss, Won't Miss",
+          "simcKey": "cant_miss_wont_miss",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123779,
+          "displayName": "Smoke Screen",
+          "simcKey": "smoke_screen",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117568,
+          "displayName": "Invigorating Pulse",
+          "simcKey": "invigorating_pulse",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128219,
+          "displayName": "Shadow Dagger",
+          "simcKey": "shadow_dagger",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128219,
+              "displayName": "Shadow Dagger",
+              "simcKey": "shadow_dagger"
+            },
+            {
+              "talentId": 117557,
+              "displayName": "Dark Chains",
+              "simcKey": "dark_chains"
+            }
+          ]
+        },
+        {
+          "talentId": 136058,
+          "displayName": "Wailing Dead",
+          "simcKey": "wailing_dead",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136521,
+          "displayName": "Stalk and Strike",
+          "simcKey": "stalk_and_strike",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136521,
+              "displayName": "Stalk and Strike",
+              "simcKey": "stalk_and_strike"
+            },
+            {
+              "talentId": 136522,
+              "displayName": "Twilight Requiem",
+              "simcKey": "twilight_requiem"
+            }
+          ]
+        },
+        {
+          "talentId": 117567,
+          "displayName": "Arcane Talons",
+          "simcKey": "arcane_talons",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128238,
+          "displayName": "Blighted Quiver",
+          "simcKey": "blighted_quiver",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117562,
+          "displayName": "Lunar Calling",
+          "simcKey": "lunar_calling",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136231,
+          "displayName": "The Bell Tolls",
+          "simcKey": "the_bell_tolls",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136231,
+              "displayName": "The Bell Tolls",
+              "simcKey": "the_bell_tolls"
+            },
+            {
+              "talentId": 117554,
+              "displayName": "Banshee's Mark",
+              "simcKey": "banshees_mark"
+            }
+          ]
+        },
+        {
+          "talentId": 123870,
+          "displayName": "Scout's Vigil",
+          "simcKey": "scouts_vigil",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123870,
+              "displayName": "Scout's Vigil",
+              "simcKey": "scouts_vigil"
+            },
+            {
+              "talentId": 117577,
+              "displayName": "Conditioning",
+              "simcKey": "conditioning"
+            }
+          ]
+        },
+        {
+          "talentId": 132888,
+          "displayName": "Umbral Reach",
+          "simcKey": "umbral_reach",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136057,
+          "displayName": "Pact of the Hollow",
+          "simcKey": "pact_of_the_hollow",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136063,
+          "displayName": "Radiant Edge",
+          "simcKey": "radiant_edge",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117575,
+          "displayName": "Lunar Storm",
+          "simcKey": "lunar_storm",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117590,
+          "displayName": "Withering Fire",
+          "simcKey": "withering_fire",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "hunter/survival": {
+      "classId": 3,
+      "specId": 255,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 126444,
+          "displayName": "Rejuvenating Wind",
+          "simcKey": "rejuvenating_wind",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126488,
+          "displayName": "Survival of the Fittest",
+          "simcKey": "survival_of_the_fittest",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126475,
+          "displayName": "Posthaste",
+          "simcKey": "posthaste",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126465,
+          "displayName": "Natural Mending",
+          "simcKey": "natural_mending",
+          "maxRank": 2,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126470,
+          "displayName": "Padded Armor",
+          "simcKey": "padded_armor",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126489,
+          "displayName": "Hunter's Avoidance",
+          "simcKey": "hunters_avoidance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126446,
+          "displayName": "Wilderness Medicine",
+          "simcKey": "wilderness_medicine",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136677,
+          "displayName": "Combat Experience",
+          "simcKey": "combat_experience",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135708,
+          "displayName": "Improved Aspect of the Cheetah",
+          "simcKey": "improved_aspect_of_the_cheetah",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126471,
+          "displayName": "Concussive Shot",
+          "simcKey": "concussive_shot",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126443,
+          "displayName": "Precision Strikes",
+          "simcKey": "precision_strikes",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 100543,
+          "displayName": "Muzzle",
+          "simcKey": "muzzle",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126447,
+          "displayName": "Serrated Tips",
+          "simcKey": "serrated_tips",
+          "maxRank": 2,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135712,
+          "displayName": "Tranquilizing Shot",
+          "simcKey": "tranquilizing_shot",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126468,
+          "displayName": "Pathfinding",
+          "simcKey": "pathfinding",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126459,
+          "displayName": "Disruptive Rounds",
+          "simcKey": "disruptive_rounds",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135706,
+          "displayName": "Improved Feign Death",
+          "simcKey": "improved_feign_death",
+          "maxRank": 2,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126484,
+          "displayName": "Misdirection",
+          "simcKey": "misdirection",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126479,
+          "displayName": "Devilsaur Tranquilizer",
+          "simcKey": "devilsaur_tranquilizer",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 126479,
+              "displayName": "Devilsaur Tranquilizer",
+              "simcKey": "devilsaur_tranquilizer"
+            },
+            {
+              "talentId": 126480,
+              "displayName": "Kodo Tranquilizer",
+              "simcKey": "kodo_tranquilizer"
+            }
+          ]
+        },
+        {
+          "talentId": 126491,
+          "displayName": "Kindling Flare",
+          "simcKey": "kindling_flare",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126460,
+          "displayName": "Trigger Finger",
+          "simcKey": "trigger_finger",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135707,
+          "displayName": "Scare Beast",
+          "simcKey": "scare_beast",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135707,
+              "displayName": "Scare Beast",
+              "simcKey": "scare_beast"
+            },
+            {
+              "talentId": 126457,
+              "displayName": "Tar Trap",
+              "simcKey": "tar_trap"
+            }
+          ]
+        },
+        {
+          "talentId": 135710,
+          "displayName": "Touch of Grass",
+          "simcKey": "touch_of_grass",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136676,
+          "displayName": "Camouflage",
+          "simcKey": "camouflage",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126476,
+          "displayName": "No Hard Feelings",
+          "simcKey": "no_hard_feelings",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126490,
+          "displayName": "Improved Aspect of the Turtle",
+          "simcKey": "improved_aspect_of_the_turtle",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126453,
+          "displayName": "Specialized Arsenal",
+          "simcKey": "specialized_arsenal",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135705,
+          "displayName": "Scout's Instincts",
+          "simcKey": "scouts_instincts",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136673,
+          "displayName": "Shell Wall",
+          "simcKey": "shell_wall",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128412,
+          "displayName": "Intimidation",
+          "simcKey": "intimidation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126478,
+          "displayName": "Improved Snaring",
+          "simcKey": "improved_snaring",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126454,
+          "displayName": "Lone Survivor",
+          "simcKey": "lone_survivor",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135709,
+          "displayName": "Catlike Reflexes",
+          "simcKey": "catlike_reflexes",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135711,
+          "displayName": "Binding Shot",
+          "simcKey": "binding_shot",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136674,
+          "displayName": "Moment of Opportunity",
+          "simcKey": "moment_of_opportunity",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136674,
+              "displayName": "Moment of Opportunity",
+              "simcKey": "moment_of_opportunity"
+            },
+            {
+              "talentId": 136675,
+              "displayName": "Trailblazer",
+              "simcKey": "trailblazer"
+            }
+          ]
+        },
+        {
+          "talentId": 136672,
+          "displayName": "Cold Feet",
+          "simcKey": "cold_feet",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135704,
+          "displayName": "Guttural Roar",
+          "simcKey": "guttural_roar",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135704,
+              "displayName": "Guttural Roar",
+              "simcKey": "guttural_roar"
+            },
+            {
+              "talentId": 126458,
+              "displayName": "Territorial Instincts",
+              "simcKey": "territorial_instincts"
+            }
+          ]
+        },
+        {
+          "talentId": 126481,
+          "displayName": "Born To Be Wild",
+          "simcKey": "born_to_be_wild",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126473,
+          "displayName": "Keen Eyesight",
+          "simcKey": "keen_eyesight",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136670,
+          "displayName": "Horsehair Tether",
+          "simcKey": "horsehair_tether",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136670,
+              "displayName": "Horsehair Tether",
+              "simcKey": "horsehair_tether"
+            },
+            {
+              "talentId": 136671,
+              "displayName": "Tar-Coated Bindings",
+              "simcKey": "tar_coated_bindings"
+            }
+          ]
+        },
+        {
+          "talentId": 126483,
+          "displayName": "Improved Traps",
+          "simcKey": "improved_traps",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126452,
+          "displayName": "Emergency Salve",
+          "simcKey": "emergency_salve",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136685,
+          "displayName": "Guardian's Hide",
+          "simcKey": "guardians_hide",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136685,
+              "displayName": "Guardian's Hide",
+              "simcKey": "guardians_hide"
+            },
+            {
+              "talentId": 136686,
+              "displayName": "Roar of Sacrifice",
+              "simcKey": "roar_of_sacrifice"
+            }
+          ]
+        },
+        {
+          "talentId": 126450,
+          "displayName": "Unnatural Causes",
+          "simcKey": "unnatural_causes",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 126314,
+          "displayName": "Kill Command",
+          "simcKey": "kill_command",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126324,
+          "displayName": "Wildfire Bomb",
+          "simcKey": "wildfire_bomb",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126322,
+          "displayName": "Raptor Strike",
+          "simcKey": "raptor_strike",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126345,
+          "displayName": "Guerrilla Tactics",
+          "simcKey": "guerrilla_tactics",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126323,
+          "displayName": "Tip of the Spear",
+          "simcKey": "tip_of_the_spear",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126332,
+          "displayName": "Lunge",
+          "simcKey": "lunge",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135515,
+          "displayName": "Boomstick",
+          "simcKey": "boomstick",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135512,
+          "displayName": "Strike as One",
+          "simcKey": "strike_as_one",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135493,
+          "displayName": "Flamebreak",
+          "simcKey": "flamebreak",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135493,
+              "displayName": "Flamebreak",
+              "simcKey": "flamebreak"
+            },
+            {
+              "talentId": 135500,
+              "displayName": "Shrapnel Bomb",
+              "simcKey": "shrapnel_bomb"
+            }
+          ]
+        },
+        {
+          "talentId": 126330,
+          "displayName": "Bloodseeker",
+          "simcKey": "bloodseeker",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136683,
+          "displayName": "Quick Reload",
+          "simcKey": "quick_reload",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126339,
+          "displayName": "Flanker's Advantage",
+          "simcKey": "flankers_advantage",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136684,
+          "displayName": "Two Against Many",
+          "simcKey": "two_against_many",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135501,
+          "displayName": "Mongoose Fury",
+          "simcKey": "mongoose_fury",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136066,
+          "displayName": "Wildfire Shells",
+          "simcKey": "wildfire_shells",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136066,
+              "displayName": "Wildfire Shells",
+              "simcKey": "wildfire_shells"
+            },
+            {
+              "talentId": 135507,
+              "displayName": "Mongoose Rounds",
+              "simcKey": "mongoose_rounds"
+            }
+          ]
+        },
+        {
+          "talentId": 135510,
+          "displayName": "Shellshock",
+          "simcKey": "shellshock",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135496,
+          "displayName": "Sic 'Em",
+          "simcKey": "sic_em",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136144,
+          "displayName": "Wallop",
+          "simcKey": "wallop",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136144,
+              "displayName": "Wallop",
+              "simcKey": "wallop"
+            },
+            {
+              "talentId": 135498,
+              "displayName": "Bloody Claws",
+              "simcKey": "bloody_claws"
+            }
+          ]
+        },
+        {
+          "talentId": 126349,
+          "displayName": "Improved Wildfire Bomb",
+          "simcKey": "improved_wildfire_bomb",
+          "maxRank": 2,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135502,
+          "displayName": "Bonding",
+          "simcKey": "bonding",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135504,
+          "displayName": "Sweeping Spear",
+          "simcKey": "sweeping_spear",
+          "maxRank": 2,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135688,
+          "displayName": "Blackrock Munitions",
+          "simcKey": "blackrock_munitions",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135688,
+              "displayName": "Blackrock Munitions",
+              "simcKey": "blackrock_munitions"
+            },
+            {
+              "talentId": 126342,
+              "displayName": "Vulnerability",
+              "simcKey": "vulnerability"
+            }
+          ]
+        },
+        {
+          "talentId": 135495,
+          "displayName": "Shower of Blood",
+          "simcKey": "shower_of_blood",
+          "maxRank": 2,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135497,
+          "displayName": "Outland Venom",
+          "simcKey": "outland_venom",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126341,
+          "displayName": "Explosives Expert",
+          "simcKey": "explosives_expert",
+          "maxRank": 2,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135514,
+          "displayName": "Takedown",
+          "simcKey": "takedown",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135503,
+          "displayName": "Killer Companion",
+          "simcKey": "killer_companion",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126311,
+          "displayName": "Flamefang Pitch",
+          "simcKey": "flamefang_pitch",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135689,
+          "displayName": "Twin Fangs",
+          "simcKey": "twin_fangs",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135511,
+          "displayName": "Savagery",
+          "simcKey": "savagery",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126328,
+          "displayName": "Wildfire Infusion",
+          "simcKey": "wildfire_infusion",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135508,
+          "displayName": "Grenade Juggler",
+          "simcKey": "grenade_juggler",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136681,
+          "displayName": "Wildfire Imbuement",
+          "simcKey": "wildfire_imbuement",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136682,
+          "displayName": "Flanked",
+          "simcKey": "flanked",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126316,
+          "displayName": "Lethal Calibration",
+          "simcKey": "lethal_calibration",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136680,
+          "displayName": "Primal Surge",
+          "simcKey": "primal_surge",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137053,
+          "displayName": "Raptor Swipe",
+          "simcKey": "raptor_swipe",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117573,
+          "displayName": "Sentinel",
+          "simcKey": "sentinel",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117588,
+          "displayName": "Howl of the Pack Leader",
+          "simcKey": "howl_of_the_pack_leader",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117582,
+          "displayName": "Pack Mentality",
+          "simcKey": "pack_mentality",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117586,
+          "displayName": "Don't Look Back",
+          "simcKey": "dont_look_back",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117570,
+          "displayName": "Moon's Blessing",
+          "simcKey": "moons_blessing",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117589,
+          "displayName": "Dire Summons",
+          "simcKey": "dire_summons",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117559,
+          "displayName": "Better Together",
+          "simcKey": "better_together",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117578,
+          "displayName": "Sanctified Armaments",
+          "simcKey": "sanctified_armaments",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123781,
+          "displayName": "Masterful Call",
+          "simcKey": "masterful_call",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123781,
+              "displayName": "Masterful Call",
+              "simcKey": "masterful_call"
+            },
+            {
+              "talentId": 117576,
+              "displayName": "Slicked Shoes",
+              "simcKey": "slicked_shoes"
+            }
+          ]
+        },
+        {
+          "talentId": 136065,
+          "displayName": "Moonlight Chakram",
+          "simcKey": "moonlight_chakram",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128358,
+          "displayName": "Sharpened Claws",
+          "simcKey": "sharpened_claws",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128358,
+              "displayName": "Sharpened Claws",
+              "simcKey": "sharpened_claws"
+            },
+            {
+              "talentId": 117569,
+              "displayName": "Ursine Fury",
+              "simcKey": "ursine_fury"
+            }
+          ]
+        },
+        {
+          "talentId": 135589,
+          "displayName": "Open Fire",
+          "simcKey": "open_fire",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135589,
+              "displayName": "Open Fire",
+              "simcKey": "open_fire"
+            },
+            {
+              "talentId": 117555,
+              "displayName": "Stargazer",
+              "simcKey": "stargazer"
+            }
+          ]
+        },
+        {
+          "talentId": 117581,
+          "displayName": "Fury of the Wyvern",
+          "simcKey": "fury_of_the_wyvern",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117587,
+          "displayName": "Can't Miss, Won't Miss",
+          "simcKey": "cant_miss_wont_miss",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117568,
+          "displayName": "Invigorating Pulse",
+          "simcKey": "invigorating_pulse",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117585,
+          "displayName": "Hogstrider",
+          "simcKey": "hogstrider",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136061,
+          "displayName": "Lethal Barbs",
+          "simcKey": "lethal_barbs",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136521,
+          "displayName": "Stalk and Strike",
+          "simcKey": "stalk_and_strike",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136521,
+              "displayName": "Stalk and Strike",
+              "simcKey": "stalk_and_strike"
+            },
+            {
+              "talentId": 136522,
+              "displayName": "Twilight Requiem",
+              "simcKey": "twilight_requiem"
+            }
+          ]
+        },
+        {
+          "talentId": 117566,
+          "displayName": "No Mercy",
+          "simcKey": "no_mercy",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117567,
+          "displayName": "Arcane Talons",
+          "simcKey": "arcane_talons",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117562,
+          "displayName": "Lunar Calling",
+          "simcKey": "lunar_calling",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117564,
+          "displayName": "Shell Cover",
+          "simcKey": "shell_cover",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123870,
+          "displayName": "Scout's Vigil",
+          "simcKey": "scouts_vigil",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123870,
+              "displayName": "Scout's Vigil",
+              "simcKey": "scouts_vigil"
+            },
+            {
+              "talentId": 117577,
+              "displayName": "Conditioning",
+              "simcKey": "conditioning"
+            }
+          ]
+        },
+        {
+          "talentId": 136236,
+          "displayName": "Wyvern's Gaze",
+          "simcKey": "wyverns_gaze",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136236,
+              "displayName": "Wyvern's Gaze",
+              "simcKey": "wyverns_gaze"
+            },
+            {
+              "talentId": 136062,
+              "displayName": "Hoof and Blade",
+              "simcKey": "hoof_and_blade"
+            }
+          ]
+        },
+        {
+          "talentId": 136060,
+          "displayName": "Sharpened Fangs",
+          "simcKey": "sharpened_fangs",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136063,
+          "displayName": "Radiant Edge",
+          "simcKey": "radiant_edge",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117563,
+          "displayName": "Stampede!",
+          "simcKey": "stampede",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117575,
+          "displayName": "Lunar Storm",
+          "simcKey": "lunar_storm",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    }
+  }
+}

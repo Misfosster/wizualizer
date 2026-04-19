@@ -109,6 +109,12 @@ function findGroupedBlockFold(
     return null;
   }
 
+  // Walk forward through the section. Blank/comment lines do not by
+  // themselves extend the fold: they are "in the section" only when another
+  // same-group line follows them. Trailing whitespace and the comment header
+  // for the next section therefore stay outside this fold and remain
+  // visible, which matches the convention that a comment immediately above a
+  // block belongs to the block it precedes.
   let lastLine = line;
   for (
     let nextLineNumber = line.number + 1;
@@ -118,7 +124,6 @@ function findGroupedBlockFold(
     const nextLine = state.doc.line(nextLineNumber);
     const nextText = nextLine.text;
     if (isIgnorableBlockLine(nextText)) {
-      lastLine = nextLine;
       continue;
     }
 
@@ -144,6 +149,9 @@ function findProfileFold(
     return null;
   }
 
+  // Same convention as `findGroupedBlockFold`: trailing blank lines and
+  // section-header comments that precede the next profile belong to the next
+  // profile, not this one. We extend `lastLine` only on real content lines.
   let lastLine = line;
   for (
     let nextLineNumber = line.number + 1;
@@ -153,6 +161,9 @@ function findProfileFold(
     const nextLine = state.doc.line(nextLineNumber);
     if (isProfileHeader(nextLine.text)) {
       break;
+    }
+    if (isIgnorableBlockLine(nextLine.text)) {
+      continue;
     }
 
     lastLine = nextLine;

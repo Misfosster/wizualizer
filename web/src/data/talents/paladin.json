@@ -1,0 +1,4070 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "byClassSpec": {
+    "paladin/holy": {
+      "classId": 2,
+      "specId": 65,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 102583,
+          "displayName": "Lay on Hands",
+          "simcKey": "lay_on_hands",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102587,
+          "displayName": "Auras of the Resolute",
+          "simcKey": "auras_of_the_resolute",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133481,
+          "displayName": "Hammer of Wrath",
+          "simcKey": "hammer_of_wrath",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102477,
+          "displayName": "Improved Cleanse",
+          "simcKey": "improved_cleanse",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128255,
+          "displayName": "Empyreal Ward",
+          "simcKey": "empyreal_ward",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136487,
+          "displayName": "Fist of Justice",
+          "simcKey": "fist_of_justice",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102584,
+          "displayName": "Blinding Light",
+          "simcKey": "blinding_light",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102623,
+          "displayName": "Turn Evil",
+          "simcKey": "turn_evil",
+          "maxRank": 1,
+          "row": 2,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128254,
+          "displayName": "A Just Reward",
+          "simcKey": "a_just_reward",
+          "maxRank": 2,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102601,
+          "displayName": "Afterimage",
+          "simcKey": "afterimage",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136503,
+          "displayName": "Guided Prayer",
+          "simcKey": "guided_prayer",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102625,
+          "displayName": "Divine Steed",
+          "simcKey": "divine_steed",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128247,
+          "displayName": "Light's Countenance",
+          "simcKey": "lights_countenance",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114292,
+          "displayName": "Greater Judgment",
+          "simcKey": "greater_judgment",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128249,
+          "displayName": "Stand Against Evil",
+          "simcKey": "stand_against_evil",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128249,
+              "displayName": "Stand Against Evil",
+              "simcKey": "stand_against_evil"
+            },
+            {
+              "talentId": 128250,
+              "displayName": "Wrench Evil",
+              "simcKey": "wrench_evil"
+            }
+          ]
+        },
+        {
+          "talentId": 128256,
+          "displayName": "Holy Reprieve",
+          "simcKey": "holy_reprieve",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102592,
+          "displayName": "Cavalier",
+          "simcKey": "cavalier",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128253,
+          "displayName": "Divine Spurs",
+          "simcKey": "divine_spurs",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128251,
+          "displayName": "Blessing of Freedom",
+          "simcKey": "blessing_of_freedom",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128251,
+              "displayName": "Blessing of Freedom",
+              "simcKey": "blessing_of_freedom"
+            },
+            {
+              "talentId": 102624,
+              "displayName": "Steed of Liberty",
+              "simcKey": "steed_of_liberty"
+            }
+          ]
+        },
+        {
+          "talentId": 136593,
+          "displayName": "Armory of Light",
+          "simcKey": "armory_of_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102622,
+          "displayName": "Obduracy",
+          "simcKey": "obduracy",
+          "maxRank": 2,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133480,
+          "displayName": "Holy Prism",
+          "simcKey": "holy_prism",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133480,
+              "displayName": "Holy Prism",
+              "simcKey": "holy_prism"
+            },
+            {
+              "talentId": 102465,
+              "displayName": "Divine Toll",
+              "simcKey": "divine_toll"
+            }
+          ]
+        },
+        {
+          "talentId": 131438,
+          "displayName": "Unbound Freedom",
+          "simcKey": "unbound_freedom",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 131438,
+              "displayName": "Unbound Freedom",
+              "simcKey": "unbound_freedom"
+            },
+            {
+              "talentId": 115872,
+              "displayName": "Echoing Blessings",
+              "simcKey": "echoing_blessings"
+            }
+          ]
+        },
+        {
+          "talentId": 115034,
+          "displayName": "Sanctified Plates",
+          "simcKey": "sanctified_plates",
+          "maxRank": 2,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115447,
+          "displayName": "Divine Reach",
+          "simcKey": "divine_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136486,
+          "displayName": "Brought to Light",
+          "simcKey": "brought_to_light",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102602,
+          "displayName": "Blessing of Sacrifice",
+          "simcKey": "blessing_of_sacrifice",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115465,
+          "displayName": "Quickened Invocation",
+          "simcKey": "quickened_invocation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115465,
+              "displayName": "Quickened Invocation",
+              "simcKey": "quickened_invocation"
+            },
+            {
+              "talentId": 115466,
+              "displayName": "Divine Resonance",
+              "simcKey": "divine_resonance"
+            }
+          ]
+        },
+        {
+          "talentId": 102604,
+          "displayName": "Blessing of Protection",
+          "simcKey": "blessing_of_protection",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136485,
+          "displayName": "Fear No Evil",
+          "simcKey": "fear_no_evil",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102518,
+          "displayName": "Consecrated Ground",
+          "simcKey": "consecrated_ground",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102597,
+          "displayName": "Holy Aegis",
+          "simcKey": "holy_aegis",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102594,
+          "displayName": "Recompense",
+          "simcKey": "recompense",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102594,
+              "displayName": "Recompense",
+              "simcKey": "recompense"
+            },
+            {
+              "talentId": 102595,
+              "displayName": "Sacrifice of the Just",
+              "simcKey": "sacrifice_of_the_just"
+            }
+          ]
+        },
+        {
+          "talentId": 128246,
+          "displayName": "Divine Purpose",
+          "simcKey": "divine_purpose",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128246,
+              "displayName": "Divine Purpose",
+              "simcKey": "divine_purpose"
+            },
+            {
+              "talentId": 115489,
+              "displayName": "Sacred Strength",
+              "simcKey": "sacred_strength"
+            }
+          ]
+        },
+        {
+          "talentId": 102606,
+          "displayName": "Improved Blessing of Protection",
+          "simcKey": "improved_blessing_of_protection",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102603,
+          "displayName": "Unbreakable Spirit",
+          "simcKey": "unbreakable_spirit",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128242,
+          "displayName": "Lightforged Blessing",
+          "simcKey": "lightforged_blessing",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128245,
+          "displayName": "Lightforged Blessing",
+          "simcKey": "lightforged_blessing",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128263,
+          "displayName": "Lead the Charge",
+          "simcKey": "lead_the_charge",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128248,
+          "displayName": "Righteous Protection",
+          "simcKey": "righteous_protection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128248,
+              "displayName": "Righteous Protection",
+              "simcKey": "righteous_protection"
+            },
+            {
+              "talentId": 128261,
+              "displayName": "Worthy Sacrifice",
+              "simcKey": "worthy_sacrifice"
+            }
+          ]
+        },
+        {
+          "talentId": 128262,
+          "displayName": "Holy Ritual",
+          "simcKey": "holy_ritual",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128264,
+          "displayName": "Blessed Calling",
+          "simcKey": "blessed_calling",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128260,
+          "displayName": "Inspired Guard",
+          "simcKey": "inspired_guard",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102596,
+          "displayName": "Light's Revocation",
+          "simcKey": "lights_revocation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102464,
+          "displayName": "Faith's Armor",
+          "simcKey": "faiths_armor",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128258,
+          "displayName": "Stoicism",
+          "simcKey": "stoicism",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102612,
+          "displayName": "Seal of Might",
+          "simcKey": "seal_of_might",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128241,
+          "displayName": "Vengeful Wrath",
+          "simcKey": "vengeful_wrath",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102620,
+          "displayName": "Eye for an Eye",
+          "simcKey": "eye_for_an_eye",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128309,
+          "displayName": "Selfless Healer",
+          "simcKey": "selfless_healer",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128309,
+              "displayName": "Selfless Healer",
+              "simcKey": "selfless_healer"
+            },
+            {
+              "talentId": 128252,
+              "displayName": "Golden Path",
+              "simcKey": "golden_path"
+            }
+          ]
+        },
+        {
+          "talentId": 115673,
+          "displayName": "Blessing of Dawn",
+          "simcKey": "blessing_of_dawn",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128257,
+          "displayName": "Lightbearer",
+          "simcKey": "lightbearer",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128259,
+          "displayName": "Blessing of Dusk",
+          "simcKey": "blessing_of_dusk",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 102534,
+          "displayName": "Holy Shock",
+          "simcKey": "holy_shock",
+          "maxRank": 1,
+          "row": 1,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102550,
+          "displayName": "Infusion of Light",
+          "simcKey": "infusion_of_light",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102545,
+          "displayName": "Light of Dawn",
+          "simcKey": "light_of_dawn",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 116376,
+          "displayName": "Light's Conviction",
+          "simcKey": "lights_conviction",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102548,
+          "displayName": "Aura Mastery",
+          "simcKey": "aura_mastery",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102549,
+          "displayName": "Beacon of the Lightbringer",
+          "simcKey": "beacon_of_the_lightbringer",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102575,
+          "displayName": "Extrication",
+          "simcKey": "extrication",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133479,
+          "displayName": "Ringing of the Heavens",
+          "simcKey": "ringing_of_the_heavens",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102558,
+          "displayName": "Unending Light",
+          "simcKey": "unending_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102544,
+          "displayName": "Awestruck",
+          "simcKey": "awestruck",
+          "maxRank": 1,
+          "row": 4,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102552,
+          "displayName": "Resplendent Light",
+          "simcKey": "resplendent_light",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102552,
+              "displayName": "Resplendent Light",
+              "simcKey": "resplendent_light"
+            },
+            {
+              "talentId": 102553,
+              "displayName": "Moment of Compassion",
+              "simcKey": "moment_of_compassion"
+            }
+          ]
+        },
+        {
+          "talentId": 102551,
+          "displayName": "Divine Favor",
+          "simcKey": "divine_favor",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102546,
+          "displayName": "Protection of Tyr",
+          "simcKey": "protection_of_tyr",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102546,
+              "displayName": "Protection of Tyr",
+              "simcKey": "protection_of_tyr"
+            },
+            {
+              "talentId": 102547,
+              "displayName": "Unwavering Spirit",
+              "simcKey": "unwavering_spirit"
+            }
+          ]
+        },
+        {
+          "talentId": 102536,
+          "displayName": "Imbued Infusions",
+          "simcKey": "imbued_infusions",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102540,
+          "displayName": "Light of the Martyr",
+          "simcKey": "light_of_the_martyr",
+          "maxRank": 1,
+          "row": 5,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115875,
+          "displayName": "Righteous Judgment",
+          "simcKey": "righteous_judgment",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102557,
+          "displayName": "Saved by the Light",
+          "simcKey": "saved_by_the_light",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115874,
+          "displayName": "Light's Protection",
+          "simcKey": "lights_protection",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102535,
+          "displayName": "Overflowing Light",
+          "simcKey": "overflowing_light",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102541,
+          "displayName": "Shining Righteousness",
+          "simcKey": "shining_righteousness",
+          "maxRank": 1,
+          "row": 6,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136574,
+          "displayName": "Crusader's Might",
+          "simcKey": "crusaders_might",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136574,
+              "displayName": "Crusader's Might",
+              "simcKey": "crusaders_might"
+            },
+            {
+              "talentId": 126571,
+              "displayName": "Liberation",
+              "simcKey": "liberation"
+            }
+          ]
+        },
+        {
+          "talentId": 102556,
+          "displayName": "Tirion's Devotion",
+          "simcKey": "tirions_devotion",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102564,
+          "displayName": "Commanding Light",
+          "simcKey": "commanding_light",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102559,
+          "displayName": "Glistening Radiance",
+          "simcKey": "glistening_radiance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102567,
+          "displayName": "Breaking Dawn",
+          "simcKey": "breaking_dawn",
+          "maxRank": 2,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102562,
+          "displayName": "Divine Revelations",
+          "simcKey": "divine_revelations",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102570,
+          "displayName": "Divine Glimpse",
+          "simcKey": "divine_glimpse",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102539,
+          "displayName": "Bestow Light",
+          "simcKey": "bestow_light",
+          "maxRank": 1,
+          "row": 7,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102532,
+          "displayName": "Beacon of Virtue",
+          "simcKey": "beacon_of_virtue",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102532,
+              "displayName": "Beacon of Virtue",
+              "simcKey": "beacon_of_virtue"
+            },
+            {
+              "talentId": 102533,
+              "displayName": "Beacon of Faith",
+              "simcKey": "beacon_of_faith"
+            }
+          ]
+        },
+        {
+          "talentId": 102576,
+          "displayName": "Empyrean Legacy",
+          "simcKey": "empyrean_legacy",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102565,
+          "displayName": "Veneration",
+          "simcKey": "veneration",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102568,
+          "displayName": "Avenging Crusader",
+          "simcKey": "avenging_crusader",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102568,
+              "displayName": "Avenging Crusader",
+              "simcKey": "avenging_crusader"
+            },
+            {
+              "talentId": 102569,
+              "displayName": "Avenging Wrath",
+              "simcKey": "avenging_wrath"
+            }
+          ]
+        },
+        {
+          "talentId": 102537,
+          "displayName": "Reclamation",
+          "simcKey": "reclamation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102563,
+          "displayName": "Pillars of Light",
+          "simcKey": "pillars_of_light",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102580,
+          "displayName": "Seek Deliverance",
+          "simcKey": "seek_deliverance",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 116205,
+          "displayName": "Awakening",
+          "simcKey": "awakening",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 116205,
+              "displayName": "Awakening",
+              "simcKey": "awakening"
+            },
+            {
+              "talentId": 102578,
+              "displayName": "Sanctified Wrath",
+              "simcKey": "sanctified_wrath"
+            }
+          ]
+        },
+        {
+          "talentId": 102572,
+          "displayName": "Call of the Righteous",
+          "simcKey": "call_of_the_righteous",
+          "maxRank": 2,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133407,
+          "displayName": "Truth Prevails",
+          "simcKey": "truth_prevails",
+          "maxRank": 1,
+          "row": 9,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102574,
+          "displayName": "Divine Overload",
+          "simcKey": "divine_overload",
+          "maxRank": 1,
+          "row": 9,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102581,
+          "displayName": "Rising Sunlight",
+          "simcKey": "rising_sunlight",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115873,
+          "displayName": "Glorious Dawn",
+          "simcKey": "glorious_dawn",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102579,
+          "displayName": "Seraphic Barrier",
+          "simcKey": "seraphic_barrier",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133501,
+          "displayName": "Hand of Divinity",
+          "simcKey": "hand_of_divinity",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133501,
+              "displayName": "Hand of Divinity",
+              "simcKey": "hand_of_divinity"
+            },
+            {
+              "talentId": 102573,
+              "displayName": "Tyr's Deliverance",
+              "simcKey": "tyrs_deliverance"
+            }
+          ]
+        },
+        {
+          "talentId": 102577,
+          "displayName": "Inflorescence of the Sunwell",
+          "simcKey": "inflorescence_of_the_sunwell",
+          "maxRank": 1,
+          "row": 10,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137017,
+          "displayName": "Beacon of the Savior",
+          "simcKey": "beacon_of_the_savior",
+          "maxRank": 4,
+          "row": 11,
+          "col": 5,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117696,
+          "displayName": "Dawnlight",
+          "simcKey": "dawnlight",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136795,
+          "displayName": "Holy Armaments",
+          "simcKey": "holy_armaments",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117778,
+          "displayName": "Gleaming Rays",
+          "simcKey": "gleaming_rays",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117778,
+              "displayName": "Gleaming Rays",
+              "simcKey": "gleaming_rays"
+            },
+            {
+              "talentId": 117670,
+              "displayName": "Morning Star",
+              "simcKey": "morning_star"
+            }
+          ]
+        },
+        {
+          "talentId": 117880,
+          "displayName": "Rite of Adjuration",
+          "simcKey": "rite_of_adjuration",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117880,
+              "displayName": "Rite of Adjuration",
+              "simcKey": "rite_of_adjuration"
+            },
+            {
+              "talentId": 117881,
+              "displayName": "Rite of Sanctification",
+              "simcKey": "rite_of_sanctification"
+            }
+          ]
+        },
+        {
+          "talentId": 117692,
+          "displayName": "Eternal Flame",
+          "simcKey": "eternal_flame",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117873,
+          "displayName": "Solidarity",
+          "simcKey": "solidarity",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117677,
+          "displayName": "Luminosity",
+          "simcKey": "luminosity",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117883,
+          "displayName": "Blessed Assurance",
+          "simcKey": "blessed_assurance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117883,
+              "displayName": "Blessed Assurance",
+              "simcKey": "blessed_assurance"
+            },
+            {
+              "talentId": 117884,
+              "displayName": "Divine Guidance",
+              "simcKey": "divine_guidance"
+            }
+          ]
+        },
+        {
+          "talentId": 136000,
+          "displayName": "Masterwork",
+          "simcKey": "masterwork",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136006,
+          "displayName": "Endless Gleam",
+          "simcKey": "endless_gleam",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117777,
+          "displayName": "Will of the Dawn",
+          "simcKey": "will_of_the_dawn",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117777,
+              "displayName": "Will of the Dawn",
+              "simcKey": "will_of_the_dawn"
+            },
+            {
+              "talentId": 117695,
+              "displayName": "Illumine",
+              "simcKey": "illumine"
+            }
+          ]
+        },
+        {
+          "talentId": 117885,
+          "displayName": "Laying Down Arms",
+          "simcKey": "laying_down_arms",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117779,
+          "displayName": "Lingering Radiance",
+          "simcKey": "lingering_radiance",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117779,
+              "displayName": "Lingering Radiance",
+              "simcKey": "lingering_radiance"
+            },
+            {
+              "talentId": 117668,
+              "displayName": "Blessing of An'she",
+              "simcKey": "blessing_of_anshe"
+            }
+          ]
+        },
+        {
+          "talentId": 117876,
+          "displayName": "Forewarning",
+          "simcKey": "forewarning",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117876,
+              "displayName": "Forewarning",
+              "simcKey": "forewarning"
+            },
+            {
+              "talentId": 117877,
+              "displayName": "Divine Inspiration",
+              "simcKey": "divine_inspiration"
+            }
+          ]
+        },
+        {
+          "talentId": 117669,
+          "displayName": "Sun Sear",
+          "simcKey": "sun_sear",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117878,
+          "displayName": "Tempered in Battle",
+          "simcKey": "tempered_in_battle",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117878,
+              "displayName": "Tempered in Battle",
+              "simcKey": "tempered_in_battle"
+            },
+            {
+              "talentId": 117879,
+              "displayName": "Authoritative Rebuke",
+              "simcKey": "authoritative_rebuke"
+            }
+          ]
+        },
+        {
+          "talentId": 136001,
+          "displayName": "Hammer and Anvil",
+          "simcKey": "hammer_and_anvil",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136008,
+          "displayName": "Solar Grace",
+          "simcKey": "solar_grace",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117666,
+          "displayName": "Aurora",
+          "simcKey": "aurora",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117886,
+          "displayName": "Shared Resolve",
+          "simcKey": "shared_resolve",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117691,
+          "displayName": "Walk Into Light",
+          "simcKey": "walk_into_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117874,
+          "displayName": "Valiance",
+          "simcKey": "valiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117683,
+          "displayName": "Second Sunrise",
+          "simcKey": "second_sunrise",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117887,
+          "displayName": "Reflection of Radiance",
+          "simcKey": "reflection_of_radiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136002,
+          "displayName": "Resounding Strike",
+          "simcKey": "resounding_strike",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136007,
+          "displayName": "Born in Sunlight",
+          "simcKey": "born_in_sunlight",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117702,
+          "displayName": "Sun's Avatar",
+          "simcKey": "suns_avatar",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117875,
+          "displayName": "Blessing of the Forge",
+          "simcKey": "blessing_of_the_forge",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "paladin/protection": {
+      "classId": 2,
+      "specId": 66,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 102583,
+          "displayName": "Lay on Hands",
+          "simcKey": "lay_on_hands",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102587,
+          "displayName": "Auras of the Resolute",
+          "simcKey": "auras_of_the_resolute",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133481,
+          "displayName": "Hammer of Wrath",
+          "simcKey": "hammer_of_wrath",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102476,
+          "displayName": "Cleanse Toxins",
+          "simcKey": "cleanse_toxins",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128255,
+          "displayName": "Empyreal Ward",
+          "simcKey": "empyreal_ward",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136487,
+          "displayName": "Fist of Justice",
+          "simcKey": "fist_of_justice",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102584,
+          "displayName": "Blinding Light",
+          "simcKey": "blinding_light",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102623,
+          "displayName": "Turn Evil",
+          "simcKey": "turn_evil",
+          "maxRank": 1,
+          "row": 2,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128254,
+          "displayName": "A Just Reward",
+          "simcKey": "a_just_reward",
+          "maxRank": 2,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115480,
+          "displayName": "Afterimage",
+          "simcKey": "afterimage",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136503,
+          "displayName": "Guided Prayer",
+          "simcKey": "guided_prayer",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102625,
+          "displayName": "Divine Steed",
+          "simcKey": "divine_steed",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128247,
+          "displayName": "Light's Countenance",
+          "simcKey": "lights_countenance",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102590,
+          "displayName": "Greater Judgment",
+          "simcKey": "greater_judgment",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128249,
+          "displayName": "Stand Against Evil",
+          "simcKey": "stand_against_evil",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128249,
+              "displayName": "Stand Against Evil",
+              "simcKey": "stand_against_evil"
+            },
+            {
+              "talentId": 128250,
+              "displayName": "Wrench Evil",
+              "simcKey": "wrench_evil"
+            }
+          ]
+        },
+        {
+          "talentId": 128256,
+          "displayName": "Holy Reprieve",
+          "simcKey": "holy_reprieve",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102592,
+          "displayName": "Cavalier",
+          "simcKey": "cavalier",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128253,
+          "displayName": "Divine Spurs",
+          "simcKey": "divine_spurs",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128251,
+          "displayName": "Blessing of Freedom",
+          "simcKey": "blessing_of_freedom",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128251,
+              "displayName": "Blessing of Freedom",
+              "simcKey": "blessing_of_freedom"
+            },
+            {
+              "talentId": 102624,
+              "displayName": "Steed of Liberty",
+              "simcKey": "steed_of_liberty"
+            }
+          ]
+        },
+        {
+          "talentId": 102591,
+          "displayName": "Rebuke",
+          "simcKey": "rebuke",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102622,
+          "displayName": "Obduracy",
+          "simcKey": "obduracy",
+          "maxRank": 2,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136496,
+          "displayName": "Divine Toll",
+          "simcKey": "divine_toll",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115479,
+          "displayName": "Unbound Freedom",
+          "simcKey": "unbound_freedom",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115034,
+          "displayName": "Sanctified Plates",
+          "simcKey": "sanctified_plates",
+          "maxRank": 2,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115444,
+          "displayName": "Punishment",
+          "simcKey": "punishment",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115447,
+          "displayName": "Divine Reach",
+          "simcKey": "divine_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136486,
+          "displayName": "Brought to Light",
+          "simcKey": "brought_to_light",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102602,
+          "displayName": "Blessing of Sacrifice",
+          "simcKey": "blessing_of_sacrifice",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115168,
+          "displayName": "Quickened Invocation",
+          "simcKey": "quickened_invocation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115168,
+              "displayName": "Quickened Invocation",
+              "simcKey": "quickened_invocation"
+            },
+            {
+              "talentId": 102443,
+              "displayName": "Divine Resonance",
+              "simcKey": "divine_resonance"
+            }
+          ]
+        },
+        {
+          "talentId": 102604,
+          "displayName": "Blessing of Protection",
+          "simcKey": "blessing_of_protection",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136485,
+          "displayName": "Fear No Evil",
+          "simcKey": "fear_no_evil",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102518,
+          "displayName": "Consecrated Ground",
+          "simcKey": "consecrated_ground",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102597,
+          "displayName": "Holy Aegis",
+          "simcKey": "holy_aegis",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102594,
+          "displayName": "Recompense",
+          "simcKey": "recompense",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102594,
+              "displayName": "Recompense",
+              "simcKey": "recompense"
+            },
+            {
+              "talentId": 102595,
+              "displayName": "Sacrifice of the Just",
+              "simcKey": "sacrifice_of_the_just"
+            }
+          ]
+        },
+        {
+          "talentId": 128244,
+          "displayName": "Divine Purpose",
+          "simcKey": "divine_purpose",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128244,
+              "displayName": "Divine Purpose",
+              "simcKey": "divine_purpose"
+            },
+            {
+              "talentId": 115490,
+              "displayName": "Sacred Strength",
+              "simcKey": "sacred_strength"
+            }
+          ]
+        },
+        {
+          "talentId": 102606,
+          "displayName": "Improved Blessing of Protection",
+          "simcKey": "improved_blessing_of_protection",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102603,
+          "displayName": "Unbreakable Spirit",
+          "simcKey": "unbreakable_spirit",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128240,
+          "displayName": "Lightforged Blessing",
+          "simcKey": "lightforged_blessing",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128245,
+          "displayName": "Lightforged Blessing",
+          "simcKey": "lightforged_blessing",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128263,
+          "displayName": "Lead the Charge",
+          "simcKey": "lead_the_charge",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128248,
+          "displayName": "Righteous Protection",
+          "simcKey": "righteous_protection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128248,
+              "displayName": "Righteous Protection",
+              "simcKey": "righteous_protection"
+            },
+            {
+              "talentId": 128261,
+              "displayName": "Worthy Sacrifice",
+              "simcKey": "worthy_sacrifice"
+            }
+          ]
+        },
+        {
+          "talentId": 128262,
+          "displayName": "Holy Ritual",
+          "simcKey": "holy_ritual",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128264,
+          "displayName": "Blessed Calling",
+          "simcKey": "blessed_calling",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128260,
+          "displayName": "Inspired Guard",
+          "simcKey": "inspired_guard",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102596,
+          "displayName": "Light's Revocation",
+          "simcKey": "lights_revocation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102464,
+          "displayName": "Faith's Armor",
+          "simcKey": "faiths_armor",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128258,
+          "displayName": "Stoicism",
+          "simcKey": "stoicism",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102612,
+          "displayName": "Seal of Might",
+          "simcKey": "seal_of_might",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128241,
+          "displayName": "Vengeful Wrath",
+          "simcKey": "vengeful_wrath",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102620,
+          "displayName": "Eye for an Eye",
+          "simcKey": "eye_for_an_eye",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128309,
+          "displayName": "Selfless Healer",
+          "simcKey": "selfless_healer",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128309,
+              "displayName": "Selfless Healer",
+              "simcKey": "selfless_healer"
+            },
+            {
+              "talentId": 128252,
+              "displayName": "Golden Path",
+              "simcKey": "golden_path"
+            }
+          ]
+        },
+        {
+          "talentId": 115673,
+          "displayName": "Blessing of Dawn",
+          "simcKey": "blessing_of_dawn",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128257,
+          "displayName": "Lightbearer",
+          "simcKey": "lightbearer",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128259,
+          "displayName": "Blessing of Dusk",
+          "simcKey": "blessing_of_dusk",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 102471,
+          "displayName": "Avenger's Shield",
+          "simcKey": "avengers_shield",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102455,
+          "displayName": "Shining Light",
+          "simcKey": "shining_light",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102430,
+          "displayName": "Blessed Hammer",
+          "simcKey": "blessed_hammer",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102430,
+              "displayName": "Blessed Hammer",
+              "simcKey": "blessed_hammer"
+            },
+            {
+              "talentId": 102431,
+              "displayName": "Hammer of the Righteous",
+              "simcKey": "hammer_of_the_righteous"
+            }
+          ]
+        },
+        {
+          "talentId": 102462,
+          "displayName": "Redoubt",
+          "simcKey": "redoubt",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102462,
+              "displayName": "Redoubt",
+              "simcKey": "redoubt"
+            },
+            {
+              "talentId": 102463,
+              "displayName": "Imbued Shield",
+              "simcKey": "imbued_shield"
+            }
+          ]
+        },
+        {
+          "talentId": 102453,
+          "displayName": "Grand Crusader",
+          "simcKey": "grand_crusader",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102467,
+          "displayName": "Seal of Charity",
+          "simcKey": "seal_of_charity",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102452,
+          "displayName": "Refining Fire",
+          "simcKey": "refining_fire",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102439,
+          "displayName": "Valiant Crusade",
+          "simcKey": "valiant_crusade",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102445,
+          "displayName": "Ardent Defender",
+          "simcKey": "ardent_defender",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102470,
+          "displayName": "Searing Sunlight",
+          "simcKey": "searing_sunlight",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102451,
+          "displayName": "Solace",
+          "simcKey": "solace",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102459,
+          "displayName": "Undying Embers",
+          "simcKey": "undying_embers",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102468,
+          "displayName": "Bulwark of Order",
+          "simcKey": "bulwark_of_order",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 111886,
+          "displayName": "Blessing of Spellwarding",
+          "simcKey": "blessing_of_spellwarding",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 111886,
+              "displayName": "Blessing of Spellwarding",
+              "simcKey": "blessing_of_spellwarding"
+            },
+            {
+              "talentId": 111887,
+              "displayName": "Improved Ardent Defender",
+              "simcKey": "improved_ardent_defender"
+            }
+          ]
+        },
+        {
+          "talentId": 125873,
+          "displayName": "Tirion's Devotion",
+          "simcKey": "tirions_devotion",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 125873,
+              "displayName": "Tirion's Devotion",
+              "simcKey": "tirions_devotion"
+            },
+            {
+              "talentId": 102472,
+              "displayName": "Light of the Titans",
+              "simcKey": "light_of_the_titans"
+            }
+          ]
+        },
+        {
+          "talentId": 102432,
+          "displayName": "Vision of Sanctity",
+          "simcKey": "vision_of_sanctity",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102437,
+          "displayName": "Tyr's Enforcer",
+          "simcKey": "tyrs_enforcer",
+          "maxRank": 2,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102475,
+          "displayName": "Relentless Inquisitor",
+          "simcKey": "relentless_inquisitor",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102447,
+          "displayName": "Sentinel",
+          "simcKey": "sentinel",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102447,
+              "displayName": "Sentinel",
+              "simcKey": "sentinel"
+            },
+            {
+              "talentId": 102448,
+              "displayName": "Avenging Wrath",
+              "simcKey": "avenging_wrath"
+            }
+          ]
+        },
+        {
+          "talentId": 102600,
+          "displayName": "Crusader's Judgment",
+          "simcKey": "crusaders_judgment",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102450,
+          "displayName": "Consecration in Flame",
+          "simcKey": "consecration_in_flame",
+          "maxRank": 2,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102434,
+          "displayName": "Soaring Shield",
+          "simcKey": "soaring_shield",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102621,
+          "displayName": "Seal of Reprisal",
+          "simcKey": "seal_of_reprisal",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102456,
+          "displayName": "Guardian of Ancient Kings",
+          "simcKey": "guardian_of_ancient_kings",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102438,
+          "displayName": "Hand of the Protector",
+          "simcKey": "hand_of_the_protector",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102436,
+          "displayName": "Sanctuary",
+          "simcKey": "sanctuary",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102435,
+          "displayName": "Focused Enmity",
+          "simcKey": "focused_enmity",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102449,
+          "displayName": "Gift of the Golden Val'kyr",
+          "simcKey": "gift_of_the_golden_valkyr",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128278,
+          "displayName": "Sanctified Wrath",
+          "simcKey": "sanctified_wrath",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102469,
+          "displayName": "Uther's Counsel",
+          "simcKey": "uthers_counsel",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102460,
+          "displayName": "Crusader's Resolve",
+          "simcKey": "crusaders_resolve",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102460,
+              "displayName": "Crusader's Resolve",
+              "simcKey": "crusaders_resolve"
+            },
+            {
+              "talentId": 102461,
+              "displayName": "Strength in Adversity",
+              "simcKey": "strength_in_adversity"
+            }
+          ]
+        },
+        {
+          "talentId": 102446,
+          "displayName": "Ferren Marcus's Fervor",
+          "simcKey": "ferren_marcuss_fervor",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102466,
+          "displayName": "Empyrean Authority",
+          "simcKey": "empyrean_authority",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102433,
+          "displayName": "Zealot's Paragon",
+          "simcKey": "zealots_paragon",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102454,
+          "displayName": "Instrument of the Divine",
+          "simcKey": "instrument_of_the_divine",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136732,
+          "displayName": "Adjudication",
+          "simcKey": "adjudication",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136732,
+              "displayName": "Adjudication",
+              "simcKey": "adjudication"
+            },
+            {
+              "talentId": 102474,
+              "displayName": "Sweeping Verdict",
+              "simcKey": "sweeping_verdict"
+            }
+          ]
+        },
+        {
+          "talentId": 102457,
+          "displayName": "Bulwark of Righteous Fury",
+          "simcKey": "bulwark_of_righteous_fury",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102473,
+          "displayName": "Final Stand",
+          "simcKey": "final_stand",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102440,
+          "displayName": "Righteous Protector",
+          "simcKey": "righteous_protector",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137020,
+          "displayName": "Glory of the Vanguard",
+          "simcKey": "glory_of_the_vanguard",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117813,
+          "displayName": "Light's Guidance",
+          "simcKey": "lights_guidance",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117882,
+          "displayName": "Holy Armaments",
+          "simcKey": "holy_armaments",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117816,
+          "displayName": "Zealous Vindication",
+          "simcKey": "zealous_vindication",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117880,
+          "displayName": "Rite of Adjuration",
+          "simcKey": "rite_of_adjuration",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117880,
+              "displayName": "Rite of Adjuration",
+              "simcKey": "rite_of_adjuration"
+            },
+            {
+              "talentId": 117881,
+              "displayName": "Rite of Sanctification",
+              "simcKey": "rite_of_sanctification"
+            }
+          ]
+        },
+        {
+          "talentId": 117823,
+          "displayName": "Shake the Heavens",
+          "simcKey": "shake_the_heavens",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117873,
+          "displayName": "Solidarity",
+          "simcKey": "solidarity",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117810,
+          "displayName": "Wrathful Descent",
+          "simcKey": "wrathful_descent",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117883,
+          "displayName": "Blessed Assurance",
+          "simcKey": "blessed_assurance",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117883,
+              "displayName": "Blessed Assurance",
+              "simcKey": "blessed_assurance"
+            },
+            {
+              "talentId": 117884,
+              "displayName": "Divine Guidance",
+              "simcKey": "divine_guidance"
+            }
+          ]
+        },
+        {
+          "talentId": 136000,
+          "displayName": "Masterwork",
+          "simcKey": "masterwork",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136005,
+          "displayName": "Divine Hammer",
+          "simcKey": "divine_hammer",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117812,
+          "displayName": "Sacrosanct Crusade",
+          "simcKey": "sacrosanct_crusade",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117885,
+          "displayName": "Laying Down Arms",
+          "simcKey": "laying_down_arms",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117811,
+          "displayName": "Higher Calling",
+          "simcKey": "higher_calling",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117876,
+          "displayName": "Forewarning",
+          "simcKey": "forewarning",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117876,
+              "displayName": "Forewarning",
+              "simcKey": "forewarning"
+            },
+            {
+              "talentId": 117877,
+              "displayName": "Divine Inspiration",
+              "simcKey": "divine_inspiration"
+            }
+          ]
+        },
+        {
+          "talentId": 117858,
+          "displayName": "Unrelenting Charger",
+          "simcKey": "unrelenting_charger",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117858,
+              "displayName": "Unrelenting Charger",
+              "simcKey": "unrelenting_charger"
+            },
+            {
+              "talentId": 117814,
+              "displayName": "Bonds of Fellowship",
+              "simcKey": "bonds_of_fellowship"
+            }
+          ]
+        },
+        {
+          "talentId": 117878,
+          "displayName": "Tempered in Battle",
+          "simcKey": "tempered_in_battle",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117878,
+              "displayName": "Tempered in Battle",
+              "simcKey": "tempered_in_battle"
+            },
+            {
+              "talentId": 117879,
+              "displayName": "Authoritative Rebuke",
+              "simcKey": "authoritative_rebuke"
+            }
+          ]
+        },
+        {
+          "talentId": 136001,
+          "displayName": "Hammer and Anvil",
+          "simcKey": "hammer_and_anvil",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136004,
+          "displayName": "Light's Judicator",
+          "simcKey": "lights_judicator",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117819,
+          "displayName": "Sanctification",
+          "simcKey": "sanctification",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117819,
+              "displayName": "Sanctification",
+              "simcKey": "sanctification"
+            },
+            {
+              "talentId": 117820,
+              "displayName": "Endless Wrath",
+              "simcKey": "endless_wrath"
+            }
+          ]
+        },
+        {
+          "talentId": 117886,
+          "displayName": "Shared Resolve",
+          "simcKey": "shared_resolve",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117818,
+          "displayName": "Hammerfall",
+          "simcKey": "hammerfall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117874,
+          "displayName": "Valiance",
+          "simcKey": "valiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117822,
+          "displayName": "Undisputed Ruling",
+          "simcKey": "undisputed_ruling",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117887,
+          "displayName": "Reflection of Radiance",
+          "simcKey": "reflection_of_radiance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136002,
+          "displayName": "Resounding Strike",
+          "simcKey": "resounding_strike",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136184,
+          "displayName": "Seal of the Templar",
+          "simcKey": "seal_of_the_templar",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136184,
+              "displayName": "Seal of the Templar",
+              "simcKey": "seal_of_the_templar"
+            },
+            {
+              "talentId": 136003,
+              "displayName": "Divine Exaction",
+              "simcKey": "divine_exaction"
+            }
+          ]
+        },
+        {
+          "talentId": 117815,
+          "displayName": "Light's Deliverance",
+          "simcKey": "lights_deliverance",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117875,
+          "displayName": "Blessing of the Forge",
+          "simcKey": "blessing_of_the_forge",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "paladin/retribution": {
+      "classId": 2,
+      "specId": 70,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 102583,
+          "displayName": "Lay on Hands",
+          "simcKey": "lay_on_hands",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102587,
+          "displayName": "Auras of the Resolute",
+          "simcKey": "auras_of_the_resolute",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133481,
+          "displayName": "Hammer of Wrath",
+          "simcKey": "hammer_of_wrath",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102476,
+          "displayName": "Cleanse Toxins",
+          "simcKey": "cleanse_toxins",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128255,
+          "displayName": "Empyreal Ward",
+          "simcKey": "empyreal_ward",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136487,
+          "displayName": "Fist of Justice",
+          "simcKey": "fist_of_justice",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102584,
+          "displayName": "Blinding Light",
+          "simcKey": "blinding_light",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102623,
+          "displayName": "Turn Evil",
+          "simcKey": "turn_evil",
+          "maxRank": 1,
+          "row": 2,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128254,
+          "displayName": "A Just Reward",
+          "simcKey": "a_just_reward",
+          "maxRank": 2,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115481,
+          "displayName": "Healing Hands",
+          "simcKey": "healing_hands",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115481,
+              "displayName": "Healing Hands",
+              "simcKey": "healing_hands"
+            },
+            {
+              "talentId": 115482,
+              "displayName": "Afterimage",
+              "simcKey": "afterimage"
+            }
+          ]
+        },
+        {
+          "talentId": 136503,
+          "displayName": "Guided Prayer",
+          "simcKey": "guided_prayer",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102625,
+          "displayName": "Divine Steed",
+          "simcKey": "divine_steed",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128247,
+          "displayName": "Light's Countenance",
+          "simcKey": "lights_countenance",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102590,
+          "displayName": "Greater Judgment",
+          "simcKey": "greater_judgment",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128249,
+          "displayName": "Stand Against Evil",
+          "simcKey": "stand_against_evil",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128249,
+              "displayName": "Stand Against Evil",
+              "simcKey": "stand_against_evil"
+            },
+            {
+              "talentId": 128250,
+              "displayName": "Wrench Evil",
+              "simcKey": "wrench_evil"
+            }
+          ]
+        },
+        {
+          "talentId": 128256,
+          "displayName": "Holy Reprieve",
+          "simcKey": "holy_reprieve",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136127,
+          "displayName": "Shield of Vengeance",
+          "simcKey": "shield_of_vengeance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102592,
+          "displayName": "Cavalier",
+          "simcKey": "cavalier",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128253,
+          "displayName": "Divine Spurs",
+          "simcKey": "divine_spurs",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128251,
+          "displayName": "Blessing of Freedom",
+          "simcKey": "blessing_of_freedom",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128251,
+              "displayName": "Blessing of Freedom",
+              "simcKey": "blessing_of_freedom"
+            },
+            {
+              "talentId": 102624,
+              "displayName": "Steed of Liberty",
+              "simcKey": "steed_of_liberty"
+            }
+          ]
+        },
+        {
+          "talentId": 136594,
+          "displayName": "Rebuke",
+          "simcKey": "rebuke",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102622,
+          "displayName": "Obduracy",
+          "simcKey": "obduracy",
+          "maxRank": 2,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135564,
+          "displayName": "Divine Toll",
+          "simcKey": "divine_toll",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115454,
+          "displayName": "Unbound Freedom",
+          "simcKey": "unbound_freedom",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115034,
+          "displayName": "Sanctified Plates",
+          "simcKey": "sanctified_plates",
+          "maxRank": 2,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136592,
+          "displayName": "Punishment",
+          "simcKey": "punishment",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115447,
+          "displayName": "Divine Reach",
+          "simcKey": "divine_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136486,
+          "displayName": "Brought to Light",
+          "simcKey": "brought_to_light",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102602,
+          "displayName": "Blessing of Sacrifice",
+          "simcKey": "blessing_of_sacrifice",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115467,
+          "displayName": "Quickened Invocation",
+          "simcKey": "quickened_invocation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115467,
+              "displayName": "Quickened Invocation",
+              "simcKey": "quickened_invocation"
+            },
+            {
+              "talentId": 115468,
+              "displayName": "Divine Resonance",
+              "simcKey": "divine_resonance"
+            }
+          ]
+        },
+        {
+          "talentId": 102604,
+          "displayName": "Blessing of Protection",
+          "simcKey": "blessing_of_protection",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136485,
+          "displayName": "Fear No Evil",
+          "simcKey": "fear_no_evil",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102518,
+          "displayName": "Consecrated Ground",
+          "simcKey": "consecrated_ground",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102597,
+          "displayName": "Holy Aegis",
+          "simcKey": "holy_aegis",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102594,
+          "displayName": "Recompense",
+          "simcKey": "recompense",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102594,
+              "displayName": "Recompense",
+              "simcKey": "recompense"
+            },
+            {
+              "talentId": 102595,
+              "displayName": "Sacrifice of the Just",
+              "simcKey": "sacrifice_of_the_just"
+            }
+          ]
+        },
+        {
+          "talentId": 128243,
+          "displayName": "Divine Purpose",
+          "simcKey": "divine_purpose",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128243,
+              "displayName": "Divine Purpose",
+              "simcKey": "divine_purpose"
+            },
+            {
+              "talentId": 102608,
+              "displayName": "Sacred Strength",
+              "simcKey": "sacred_strength"
+            }
+          ]
+        },
+        {
+          "talentId": 102606,
+          "displayName": "Improved Blessing of Protection",
+          "simcKey": "improved_blessing_of_protection",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102603,
+          "displayName": "Unbreakable Spirit",
+          "simcKey": "unbreakable_spirit",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115239,
+          "displayName": "Lightforged Blessing",
+          "simcKey": "lightforged_blessing",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128263,
+          "displayName": "Lead the Charge",
+          "simcKey": "lead_the_charge",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128248,
+          "displayName": "Righteous Protection",
+          "simcKey": "righteous_protection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128248,
+              "displayName": "Righteous Protection",
+              "simcKey": "righteous_protection"
+            },
+            {
+              "talentId": 128261,
+              "displayName": "Worthy Sacrifice",
+              "simcKey": "worthy_sacrifice"
+            }
+          ]
+        },
+        {
+          "talentId": 128262,
+          "displayName": "Holy Ritual",
+          "simcKey": "holy_ritual",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128264,
+          "displayName": "Blessed Calling",
+          "simcKey": "blessed_calling",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128260,
+          "displayName": "Inspired Guard",
+          "simcKey": "inspired_guard",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102596,
+          "displayName": "Light's Revocation",
+          "simcKey": "lights_revocation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102464,
+          "displayName": "Faith's Armor",
+          "simcKey": "faiths_armor",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128258,
+          "displayName": "Stoicism",
+          "simcKey": "stoicism",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102612,
+          "displayName": "Seal of Might",
+          "simcKey": "seal_of_might",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128241,
+          "displayName": "Vengeful Wrath",
+          "simcKey": "vengeful_wrath",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102620,
+          "displayName": "Eye for an Eye",
+          "simcKey": "eye_for_an_eye",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128309,
+          "displayName": "Selfless Healer",
+          "simcKey": "selfless_healer",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128309,
+              "displayName": "Selfless Healer",
+              "simcKey": "selfless_healer"
+            },
+            {
+              "talentId": 128252,
+              "displayName": "Golden Path",
+              "simcKey": "golden_path"
+            }
+          ]
+        },
+        {
+          "talentId": 115673,
+          "displayName": "Blessing of Dawn",
+          "simcKey": "blessing_of_dawn",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128257,
+          "displayName": "Lightbearer",
+          "simcKey": "lightbearer",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128259,
+          "displayName": "Blessing of Dusk",
+          "simcKey": "blessing_of_dusk",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 102498,
+          "displayName": "Blade of Justice",
+          "simcKey": "blade_of_justice",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102499,
+          "displayName": "Divine Storm",
+          "simcKey": "divine_storm",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114830,
+          "displayName": "Expurgation",
+          "simcKey": "expurgation",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114828,
+          "displayName": "Light of Justice",
+          "simcKey": "light_of_justice",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 114828,
+              "displayName": "Light of Justice",
+              "simcKey": "light_of_justice"
+            },
+            {
+              "talentId": 102491,
+              "displayName": "Swift Justice",
+              "simcKey": "swift_justice"
+            }
+          ]
+        },
+        {
+          "talentId": 115440,
+          "displayName": "Judgment of Justice",
+          "simcKey": "judgment_of_justice",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102519,
+          "displayName": "Avenging Wrath",
+          "simcKey": "avenging_wrath",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102504,
+          "displayName": "Final Verdict",
+          "simcKey": "final_verdict",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115022,
+          "displayName": "Holy Blade",
+          "simcKey": "holy_blade",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115022,
+              "displayName": "Holy Blade",
+              "simcKey": "holy_blade"
+            },
+            {
+              "talentId": 115023,
+              "displayName": "Improved Blade of Justice",
+              "simcKey": "improved_blade_of_justice"
+            }
+          ]
+        },
+        {
+          "talentId": 102493,
+          "displayName": "Art of War",
+          "simcKey": "art_of_war",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 102493,
+              "displayName": "Art of War",
+              "simcKey": "art_of_war"
+            },
+            {
+              "talentId": 102494,
+              "displayName": "Righteous Cause",
+              "simcKey": "righteous_cause"
+            }
+          ]
+        },
+        {
+          "talentId": 102516,
+          "displayName": "Jurisdiction",
+          "simcKey": "jurisdiction",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115452,
+          "displayName": "Tempest of the Lightbringer",
+          "simcKey": "tempest_of_the_lightbringer",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115475,
+          "displayName": "Rush of Light",
+          "simcKey": "rush_of_light",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115488,
+          "displayName": "Sanctify",
+          "simcKey": "sanctify",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115438,
+          "displayName": "Holy Flames",
+          "simcKey": "holy_flames",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115021,
+          "displayName": "Boundless Judgment",
+          "simcKey": "boundless_judgment",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 115021,
+              "displayName": "Boundless Judgment",
+              "simcKey": "boundless_judgment"
+            },
+            {
+              "talentId": 102505,
+              "displayName": "Improved Judgment",
+              "simcKey": "improved_judgment"
+            }
+          ]
+        },
+        {
+          "talentId": 115165,
+          "displayName": "Zealot's Fervor",
+          "simcKey": "zealots_fervor",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115483,
+          "displayName": "Heart of the Crusader",
+          "simcKey": "heart_of_the_crusader",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102521,
+          "displayName": "Blade of Vengeance",
+          "simcKey": "blade_of_vengeance",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115051,
+          "displayName": "Empyrean Power",
+          "simcKey": "empyrean_power",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102506,
+          "displayName": "Highlord's Wrath",
+          "simcKey": "highlords_wrath",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136809,
+          "displayName": "Crusading Strikes",
+          "simcKey": "crusading_strikes",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136809,
+              "displayName": "Crusading Strikes",
+              "simcKey": "crusading_strikes"
+            },
+            {
+              "talentId": 115473,
+              "displayName": "Templar Strikes",
+              "simcKey": "templar_strikes"
+            }
+          ]
+        },
+        {
+          "talentId": 102515,
+          "displayName": "Blessed Champion",
+          "simcKey": "blessed_champion",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115024,
+          "displayName": "Burning Crusade",
+          "simcKey": "burning_crusade",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115443,
+          "displayName": "Blades of Light",
+          "simcKey": "blades_of_light",
+          "maxRank": 2,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102497,
+          "displayName": "Wake of Ashes",
+          "simcKey": "wake_of_ashes",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115439,
+          "displayName": "Divine Wrath",
+          "simcKey": "divine_wrath",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115435,
+          "displayName": "Execution Sentence",
+          "simcKey": "execution_sentence",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115043,
+          "displayName": "Seething Flames",
+          "simcKey": "seething_flames",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115453,
+          "displayName": "Empyrean Legacy",
+          "simcKey": "empyrean_legacy",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102511,
+          "displayName": "Judge, Jury and Executioner",
+          "simcKey": "judge_jury_and_executioner",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 102525,
+          "displayName": "Radiant Glory",
+          "simcKey": "radiant_glory",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 114824,
+          "displayName": "Burn to Ash",
+          "simcKey": "burn_to_ash",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135565,
+          "displayName": "Crusade",
+          "simcKey": "crusade",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137023,
+          "displayName": "Light Within",
+          "simcKey": "light_within",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117696,
+          "displayName": "Dawnlight",
+          "simcKey": "dawnlight",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117813,
+          "displayName": "Light's Guidance",
+          "simcKey": "lights_guidance",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117778,
+          "displayName": "Gleaming Rays",
+          "simcKey": "gleaming_rays",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117778,
+              "displayName": "Gleaming Rays",
+              "simcKey": "gleaming_rays"
+            },
+            {
+              "talentId": 117670,
+              "displayName": "Morning Star",
+              "simcKey": "morning_star"
+            }
+          ]
+        },
+        {
+          "talentId": 117816,
+          "displayName": "Zealous Vindication",
+          "simcKey": "zealous_vindication",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117692,
+          "displayName": "Eternal Flame",
+          "simcKey": "eternal_flame",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117823,
+          "displayName": "Shake the Heavens",
+          "simcKey": "shake_the_heavens",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117677,
+          "displayName": "Luminosity",
+          "simcKey": "luminosity",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117810,
+          "displayName": "Wrathful Descent",
+          "simcKey": "wrathful_descent",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136005,
+          "displayName": "Divine Hammer",
+          "simcKey": "divine_hammer",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136006,
+          "displayName": "Endless Gleam",
+          "simcKey": "endless_gleam",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117777,
+          "displayName": "Will of the Dawn",
+          "simcKey": "will_of_the_dawn",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117777,
+              "displayName": "Will of the Dawn",
+              "simcKey": "will_of_the_dawn"
+            },
+            {
+              "talentId": 117695,
+              "displayName": "Illumine",
+              "simcKey": "illumine"
+            }
+          ]
+        },
+        {
+          "talentId": 117812,
+          "displayName": "Sacrosanct Crusade",
+          "simcKey": "sacrosanct_crusade",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117779,
+          "displayName": "Lingering Radiance",
+          "simcKey": "lingering_radiance",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117779,
+              "displayName": "Lingering Radiance",
+              "simcKey": "lingering_radiance"
+            },
+            {
+              "talentId": 117668,
+              "displayName": "Blessing of An'she",
+              "simcKey": "blessing_of_anshe"
+            }
+          ]
+        },
+        {
+          "talentId": 117811,
+          "displayName": "Higher Calling",
+          "simcKey": "higher_calling",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117669,
+          "displayName": "Sun Sear",
+          "simcKey": "sun_sear",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117858,
+          "displayName": "Unrelenting Charger",
+          "simcKey": "unrelenting_charger",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117858,
+              "displayName": "Unrelenting Charger",
+              "simcKey": "unrelenting_charger"
+            },
+            {
+              "talentId": 117814,
+              "displayName": "Bonds of Fellowship",
+              "simcKey": "bonds_of_fellowship"
+            }
+          ]
+        },
+        {
+          "talentId": 136004,
+          "displayName": "Light's Judicator",
+          "simcKey": "lights_judicator",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136008,
+          "displayName": "Solar Grace",
+          "simcKey": "solar_grace",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117666,
+          "displayName": "Aurora",
+          "simcKey": "aurora",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117819,
+          "displayName": "Sanctification",
+          "simcKey": "sanctification",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117819,
+              "displayName": "Sanctification",
+              "simcKey": "sanctification"
+            },
+            {
+              "talentId": 117820,
+              "displayName": "Endless Wrath",
+              "simcKey": "endless_wrath"
+            }
+          ]
+        },
+        {
+          "talentId": 117691,
+          "displayName": "Walk Into Light",
+          "simcKey": "walk_into_light",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117818,
+          "displayName": "Hammerfall",
+          "simcKey": "hammerfall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117683,
+          "displayName": "Second Sunrise",
+          "simcKey": "second_sunrise",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117822,
+          "displayName": "Undisputed Ruling",
+          "simcKey": "undisputed_ruling",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136007,
+          "displayName": "Born in Sunlight",
+          "simcKey": "born_in_sunlight",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136184,
+          "displayName": "Seal of the Templar",
+          "simcKey": "seal_of_the_templar",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136184,
+              "displayName": "Seal of the Templar",
+              "simcKey": "seal_of_the_templar"
+            },
+            {
+              "talentId": 136003,
+              "displayName": "Divine Exaction",
+              "simcKey": "divine_exaction"
+            }
+          ]
+        },
+        {
+          "talentId": 117702,
+          "displayName": "Sun's Avatar",
+          "simcKey": "suns_avatar",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117815,
+          "displayName": "Light's Deliverance",
+          "simcKey": "lights_deliverance",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    }
+  }
+}

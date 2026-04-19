@@ -1,0 +1,3401 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "byClassSpec": {
+    "death_knight/blood": {
+      "classId": 6,
+      "specId": 250,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 96210,
+          "displayName": "Icebound Fortitude",
+          "simcKey": "icebound_fortitude",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96200,
+          "displayName": "Death Strike",
+          "simcKey": "death_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96201,
+          "displayName": "Raise Dead",
+          "simcKey": "raise_dead",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96173,
+          "displayName": "Runic Attenuation",
+          "simcKey": "runic_attenuation",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96196,
+          "displayName": "Improved Death Strike",
+          "simcKey": "improved_death_strike",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96202,
+          "displayName": "Cleaving Strikes",
+          "simcKey": "cleaving_strikes",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96213,
+          "displayName": "Mind Freeze",
+          "simcKey": "mind_freeze",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96172,
+          "displayName": "Blinding Sleet",
+          "simcKey": "blinding_sleet",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96180,
+          "displayName": "Gloom Ward",
+          "simcKey": "gloom_ward",
+          "maxRank": 2,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133518,
+          "displayName": "Wraith Walk",
+          "simcKey": "wraith_walk",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133518,
+              "displayName": "Wraith Walk",
+              "simcKey": "wraith_walk"
+            },
+            {
+              "talentId": 96203,
+              "displayName": "March of Darkness",
+              "simcKey": "march_of_darkness"
+            }
+          ]
+        },
+        {
+          "talentId": 96198,
+          "displayName": "Unholy Momentum",
+          "simcKey": "unholy_momentum",
+          "maxRank": 2,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96188,
+          "displayName": "Control Undead",
+          "simcKey": "control_undead",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136523,
+          "displayName": "Enfeeble",
+          "simcKey": "enfeeble",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96212,
+          "displayName": "Coldthirst",
+          "simcKey": "coldthirst",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125606,
+          "displayName": "Proliferating Chill",
+          "simcKey": "proliferating_chill",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96195,
+          "displayName": "Permafrost",
+          "simcKey": "permafrost",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96197,
+          "displayName": "Veteran of the Third War",
+          "simcKey": "veteran_of_the_third_war",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96204,
+          "displayName": "Death Pact",
+          "simcKey": "death_pact",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96190,
+          "displayName": "Brittle",
+          "simcKey": "brittle",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96189,
+          "displayName": "Blood Bond",
+          "simcKey": "blood_bond",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96214,
+          "displayName": "Icy Talons",
+          "simcKey": "icy_talons",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136524,
+          "displayName": "Death Notes",
+          "simcKey": "death_notes",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96194,
+          "displayName": "Anti-Magic Zone",
+          "simcKey": "anti_magic_zone",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136525,
+          "displayName": "Death Defiance",
+          "simcKey": "death_defiance",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96205,
+          "displayName": "Unholy Bond",
+          "simcKey": "unholy_bond",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96215,
+          "displayName": "Ice Prison",
+          "simcKey": "ice_prison",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136526,
+          "displayName": "Death's Reach",
+          "simcKey": "deaths_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136526,
+              "displayName": "Death's Reach",
+              "simcKey": "deaths_reach"
+            },
+            {
+              "talentId": 96193,
+              "displayName": "Asphyxiate",
+              "simcKey": "asphyxiate"
+            }
+          ]
+        },
+        {
+          "talentId": 96176,
+          "displayName": "Assimilation",
+          "simcKey": "assimilation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96174,
+          "displayName": "Anti-Magic Barrier",
+          "simcKey": "anti_magic_barrier",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96186,
+          "displayName": "Grip of the Dead",
+          "simcKey": "grip_of_the_dead",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96216,
+          "displayName": "Suppression",
+          "simcKey": "suppression",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96207,
+          "displayName": "Blood Scent",
+          "simcKey": "blood_scent",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96187,
+          "displayName": "Unholy Endurance",
+          "simcKey": "unholy_endurance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96217,
+          "displayName": "Osmosis",
+          "simcKey": "osmosis",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96179,
+          "displayName": "Insidious Chill",
+          "simcKey": "insidious_chill",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96183,
+          "displayName": "Runic Protection",
+          "simcKey": "runic_protection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96184,
+          "displayName": "Blood Draw",
+          "simcKey": "blood_draw",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96208,
+          "displayName": "Rune Mastery",
+          "simcKey": "rune_mastery",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96209,
+          "displayName": "Subduing Grasp",
+          "simcKey": "subduing_grasp",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96182,
+          "displayName": "Will of the Necropolis",
+          "simcKey": "will_of_the_necropolis",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126016,
+          "displayName": "Null Magic",
+          "simcKey": "null_magic",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96178,
+          "displayName": "Unyielding Will",
+          "simcKey": "unyielding_will",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126015,
+          "displayName": "Death's Echo",
+          "simcKey": "deaths_echo",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96181,
+          "displayName": "Vestigial Shell",
+          "simcKey": "vestigial_shell",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 96304,
+          "displayName": "Heart Strike",
+          "simcKey": "heart_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96303,
+          "displayName": "Marrowrend",
+          "simcKey": "marrowrend",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96305,
+          "displayName": "Blood Boil",
+          "simcKey": "blood_boil",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96308,
+          "displayName": "Vampiric Blood",
+          "simcKey": "vampiric_blood",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96306,
+          "displayName": "Bone Collector",
+          "simcKey": "bone_collector",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96277,
+          "displayName": "Ossuary",
+          "simcKey": "ossuary",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96272,
+          "displayName": "Improved Vampiric Blood",
+          "simcKey": "improved_vampiric_blood",
+          "maxRank": 2,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96257,
+          "displayName": "Improved Heart Strike",
+          "simcKey": "improved_heart_strike",
+          "maxRank": 2,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96279,
+          "displayName": "Relish in Blood",
+          "simcKey": "relish_in_blood",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96278,
+          "displayName": "Leeching Strike",
+          "simcKey": "leeching_strike",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96266,
+          "displayName": "Heartbreaker",
+          "simcKey": "heartbreaker",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96302,
+          "displayName": "Foul Bulwark",
+          "simcKey": "foul_bulwark",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96269,
+          "displayName": "Dancing Rune Weapon",
+          "simcKey": "dancing_rune_weapon",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96268,
+          "displayName": "Hemostasis",
+          "simcKey": "hemostasis",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96255,
+          "displayName": "Perseverance of the Ebon Blade",
+          "simcKey": "perseverance_of_the_ebon_blade",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96280,
+          "displayName": "Bloodworms",
+          "simcKey": "bloodworms",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136213,
+          "displayName": "Abomination Limb",
+          "simcKey": "abomination_limb",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136213,
+              "displayName": "Abomination Limb",
+              "simcKey": "abomination_limb"
+            },
+            {
+              "talentId": 96170,
+              "displayName": "Gorefiend's Grasp",
+              "simcKey": "gorefiends_grasp"
+            }
+          ]
+        },
+        {
+          "talentId": 96274,
+          "displayName": "Improved Bone Shield",
+          "simcKey": "improved_bone_shield",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96260,
+          "displayName": "Insatiable Blade",
+          "simcKey": "insatiable_blade",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96301,
+          "displayName": "Deadly Reach",
+          "simcKey": "deadly_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96273,
+          "displayName": "Rapid Decomposition",
+          "simcKey": "rapid_decomposition",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96167,
+          "displayName": "Boiling Point",
+          "simcKey": "boiling_point",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96276,
+          "displayName": "Lifeblood",
+          "simcKey": "lifeblood",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96261,
+          "displayName": "Everlasting Bond",
+          "simcKey": "everlasting_bond",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96171,
+          "displayName": "Voracious",
+          "simcKey": "voracious",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96309,
+          "displayName": "Blood Feast",
+          "simcKey": "blood_feast",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126298,
+          "displayName": "Plague Infusion",
+          "simcKey": "plague_infusion",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96271,
+          "displayName": "Bloody Reflection",
+          "simcKey": "bloody_reflection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96307,
+          "displayName": "Iron Heart",
+          "simcKey": "iron_heart",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126296,
+          "displayName": "Bloodied Blade",
+          "simcKey": "bloodied_blade",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96169,
+          "displayName": "Coagulopathy",
+          "simcKey": "coagulopathy",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96259,
+          "displayName": "Blood Mist",
+          "simcKey": "blood_mist",
+          "maxRank": 1,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96262,
+          "displayName": "Sanguine Ground",
+          "simcKey": "sanguine_ground",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96256,
+          "displayName": "Bloodshot",
+          "simcKey": "bloodshot",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126300,
+          "displayName": "Consumption",
+          "simcKey": "consumption",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96263,
+          "displayName": "Red Thirst",
+          "simcKey": "red_thirst",
+          "maxRank": 1,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96258,
+          "displayName": "Sanguinary Burst",
+          "simcKey": "sanguinary_burst",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96264,
+          "displayName": "Purgatory",
+          "simcKey": "purgatory",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126301,
+          "displayName": "Carnage",
+          "simcKey": "carnage",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96168,
+          "displayName": "Umbilicus Eternus",
+          "simcKey": "umbilicus_eternus",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136915,
+          "displayName": "Dance of Midnight",
+          "simcKey": "dance_of_midnight",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117648,
+          "displayName": "Vampiric Strike",
+          "simcKey": "vampiric_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117659,
+          "displayName": "Reaper's Mark",
+          "simcKey": "reapers_mark",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117633,
+          "displayName": "Wave of Souls",
+          "simcKey": "wave_of_souls",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117892,
+          "displayName": "Vampiric Speed",
+          "simcKey": "vampiric_speed",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117892,
+              "displayName": "Vampiric Speed",
+              "simcKey": "vampiric_speed"
+            },
+            {
+              "talentId": 117661,
+              "displayName": "Newly Turned",
+              "simcKey": "newly_turned"
+            }
+          ]
+        },
+        {
+          "talentId": 117655,
+          "displayName": "Wither Away",
+          "simcKey": "wither_away",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136836,
+          "displayName": "Desecrate",
+          "simcKey": "desecrate",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136836,
+              "displayName": "Desecrate",
+              "simcKey": "desecrate"
+            },
+            {
+              "talentId": 117645,
+              "displayName": "Blood-Soaked Ground",
+              "simcKey": "blood_soaked_ground"
+            }
+          ]
+        },
+        {
+          "talentId": 117640,
+          "displayName": "Bind in Darkness",
+          "simcKey": "bind_in_darkness",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117891,
+          "displayName": "Bloody Fortitude",
+          "simcKey": "bloody_fortitude",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117891,
+              "displayName": "Bloody Fortitude",
+              "simcKey": "bloody_fortitude"
+            },
+            {
+              "talentId": 117653,
+              "displayName": "Vampiric Aura",
+              "simcKey": "vampiric_aura"
+            }
+          ]
+        },
+        {
+          "talentId": 135993,
+          "displayName": "Frigid Resolve",
+          "simcKey": "frigid_resolve",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135995,
+          "displayName": "Thrill of Blood",
+          "simcKey": "thrill_of_blood",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117630,
+          "displayName": "Infliction of Sorrow",
+          "simcKey": "infliction_of_sorrow",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117658,
+          "displayName": "Soul Rupture",
+          "simcKey": "soul_rupture",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117631,
+          "displayName": "Grim Reaper",
+          "simcKey": "grim_reaper",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117662,
+          "displayName": "Frenzied Bloodthirst",
+          "simcKey": "frenzied_bloodthirst",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117643,
+          "displayName": "The Blood is Life",
+          "simcKey": "the_blood_is_life",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123420,
+          "displayName": "Rune Carved Plates",
+          "simcKey": "rune_carved_plates",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123420,
+              "displayName": "Rune Carved Plates",
+              "simcKey": "rune_carved_plates"
+            },
+            {
+              "talentId": 117632,
+              "displayName": "Pact of the Deathbringer",
+              "simcKey": "pact_of_the_deathbringer"
+            }
+          ]
+        },
+        {
+          "talentId": 135992,
+          "displayName": "Deathly Blows",
+          "simcKey": "deathly_blows",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135996,
+          "displayName": "Visceral Strength",
+          "simcKey": "visceral_strength",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117629,
+          "displayName": "Swift and Painful",
+          "simcKey": "swift_and_painful",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117642,
+          "displayName": "Inevitable",
+          "simcKey": "inevitable",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117637,
+          "displayName": "Incite Terror",
+          "simcKey": "incite_terror",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128266,
+          "displayName": "Reaper's Onslaught",
+          "simcKey": "reapers_onslaught",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128266,
+              "displayName": "Reaper's Onslaught",
+              "simcKey": "reapers_onslaught"
+            },
+            {
+              "talentId": 117654,
+              "displayName": "Dark Talons",
+              "simcKey": "dark_talons"
+            }
+          ]
+        },
+        {
+          "talentId": 117893,
+          "displayName": "Sanguine Scent",
+          "simcKey": "sanguine_scent",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117893,
+              "displayName": "Sanguine Scent",
+              "simcKey": "sanguine_scent"
+            },
+            {
+              "talentId": 117652,
+              "displayName": "Pact of the San'layn",
+              "simcKey": "pact_of_the_sanlayn"
+            }
+          ]
+        },
+        {
+          "talentId": 128234,
+          "displayName": "Expelling Shield",
+          "simcKey": "expelling_shield",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128234,
+              "displayName": "Expelling Shield",
+              "simcKey": "expelling_shield"
+            },
+            {
+              "talentId": 117646,
+              "displayName": "Death's Messenger",
+              "simcKey": "deaths_messenger"
+            }
+          ]
+        },
+        {
+          "talentId": 135991,
+          "displayName": "Echoing Fury",
+          "simcKey": "echoing_fury",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135994,
+          "displayName": "Transfusion",
+          "simcKey": "transfusion",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117650,
+          "displayName": "Gift of the San'layn",
+          "simcKey": "gift_of_the_sanlayn",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117665,
+          "displayName": "Exterminate",
+          "simcKey": "exterminate",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "death_knight/frost": {
+      "classId": 6,
+      "specId": 251,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 96210,
+          "displayName": "Icebound Fortitude",
+          "simcKey": "icebound_fortitude",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96200,
+          "displayName": "Death Strike",
+          "simcKey": "death_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96201,
+          "displayName": "Raise Dead",
+          "simcKey": "raise_dead",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96173,
+          "displayName": "Runic Attenuation",
+          "simcKey": "runic_attenuation",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96196,
+          "displayName": "Improved Death Strike",
+          "simcKey": "improved_death_strike",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96202,
+          "displayName": "Cleaving Strikes",
+          "simcKey": "cleaving_strikes",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96213,
+          "displayName": "Mind Freeze",
+          "simcKey": "mind_freeze",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96172,
+          "displayName": "Blinding Sleet",
+          "simcKey": "blinding_sleet",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96180,
+          "displayName": "Gloom Ward",
+          "simcKey": "gloom_ward",
+          "maxRank": 2,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133518,
+          "displayName": "Wraith Walk",
+          "simcKey": "wraith_walk",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133518,
+              "displayName": "Wraith Walk",
+              "simcKey": "wraith_walk"
+            },
+            {
+              "talentId": 96203,
+              "displayName": "March of Darkness",
+              "simcKey": "march_of_darkness"
+            }
+          ]
+        },
+        {
+          "talentId": 96198,
+          "displayName": "Unholy Momentum",
+          "simcKey": "unholy_momentum",
+          "maxRank": 2,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96188,
+          "displayName": "Control Undead",
+          "simcKey": "control_undead",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136523,
+          "displayName": "Enfeeble",
+          "simcKey": "enfeeble",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96212,
+          "displayName": "Coldthirst",
+          "simcKey": "coldthirst",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125606,
+          "displayName": "Proliferating Chill",
+          "simcKey": "proliferating_chill",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96195,
+          "displayName": "Permafrost",
+          "simcKey": "permafrost",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96197,
+          "displayName": "Veteran of the Third War",
+          "simcKey": "veteran_of_the_third_war",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96204,
+          "displayName": "Death Pact",
+          "simcKey": "death_pact",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96190,
+          "displayName": "Brittle",
+          "simcKey": "brittle",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96189,
+          "displayName": "Blood Bond",
+          "simcKey": "blood_bond",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96214,
+          "displayName": "Icy Talons",
+          "simcKey": "icy_talons",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136524,
+          "displayName": "Death Notes",
+          "simcKey": "death_notes",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96194,
+          "displayName": "Anti-Magic Zone",
+          "simcKey": "anti_magic_zone",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136525,
+          "displayName": "Death Defiance",
+          "simcKey": "death_defiance",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96205,
+          "displayName": "Unholy Bond",
+          "simcKey": "unholy_bond",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96215,
+          "displayName": "Ice Prison",
+          "simcKey": "ice_prison",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136526,
+          "displayName": "Death's Reach",
+          "simcKey": "deaths_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136526,
+              "displayName": "Death's Reach",
+              "simcKey": "deaths_reach"
+            },
+            {
+              "talentId": 96193,
+              "displayName": "Asphyxiate",
+              "simcKey": "asphyxiate"
+            }
+          ]
+        },
+        {
+          "talentId": 96176,
+          "displayName": "Assimilation",
+          "simcKey": "assimilation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96174,
+          "displayName": "Anti-Magic Barrier",
+          "simcKey": "anti_magic_barrier",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96186,
+          "displayName": "Grip of the Dead",
+          "simcKey": "grip_of_the_dead",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96216,
+          "displayName": "Suppression",
+          "simcKey": "suppression",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96207,
+          "displayName": "Blood Scent",
+          "simcKey": "blood_scent",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96187,
+          "displayName": "Unholy Endurance",
+          "simcKey": "unholy_endurance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96217,
+          "displayName": "Osmosis",
+          "simcKey": "osmosis",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96179,
+          "displayName": "Insidious Chill",
+          "simcKey": "insidious_chill",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96183,
+          "displayName": "Runic Protection",
+          "simcKey": "runic_protection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96184,
+          "displayName": "Blood Draw",
+          "simcKey": "blood_draw",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96208,
+          "displayName": "Rune Mastery",
+          "simcKey": "rune_mastery",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96209,
+          "displayName": "Subduing Grasp",
+          "simcKey": "subduing_grasp",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96182,
+          "displayName": "Will of the Necropolis",
+          "simcKey": "will_of_the_necropolis",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126016,
+          "displayName": "Null Magic",
+          "simcKey": "null_magic",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96178,
+          "displayName": "Unyielding Will",
+          "simcKey": "unyielding_will",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126015,
+          "displayName": "Death's Echo",
+          "simcKey": "deaths_echo",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96181,
+          "displayName": "Vestigial Shell",
+          "simcKey": "vestigial_shell",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 96245,
+          "displayName": "Frost Strike",
+          "simcKey": "frost_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96246,
+          "displayName": "Obliterate",
+          "simcKey": "obliterate",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96244,
+          "displayName": "Howling Blast",
+          "simcKey": "howling_blast",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96247,
+          "displayName": "Killing Machine",
+          "simcKey": "killing_machine",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96225,
+          "displayName": "Empower Rune Weapon",
+          "simcKey": "empower_rune_weapon",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96243,
+          "displayName": "Frostscythe",
+          "simcKey": "frostscythe",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96248,
+          "displayName": "Arctic Assault",
+          "simcKey": "arctic_assault",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96233,
+          "displayName": "Runic Overflow",
+          "simcKey": "runic_overflow",
+          "maxRank": 2,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133362,
+          "displayName": "Frostbound Will",
+          "simcKey": "frostbound_will",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96232,
+          "displayName": "Runic Command",
+          "simcKey": "runic_command",
+          "maxRank": 2,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96242,
+          "displayName": "Biting Cold",
+          "simcKey": "biting_cold",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96230,
+          "displayName": "Inexorable Assault",
+          "simcKey": "inexorable_assault",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96228,
+          "displayName": "Frostreaper",
+          "simcKey": "frostreaper",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125874,
+          "displayName": "Pillar of Frost",
+          "simcKey": "pillar_of_frost",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 131619,
+          "displayName": "Icy Onslaught",
+          "simcKey": "icy_onslaught",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96240,
+          "displayName": "Gathering Storm",
+          "simcKey": "gathering_storm",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96252,
+          "displayName": "Murderous Efficiency",
+          "simcKey": "murderous_efficiency",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125876,
+          "displayName": "Rage of the Frozen Champion",
+          "simcKey": "rage_of_the_frozen_champion",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125875,
+          "displayName": "Enduring Strength",
+          "simcKey": "enduring_strength",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126017,
+          "displayName": "Frozen Dominion",
+          "simcKey": "frozen_dominion",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96221,
+          "displayName": "Frigid Executioner",
+          "simcKey": "frigid_executioner",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96165,
+          "displayName": "Howling Blades",
+          "simcKey": "howling_blades",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 131618,
+          "displayName": "Cryogenic Chamber",
+          "simcKey": "cryogenic_chamber",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96236,
+          "displayName": "Frostwyrm's Fury",
+          "simcKey": "frostwyrms_fury",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96229,
+          "displayName": "Everfrost",
+          "simcKey": "everfrost",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96239,
+          "displayName": "Northwinds",
+          "simcKey": "northwinds",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96253,
+          "displayName": "Bonegrinder",
+          "simcKey": "bonegrinder",
+          "maxRank": 2,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96231,
+          "displayName": "Smothering Offense",
+          "simcKey": "smothering_offense",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96235,
+          "displayName": "Avalanche",
+          "simcKey": "avalanche",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96161,
+          "displayName": "Icebreaker",
+          "simcKey": "icebreaker",
+          "maxRank": 2,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96220,
+          "displayName": "Obliteration",
+          "simcKey": "obliteration",
+          "maxRank": 1,
+          "row": 9,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125878,
+          "displayName": "Icy Death Torrent",
+          "simcKey": "icy_death_torrent",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96224,
+          "displayName": "Shattering Blade",
+          "simcKey": "shattering_blade",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96238,
+          "displayName": "Hyperpyrexia",
+          "simcKey": "hyperpyrexia",
+          "maxRank": 1,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96254,
+          "displayName": "Killing Streak",
+          "simcKey": "killing_streak",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125877,
+          "displayName": "The Long Winter",
+          "simcKey": "the_long_winter",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96223,
+          "displayName": "Frostbane",
+          "simcKey": "frostbane",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96222,
+          "displayName": "Breath of Sindragosa",
+          "simcKey": "breath_of_sindragosa",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136966,
+          "displayName": "Chosen of Frostbrood",
+          "simcKey": "chosen_of_frostbrood",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117659,
+          "displayName": "Reaper's Mark",
+          "simcKey": "reapers_mark",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117663,
+          "displayName": "Rider's Champion",
+          "simcKey": "riders_champion",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117633,
+          "displayName": "Wave of Souls",
+          "simcKey": "wave_of_souls",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123412,
+          "displayName": "Death Charge",
+          "simcKey": "death_charge",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123412,
+              "displayName": "Death Charge",
+              "simcKey": "death_charge"
+            },
+            {
+              "talentId": 117657,
+              "displayName": "On a Paler Horse",
+              "simcKey": "on_a_paler_horse"
+            }
+          ]
+        },
+        {
+          "talentId": 117655,
+          "displayName": "Wither Away",
+          "simcKey": "wither_away",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117664,
+          "displayName": "Mograine's Might",
+          "simcKey": "mograines_might",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117640,
+          "displayName": "Bind in Darkness",
+          "simcKey": "bind_in_darkness",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123410,
+          "displayName": "Pact of the Apocalypse",
+          "simcKey": "pact_of_the_apocalypse",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123410,
+              "displayName": "Pact of the Apocalypse",
+              "simcKey": "pact_of_the_apocalypse"
+            },
+            {
+              "talentId": 117634,
+              "displayName": "Horsemen's Aid",
+              "simcKey": "horsemens_aid"
+            }
+          ]
+        },
+        {
+          "talentId": 135993,
+          "displayName": "Frigid Resolve",
+          "simcKey": "frigid_resolve",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135999,
+          "displayName": "Ride or Die!",
+          "simcKey": "ride_or_die",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117644,
+          "displayName": "Whitemane's Famine",
+          "simcKey": "whitemanes_famine",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117658,
+          "displayName": "Soul Rupture",
+          "simcKey": "soul_rupture",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117631,
+          "displayName": "Grim Reaper",
+          "simcKey": "grim_reaper",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117656,
+          "displayName": "Nazgrim's Conquest",
+          "simcKey": "nazgrims_conquest",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117660,
+          "displayName": "Trollbane's Icy Fury",
+          "simcKey": "trollbanes_icy_fury",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123420,
+          "displayName": "Rune Carved Plates",
+          "simcKey": "rune_carved_plates",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123420,
+              "displayName": "Rune Carved Plates",
+              "simcKey": "rune_carved_plates"
+            },
+            {
+              "talentId": 117632,
+              "displayName": "Pact of the Deathbringer",
+              "simcKey": "pact_of_the_deathbringer"
+            }
+          ]
+        },
+        {
+          "talentId": 135992,
+          "displayName": "Deathly Blows",
+          "simcKey": "deathly_blows",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135998,
+          "displayName": "Let Terror Reign",
+          "simcKey": "let_terror_reign",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117629,
+          "displayName": "Swift and Painful",
+          "simcKey": "swift_and_painful",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117641,
+          "displayName": "Hungering Thirst",
+          "simcKey": "hungering_thirst",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123411,
+          "displayName": "A Feast of Souls",
+          "simcKey": "a_feast_of_souls",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123411,
+              "displayName": "A Feast of Souls",
+              "simcKey": "a_feast_of_souls"
+            },
+            {
+              "talentId": 117639,
+              "displayName": "Fury of the Horsemen",
+              "simcKey": "fury_of_the_horsemen"
+            }
+          ]
+        },
+        {
+          "talentId": 128266,
+          "displayName": "Reaper's Onslaught",
+          "simcKey": "reapers_onslaught",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128266,
+              "displayName": "Reaper's Onslaught",
+              "simcKey": "reapers_onslaught"
+            },
+            {
+              "talentId": 117654,
+              "displayName": "Dark Talons",
+              "simcKey": "dark_talons"
+            }
+          ]
+        },
+        {
+          "talentId": 117651,
+          "displayName": "Mawsworn Menace",
+          "simcKey": "mawsworn_menace",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 128234,
+          "displayName": "Expelling Shield",
+          "simcKey": "expelling_shield",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 128234,
+              "displayName": "Expelling Shield",
+              "simcKey": "expelling_shield"
+            },
+            {
+              "talentId": 117646,
+              "displayName": "Death's Messenger",
+              "simcKey": "deaths_messenger"
+            }
+          ]
+        },
+        {
+          "talentId": 135991,
+          "displayName": "Echoing Fury",
+          "simcKey": "echoing_fury",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135997,
+          "displayName": "Unholy Armaments",
+          "simcKey": "unholy_armaments",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117638,
+          "displayName": "Apocalypse Now",
+          "simcKey": "apocalypse_now",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117665,
+          "displayName": "Exterminate",
+          "simcKey": "exterminate",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "death_knight/unholy": {
+      "classId": 6,
+      "specId": 252,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 96210,
+          "displayName": "Icebound Fortitude",
+          "simcKey": "icebound_fortitude",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96200,
+          "displayName": "Death Strike",
+          "simcKey": "death_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96201,
+          "displayName": "Raise Dead",
+          "simcKey": "raise_dead",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96173,
+          "displayName": "Runic Attenuation",
+          "simcKey": "runic_attenuation",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96196,
+          "displayName": "Improved Death Strike",
+          "simcKey": "improved_death_strike",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96202,
+          "displayName": "Cleaving Strikes",
+          "simcKey": "cleaving_strikes",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96213,
+          "displayName": "Mind Freeze",
+          "simcKey": "mind_freeze",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96172,
+          "displayName": "Blinding Sleet",
+          "simcKey": "blinding_sleet",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96180,
+          "displayName": "Gloom Ward",
+          "simcKey": "gloom_ward",
+          "maxRank": 2,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133518,
+          "displayName": "Wraith Walk",
+          "simcKey": "wraith_walk",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133518,
+              "displayName": "Wraith Walk",
+              "simcKey": "wraith_walk"
+            },
+            {
+              "talentId": 96203,
+              "displayName": "March of Darkness",
+              "simcKey": "march_of_darkness"
+            }
+          ]
+        },
+        {
+          "talentId": 96198,
+          "displayName": "Unholy Momentum",
+          "simcKey": "unholy_momentum",
+          "maxRank": 2,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96188,
+          "displayName": "Control Undead",
+          "simcKey": "control_undead",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136523,
+          "displayName": "Enfeeble",
+          "simcKey": "enfeeble",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96212,
+          "displayName": "Coldthirst",
+          "simcKey": "coldthirst",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125606,
+          "displayName": "Proliferating Chill",
+          "simcKey": "proliferating_chill",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96195,
+          "displayName": "Permafrost",
+          "simcKey": "permafrost",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96197,
+          "displayName": "Veteran of the Third War",
+          "simcKey": "veteran_of_the_third_war",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96204,
+          "displayName": "Death Pact",
+          "simcKey": "death_pact",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96190,
+          "displayName": "Brittle",
+          "simcKey": "brittle",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96189,
+          "displayName": "Blood Bond",
+          "simcKey": "blood_bond",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96214,
+          "displayName": "Icy Talons",
+          "simcKey": "icy_talons",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136524,
+          "displayName": "Death Notes",
+          "simcKey": "death_notes",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96194,
+          "displayName": "Anti-Magic Zone",
+          "simcKey": "anti_magic_zone",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136525,
+          "displayName": "Death Defiance",
+          "simcKey": "death_defiance",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96205,
+          "displayName": "Unholy Bond",
+          "simcKey": "unholy_bond",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96215,
+          "displayName": "Ice Prison",
+          "simcKey": "ice_prison",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136526,
+          "displayName": "Death's Reach",
+          "simcKey": "deaths_reach",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136526,
+              "displayName": "Death's Reach",
+              "simcKey": "deaths_reach"
+            },
+            {
+              "talentId": 96193,
+              "displayName": "Asphyxiate",
+              "simcKey": "asphyxiate"
+            }
+          ]
+        },
+        {
+          "talentId": 96176,
+          "displayName": "Assimilation",
+          "simcKey": "assimilation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96174,
+          "displayName": "Anti-Magic Barrier",
+          "simcKey": "anti_magic_barrier",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96186,
+          "displayName": "Grip of the Dead",
+          "simcKey": "grip_of_the_dead",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96216,
+          "displayName": "Suppression",
+          "simcKey": "suppression",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96207,
+          "displayName": "Blood Scent",
+          "simcKey": "blood_scent",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96187,
+          "displayName": "Unholy Endurance",
+          "simcKey": "unholy_endurance",
+          "maxRank": 1,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96217,
+          "displayName": "Osmosis",
+          "simcKey": "osmosis",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96179,
+          "displayName": "Insidious Chill",
+          "simcKey": "insidious_chill",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96183,
+          "displayName": "Runic Protection",
+          "simcKey": "runic_protection",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96184,
+          "displayName": "Blood Draw",
+          "simcKey": "blood_draw",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96208,
+          "displayName": "Rune Mastery",
+          "simcKey": "rune_mastery",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96209,
+          "displayName": "Subduing Grasp",
+          "simcKey": "subduing_grasp",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96182,
+          "displayName": "Will of the Necropolis",
+          "simcKey": "will_of_the_necropolis",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126016,
+          "displayName": "Null Magic",
+          "simcKey": "null_magic",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96178,
+          "displayName": "Unyielding Will",
+          "simcKey": "unyielding_will",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 126015,
+          "displayName": "Death's Echo",
+          "simcKey": "deaths_echo",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96181,
+          "displayName": "Vestigial Shell",
+          "simcKey": "vestigial_shell",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 96326,
+          "displayName": "Outbreak",
+          "simcKey": "outbreak",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96327,
+          "displayName": "Scourge Strike",
+          "simcKey": "scourge_strike",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96328,
+          "displayName": "Sudden Doom",
+          "simcKey": "sudden_doom",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133523,
+          "displayName": "Clawing Shadows",
+          "simcKey": "clawing_shadows",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133522,
+          "displayName": "Putrefy",
+          "simcKey": "putrefy",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96322,
+          "displayName": "Dark Transformation",
+          "simcKey": "dark_transformation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96296,
+          "displayName": "Foul Infections",
+          "simcKey": "foul_infections",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133365,
+          "displayName": "Grave Mastery",
+          "simcKey": "grave_mastery",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133365,
+              "displayName": "Grave Mastery",
+              "simcKey": "grave_mastery"
+            },
+            {
+              "talentId": 96323,
+              "displayName": "Plague Mastery",
+              "simcKey": "plague_mastery"
+            }
+          ]
+        },
+        {
+          "talentId": 125816,
+          "displayName": "Doomed Bidding",
+          "simcKey": "doomed_bidding",
+          "maxRank": 1,
+          "row": 4,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96334,
+          "displayName": "Morbidity",
+          "simcKey": "morbidity",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96330,
+          "displayName": "Festering Scythe",
+          "simcKey": "festering_scythe",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96329,
+          "displayName": "Superstrain",
+          "simcKey": "superstrain",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133521,
+          "displayName": "March of Madness",
+          "simcKey": "march_of_madness",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96282,
+          "displayName": "Magus of the Dead",
+          "simcKey": "magus_of_the_dead",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96324,
+          "displayName": "Infected Claws",
+          "simcKey": "infected_claws",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96294,
+          "displayName": "Ebon Fever",
+          "simcKey": "ebon_fever",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96289,
+          "displayName": "Scythe of Decay",
+          "simcKey": "scythe_of_decay",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96290,
+          "displayName": "Coil of Devastation",
+          "simcKey": "coil_of_devastation",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96333,
+          "displayName": "Army of the Dead",
+          "simcKey": "army_of_the_dead",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96321,
+          "displayName": "Unholy Devotion",
+          "simcKey": "unholy_devotion",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 125815,
+          "displayName": "Menacing Magus",
+          "simcKey": "menacing_magus",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96331,
+          "displayName": "Ghoulish Frenzy",
+          "simcKey": "ghoulish_frenzy",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96332,
+          "displayName": "Blightfall",
+          "simcKey": "blightfall",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96313,
+          "displayName": "Harbinger of Doom",
+          "simcKey": "harbinger_of_doom",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133514,
+          "displayName": "Summon Gargoyle",
+          "simcKey": "summon_gargoyle",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 133514,
+              "displayName": "Summon Gargoyle",
+              "simcKey": "summon_gargoyle"
+            },
+            {
+              "talentId": 96311,
+              "displayName": "Raise Abomination",
+              "simcKey": "raise_abomination"
+            }
+          ]
+        },
+        {
+          "talentId": 133546,
+          "displayName": "Putrid Echoes",
+          "simcKey": "putrid_echoes",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96317,
+          "displayName": "All Will Serve",
+          "simcKey": "all_will_serve",
+          "maxRank": 1,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133515,
+          "displayName": "Blightburst",
+          "simcKey": "blightburst",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96314,
+          "displayName": "Soul Reaper",
+          "simcKey": "soul_reaper",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136797,
+          "displayName": "Necromancer's Cunning",
+          "simcKey": "necromancers_cunning",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133516,
+          "displayName": "Scourging",
+          "simcKey": "scourging",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96286,
+          "displayName": "Ancient Power",
+          "simcKey": "ancient_power",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133517,
+          "displayName": "Reaping",
+          "simcKey": "reaping",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96284,
+          "displayName": "Unholy Aura",
+          "simcKey": "unholy_aura",
+          "maxRank": 2,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96283,
+          "displayName": "Commander of the Dead",
+          "simcKey": "commander_of_the_dead",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 133513,
+          "displayName": "Pestilence",
+          "simcKey": "pestilence",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135676,
+          "displayName": "Reanimation",
+          "simcKey": "reanimation",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 96318,
+          "displayName": "Outnumber",
+          "simcKey": "outnumber",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136918,
+          "displayName": "Forbidden Knowledge",
+          "simcKey": "forbidden_knowledge",
+          "maxRank": 4,
+          "row": 11,
+          "col": 4,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117648,
+          "displayName": "Vampiric Strike",
+          "simcKey": "vampiric_strike",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117663,
+          "displayName": "Rider's Champion",
+          "simcKey": "riders_champion",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117892,
+          "displayName": "Vampiric Speed",
+          "simcKey": "vampiric_speed",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117892,
+              "displayName": "Vampiric Speed",
+              "simcKey": "vampiric_speed"
+            },
+            {
+              "talentId": 117661,
+              "displayName": "Newly Turned",
+              "simcKey": "newly_turned"
+            }
+          ]
+        },
+        {
+          "talentId": 123412,
+          "displayName": "Death Charge",
+          "simcKey": "death_charge",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123412,
+              "displayName": "Death Charge",
+              "simcKey": "death_charge"
+            },
+            {
+              "talentId": 117657,
+              "displayName": "On a Paler Horse",
+              "simcKey": "on_a_paler_horse"
+            }
+          ]
+        },
+        {
+          "talentId": 117664,
+          "displayName": "Mograine's Might",
+          "simcKey": "mograines_might",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136836,
+          "displayName": "Desecrate",
+          "simcKey": "desecrate",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136836,
+              "displayName": "Desecrate",
+              "simcKey": "desecrate"
+            },
+            {
+              "talentId": 117645,
+              "displayName": "Blood-Soaked Ground",
+              "simcKey": "blood_soaked_ground"
+            }
+          ]
+        },
+        {
+          "talentId": 117891,
+          "displayName": "Bloody Fortitude",
+          "simcKey": "bloody_fortitude",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117891,
+              "displayName": "Bloody Fortitude",
+              "simcKey": "bloody_fortitude"
+            },
+            {
+              "talentId": 117653,
+              "displayName": "Vampiric Aura",
+              "simcKey": "vampiric_aura"
+            }
+          ]
+        },
+        {
+          "talentId": 123410,
+          "displayName": "Pact of the Apocalypse",
+          "simcKey": "pact_of_the_apocalypse",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123410,
+              "displayName": "Pact of the Apocalypse",
+              "simcKey": "pact_of_the_apocalypse"
+            },
+            {
+              "talentId": 117634,
+              "displayName": "Horsemen's Aid",
+              "simcKey": "horsemens_aid"
+            }
+          ]
+        },
+        {
+          "talentId": 135995,
+          "displayName": "Thrill of Blood",
+          "simcKey": "thrill_of_blood",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135999,
+          "displayName": "Ride or Die!",
+          "simcKey": "ride_or_die",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117630,
+          "displayName": "Infliction of Sorrow",
+          "simcKey": "infliction_of_sorrow",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117644,
+          "displayName": "Whitemane's Famine",
+          "simcKey": "whitemanes_famine",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117656,
+          "displayName": "Nazgrim's Conquest",
+          "simcKey": "nazgrims_conquest",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117662,
+          "displayName": "Frenzied Bloodthirst",
+          "simcKey": "frenzied_bloodthirst",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117643,
+          "displayName": "The Blood is Life",
+          "simcKey": "the_blood_is_life",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117660,
+          "displayName": "Trollbane's Icy Fury",
+          "simcKey": "trollbanes_icy_fury",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135996,
+          "displayName": "Visceral Strength",
+          "simcKey": "visceral_strength",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135998,
+          "displayName": "Let Terror Reign",
+          "simcKey": "let_terror_reign",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117641,
+          "displayName": "Hungering Thirst",
+          "simcKey": "hungering_thirst",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117642,
+          "displayName": "Inevitable",
+          "simcKey": "inevitable",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117637,
+          "displayName": "Incite Terror",
+          "simcKey": "incite_terror",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123411,
+          "displayName": "A Feast of Souls",
+          "simcKey": "a_feast_of_souls",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123411,
+              "displayName": "A Feast of Souls",
+              "simcKey": "a_feast_of_souls"
+            },
+            {
+              "talentId": 117639,
+              "displayName": "Fury of the Horsemen",
+              "simcKey": "fury_of_the_horsemen"
+            }
+          ]
+        },
+        {
+          "talentId": 117651,
+          "displayName": "Mawsworn Menace",
+          "simcKey": "mawsworn_menace",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117893,
+          "displayName": "Sanguine Scent",
+          "simcKey": "sanguine_scent",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117893,
+              "displayName": "Sanguine Scent",
+              "simcKey": "sanguine_scent"
+            },
+            {
+              "talentId": 117652,
+              "displayName": "Pact of the San'layn",
+              "simcKey": "pact_of_the_sanlayn"
+            }
+          ]
+        },
+        {
+          "talentId": 135994,
+          "displayName": "Transfusion",
+          "simcKey": "transfusion",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135997,
+          "displayName": "Unholy Armaments",
+          "simcKey": "unholy_armaments",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117638,
+          "displayName": "Apocalypse Now",
+          "simcKey": "apocalypse_now",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117650,
+          "displayName": "Gift of the San'layn",
+          "simcKey": "gift_of_the_sanlayn",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    }
+  }
+}

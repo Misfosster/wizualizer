@@ -1,4 +1,5 @@
 import type { Node } from "@xyflow/react";
+import type { TalentState } from "@/utils/talents/types";
 
 export const CONDITION_HANDLE_IDS = {
   targetLeft: "condition-target-left",
@@ -6,6 +7,9 @@ export const CONDITION_HANDLE_IDS = {
   targetTop: "condition-target-top",
   sourceBottom: "condition-source-bottom",
 } as const;
+
+// Re-export so node consumers do not need to know about the talents module.
+export type { TalentState } from "@/utils/talents/types";
 
 export type GraphNodeKind =
   | "root"
@@ -39,6 +43,7 @@ export interface ActionNodeData extends Record<string, unknown> {
   hasCondition: boolean;
   hasChildren: boolean;
   isCollapsed: boolean;
+  talentState?: TalentState;
 }
 
 export interface VariableNodeData extends Record<string, unknown> {
@@ -51,6 +56,7 @@ export interface VariableNodeData extends Record<string, unknown> {
   hasChildren: boolean;
   isCollapsed: boolean;
   valueText: string;
+  talentState?: TalentState;
 }
 
 export interface UseItemNodeData extends Record<string, unknown> {
@@ -60,6 +66,7 @@ export interface UseItemNodeData extends Record<string, unknown> {
   hasCondition: boolean;
   hasChildren: boolean;
   isCollapsed: boolean;
+  talentState?: TalentState;
 }
 
 export interface CallActionListNodeData extends Record<string, unknown> {
@@ -69,6 +76,7 @@ export interface CallActionListNodeData extends Record<string, unknown> {
   hasCondition: boolean;
   hasChildren: boolean;
   isCollapsed: boolean;
+  talentState?: TalentState;
 }
 
 export interface SequenceNodeData extends Record<string, unknown> {
@@ -78,6 +86,7 @@ export interface SequenceNodeData extends Record<string, unknown> {
   hasCondition: boolean;
   hasChildren: boolean;
   isCollapsed: boolean;
+  talentState?: TalentState;
 }
 
 export interface ConditionHandleUsage extends Record<string, boolean | undefined> {
@@ -97,6 +106,7 @@ export interface ConditionNodeData extends Record<string, unknown> {
   kind: "condition";
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
+  talentState?: TalentState;
 }
 
 export interface ValueExpressionNodeData extends Record<string, unknown> {
@@ -104,6 +114,7 @@ export interface ValueExpressionNodeData extends Record<string, unknown> {
   kind: "valueExpression";
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
+  talentState?: TalentState;
 }
 
 export interface ContainerNodeData extends Record<string, unknown> {
@@ -112,6 +123,7 @@ export interface ContainerNodeData extends Record<string, unknown> {
   depth: number;
   operator: string;
   handleUsage?: ConditionHandleUsage;
+  talentState?: TalentState;
 }
 
 export type GraphNodeData =

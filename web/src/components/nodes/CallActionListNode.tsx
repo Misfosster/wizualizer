@@ -13,6 +13,7 @@ function CallActionListNode({
   return (
     <NodeCard
       className={`lc-node-card--callActionList ${data.hasChildren ? "lc-node-card--actionCollapsible" : ""}`}
+      talentState={data.talentState}
     >
       <TargetHandle isConnectable={isConnectable} />
       {data.hasChildren && !data.isCollapsed ? (

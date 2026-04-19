@@ -13,6 +13,7 @@ function UseItemNode({
   return (
     <NodeCard
       className={`lc-node-card--useItem ${data.hasChildren ? "lc-node-card--actionCollapsible" : ""}`}
+      talentState={data.talentState}
     >
       <TargetHandle isConnectable={isConnectable} />
       {data.hasChildren && !data.isCollapsed ? (

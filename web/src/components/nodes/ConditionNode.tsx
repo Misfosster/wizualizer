@@ -10,7 +10,7 @@ function ConditionNode({
   const handleUsage = data.handleUsage ?? {};
 
   return (
-    <NodeCard className="lc-node-card--condition">
+    <NodeCard className="lc-node-card--condition" talentState={data.talentState}>
       {handleUsage.targetLeft ? (
         <TargetHandle
           isConnectable={isConnectable}

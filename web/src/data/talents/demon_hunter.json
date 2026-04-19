@@ -1,0 +1,2630 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "byClassSpec": {
+    "demon_hunter/havoc": {
+      "classId": 12,
+      "specId": 577,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 112853,
+          "displayName": "Vengeful Retreat",
+          "simcKey": "vengeful_retreat",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112928,
+          "displayName": "Felblade",
+          "simcKey": "felblade",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112859,
+          "displayName": "Sigil of Misery",
+          "simcKey": "sigil_of_misery",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112840,
+          "displayName": "Vengeful Bonds",
+          "simcKey": "vengeful_bonds",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112852,
+          "displayName": "Unrestrained Fury",
+          "simcKey": "unrestrained_fury",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112863,
+          "displayName": "Shattered Restoration",
+          "simcKey": "shattered_restoration",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112858,
+          "displayName": "Improved Sigil of Misery",
+          "simcKey": "improved_sigil_of_misery",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112841,
+          "displayName": "Bouncing Glaives",
+          "simcKey": "bouncing_glaives",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112927,
+          "displayName": "Imprison",
+          "simcKey": "imprison",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112861,
+          "displayName": "Charred Warblades",
+          "simcKey": "charred_warblades",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112911,
+          "displayName": "Chaos Nova",
+          "simcKey": "chaos_nova",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112849,
+          "displayName": "Improved Disrupt",
+          "simcKey": "improved_disrupt",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112926,
+          "displayName": "Consume Magic",
+          "simcKey": "consume_magic",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112917,
+          "displayName": "Aldrachi Design",
+          "simcKey": "aldrachi_design",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117767,
+          "displayName": "Focused Ire",
+          "simcKey": "focused_ire",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117768,
+          "displayName": "Champion of the Glaive",
+          "simcKey": "champion_of_the_glaive",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117768,
+              "displayName": "Champion of the Glaive",
+              "simcKey": "champion_of_the_glaive"
+            },
+            {
+              "talentId": 112912,
+              "displayName": "Master of the Glaive",
+              "simcKey": "master_of_the_glaive"
+            }
+          ]
+        },
+        {
+          "talentId": 112848,
+          "displayName": "Disrupting Fury",
+          "simcKey": "disrupting_fury",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117759,
+          "displayName": "Blazing Path",
+          "simcKey": "blazing_path",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112925,
+          "displayName": "Swallowed Anger",
+          "simcKey": "swallowed_anger",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112844,
+          "displayName": "Aura of Pain",
+          "simcKey": "aura_of_pain",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117761,
+          "displayName": "Live by the Glaive",
+          "simcKey": "live_by_the_glaive",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112851,
+          "displayName": "Pursuit",
+          "simcKey": "pursuit",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112847,
+          "displayName": "Soul Rending",
+          "simcKey": "soul_rending",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112850,
+          "displayName": "Felfire Haste",
+          "simcKey": "felfire_haste",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112924,
+          "displayName": "Infernal Armor",
+          "simcKey": "infernal_armor",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136502,
+          "displayName": "Soul Cleanse",
+          "simcKey": "soul_cleanse",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136502,
+              "displayName": "Soul Cleanse",
+              "simcKey": "soul_cleanse"
+            },
+            {
+              "talentId": 112837,
+              "displayName": "Burn It Out",
+              "simcKey": "burn_it_out"
+            }
+          ]
+        },
+        {
+          "talentId": 112860,
+          "displayName": "Lost in Darkness",
+          "simcKey": "lost_in_darkness",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112846,
+          "displayName": "Illidari Knowledge",
+          "simcKey": "illidari_knowledge",
+          "maxRank": 2,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112923,
+          "displayName": "Felbound",
+          "simcKey": "felbound",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112918,
+          "displayName": "Will of the Illidari",
+          "simcKey": "will_of_the_illidari",
+          "maxRank": 2,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112845,
+          "displayName": "Internal Struggle",
+          "simcKey": "internal_struggle",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117762,
+          "displayName": "Furious",
+          "simcKey": "furious",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112839,
+          "displayName": "Remorseless",
+          "simcKey": "remorseless",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117758,
+          "displayName": "First In, Last Out",
+          "simcKey": "first_in_last_out",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112914,
+          "displayName": "Erratic Felheart",
+          "simcKey": "erratic_felheart",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136501,
+          "displayName": "Final Breath",
+          "simcKey": "final_breath",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112921,
+          "displayName": "Darkness",
+          "simcKey": "darkness",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112838,
+          "displayName": "Demon Muzzle",
+          "simcKey": "demon_muzzle",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112862,
+          "displayName": "Soul Splitter",
+          "simcKey": "soul_splitter",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136500,
+          "displayName": "Wings of Wrath",
+          "simcKey": "wings_of_wrath",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112919,
+          "displayName": "Pitch Black",
+          "simcKey": "pitch_black",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 112919,
+              "displayName": "Pitch Black",
+              "simcKey": "pitch_black"
+            },
+            {
+              "talentId": 112920,
+              "displayName": "Long Night",
+              "simcKey": "long_night"
+            }
+          ]
+        },
+        {
+          "talentId": 117755,
+          "displayName": "Demonic Resilience",
+          "simcKey": "demonic_resilience",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112820,
+          "displayName": "0",
+          "simcKey": "0",
+          "maxRank": 1,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 112939,
+          "displayName": "Eye Beam",
+          "simcKey": "eye_beam",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112951,
+          "displayName": "Critical Chaos",
+          "simcKey": "critical_chaos",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112832,
+          "displayName": "Burning Hatred",
+          "simcKey": "burning_hatred",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115245,
+          "displayName": "Dash of Chaos",
+          "simcKey": "dash_of_chaos",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112953,
+          "displayName": "Improved Chaos Strike",
+          "simcKey": "improved_chaos_strike",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112834,
+          "displayName": "First Blood",
+          "simcKey": "first_blood",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112932,
+          "displayName": "Accelerated Blade",
+          "simcKey": "accelerated_blade",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112938,
+          "displayName": "Demon Hide",
+          "simcKey": "demon_hide",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115248,
+          "displayName": "Desperate Instincts",
+          "simcKey": "desperate_instincts",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117743,
+          "displayName": "Mortal Dance",
+          "simcKey": "mortal_dance",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117743,
+              "displayName": "Mortal Dance",
+              "simcKey": "mortal_dance"
+            },
+            {
+              "talentId": 115246,
+              "displayName": "Deflecting Dance",
+              "simcKey": "deflecting_dance"
+            }
+          ]
+        },
+        {
+          "talentId": 112950,
+          "displayName": "Initiative",
+          "simcKey": "initiative",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112823,
+          "displayName": "Scars of Suffering",
+          "simcKey": "scars_of_suffering",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112831,
+          "displayName": "Demonic",
+          "simcKey": "demonic",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 115244,
+          "displayName": "Furious Throws",
+          "simcKey": "furious_throws",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112824,
+          "displayName": "Trail of Ruin",
+          "simcKey": "trail_of_ruin",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112944,
+          "displayName": "Tactical Retreat",
+          "simcKey": "tactical_retreat",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112949,
+          "displayName": "Blind Fury",
+          "simcKey": "blind_fury",
+          "maxRank": 2,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112948,
+          "displayName": "Furious Gaze",
+          "simcKey": "furious_gaze",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112936,
+          "displayName": "Dancing with Fate",
+          "simcKey": "dancing_with_fate",
+          "maxRank": 2,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112825,
+          "displayName": "Growing Inferno",
+          "simcKey": "growing_inferno",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117744,
+          "displayName": "Inertia",
+          "simcKey": "inertia",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117744,
+              "displayName": "Inertia",
+              "simcKey": "inertia"
+            },
+            {
+              "talentId": 112943,
+              "displayName": "Exergy",
+              "simcKey": "exergy"
+            }
+          ]
+        },
+        {
+          "talentId": 112959,
+          "displayName": "Isolated Prey",
+          "simcKey": "isolated_prey",
+          "maxRank": 1,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112830,
+          "displayName": "The Hunt",
+          "simcKey": "the_hunt",
+          "maxRank": 1,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112934,
+          "displayName": "Serrated Glaive",
+          "simcKey": "serrated_glaive",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112826,
+          "displayName": "Burning Wound",
+          "simcKey": "burning_wound",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112942,
+          "displayName": "Unbound Chaos",
+          "simcKey": "unbound_chaos",
+          "maxRank": 1,
+          "row": 8,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112958,
+          "displayName": "Chaos Theory",
+          "simcKey": "chaos_theory",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117765,
+          "displayName": "Chaotic Transformation",
+          "simcKey": "chaotic_transformation",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117765,
+              "displayName": "Chaotic Transformation",
+              "simcKey": "chaotic_transformation"
+            },
+            {
+              "talentId": 112947,
+              "displayName": "Inner Demon",
+              "simcKey": "inner_demon"
+            }
+          ]
+        },
+        {
+          "talentId": 117764,
+          "displayName": "Soulscar",
+          "simcKey": "soulscar",
+          "maxRank": 1,
+          "row": 8,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117764,
+              "displayName": "Soulscar",
+              "simcKey": "soulscar"
+            },
+            {
+              "talentId": 112933,
+              "displayName": "Relentless Onslaught",
+              "simcKey": "relentless_onslaught"
+            }
+          ]
+        },
+        {
+          "talentId": 112827,
+          "displayName": "Ragefire",
+          "simcKey": "ragefire",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112957,
+          "displayName": "Know Your Enemy",
+          "simcKey": "know_your_enemy",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112955,
+          "displayName": "Cycle of Hatred",
+          "simcKey": "cycle_of_hatred",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117754,
+          "displayName": "Chaotic Disposition",
+          "simcKey": "chaotic_disposition",
+          "maxRank": 2,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112956,
+          "displayName": "Essence Break",
+          "simcKey": "essence_break",
+          "maxRank": 1,
+          "row": 10,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134203,
+          "displayName": "Glaive Tempest",
+          "simcKey": "glaive_tempest",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134227,
+          "displayName": "Collective Anguish",
+          "simcKey": "collective_anguish",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 134227,
+              "displayName": "Collective Anguish",
+              "simcKey": "collective_anguish"
+            },
+            {
+              "talentId": 112954,
+              "displayName": "Shattered Destiny",
+              "simcKey": "shattered_destiny"
+            }
+          ]
+        },
+        {
+          "talentId": 112828,
+          "displayName": "Screaming Brutality",
+          "simcKey": "screaming_brutality",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117741,
+          "displayName": "A Fire Inside",
+          "simcKey": "a_fire_inside",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137047,
+          "displayName": "Eternal Hunt",
+          "simcKey": "eternal_hunt",
+          "maxRank": 4,
+          "row": 11,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117512,
+          "displayName": "Art of the Glaive",
+          "simcKey": "art_of_the_glaive",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117514,
+          "displayName": "Demonsurge",
+          "simcKey": "demonsurge",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135667,
+          "displayName": "Voidfall",
+          "simcKey": "voidfall",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136613,
+          "displayName": "Voidsurge",
+          "simcKey": "voidsurge",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117495,
+          "displayName": "Fury of the Aldrachi",
+          "simcKey": "fury_of_the_aldrachi",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 124011,
+          "displayName": "Pursuit of Angriness",
+          "simcKey": "pursuit_of_angriness",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 124011,
+              "displayName": "Pursuit of Angriness",
+              "simcKey": "pursuit_of_angriness"
+            },
+            {
+              "talentId": 117510,
+              "displayName": "Wave of Debilitation",
+              "simcKey": "wave_of_debilitation"
+            }
+          ]
+        },
+        {
+          "talentId": 135672,
+          "displayName": "Swift Erasure",
+          "simcKey": "swift_erasure",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136619,
+          "displayName": "Pursuit of Angriness",
+          "simcKey": "pursuit_of_angriness",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136619,
+              "displayName": "Pursuit of Angriness",
+              "simcKey": "pursuit_of_angriness"
+            },
+            {
+              "talentId": 136621,
+              "displayName": "Wave of Debilitation",
+              "simcKey": "wave_of_debilitation"
+            }
+          ]
+        },
+        {
+          "talentId": 117515,
+          "displayName": "Focused Hatred",
+          "simcKey": "focused_hatred",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123047,
+          "displayName": "Unhindered Assault",
+          "simcKey": "unhindered_assault",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123047,
+              "displayName": "Unhindered Assault",
+              "simcKey": "unhindered_assault"
+            },
+            {
+              "talentId": 117508,
+              "displayName": "Evasive Action",
+              "simcKey": "evasive_action"
+            }
+          ]
+        },
+        {
+          "talentId": 135673,
+          "displayName": "Meteoric Rise",
+          "simcKey": "meteoric_rise",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136612,
+          "displayName": "Focused Hatred",
+          "simcKey": "focused_hatred",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117500,
+          "displayName": "Reaver's Mark",
+          "simcKey": "reavers_mark",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 124010,
+          "displayName": "Improved Soul Rending",
+          "simcKey": "improved_soul_rending",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 124010,
+              "displayName": "Improved Soul Rending",
+              "simcKey": "improved_soul_rending"
+            },
+            {
+              "talentId": 117496,
+              "displayName": "Set Fire to the Pain",
+              "simcKey": "set_fire_to_the_pain"
+            }
+          ]
+        },
+        {
+          "talentId": 135671,
+          "displayName": "Catastrophe",
+          "simcKey": "catastrophe",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136618,
+          "displayName": "Improved Soul Rending",
+          "simcKey": "improved_soul_rending",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136618,
+              "displayName": "Improved Soul Rending",
+              "simcKey": "improved_soul_rending"
+            },
+            {
+              "talentId": 136620,
+              "displayName": "Set Fire to the Pain",
+              "simcKey": "set_fire_to_the_pain"
+            }
+          ]
+        },
+        {
+          "talentId": 135670,
+          "displayName": "Phase Shift",
+          "simcKey": "phase_shift",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136029,
+          "displayName": "Broken Spirit",
+          "simcKey": "broken_spirit",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136031,
+          "displayName": "Blind Focus",
+          "simcKey": "blind_focus",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136607,
+          "displayName": "Blind Focus",
+          "simcKey": "blind_focus",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117502,
+          "displayName": "Burning Blades",
+          "simcKey": "burning_blades",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117511,
+          "displayName": "Aldrachi Tactics",
+          "simcKey": "aldrachi_tactics",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135659,
+          "displayName": "State of Matter",
+          "simcKey": "state_of_matter",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135659,
+              "displayName": "State of Matter",
+              "simcKey": "state_of_matter"
+            },
+            {
+              "talentId": 135666,
+              "displayName": "Path to Oblivion",
+              "simcKey": "path_to_oblivion"
+            }
+          ]
+        },
+        {
+          "talentId": 136610,
+          "displayName": "Burning Blades",
+          "simcKey": "burning_blades",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117509,
+          "displayName": "Violent Transformation",
+          "simcKey": "violent_transformation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123046,
+          "displayName": "Incorruptible Spirit",
+          "simcKey": "incorruptible_spirit",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123046,
+              "displayName": "Incorruptible Spirit",
+              "simcKey": "incorruptible_spirit"
+            },
+            {
+              "talentId": 117493,
+              "displayName": "Army Unto Oneself",
+              "simcKey": "army_unto_oneself"
+            }
+          ]
+        },
+        {
+          "talentId": 135665,
+          "displayName": "Mass Acceleration",
+          "simcKey": "mass_acceleration",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136622,
+          "displayName": "Violent Transformation",
+          "simcKey": "violent_transformation",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117494,
+          "displayName": "Wounded Quarry",
+          "simcKey": "wounded_quarry",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117513,
+          "displayName": "Enduring Torment",
+          "simcKey": "enduring_torment",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136615,
+          "displayName": "Enduring Torment",
+          "simcKey": "enduring_torment",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136810,
+          "displayName": "Harness the Cosmos",
+          "simcKey": "harness_the_cosmos",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136810,
+              "displayName": "Harness the Cosmos",
+              "simcKey": "harness_the_cosmos"
+            },
+            {
+              "talentId": 135668,
+              "displayName": "Doomsayer",
+              "simcKey": "doomsayer"
+            }
+          ]
+        },
+        {
+          "talentId": 135669,
+          "displayName": "Celestial Echoes",
+          "simcKey": "celestial_echoes",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136028,
+          "displayName": "Keen Edge",
+          "simcKey": "keen_edge",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136032,
+          "displayName": "Undying Embers",
+          "simcKey": "undying_embers",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136609,
+          "displayName": "Undying Embers",
+          "simcKey": "undying_embers",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117492,
+          "displayName": "Incisive Blade",
+          "simcKey": "incisive_blade",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117501,
+          "displayName": "Untethered Fury",
+          "simcKey": "untethered_fury",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135663,
+          "displayName": "Final Hour",
+          "simcKey": "final_hour",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136606,
+          "displayName": "Untethered Fury",
+          "simcKey": "untethered_fury",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 122422,
+          "displayName": "Preemptive Strike",
+          "simcKey": "preemptive_strike",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 122422,
+              "displayName": "Preemptive Strike",
+              "simcKey": "preemptive_strike"
+            },
+            {
+              "talentId": 117507,
+              "displayName": "Keen Engagement",
+              "simcKey": "keen_engagement"
+            }
+          ]
+        },
+        {
+          "talentId": 124009,
+          "displayName": "Flamebound",
+          "simcKey": "flamebound",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 124009,
+              "displayName": "Flamebound",
+              "simcKey": "flamebound"
+            },
+            {
+              "talentId": 117499,
+              "displayName": "Student of Suffering",
+              "simcKey": "student_of_suffering"
+            }
+          ]
+        },
+        {
+          "talentId": 135664,
+          "displayName": "Meteoric Fall",
+          "simcKey": "meteoric_fall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136614,
+          "displayName": "Flamebound",
+          "simcKey": "flamebound",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136614,
+              "displayName": "Flamebound",
+              "simcKey": "flamebound"
+            },
+            {
+              "talentId": 136616,
+              "displayName": "Student of Suffering",
+              "simcKey": "student_of_suffering"
+            }
+          ]
+        },
+        {
+          "talentId": 117503,
+          "displayName": "Bladecraft",
+          "simcKey": "bladecraft",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117506,
+          "displayName": "Monster Rising",
+          "simcKey": "monster_rising",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135662,
+          "displayName": "Dark Matter",
+          "simcKey": "dark_matter",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136608,
+          "displayName": "Monster Rising",
+          "simcKey": "monster_rising",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135661,
+          "displayName": "Otherworldly Focus",
+          "simcKey": "otherworldly_focus",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136027,
+          "displayName": "Warblade's Hunger",
+          "simcKey": "warblades_hunger",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136030,
+          "displayName": "Volatile Instinct",
+          "simcKey": "volatile_instinct",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136611,
+          "displayName": "Volatile Instinct",
+          "simcKey": "volatile_instinct",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117498,
+          "displayName": "Demonic Intensity",
+          "simcKey": "demonic_intensity",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117516,
+          "displayName": "Thrill of the Fight",
+          "simcKey": "thrill_of_the_fight",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135660,
+          "displayName": "World Killer",
+          "simcKey": "world_killer",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136617,
+          "displayName": "Demonic Intensity",
+          "simcKey": "demonic_intensity",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    },
+    "demon_hunter/vengeance": {
+      "classId": 12,
+      "specId": 581,
+      "treeHash": "",
+      "classNodes": [
+        {
+          "talentId": 112853,
+          "displayName": "Vengeful Retreat",
+          "simcKey": "vengeful_retreat",
+          "maxRank": 1,
+          "row": 1,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134271,
+          "displayName": "Felblade",
+          "simcKey": "felblade",
+          "maxRank": 1,
+          "row": 1,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112859,
+          "displayName": "Sigil of Misery",
+          "simcKey": "sigil_of_misery",
+          "maxRank": 1,
+          "row": 1,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112840,
+          "displayName": "Vengeful Bonds",
+          "simcKey": "vengeful_bonds",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112852,
+          "displayName": "Unrestrained Fury",
+          "simcKey": "unrestrained_fury",
+          "maxRank": 1,
+          "row": 2,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112863,
+          "displayName": "Shattered Restoration",
+          "simcKey": "shattered_restoration",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112858,
+          "displayName": "Improved Sigil of Misery",
+          "simcKey": "improved_sigil_of_misery",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112841,
+          "displayName": "Bouncing Glaives",
+          "simcKey": "bouncing_glaives",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112927,
+          "displayName": "Imprison",
+          "simcKey": "imprison",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112861,
+          "displayName": "Charred Warblades",
+          "simcKey": "charred_warblades",
+          "maxRank": 1,
+          "row": 3,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134282,
+          "displayName": "Chaos Nova",
+          "simcKey": "chaos_nova",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112849,
+          "displayName": "Improved Disrupt",
+          "simcKey": "improved_disrupt",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112926,
+          "displayName": "Consume Magic",
+          "simcKey": "consume_magic",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112917,
+          "displayName": "Aldrachi Design",
+          "simcKey": "aldrachi_design",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117767,
+          "displayName": "Focused Ire",
+          "simcKey": "focused_ire",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117768,
+          "displayName": "Champion of the Glaive",
+          "simcKey": "champion_of_the_glaive",
+          "maxRank": 1,
+          "row": 5,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 117768,
+              "displayName": "Champion of the Glaive",
+              "simcKey": "champion_of_the_glaive"
+            },
+            {
+              "talentId": 112912,
+              "displayName": "Master of the Glaive",
+              "simcKey": "master_of_the_glaive"
+            }
+          ]
+        },
+        {
+          "talentId": 112848,
+          "displayName": "Disrupting Fury",
+          "simcKey": "disrupting_fury",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117759,
+          "displayName": "Blazing Path",
+          "simcKey": "blazing_path",
+          "maxRank": 1,
+          "row": 5,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112925,
+          "displayName": "Swallowed Anger",
+          "simcKey": "swallowed_anger",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112844,
+          "displayName": "Aura of Pain",
+          "simcKey": "aura_of_pain",
+          "maxRank": 1,
+          "row": 5,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117761,
+          "displayName": "Live by the Glaive",
+          "simcKey": "live_by_the_glaive",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112851,
+          "displayName": "Pursuit",
+          "simcKey": "pursuit",
+          "maxRank": 1,
+          "row": 6,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112847,
+          "displayName": "Soul Rending",
+          "simcKey": "soul_rending",
+          "maxRank": 2,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112850,
+          "displayName": "Felfire Haste",
+          "simcKey": "felfire_haste",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112924,
+          "displayName": "Infernal Armor",
+          "simcKey": "infernal_armor",
+          "maxRank": 2,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136502,
+          "displayName": "Soul Cleanse",
+          "simcKey": "soul_cleanse",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136502,
+              "displayName": "Soul Cleanse",
+              "simcKey": "soul_cleanse"
+            },
+            {
+              "talentId": 112837,
+              "displayName": "Burn It Out",
+              "simcKey": "burn_it_out"
+            }
+          ]
+        },
+        {
+          "talentId": 112860,
+          "displayName": "Lost in Darkness",
+          "simcKey": "lost_in_darkness",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112846,
+          "displayName": "Illidari Knowledge",
+          "simcKey": "illidari_knowledge",
+          "maxRank": 2,
+          "row": 7,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 134281,
+          "displayName": "Felbound",
+          "simcKey": "felbound",
+          "maxRank": 1,
+          "row": 7,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112918,
+          "displayName": "Will of the Illidari",
+          "simcKey": "will_of_the_illidari",
+          "maxRank": 2,
+          "row": 7,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112845,
+          "displayName": "Internal Struggle",
+          "simcKey": "internal_struggle",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117762,
+          "displayName": "Furious",
+          "simcKey": "furious",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112839,
+          "displayName": "Remorseless",
+          "simcKey": "remorseless",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117758,
+          "displayName": "First In, Last Out",
+          "simcKey": "first_in_last_out",
+          "maxRank": 1,
+          "row": 8,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112914,
+          "displayName": "Erratic Felheart",
+          "simcKey": "erratic_felheart",
+          "maxRank": 2,
+          "row": 9,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136501,
+          "displayName": "Final Breath",
+          "simcKey": "final_breath",
+          "maxRank": 1,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112921,
+          "displayName": "Darkness",
+          "simcKey": "darkness",
+          "maxRank": 1,
+          "row": 9,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112838,
+          "displayName": "Demon Muzzle",
+          "simcKey": "demon_muzzle",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112862,
+          "displayName": "Soul Splitter",
+          "simcKey": "soul_splitter",
+          "maxRank": 2,
+          "row": 9,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136500,
+          "displayName": "Wings of Wrath",
+          "simcKey": "wings_of_wrath",
+          "maxRank": 1,
+          "row": 10,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112919,
+          "displayName": "Pitch Black",
+          "simcKey": "pitch_black",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 112919,
+              "displayName": "Pitch Black",
+              "simcKey": "pitch_black"
+            },
+            {
+              "talentId": 112920,
+              "displayName": "Long Night",
+              "simcKey": "long_night"
+            }
+          ]
+        },
+        {
+          "talentId": 117755,
+          "displayName": "Demonic Resilience",
+          "simcKey": "demonic_resilience",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112820,
+          "displayName": "0",
+          "simcKey": "0",
+          "maxRank": 1,
+          "nodeType": "normal"
+        }
+      ],
+      "specNodes": [
+        {
+          "talentId": 112908,
+          "displayName": "Fel Devastation",
+          "simcKey": "fel_devastation",
+          "maxRank": 1,
+          "row": 1,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112907,
+          "displayName": "Spirit Bomb",
+          "simcKey": "spirit_bomb",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112864,
+          "displayName": "Fiery Brand",
+          "simcKey": "fiery_brand",
+          "maxRank": 1,
+          "row": 2,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112886,
+          "displayName": "Perfectly Balanced Glaive",
+          "simcKey": "perfectly_balanced_glaive",
+          "maxRank": 1,
+          "row": 3,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112906,
+          "displayName": "Quickened Sigils",
+          "simcKey": "quickened_sigils",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112875,
+          "displayName": "Ascending Flame",
+          "simcKey": "ascending_flame",
+          "maxRank": 1,
+          "row": 3,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112883,
+          "displayName": "Tempered Steel",
+          "simcKey": "tempered_steel",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112882,
+          "displayName": "Calcified Spikes",
+          "simcKey": "calcified_spikes",
+          "maxRank": 1,
+          "row": 4,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112904,
+          "displayName": "Sigil of Silence",
+          "simcKey": "sigil_of_silence",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 112904,
+              "displayName": "Sigil of Silence",
+              "simcKey": "sigil_of_silence"
+            },
+            {
+              "talentId": 112905,
+              "displayName": "Roaring Fire",
+              "simcKey": "roaring_fire"
+            }
+          ]
+        },
+        {
+          "talentId": 112865,
+          "displayName": "Retaliation",
+          "simcKey": "retaliation",
+          "maxRank": 1,
+          "row": 4,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112866,
+          "displayName": "Felfire Fist",
+          "simcKey": "felfire_fist",
+          "maxRank": 1,
+          "row": 4,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112894,
+          "displayName": "Sigil of Spite",
+          "simcKey": "sigil_of_spite",
+          "maxRank": 1,
+          "row": 5,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112887,
+          "displayName": "Agonizing Flames",
+          "simcKey": "agonizing_flames",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112881,
+          "displayName": "Feed the Demon",
+          "simcKey": "feed_the_demon",
+          "maxRank": 1,
+          "row": 5,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112903,
+          "displayName": "Burning Blood",
+          "simcKey": "burning_blood",
+          "maxRank": 1,
+          "row": 5,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112871,
+          "displayName": "Revel in Pain",
+          "simcKey": "revel_in_pain",
+          "maxRank": 1,
+          "row": 5,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112893,
+          "displayName": "Frailty",
+          "simcKey": "frailty",
+          "maxRank": 1,
+          "row": 6,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112884,
+          "displayName": "Feast of Souls",
+          "simcKey": "feast_of_souls",
+          "maxRank": 1,
+          "row": 6,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112888,
+          "displayName": "Fallout",
+          "simcKey": "fallout",
+          "maxRank": 1,
+          "row": 6,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112880,
+          "displayName": "Ruinous Bulwark",
+          "simcKey": "ruinous_bulwark",
+          "maxRank": 1,
+          "row": 6,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112902,
+          "displayName": "Volatile Flameblood",
+          "simcKey": "volatile_flameblood",
+          "maxRank": 1,
+          "row": 6,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112869,
+          "displayName": "Soul Sigils",
+          "simcKey": "soul_sigils",
+          "maxRank": 1,
+          "row": 6,
+          "col": 7,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 112869,
+              "displayName": "Soul Sigils",
+              "simcKey": "soul_sigils"
+            },
+            {
+              "talentId": 112870,
+              "displayName": "Soul Barrier",
+              "simcKey": "soul_barrier"
+            }
+          ]
+        },
+        {
+          "talentId": 112868,
+          "displayName": "Fel Flame Fortification",
+          "simcKey": "fel_flame_fortification",
+          "maxRank": 1,
+          "row": 6,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112890,
+          "displayName": "Void Reaver",
+          "simcKey": "void_reaver",
+          "maxRank": 1,
+          "row": 7,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112892,
+          "displayName": "Painbringer",
+          "simcKey": "painbringer",
+          "maxRank": 2,
+          "row": 7,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112867,
+          "displayName": "Sigil of Chains",
+          "simcKey": "sigil_of_chains",
+          "maxRank": 1,
+          "row": 7,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112872,
+          "displayName": "Fiery Demise",
+          "simcKey": "fiery_demise",
+          "maxRank": 2,
+          "row": 7,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112879,
+          "displayName": "Chains of Anger",
+          "simcKey": "chains_of_anger",
+          "maxRank": 1,
+          "row": 7,
+          "col": 9,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112891,
+          "displayName": "Focused Cleave",
+          "simcKey": "focused_cleave",
+          "maxRank": 1,
+          "row": 8,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112889,
+          "displayName": "Soulmonger",
+          "simcKey": "soulmonger",
+          "maxRank": 1,
+          "row": 8,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112900,
+          "displayName": "Stoke the Flames",
+          "simcKey": "stoke_the_flames",
+          "maxRank": 1,
+          "row": 8,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112873,
+          "displayName": "Burning Alive",
+          "simcKey": "burning_alive",
+          "maxRank": 1,
+          "row": 8,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112878,
+          "displayName": "Cycle of Binding",
+          "simcKey": "cycle_of_binding",
+          "maxRank": 1,
+          "row": 8,
+          "col": 8,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112897,
+          "displayName": "Vulnerability",
+          "simcKey": "vulnerability",
+          "maxRank": 2,
+          "row": 9,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112899,
+          "displayName": "Vengeful Beast",
+          "simcKey": "vengeful_beast",
+          "maxRank": 1,
+          "row": 9,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112877,
+          "displayName": "Charred Flesh",
+          "simcKey": "charred_flesh",
+          "maxRank": 2,
+          "row": 9,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112896,
+          "displayName": "Soulcrush",
+          "simcKey": "soulcrush",
+          "maxRank": 1,
+          "row": 10,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112898,
+          "displayName": "Soul Carver",
+          "simcKey": "soul_carver",
+          "maxRank": 1,
+          "row": 10,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112895,
+          "displayName": "Last Resort",
+          "simcKey": "last_resort",
+          "maxRank": 1,
+          "row": 10,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112901,
+          "displayName": "Darkglare Boon",
+          "simcKey": "darkglare_boon",
+          "maxRank": 1,
+          "row": 10,
+          "col": 6,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 112876,
+          "displayName": "Down in Flames",
+          "simcKey": "down_in_flames",
+          "maxRank": 1,
+          "row": 10,
+          "col": 7,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 137041,
+          "displayName": "Untethered Rage",
+          "simcKey": "untethered_rage",
+          "maxRank": 4,
+          "row": 11,
+          "col": 5,
+          "nodeType": "normal"
+        }
+      ],
+      "heroNodes": [
+        {
+          "talentId": 117512,
+          "displayName": "Art of the Glaive",
+          "simcKey": "art_of_the_glaive",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135667,
+          "displayName": "Voidfall",
+          "simcKey": "voidfall",
+          "maxRank": 1,
+          "row": 1,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117495,
+          "displayName": "Fury of the Aldrachi",
+          "simcKey": "fury_of_the_aldrachi",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135672,
+          "displayName": "Swift Erasure",
+          "simcKey": "swift_erasure",
+          "maxRank": 1,
+          "row": 2,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 123047,
+          "displayName": "Unhindered Assault",
+          "simcKey": "unhindered_assault",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123047,
+              "displayName": "Unhindered Assault",
+              "simcKey": "unhindered_assault"
+            },
+            {
+              "talentId": 117508,
+              "displayName": "Evasive Action",
+              "simcKey": "evasive_action"
+            }
+          ]
+        },
+        {
+          "talentId": 135673,
+          "displayName": "Meteoric Rise",
+          "simcKey": "meteoric_rise",
+          "maxRank": 1,
+          "row": 2,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117500,
+          "displayName": "Reaver's Mark",
+          "simcKey": "reavers_mark",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135671,
+          "displayName": "Catastrophe",
+          "simcKey": "catastrophe",
+          "maxRank": 1,
+          "row": 2,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135670,
+          "displayName": "Phase Shift",
+          "simcKey": "phase_shift",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136029,
+          "displayName": "Broken Spirit",
+          "simcKey": "broken_spirit",
+          "maxRank": 1,
+          "row": 2,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117511,
+          "displayName": "Aldrachi Tactics",
+          "simcKey": "aldrachi_tactics",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135659,
+          "displayName": "State of Matter",
+          "simcKey": "state_of_matter",
+          "maxRank": 1,
+          "row": 3,
+          "col": 1,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 135659,
+              "displayName": "State of Matter",
+              "simcKey": "state_of_matter"
+            },
+            {
+              "talentId": 135666,
+              "displayName": "Path to Oblivion",
+              "simcKey": "path_to_oblivion"
+            }
+          ]
+        },
+        {
+          "talentId": 123046,
+          "displayName": "Incorruptible Spirit",
+          "simcKey": "incorruptible_spirit",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 123046,
+              "displayName": "Incorruptible Spirit",
+              "simcKey": "incorruptible_spirit"
+            },
+            {
+              "talentId": 117493,
+              "displayName": "Army Unto Oneself",
+              "simcKey": "army_unto_oneself"
+            }
+          ]
+        },
+        {
+          "talentId": 135665,
+          "displayName": "Mass Acceleration",
+          "simcKey": "mass_acceleration",
+          "maxRank": 1,
+          "row": 3,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117494,
+          "displayName": "Wounded Quarry",
+          "simcKey": "wounded_quarry",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136810,
+          "displayName": "Harness the Cosmos",
+          "simcKey": "harness_the_cosmos",
+          "maxRank": 1,
+          "row": 3,
+          "col": 4,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 136810,
+              "displayName": "Harness the Cosmos",
+              "simcKey": "harness_the_cosmos"
+            },
+            {
+              "talentId": 135668,
+              "displayName": "Doomsayer",
+              "simcKey": "doomsayer"
+            }
+          ]
+        },
+        {
+          "talentId": 135669,
+          "displayName": "Celestial Echoes",
+          "simcKey": "celestial_echoes",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136028,
+          "displayName": "Keen Edge",
+          "simcKey": "keen_edge",
+          "maxRank": 1,
+          "row": 3,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117492,
+          "displayName": "Incisive Blade",
+          "simcKey": "incisive_blade",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135663,
+          "displayName": "Final Hour",
+          "simcKey": "final_hour",
+          "maxRank": 1,
+          "row": 4,
+          "col": 1,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 122422,
+          "displayName": "Preemptive Strike",
+          "simcKey": "preemptive_strike",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "choice",
+          "choices": [
+            {
+              "talentId": 122422,
+              "displayName": "Preemptive Strike",
+              "simcKey": "preemptive_strike"
+            },
+            {
+              "talentId": 117507,
+              "displayName": "Keen Engagement",
+              "simcKey": "keen_engagement"
+            }
+          ]
+        },
+        {
+          "talentId": 135664,
+          "displayName": "Meteoric Fall",
+          "simcKey": "meteoric_fall",
+          "maxRank": 1,
+          "row": 4,
+          "col": 2,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117503,
+          "displayName": "Bladecraft",
+          "simcKey": "bladecraft",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135662,
+          "displayName": "Dark Matter",
+          "simcKey": "dark_matter",
+          "maxRank": 1,
+          "row": 4,
+          "col": 4,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135661,
+          "displayName": "Otherworldly Focus",
+          "simcKey": "otherworldly_focus",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 136027,
+          "displayName": "Warblade's Hunger",
+          "simcKey": "warblades_hunger",
+          "maxRank": 1,
+          "row": 4,
+          "col": 5,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 117516,
+          "displayName": "Thrill of the Fight",
+          "simcKey": "thrill_of_the_fight",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        },
+        {
+          "talentId": 135660,
+          "displayName": "World Killer",
+          "simcKey": "world_killer",
+          "maxRank": 1,
+          "row": 5,
+          "col": 3,
+          "nodeType": "normal"
+        }
+      ]
+    }
+  }
+}

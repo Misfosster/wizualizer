@@ -52,7 +52,7 @@ function collectChainOperands(expr: Condition, op: string): Condition[] {
 }
 
 function findOtherSegment(
-  segments: Segment[],
+  segments: readonly Segment[],
   key: string,
 ): Extract<Segment, { type: "other" }> | undefined {
   return segments.find(
@@ -75,7 +75,7 @@ export function extractVariableData(segments: Segment[]): ExtractedVariableData 
   };
 }
 
-export function extractCallTarget(segments: Segment[]): string {
+export function extractCallTarget(segments: readonly Segment[]): string {
   const targetSegment = findOtherSegment(segments, "name");
   return targetSegment ? prettyCond(targetSegment.expr) : UNNAMED_ACTION_LIST;
 }

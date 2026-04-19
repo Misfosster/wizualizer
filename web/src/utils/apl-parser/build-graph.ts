@@ -15,6 +15,13 @@ import {
   type ValueExpressionNodeData,
   type VariableNodeData,
 } from "@/components/nodes/types";
+import type {
+  TalentRenderMode,
+  TalentRenderSummary,
+  TalentSelectionResult,
+  TalentState,
+} from "@/utils/talents/types";
+import type { ConditionOverrides } from "@/utils/conditions/types";
 import {
   EXPRESSION_NODE_BOUNDS,
   PROFILE_PADDING_ROWS,
@@ -34,10 +41,27 @@ import {
   placeValueExpressionGraph,
   type ConditionGraphResult,
 } from "./condition-layout";
+import {
+  getActionNodeId,
+  getBlockNodeId,
+  getRootNodeId,
+} from "./node-ids";
+import {
+  buildTalentRenderContext,
+  getActionTalentState,
+  getSurvivingActionIndices,
+  shouldKeepBlockInHide,
+  type TalentRenderContext,
+} from "./talent-rendering";
 export type { Point, Size } from "./grid-layout";
+export { getActionNodeId, getBlockNodeId, getRootNodeId } from "./node-ids";
 
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
 const VALUE_EDGE_STYLE = { stroke: "#8b5cf6" } as const;
+// Faded gray with reduced opacity for edges that touch a talent-impossible
+// action in Dim mode. Keeps the visual hierarchy correct: a dimmed action
+// should not anchor a fully bright connector.
+const IMPOSSIBLE_EDGE_STYLE = { stroke: "#9ca3af", opacity: 0.4 } as const;
 const NODE_BORDER_HEIGHT = 2;
 const NODE_VERTICAL_PADDING = 24;
 const NODE_HEADER_HEIGHT = 40;
@@ -76,24 +100,34 @@ interface GraphSectionResult {
 export interface GraphResult {
   nodes: GraphFlowNode[];
   edges: Edge[];
+  /**
+   * Present when `buildGraph` was invoked with a non-`off` `talentRenderMode`.
+   * The editor surface uses this to render the per-profile "N actions hidden"
+   * row inside the talent panel. Absent in Off mode so the surrounding code
+   * can treat its presence as an "explicitly filtered build" signal.
+   */
+  talentSummary?: TalentRenderSummary;
+}
+
+/**
+ * Optional inputs for the talent-aware passes. Defaults preserve the old
+ * behavior exactly (Off mode, no selections), so existing callers do not need
+ * to change.
+ */
+export interface BuildGraphOptions {
+  talentRenderMode?: TalentRenderMode;
+  talentSelectionsByProfile?: ReadonlyMap<number, TalentSelectionResult>;
+  /**
+   * Manual override panel state. Defaults to no overrides, in which
+   * case behaviour is identical to the talents-only flow.
+   */
+  conditionOverrides?: ConditionOverrides;
 }
 
 interface EdgeOptions {
   sourceHandle?: string;
   targetHandle?: string;
   style?: Edge["style"];
-}
-
-export function getBlockNodeId(profileIndex: number, blockName: string): string {
-  return `block__${String(profileIndex)}__${blockName}`;
-}
-
-export function getActionNodeId(
-  profileIndex: number,
-  blockName: string,
-  actionIndex: number,
-): string {
-  return `action__${String(profileIndex)}__${blockName}__${String(actionIndex)}`;
 }
 
 function createNode<T extends GraphNodeData>(
@@ -147,6 +181,33 @@ function markConditionHandleUsage(
   const handleUsage = handleUsageByNode.get(nodeId) ?? {};
   handleUsage[key] = true;
   handleUsageByNode.set(nodeId, handleUsage);
+}
+
+// Subtree nodes (condition / valueExpression / container) belong to a single
+// action. When that action is impossible in Dim mode, every descendant gets
+// the same `talentState` so the renderers can fade the whole subtree together.
+function withSubtreeTalentState(
+  nodes: GraphFlowNode[],
+  talentState: TalentState | undefined,
+): GraphFlowNode[] {
+  if (!talentState) {
+    return nodes;
+  }
+
+  return nodes.map((node) => {
+    if (
+      node.type !== "condition" &&
+      node.type !== "valueExpression" &&
+      node.type !== "container"
+    ) {
+      return node;
+    }
+
+    return {
+      ...node,
+      data: { ...node.data, talentState },
+    } as GraphFlowNode;
+  });
 }
 
 function withConditionHandleUsage(
@@ -215,6 +276,7 @@ function createActionNodeData(
   actionLine: ParsedActionLine,
   conditionCount: number,
   isCollapsed: boolean,
+  talentState: TalentState | undefined,
 ):
   | ActionNodeData
   | VariableNodeData
@@ -230,6 +292,7 @@ function createActionNodeData(
     hasChildren,
     isCollapsed: hasChildren && isCollapsed,
   };
+  const talentData = talentState ? { talentState } : {};
 
   switch (kind) {
     case "variable": {
@@ -238,6 +301,7 @@ function createActionNodeData(
         label: action.spell,
         kind: "variable",
         ...collapseData,
+        ...talentData,
         variableName: variableData.variableName,
         op: variableData.op,
         hasExplicitOp: variableData.hasExplicitOp,
@@ -249,6 +313,7 @@ function createActionNodeData(
         label: action.spell,
         kind: "callActionList",
         ...collapseData,
+        ...talentData,
         targetList: extractCallTarget(action.segments),
       };
     case "useItem":
@@ -256,6 +321,7 @@ function createActionNodeData(
         label: action.spell,
         kind: "useItem",
         ...collapseData,
+        ...talentData,
         itemName: extractUseItemName(action.segments),
       };
     case "sequence":
@@ -263,6 +329,7 @@ function createActionNodeData(
         label: action.spell,
         kind: "sequence",
         ...collapseData,
+        ...talentData,
         spells: extractSequenceSpells(action.segments),
       };
     case "action":
@@ -270,6 +337,7 @@ function createActionNodeData(
         label: action.spell,
         kind: "action",
         ...collapseData,
+        ...talentData,
       };
     default:
       return assertNever(kind);
@@ -361,6 +429,7 @@ function buildActionGraph(
   actionIndex: number,
   row: number,
   collapsedActions: ReadonlySet<string>,
+  talentState: TalentState | undefined,
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
@@ -369,7 +438,12 @@ function buildActionGraph(
     actionLine,
     conditionSegments.length,
     collapsedActions.has(actionId),
+    talentState,
   );
+  const isImpossible = talentState === "impossible";
+  const childEdgeStyle: Edge["style"] | undefined = isImpossible
+    ? IMPOSSIBLE_EDGE_STYLE
+    : undefined;
   const nodes: GraphFlowNode[] = [
     createGraphNode(actionId, actionNodeData, gridPoint("action", row)),
   ];
@@ -426,7 +500,7 @@ function buildActionGraph(
       },
     }));
 
-    nodes.push(...valueExpressionGraph.nodes);
+    nodes.push(...withSubtreeTalentState(valueExpressionGraph.nodes, talentState));
     edges.push(...valueExpressionGraph.edges);
     edges.push(
       createEdge(
@@ -436,7 +510,7 @@ function buildActionGraph(
         {
           sourceHandle: "val",
           targetHandle: CONDITION_HANDLE_IDS.targetLeft,
-          style: VALUE_EDGE_STYLE,
+          style: { ...VALUE_EDGE_STYLE, ...(childEdgeStyle ?? {}) },
         },
       ),
     );
@@ -460,7 +534,7 @@ function buildActionGraph(
     );
     alignActionToConditionEntry(conditionOrigin, conditionGraph);
 
-    nodes.push(...conditionGraph.nodes);
+    nodes.push(...withSubtreeTalentState(conditionGraph.nodes, talentState));
     edges.push(...conditionGraph.edges);
     edges.push(
       createEdge(
@@ -470,6 +544,7 @@ function buildActionGraph(
         {
           ...(actionNodeData.kind === "variable" ? { sourceHandle: "if" } : {}),
           targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+          ...(childEdgeStyle ? { style: childEdgeStyle } : {}),
         },
       ),
     );
@@ -491,12 +566,27 @@ function buildBlockGraph(
   startRow: number,
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
-): GraphSectionResult {
+  context: TalentRenderContext,
+): GraphSectionResult | null {
+  const survivingIndices = getSurvivingActionIndices(
+    block,
+    profileIndex,
+    context,
+  );
+
+  if (!shouldKeepBlockInHide(block, profileIndex, context, survivingIndices.length)) {
+    return null;
+  }
+
   const blockId = getBlockNodeId(profileIndex, block.name);
+  // In Hide mode, surfaced counts must match what the user actually sees.
+  // In Off and Dim, all actions are present, so the source count is correct.
+  const visibleActionCount =
+    context.mode === "hide" ? survivingIndices.length : block.actions.length;
   const blockNodeData: BlockNodeData = {
     label: block.name,
     kind: "block",
-    actionCount: block.actions.length,
+    actionCount: visibleActionCount,
     isCollapsed: collapsedBlocks.has(blockId),
   };
   const nodes: GraphFlowNode[] = [
@@ -512,7 +602,14 @@ function buildBlockGraph(
 
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;
-  for (let actionIndex = 0; actionIndex < block.actions.length; actionIndex++) {
+  for (let i = 0; i < survivingIndices.length; i++) {
+    const actionIndex = survivingIndices[i];
+    const talentState = getActionTalentState(
+      profileIndex,
+      block.name,
+      actionIndex,
+      context,
+    );
     const actionGraph = buildActionGraph(
       block.actions[actionIndex],
       profileIndex,
@@ -520,6 +617,7 @@ function buildBlockGraph(
       actionIndex,
       rowCursor,
       collapsedActions,
+      talentState,
     );
 
     nodes.push(...actionGraph.nodes);
@@ -528,11 +626,14 @@ function buildBlockGraph(
         `edge__${blockId}__${String(actionIndex)}`,
         blockId,
         actionGraph.nodes[0].id,
+        talentState === "impossible"
+          ? { style: IMPOSSIBLE_EDGE_STYLE }
+          : {},
       ),
     );
     edges.push(...actionGraph.edges);
     rowCursor += actionGraph.rowsUsed;
-    if (actionIndex < block.actions.length - 1) {
+    if (i < survivingIndices.length - 1) {
       rowCursor += ACTION_SECTION_GAP_ROWS;
     }
   }
@@ -547,32 +648,57 @@ function buildProfileGraph(
   startRow: number,
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
-): GraphSectionResult {
-  const rootId = `root__${String(profileIndex)}`;
+  context: TalentRenderContext,
+): GraphSectionResult | null {
+  // Build blocks first; in Hide mode some may be skipped entirely. We need to
+  // know that before deciding whether the profile root should appear at all.
+  const blockGraphs: GraphSectionResult[] = [];
+  let rowCursor = startRow;
+
+  for (const block of blocks) {
+    const blockGraph = buildBlockGraph(
+      block,
+      profileIndex,
+      getRootNodeId(profileIndex),
+      rowCursor,
+      collapsedBlocks,
+      collapsedActions,
+      context,
+    );
+    if (!blockGraph) {
+      continue;
+    }
+    blockGraphs.push(blockGraph);
+    rowCursor += blockGraph.rowsUsed;
+  }
+
+  if (context.mode === "hide" && blockGraphs.length === 0) {
+    return null;
+  }
+
+  const rootId = getRootNodeId(profileIndex);
   const rootNodeData: RootNodeData = {
     label: profileName,
     kind: "root",
-    blockCount: blocks.length,
-    actionCount: countActions(blocks),
+    blockCount:
+      context.mode === "hide" ? blockGraphs.length : blocks.length,
+    actionCount:
+      context.mode === "hide"
+        ? blockGraphs.reduce(
+            (total, blockGraph) =>
+              total + (blockGraph.nodes[0].data as BlockNodeData).actionCount,
+            0,
+          )
+        : countActions(blocks),
   };
   const nodes: GraphFlowNode[] = [
     createGraphNode(rootId, rootNodeData, gridPoint("root", startRow)),
   ];
   const edges: Edge[] = [];
 
-  let rowCursor = startRow;
-  for (const block of blocks) {
-    const blockGraph = buildBlockGraph(
-      block,
-      profileIndex,
-      rootId,
-      rowCursor,
-      collapsedBlocks,
-      collapsedActions,
-    );
+  for (const blockGraph of blockGraphs) {
     nodes.push(...blockGraph.nodes);
     edges.push(...blockGraph.edges);
-    rowCursor += blockGraph.rowsUsed;
   }
 
   return { nodes, edges, rowsUsed: Math.max(1, rowCursor - startRow) };
@@ -582,7 +708,15 @@ export function buildGraph(
   document: AplDocument,
   collapsedBlocks: ReadonlySet<string> = new Set<string>(),
   collapsedActions: ReadonlySet<string> = new Set<string>(),
+  options: BuildGraphOptions = {},
 ): GraphResult {
+  const mode: TalentRenderMode = options.talentRenderMode ?? "off";
+  const context = buildTalentRenderContext(
+    document,
+    mode,
+    options.talentSelectionsByProfile,
+    options.conditionOverrides,
+  );
   const nodes: GraphFlowNode[] = [];
   const edges: Edge[] = [];
   let profileStartRow = 0;
@@ -596,12 +730,31 @@ export function buildGraph(
       profileStartRow,
       collapsedBlocks,
       collapsedActions,
+      context,
     );
+
+    if (!profileGraph) {
+      // Hide eliminated this profile entirely: do not emit a root, do not
+      // reserve PROFILE_PADDING_ROWS so the layout compacts.
+      continue;
+    }
 
     nodes.push(...profileGraph.nodes);
     edges.push(...profileGraph.edges);
     profileStartRow += profileGraph.rowsUsed + PROFILE_PADDING_ROWS;
   }
 
-  return { nodes: withConditionHandleUsage(nodes, edges), edges };
+  const result: GraphResult = {
+    nodes: withConditionHandleUsage(nodes, edges),
+    edges,
+  };
+
+  if (mode !== "off") {
+    result.talentSummary = {
+      hiddenActionCountByProfile: context.hiddenCountByProfile,
+      hiddenActionsByProfile: context.hiddenActionsByProfile,
+    };
+  }
+
+  return result;
 }
