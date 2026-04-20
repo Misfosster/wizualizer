@@ -43,6 +43,7 @@ export function describeTalentRow(
   selection: TalentSelectionResult | undefined,
   hiddenActionCount: number,
   mode: TalentRenderMode,
+  overrideHiddenActionCount = 0,
 ): TalentRowDescriptor {
   const heading = formatHeading(profile);
   const status = selection?.status ?? { kind: "absent" as const };
@@ -51,7 +52,11 @@ export function describeTalentRow(
     heading,
     statusMessage,
     tone,
-    hiddenActionsMessage: formatHiddenSuffix(hiddenActionCount, mode),
+    hiddenActionsMessage: formatHiddenSuffix(
+      hiddenActionCount,
+      mode,
+      overrideHiddenActionCount,
+    ),
   };
 }
 
@@ -131,14 +136,33 @@ function describeStatus(
 function formatHiddenSuffix(
   hiddenActionCount: number,
   mode: TalentRenderMode,
+  overrideHiddenActionCount: number,
 ): string {
   if (mode === "off" || hiddenActionCount <= 0) {
     return "";
   }
-  const noun = hiddenActionCount === 1 ? "action" : "actions";
+  const overrideCount = Math.min(
+    hiddenActionCount,
+    Math.max(0, overrideHiddenActionCount),
+  );
+  const talentCount = hiddenActionCount - overrideCount;
   // Wording differs by mode so the row reads naturally:
   //   Dim: "3 actions dimmed"
   //   Hide: "3 actions hidden"
   const verb = mode === "dim" ? "dimmed" : "hidden";
+  if (overrideCount > 0 && talentCount > 0) {
+    return [
+      `${String(talentCount)} talent ${formatActionNoun(talentCount)} ${verb}`,
+      `${String(overrideCount)} override ${formatActionNoun(overrideCount)} ${verb}`,
+    ].join(", ");
+  }
+  if (overrideCount > 0) {
+    return `${String(overrideCount)} override ${formatActionNoun(overrideCount)} ${verb}`;
+  }
+  const noun = formatActionNoun(hiddenActionCount);
   return `${String(hiddenActionCount)} ${noun} ${verb}`;
+}
+
+function formatActionNoun(count: number): string {
+  return count === 1 ? "action" : "actions";
 }

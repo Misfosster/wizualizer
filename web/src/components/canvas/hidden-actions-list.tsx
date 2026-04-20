@@ -41,12 +41,15 @@ export function HiddenActionsList({
           <span className="font-mono text-gray-500">
             {action.blockName}
           </span>
-          <span className="text-gray-400">·</span>
+          <span className="text-gray-400">-</span>
           <span className="font-mono text-gray-500">
             line {String(action.lineNumber)}
           </span>
-          <span className="text-gray-400">·</span>
+          <span className="text-gray-400">-</span>
           <span className="font-semibold text-gray-800">{action.label}</span>
+          <span className="font-medium text-amber-700">
+            {action.reasonLabel}
+          </span>
           <span
             className="font-mono text-amber-700"
             title={action.reason}

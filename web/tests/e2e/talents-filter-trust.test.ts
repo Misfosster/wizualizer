@@ -15,7 +15,7 @@ import type { TalentSelectionResult } from "../../src/utils/talents/types";
  * Before this gate existed, a profile that carried a `talents=` line but
  * whose decoder had returned `missing_catalog` (the Phase C stub always
  * does that, and Phase D can still return it when the spec is new) had
- * every `talent.*` reference collapse to `rank=0` → `false`. That
+ * every `talent.*` reference collapse to `rank=0` -> `false`. That
  * silently nuked real actions like `call_action_list,name=single_totemic`
  * the user's APL contained. The fix: only profiles with
  * `status.kind === "decoded"` participate in filtering.
@@ -104,6 +104,32 @@ test("decoded status with rank=0 still filters (trust gate is specific, not blan
   expect(hidden?.[0]?.label).toBe("single_totemic");
 });
 
+test("decoded Totemic profile filters Stormbringer-only talent gates", () => {
+  const apl = [
+    'shaman="Totemic"',
+    "actions=call_action_list,name=stormbringer,if=talent.tempest.enabled",
+    "actions.stormbringer=lightning_bolt",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "hide",
+    talentSelectionsByProfile: new Map([
+      [0, decoded({ surging_totem: 1, totemic_rebound: 1 })],
+    ]),
+  });
+
+  expect(
+    result.nodes.find(
+      (n) => n.id === getActionNodeId(0, "actions", 0),
+    ),
+  ).toBeUndefined();
+  expect(result.talentSummary?.hiddenActionCountByProfile.get(0)).toBe(1);
+  const hidden = result.talentSummary?.hiddenActionsByProfile.get(0);
+  expect(hidden?.[0]?.reason).toContain("talent.tempest.enabled");
+  expect(hidden?.[0]?.reasonLabel).toBe("talent-decoded");
+});
+
 test("hiddenActionsByProfile lists the filtered action with its failing segment", () => {
   const apl = [
     'shaman="Demo"',
@@ -133,6 +159,7 @@ test("hiddenActionsByProfile lists the filtered action with its failing segment"
   // And the reason should be the failing `if=` clause, pretty-printed.
   expect(entry.reason).toContain("if=");
   expect(entry.reason).toContain("talent.surging_totem.enabled");
+  expect(entry.reasonLabel).toBe("talent-decoded");
   expect(entry.lineNumber).toBeGreaterThan(0);
 });
 

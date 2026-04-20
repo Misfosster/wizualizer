@@ -25,6 +25,7 @@ export interface TalentRenderContext {
   impossibleActionIds: ReadonlySet<string>;
   referencedBlocksByProfile: ReadonlyMap<number, ReadonlySet<string>>;
   hiddenCountByProfile: ReadonlyMap<number, number>;
+  hiddenActionById: ReadonlyMap<string, HiddenActionSummary>;
   /**
    * Per-profile, ordered list of hidden actions with enough context to
    * power the panel's "see what was filtered" inspector. Passed through
@@ -39,12 +40,15 @@ const EMPTY_REFS: ReadonlyMap<number, ReadonlySet<string>> = new Map();
 const EMPTY_COUNTS: ReadonlyMap<number, number> = new Map();
 const EMPTY_HIDDEN: ReadonlyMap<number, readonly HiddenActionSummary[]> =
   new Map();
+const EMPTY_HIDDEN_BY_ID: ReadonlyMap<string, HiddenActionSummary> =
+  new Map();
 
 const OFF_CONTEXT: TalentRenderContext = {
   mode: "off",
   impossibleActionIds: EMPTY_ACTIONS,
   referencedBlocksByProfile: EMPTY_REFS,
   hiddenCountByProfile: EMPTY_COUNTS,
+  hiddenActionById: EMPTY_HIDDEN_BY_ID,
   hiddenActionsByProfile: EMPTY_HIDDEN,
 };
 
@@ -64,6 +68,7 @@ export function buildTalentRenderContext(
     talentSelectionsByProfile: selectionsByProfile,
     conditionOverrides,
   });
+  const hiddenActionById = indexHiddenActions(impossible.hiddenActionsByProfile);
 
   if (mode === "dim") {
     return {
@@ -71,6 +76,7 @@ export function buildTalentRenderContext(
       impossibleActionIds: impossible.actionIds,
       referencedBlocksByProfile: EMPTY_REFS,
       hiddenCountByProfile: impossible.hiddenCountByProfile,
+      hiddenActionById,
       hiddenActionsByProfile: impossible.hiddenActionsByProfile,
     };
   }
@@ -83,8 +89,28 @@ export function buildTalentRenderContext(
       impossible,
     ),
     hiddenCountByProfile: impossible.hiddenCountByProfile,
+    hiddenActionById,
     hiddenActionsByProfile: impossible.hiddenActionsByProfile,
   };
+}
+
+function indexHiddenActions(
+  hiddenActionsByProfile: ReadonlyMap<
+    number,
+    readonly HiddenActionSummary[]
+  >,
+): ReadonlyMap<string, HiddenActionSummary> {
+  if (hiddenActionsByProfile.size === 0) {
+    return EMPTY_HIDDEN_BY_ID;
+  }
+
+  const byId = new Map<string, HiddenActionSummary>();
+  for (const actions of hiddenActionsByProfile.values()) {
+    for (const action of actions) {
+      byId.set(action.actionId, action);
+    }
+  }
+  return byId;
 }
 
 /**

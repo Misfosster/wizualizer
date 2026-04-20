@@ -53,6 +53,24 @@ test("groupAtoms places single-segment names under an empty subject row", () => 
   ]);
 });
 
+test("groupAtoms displays action cooldown atoms under cooldowns", () => {
+  const groups = groupAtoms(
+    atomsFor(`
+shaman="Test"
+spec=enhancement
+actions=fireblood,if=action.fireblood.cooldown&action.fireblood.duration>0
+`),
+  );
+  expect(groups).toHaveLength(1);
+  expect(groups[0].namespace).toBe("cooldown");
+  expect(groups[0].label).toBe("Cooldowns");
+  expect(groups[0].subjects[0].subject).toBe("fireblood");
+  expect(groups[0].subjects[0].atoms.map((atom) => atom.key)).toEqual([
+    "action.fireblood.duration",
+    "action.fireblood.cooldown",
+  ]);
+});
+
 test("filterAtomsBySearch returns input untouched for empty queries", () => {
   const atoms = atomsFor(DOC);
   expect(filterAtomsBySearch(atoms, "")).toBe(atoms);

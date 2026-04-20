@@ -5,7 +5,8 @@ import {
   isTalentAtomKey,
   parseAtomKey,
 } from "./atom-key";
-import type { ConditionAtom } from "./types";
+import { inferAtomValueKind } from "./atom-value-kind";
+import type { ConditionAtom, ConditionAtomValueKind } from "./types";
 
 /**
  * Walk a parsed APL document and collect every distinct atomic
@@ -50,7 +51,7 @@ export function extractConditionAtoms(
           if (segment.type !== "if" && segment.type !== "target_if") {
             continue;
           }
-          collectAtoms(segment.expr, all, profileAtoms);
+          collectAtoms(segment.expr, all, profileAtoms, "boolean");
         }
       }
     }
@@ -66,26 +67,32 @@ function collectAtoms(
   condition: Condition,
   all: Map<string, ConditionAtom>,
   profileAtoms: Map<string, ConditionAtom>,
+  usage: ConditionAtomValueKind,
 ): void {
   switch (condition.kind) {
     case "ident":
-      registerAtom(condition.name, all, profileAtoms);
+      registerAtom(condition.name, all, profileAtoms, usage);
       return;
     case "number":
       return;
     case "paren":
-      collectAtoms(condition.expr, all, profileAtoms);
+      collectAtoms(condition.expr, all, profileAtoms, usage);
       return;
     case "unary":
-      collectAtoms(condition.expr, all, profileAtoms);
+      collectAtoms(
+        condition.expr,
+        all,
+        profileAtoms,
+        condition.op === "!" ? "boolean" : "number",
+      );
       return;
     case "binary":
-      collectAtoms(condition.left, all, profileAtoms);
-      collectAtoms(condition.right, all, profileAtoms);
+      collectAtoms(condition.left, all, profileAtoms, binaryOperandUsage(condition.op));
+      collectAtoms(condition.right, all, profileAtoms, binaryOperandUsage(condition.op));
       return;
     case "call":
       for (const arg of condition.args) {
-        collectAtoms(arg, all, profileAtoms);
+        collectAtoms(arg, all, profileAtoms, "number");
       }
       return;
     case "sequence":
@@ -99,23 +106,43 @@ function registerAtom(
   rawName: string,
   all: Map<string, ConditionAtom>,
   profileAtoms: Map<string, ConditionAtom>,
+  usage: ConditionAtomValueKind,
 ): void {
   const key = canonicalAtomKey(rawName);
   if (key.length === 0) {
     return;
   }
 
+  const valueKind = inferAtomValueKind(key, usage);
   let atom = all.get(key);
-  if (!atom) {
+  if (!atom || shouldPromoteToNumber(atom.valueKind, valueKind)) {
     atom = {
       key,
       parts: parseAtomKey(key),
       isTalent: isTalentAtomKey(key),
+      valueKind,
     };
     all.set(key, atom);
   }
 
-  profileAtoms.set(key, atom);
+  const profileAtom = profileAtoms.get(key);
+  profileAtoms.set(
+    key,
+    profileAtom && !shouldPromoteToNumber(profileAtom.valueKind, valueKind)
+      ? profileAtom
+      : atom,
+  );
+}
+
+function binaryOperandUsage(op: string): ConditionAtomValueKind {
+  return op === "&" || op === "|" || op === "^" ? "boolean" : "number";
+}
+
+function shouldPromoteToNumber(
+  current: ConditionAtomValueKind,
+  next: ConditionAtomValueKind,
+): boolean {
+  return current === "boolean" && next === "number";
 }
 
 function sortAtoms(atoms: ConditionAtom[]): readonly ConditionAtom[] {

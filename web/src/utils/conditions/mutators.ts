@@ -2,6 +2,7 @@ import {
   EMPTY_ATOM_OVERRIDES,
   EMPTY_CONDITION_OVERRIDES,
   type AtomOverrides,
+  type AtomOverrideValue,
   type ConditionOverrides,
 } from "./types";
 
@@ -27,7 +28,7 @@ export function getOverrideValue(
   overrides: ConditionOverrides,
   scope: OverrideScope,
   key: string,
-): boolean | undefined {
+): AtomOverrideValue | undefined {
   return readScope(overrides, scope)[key];
 }
 
@@ -35,7 +36,7 @@ export function setOverride(
   overrides: ConditionOverrides,
   scope: OverrideScope,
   key: string,
-  value: boolean,
+  value: AtomOverrideValue,
 ): ConditionOverrides {
   const current = readScope(overrides, scope);
   if (current[key] === value) {
@@ -53,8 +54,7 @@ export function clearOverride(
   if (!(key in current)) {
     return overrides;
   }
-  const next: Record<string, boolean> = { ...current };
-  delete next[key];
+  const next = omitRecordKey(current, key);
   return writeScope(overrides, scope, next);
 }
 
@@ -81,8 +81,7 @@ export function clearScope(
   if (!(profileName in overrides.byProfile)) {
     return overrides;
   }
-  const nextByProfile: Record<string, AtomOverrides> = { ...overrides.byProfile };
-  delete nextByProfile[profileName];
+  const nextByProfile = omitRecordKey(overrides.byProfile, profileName);
   return collapseEmpty({
     global: overrides.global,
     byProfile: nextByProfile,
@@ -120,7 +119,10 @@ function writeScope(
   const profileName = scope.profile;
   const nextByProfile: Record<string, AtomOverrides> = { ...overrides.byProfile };
   if (Object.keys(next).length === 0) {
-    delete nextByProfile[profileName];
+    return collapseEmpty({
+      global: overrides.global,
+      byProfile: omitRecordKey(nextByProfile, profileName),
+    });
   } else {
     nextByProfile[profileName] = next;
   }
@@ -128,6 +130,19 @@ function writeScope(
     global: overrides.global,
     byProfile: nextByProfile,
   });
+}
+
+function omitRecordKey<T>(
+  record: Readonly<Record<string, T>>,
+  keyToOmit: string,
+): Record<string, T> {
+  const next: Record<string, T> = {};
+  for (const [key, value] of Object.entries(record)) {
+    if (key !== keyToOmit) {
+      next[key] = value;
+    }
+  }
+  return next;
 }
 
 /**

@@ -1,4 +1,9 @@
 import type { ConditionAtom } from "./types";
+import {
+  getAtomDisplayParts,
+  getAtomRowLabel,
+  getAtomSearchText,
+} from "./atom-display";
 
 /**
  * Pure helpers that turn a flat list of `ConditionAtom`s into the
@@ -32,6 +37,7 @@ export interface AtomSubgroup {
 
 export interface AtomGroup {
   namespace: string;
+  label: string;
   subjects: readonly AtomSubgroup[];
 }
 
@@ -41,8 +47,9 @@ export function groupAtoms(
   const byNamespace = new Map<string, Map<string, ConditionAtom[]>>();
 
   for (const atom of atoms) {
-    const namespaceBucket = ensureNamespaceBucket(byNamespace, atom.parts.namespace);
-    const subjectBucket = ensureSubjectBucket(namespaceBucket, atom.parts.subject);
+    const display = getAtomDisplayParts(atom);
+    const namespaceBucket = ensureNamespaceBucket(byNamespace, display.namespace);
+    const subjectBucket = ensureSubjectBucket(namespaceBucket, display.subject);
     subjectBucket.push(atom);
   }
 
@@ -59,7 +66,11 @@ export function groupAtoms(
         atoms: atomsInSubject.slice().sort(compareAtomsByProperty),
       });
     }
-    groups.push({ namespace, subjects });
+    groups.push({
+      namespace,
+      label: getNamespaceLabel(subjects[0]?.atoms[0], namespace),
+      subjects,
+    });
   }
   return groups;
 }
@@ -72,7 +83,7 @@ export function filterAtomsBySearch(
   if (needle.length === 0) {
     return atoms;
   }
-  return atoms.filter((atom) => atom.key.includes(needle));
+  return atoms.filter((atom) => getAtomSearchText(atom).includes(needle));
 }
 
 function ensureNamespaceBucket(
@@ -104,9 +115,19 @@ function sortKeys<V>(map: Map<string, V>): string[] {
 }
 
 function compareAtomsByProperty(a: ConditionAtom, b: ConditionAtom): number {
-  const propertyOrder = a.parts.property.localeCompare(b.parts.property);
+  const propertyOrder = getAtomRowLabel(a).localeCompare(getAtomRowLabel(b));
   if (propertyOrder !== 0) {
     return propertyOrder;
   }
   return a.key.localeCompare(b.key);
+}
+
+function getNamespaceLabel(
+  representative: ConditionAtom | undefined,
+  namespace: string,
+): string {
+  if (!representative) {
+    return namespace;
+  }
+  return getAtomDisplayParts(representative).namespaceLabel;
 }

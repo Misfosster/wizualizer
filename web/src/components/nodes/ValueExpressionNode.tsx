@@ -13,7 +13,11 @@ function ValueExpressionNode({
   const handleUsage = data.handleUsage ?? {};
 
   return (
-    <NodeCard className="lc-node-card--valueExpression" talentState={data.talentState}>
+    <NodeCard
+      className="lc-node-card--valueExpression"
+      talentState={data.talentState}
+      talentReason={data.talentReason}
+    >
       {handleUsage.targetLeft ? (
         <TargetHandle
           isConnectable={isConnectable}

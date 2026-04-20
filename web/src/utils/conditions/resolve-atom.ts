@@ -6,7 +6,7 @@ import {
   type EvalValue,
 } from "@/utils/talents/types";
 import { canonicalAtomKey, parseAtomKey } from "./atom-key";
-import type { AtomOverrides } from "./types";
+import type { AtomOverrideValue, AtomOverrides } from "./types";
 
 /**
  * Resolve a single condition atom to a concrete `EvalValue` using the
@@ -67,13 +67,13 @@ function resolveTalentAtom(
   context: ProfileResolutionContext,
 ): EvalValue {
   const override = context.globalOverrides[key];
-  if (typeof override === "boolean") {
+  if (isOverrideSet(override)) {
     if (property === "rank") {
       // A boolean override on a rank atom maps to 0 / 1 so comparisons
       // (`talent.foo.rank>=2`) still produce a definite truth value.
-      return numberValue(override ? 1 : 0);
+      return numberValue(toNumber(override));
     }
-    return boolValue(override);
+    return boolValue(toBoolean(override));
   }
 
   if (subject.length === 0) {
@@ -102,13 +102,213 @@ function resolveNonTalentAtom(
   key: string,
   context: ProfileResolutionContext,
 ): EvalValue {
-  const profileOverride = context.profileOverrides[key];
-  if (typeof profileOverride === "boolean") {
-    return boolValue(profileOverride);
-  }
-  const globalOverride = context.globalOverrides[key];
-  if (typeof globalOverride === "boolean") {
-    return boolValue(globalOverride);
-  }
+  const profileOverride = resolveLayerOverride(key, context.profileOverrides);
+  if (profileOverride) return profileOverride;
+
+  const globalOverride = resolveLayerOverride(key, context.globalOverrides);
+  if (globalOverride) return globalOverride;
+
   return UNKNOWN_VALUE;
+}
+
+function resolveLayerOverride(
+  key: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  const exact = overrides[key];
+  if (isOverrideSet(exact)) {
+    return toEvalValue(exact);
+  }
+  return resolveAliasOverride(key, overrides);
+}
+
+function resolveAliasOverride(
+  key: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  const parts = parseAtomKey(key);
+  const property = lastSegment(parts.property);
+
+  if (parts.namespace === "buff" || parts.namespace === "debuff") {
+    return resolveAuraAlias(parts.namespace, parts.subject, property, overrides);
+  }
+
+  if (parts.namespace === "dot") {
+    return resolveDotAlias(parts.subject, property, overrides);
+  }
+
+  if (parts.namespace === "cooldown") {
+    return resolveCooldownAlias(parts.subject, property || "up", overrides);
+  }
+
+  if (parts.namespace === "action" && parts.property === "cooldown") {
+    return resolveActionCooldownAlias(parts.subject, overrides);
+  }
+
+  return null;
+}
+
+function resolveAuraAlias(
+  namespace: string,
+  subject: string,
+  property: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject) return null;
+
+  if (property === "up") {
+    const down = overrideAt(overrides, `${namespace}.${subject}.down`);
+    if (isOverrideSet(down)) return boolValue(!toBoolean(down));
+    const quantity = firstSetOverride(overrides, [
+      `${namespace}.${subject}.stacks`,
+      `${namespace}.${subject}.stack`,
+      `${namespace}.${subject}.react`,
+      `${namespace}.${subject}.remains`,
+    ]);
+    return isOverrideSet(quantity) ? boolValue(toNumber(quantity) > 0) : null;
+  }
+
+  if (property === "down") {
+    const up = overrideAt(overrides, `${namespace}.${subject}.up`);
+    if (isOverrideSet(up)) return boolValue(!toBoolean(up));
+    const quantity = firstSetOverride(overrides, [
+      `${namespace}.${subject}.stacks`,
+      `${namespace}.${subject}.stack`,
+      `${namespace}.${subject}.react`,
+      `${namespace}.${subject}.remains`,
+    ]);
+    return isOverrideSet(quantity) ? boolValue(toNumber(quantity) <= 0) : null;
+  }
+
+  if (
+    property === "stacks" ||
+    property === "stack" ||
+    property === "react" ||
+    property === "remains"
+  ) {
+    const up = overrideAt(overrides, `${namespace}.${subject}.up`);
+    if (isOverrideSet(up)) return numberValue(toBoolean(up) ? 1 : 0);
+    const down = overrideAt(overrides, `${namespace}.${subject}.down`);
+    if (isOverrideSet(down)) return numberValue(toBoolean(down) ? 0 : 1);
+  }
+
+  return null;
+}
+
+function resolveDotAlias(
+  subject: string,
+  property: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject) return null;
+
+  if (property === "ticking") {
+    const remains = overrideAt(overrides, `dot.${subject}.remains`);
+    return isOverrideSet(remains) ? boolValue(toNumber(remains) > 0) : null;
+  }
+
+  if (property === "remains") {
+    const ticking = overrideAt(overrides, `dot.${subject}.ticking`);
+    return isOverrideSet(ticking)
+      ? numberValue(toBoolean(ticking) ? 1 : 0)
+      : null;
+  }
+
+  return null;
+}
+
+function resolveCooldownAlias(
+  subject: string,
+  property: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject) return null;
+
+  if (property === "up") {
+    const down = overrideAt(overrides, `cooldown.${subject}.down`);
+    if (isOverrideSet(down)) return boolValue(!toBoolean(down));
+    const remains = overrideAt(overrides, `cooldown.${subject}.remains`);
+    if (isOverrideSet(remains)) return boolValue(toNumber(remains) <= 0);
+    const actionCooldown = overrideAt(overrides, `action.${subject}.cooldown`);
+    return isOverrideSet(actionCooldown)
+      ? boolValue(toBoolean(actionCooldown))
+      : null;
+  }
+
+  if (property === "down") {
+    const up = overrideAt(overrides, `cooldown.${subject}.up`);
+    if (isOverrideSet(up)) return boolValue(!toBoolean(up));
+    const remains = overrideAt(overrides, `cooldown.${subject}.remains`);
+    if (isOverrideSet(remains)) return boolValue(toNumber(remains) > 0);
+    const actionCooldown = overrideAt(overrides, `action.${subject}.cooldown`);
+    return isOverrideSet(actionCooldown)
+      ? boolValue(!toBoolean(actionCooldown))
+      : null;
+  }
+
+  if (property === "remains") {
+    const up = firstSetOverride(overrides, [
+      `cooldown.${subject}.up`,
+      `action.${subject}.cooldown`,
+    ]);
+    if (isOverrideSet(up)) return numberValue(toBoolean(up) ? 0 : 1);
+    const down = overrideAt(overrides, `cooldown.${subject}.down`);
+    if (isOverrideSet(down)) return numberValue(toBoolean(down) ? 1 : 0);
+  }
+
+  return null;
+}
+
+function resolveActionCooldownAlias(
+  subject: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject) return null;
+  const up = overrideAt(overrides, `cooldown.${subject}.up`);
+  if (isOverrideSet(up)) return boolValue(toBoolean(up));
+  const down = overrideAt(overrides, `cooldown.${subject}.down`);
+  if (isOverrideSet(down)) return boolValue(!toBoolean(down));
+  const remains = overrideAt(overrides, `cooldown.${subject}.remains`);
+  return isOverrideSet(remains) ? boolValue(toNumber(remains) <= 0) : null;
+}
+
+function overrideAt(
+  overrides: AtomOverrides,
+  key: string,
+): AtomOverrideValue | undefined {
+  return overrides[key];
+}
+
+function firstSetOverride(
+  overrides: AtomOverrides,
+  keys: readonly string[],
+): AtomOverrideValue | undefined {
+  for (const key of keys) {
+    const value = overrideAt(overrides, key);
+    if (isOverrideSet(value)) return value;
+  }
+  return undefined;
+}
+
+function isOverrideSet(
+  value: AtomOverrideValue | undefined,
+): value is AtomOverrideValue {
+  return typeof value === "boolean" || typeof value === "number";
+}
+
+function toEvalValue(value: AtomOverrideValue): EvalValue {
+  return typeof value === "boolean" ? boolValue(value) : numberValue(value);
+}
+
+function toNumber(value: AtomOverrideValue): number {
+  return typeof value === "number" ? value : value ? 1 : 0;
+}
+
+function toBoolean(value: AtomOverrideValue): boolean {
+  return typeof value === "number" ? value !== 0 : value;
+}
+
+function lastSegment(value: string): string {
+  const segments = value.split(".");
+  return segments[segments.length - 1] ?? "";
 }

@@ -7,9 +7,10 @@
  * `talent.storm_unleashed.enabled`. Atoms are identified by their dotted
  * canonical key, which doubles as the storage key.
  *
- * Overrides are tri-state (true / false / absent). Absent means "no
- * opinion" - the evaluator falls back to its default (decoded talents
- * for `talent.*`, `unknown` for everything else).
+ * Overrides are typed by atom: boolean atoms are tri-state
+ * (true / false / absent), and numeric atoms store a finite number or
+ * absent. Absent means "no opinion" - the evaluator falls back to its
+ * default (decoded talents for `talent.*`, `unknown` for everything else).
  *
  * Two layers exist:
  *
@@ -36,16 +37,20 @@ export interface AtomParts {
 
 /** Canonical atom identifier - the source string itself, lower-cased. */
 export type AtomKey = string;
+export type ConditionAtomValueKind = "boolean" | "number";
+export type AtomOverrideValue = boolean | number;
 
 export interface ConditionAtom {
   key: AtomKey;
   parts: AtomParts;
   /** Convenience flag so the per-profile UI can render talents read-only. */
   isTalent: boolean;
+  /** Which control and evaluator value shape this atom should use. */
+  valueKind: ConditionAtomValueKind;
 }
 
-/** Tri-state encoded by presence: missing key = unknown / default. */
-export type AtomOverrides = Readonly<Record<AtomKey, boolean>>;
+/** Missing key = unknown / default. */
+export type AtomOverrides = Readonly<Record<AtomKey, AtomOverrideValue>>;
 
 export interface ConditionOverrides {
   global: AtomOverrides;

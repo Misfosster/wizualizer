@@ -23,6 +23,9 @@ function ContainerNode({ data, isConnectable }: NodeProps<ContainerFlowNode>) {
           : "lc-node-container"
       }
       data-talent-state={data.talentState ?? "normal"}
+      data-talent-reason={
+        isImpossible ? (data.talentReason ?? "filtered") : undefined
+      }
       style={{ width: "100%", height: "100%", borderColor }}
     >
       {handleUsage.targetLeft ? (

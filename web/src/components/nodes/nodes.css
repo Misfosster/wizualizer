@@ -442,7 +442,7 @@
   }
 
   .lc-node-card--impossible::after {
-    content: "filtered";
+    content: attr(data-talent-reason);
     position: absolute;
     top: -0.5rem;
     right: 0.75rem;

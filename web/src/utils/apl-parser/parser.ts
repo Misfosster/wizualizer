@@ -37,6 +37,19 @@ function tokenizeLine(line: string): AplToken[] {
   return tokens;
 }
 
+export function parseConditionExpression(source: string): Condition {
+  const tokens = tokenizeLine(source);
+  const ts = new TokenStream(tokens);
+  const expr = parseCondition(ts, 0, source);
+  if (!ts.eof()) {
+    const t = ts.peek();
+    throw new Error(
+      `Unexpected trailing token: ${String(t?.type)} ${JSON.stringify(t?.value)}`,
+    );
+  }
+  return expr;
+}
+
 export function parseAction(line: string): Action | null {
   const tokens = tokenizeLine(line);
 

@@ -34,6 +34,62 @@ test("non-talent global override applies when no profile override is set", () =>
   expect(result).toEqual({ kind: "bool", value: false });
 });
 
+test("numeric non-talent override resolves as a number", () => {
+  const result = resolveAtom(ident("cooldown.ascendance.remains"), {
+    ...baseContext,
+    profileOverrides: { "cooldown.ascendance.remains": 2.5 },
+  });
+  expect(result).toEqual({ kind: "number", value: 2.5 });
+});
+
+test("aura up overrides resolve stack comparisons through aliases", () => {
+  expect(
+    resolveAtom(ident("buff.outcrash_lightning.stacks"), {
+      ...baseContext,
+      globalOverrides: { "buff.outcrash_lightning.up": false },
+    }),
+  ).toEqual({ kind: "number", value: 0 });
+
+  expect(
+    resolveAtom(ident("buff.outcrash_lightning.up"), {
+      ...baseContext,
+      globalOverrides: { "buff.outcrash_lightning.stacks": 2 },
+    }),
+  ).toEqual({ kind: "bool", value: true });
+});
+
+test("aura up and down overrides resolve as inverse aliases", () => {
+  expect(
+    resolveAtom(ident("buff.outcrash_lightning.down"), {
+      ...baseContext,
+      globalOverrides: { "buff.outcrash_lightning.up": true },
+    }),
+  ).toEqual({ kind: "bool", value: false });
+
+  expect(
+    resolveAtom(ident("buff.outcrash_lightning.up"), {
+      ...baseContext,
+      globalOverrides: { "buff.outcrash_lightning.down": true },
+    }),
+  ).toEqual({ kind: "bool", value: false });
+});
+
+test("cooldown remains and up/down overrides resolve through aliases", () => {
+  expect(
+    resolveAtom(ident("cooldown.fireblood.remains"), {
+      ...baseContext,
+      globalOverrides: { "cooldown.fireblood.up": false },
+    }),
+  ).toEqual({ kind: "number", value: 1 });
+
+  expect(
+    resolveAtom(ident("action.fireblood.cooldown"), {
+      ...baseContext,
+      globalOverrides: { "cooldown.fireblood.remains": 0 },
+    }),
+  ).toEqual({ kind: "bool", value: true });
+});
+
 test("talent atom resolves from decoded selections by default", () => {
   expect(
     resolveAtom(ident("talent.storm_unleashed.enabled"), {
@@ -76,6 +132,15 @@ test("global override on talent.<key>.rank coerces to number", () => {
       globalOverrides: { "talent.storm_unleashed.rank": true },
     }),
   ).toEqual({ kind: "number", value: 1 });
+});
+
+test("numeric global override on talent.<key>.rank stays numeric", () => {
+  expect(
+    resolveAtom(ident("talent.storm_unleashed.rank"), {
+      ...baseContext,
+      globalOverrides: { "talent.storm_unleashed.rank": 2 },
+    }),
+  ).toEqual({ kind: "number", value: 2 });
 });
 
 test("per-profile override on a talent atom is ignored (talent layer locks)", () => {

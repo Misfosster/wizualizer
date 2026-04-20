@@ -44,6 +44,7 @@ export interface ActionNodeData extends Record<string, unknown> {
   hasChildren: boolean;
   isCollapsed: boolean;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface VariableNodeData extends Record<string, unknown> {
@@ -57,6 +58,7 @@ export interface VariableNodeData extends Record<string, unknown> {
   isCollapsed: boolean;
   valueText: string;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface UseItemNodeData extends Record<string, unknown> {
@@ -67,6 +69,7 @@ export interface UseItemNodeData extends Record<string, unknown> {
   hasChildren: boolean;
   isCollapsed: boolean;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface CallActionListNodeData extends Record<string, unknown> {
@@ -77,6 +80,7 @@ export interface CallActionListNodeData extends Record<string, unknown> {
   hasChildren: boolean;
   isCollapsed: boolean;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface SequenceNodeData extends Record<string, unknown> {
@@ -87,6 +91,7 @@ export interface SequenceNodeData extends Record<string, unknown> {
   hasChildren: boolean;
   isCollapsed: boolean;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface ConditionHandleUsage extends Record<string, boolean | undefined> {
@@ -107,6 +112,7 @@ export interface ConditionNodeData extends Record<string, unknown> {
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface ValueExpressionNodeData extends Record<string, unknown> {
@@ -115,6 +121,7 @@ export interface ValueExpressionNodeData extends Record<string, unknown> {
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export interface ContainerNodeData extends Record<string, unknown> {
@@ -124,6 +131,7 @@ export interface ContainerNodeData extends Record<string, unknown> {
   operator: string;
   handleUsage?: ConditionHandleUsage;
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 export type GraphNodeData =

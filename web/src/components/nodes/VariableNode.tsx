@@ -14,6 +14,7 @@ function VariableNode({
     <NodeCard
       className={`lc-node-card--variable ${data.hasChildren ? "lc-node-card--actionCollapsible" : ""}`}
       talentState={data.talentState}
+      talentReason={data.talentReason}
     >
       <TargetHandle isConnectable={isConnectable} />
       {!data.isCollapsed ? (

@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
@@ -6,9 +6,14 @@ import {
   readStoredTalentPanelCollapsed,
   writeStoredTalentPanelCollapsed,
 } from "@/state/storage";
+import { extractConditionAtoms } from "@/utils/conditions/extract-atoms";
+import type { ConditionAtom } from "@/utils/conditions/types";
 import { TalentModeSegmentedControl } from "./talent-mode-segmented-control";
 import { TalentProfileStatusList } from "./talent-profile-status-list";
 import { ConditionOverridesSection } from "./condition-overrides/ConditionOverridesSection";
+
+const EMPTY_PROFILE_ATOMS: ReadonlyMap<string, readonly ConditionAtom[]> =
+  new Map();
 
 /**
  * Compact canvas panel that exposes the talent render mode and reports the
@@ -41,6 +46,10 @@ export function TalentModePanel() {
   );
 
   const profiles = document?.profiles ?? [];
+  const profileAtomsByName = useMemo(
+    () => (document ? extractConditionAtoms(document).byProfile : EMPTY_PROFILE_ATOMS),
+    [document],
+  );
 
   // Local state because no graph derivation depends on this; the store
   // would be over-wiring. Persisted to localStorage so the choice rides
@@ -98,6 +107,7 @@ export function TalentModePanel() {
             selectionsByProfile={talentSelectionsByProfile}
             talentSummary={talentSummary}
             mode={talentRenderMode}
+            profileAtomsByName={profileAtomsByName}
           />
           <ConditionOverridesSection />
         </div>

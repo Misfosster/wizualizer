@@ -2,7 +2,8 @@ import { extractCallTarget } from "@/utils/apl-parser/action-data";
 import type { AplBlock, AplDocument } from "@/utils/apl-parser/document";
 import { getActionNodeId } from "@/utils/apl-parser/node-ids";
 import { prettySegment } from "@/utils/apl-parser/pretty-log";
-import type { Segment } from "@/utils/apl-parser/types";
+import type { Condition, Segment } from "@/utils/apl-parser/types";
+import { canonicalAtomKey, parseAtomKey } from "@/utils/conditions/atom-key";
 import { describeActionEligibilityIn } from "@/utils/talents/action-eligibility";
 import {
   EMPTY_ATOM_OVERRIDES,
@@ -163,6 +164,7 @@ export function computeImpossibleSet(
             actionLine.action.segments,
             actionLine.lineNumber,
             failingSegment,
+            context,
           ),
         );
       }
@@ -198,6 +200,10 @@ function summarizeHiddenAction(
   segments: readonly Segment[],
   lineNumber: number,
   failingSegment: Segment | undefined,
+  context: {
+    globalOverrides: AtomOverrides;
+    profileOverrides: AtomOverrides;
+  },
 ): HiddenActionSummary {
   return {
     actionId,
@@ -208,7 +214,85 @@ function summarizeHiddenAction(
     reason: failingSegment
       ? prettySegment(failingSegment)
       : "condition filter",
+    reasonLabel: classifyFailingSegment(failingSegment, context),
   };
+}
+
+function classifyFailingSegment(
+  segment: Segment | undefined,
+  context: {
+    globalOverrides: AtomOverrides;
+    profileOverrides: AtomOverrides;
+  },
+): string {
+  if (!segment) {
+    return "condition filter";
+  }
+
+  const atomKeys = collectAtomKeys(segment.expr);
+  if (
+    atomKeys.some(
+      (key) =>
+        hasOverride(context.profileOverrides, key) ||
+        hasOverride(context.globalOverrides, key),
+    )
+  ) {
+    return "forced off by override";
+  }
+
+  let sawTalent = false;
+  for (const key of atomKeys) {
+    const parts = parseAtomKey(key);
+    if (parts.namespace !== "talent") {
+      continue;
+    }
+    sawTalent = true;
+    if (parts.property === "rank") {
+      return "rank check";
+    }
+  }
+
+  return sawTalent ? "talent-decoded" : "condition false";
+}
+
+function hasOverride(overrides: AtomOverrides, key: string): boolean {
+  return Object.prototype.hasOwnProperty.call(overrides, key);
+}
+
+function collectAtomKeys(condition: Condition): string[] {
+  const keys = new Set<string>();
+  collectAtomKeysInto(condition, keys);
+  return Array.from(keys);
+}
+
+function collectAtomKeysInto(condition: Condition, keys: Set<string>): void {
+  switch (condition.kind) {
+    case "ident": {
+      const key = canonicalAtomKey(condition.name);
+      if (key.length > 0) {
+        keys.add(key);
+      }
+      return;
+    }
+    case "number":
+    case "sequence":
+      return;
+    case "paren":
+      collectAtomKeysInto(condition.expr, keys);
+      return;
+    case "unary":
+      collectAtomKeysInto(condition.expr, keys);
+      return;
+    case "binary":
+      collectAtomKeysInto(condition.left, keys);
+      collectAtomKeysInto(condition.right, keys);
+      return;
+    case "call":
+      for (const arg of condition.args) {
+        collectAtomKeysInto(arg, keys);
+      }
+      return;
+  }
 }
 
 /**

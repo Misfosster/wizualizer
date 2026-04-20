@@ -1,4 +1,5 @@
 import type { AplProfile } from "@/utils/apl-parser/document";
+import type { ConditionAtom } from "@/utils/conditions/types";
 import type {
   TalentRenderMode,
   TalentRenderSummary,
@@ -25,6 +26,7 @@ export interface TalentProfileStatusListProps {
   selectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   talentSummary: TalentRenderSummary | null;
   mode: TalentRenderMode;
+  profileAtomsByName: ReadonlyMap<string, readonly ConditionAtom[]>;
 }
 
 export function TalentProfileStatusList({
@@ -32,6 +34,7 @@ export function TalentProfileStatusList({
   selectionsByProfile,
   talentSummary,
   mode,
+  profileAtomsByName,
 }: TalentProfileStatusListProps) {
   if (profiles.length === 0) {
     return null;
@@ -48,7 +51,17 @@ export function TalentProfileStatusList({
           talentSummary?.hiddenActionCountByProfile.get(profileIndex) ?? 0;
         const hiddenActions =
           talentSummary?.hiddenActionsByProfile.get(profileIndex) ?? [];
-        const row = describeTalentRow(profile, selection, hiddenCount, mode);
+        const overrideHiddenCount = hiddenActions.filter(
+          (action) => action.reasonLabel === "forced off by override",
+        ).length;
+        const row = describeTalentRow(
+          profile,
+          selection,
+          hiddenCount,
+          mode,
+          overrideHiddenCount,
+        );
+        const profileAtoms = profileAtomsByName.get(profile.name) ?? [];
         return (
           <TalentProfileStatusRow
             key={`${String(profileIndex)}__${profile.name}`}
@@ -56,6 +69,7 @@ export function TalentProfileStatusList({
             profileName={profile.name}
             row={row}
             hiddenActions={hiddenActions}
+            profileAtoms={profileAtoms}
           />
         );
       })}

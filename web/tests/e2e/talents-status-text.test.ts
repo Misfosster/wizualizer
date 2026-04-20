@@ -82,6 +82,18 @@ test("hidden suffix uses 'hidden' verb in hide mode and pluralizes correctly", (
   expect(many.hiddenActionsMessage).toBe("5 actions hidden");
 });
 
+test("hidden suffix splits mixed talent and override counts", () => {
+  const row = describeTalentRow(ENHANCEMENT, undefined, 3, "dim", 1);
+  expect(row.hiddenActionsMessage).toBe(
+    "2 talent actions dimmed, 1 override action dimmed",
+  );
+});
+
+test("hidden suffix labels override-only counts", () => {
+  const row = describeTalentRow(ENHANCEMENT, undefined, 2, "hide", 2);
+  expect(row.hiddenActionsMessage).toBe("2 override actions hidden");
+});
+
 test("hidden suffix is empty in off mode regardless of count", () => {
   const row = describeTalentRow(ENHANCEMENT, undefined, 7, "off");
   expect(row.hiddenActionsMessage).toBe("");

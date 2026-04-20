@@ -83,6 +83,9 @@ export interface TalentSelectionResult {
  * (`if=...` or `target_if=...`) that proved false. Using the first failing
  * segment keeps the row compact; users who need every failing segment can
  * open the action in the editor at `lineNumber`.
+ *
+ * `reasonLabel` is the short classification used by graph badges and status
+ * copy. `reason` keeps the exact expression for the inspector row.
  */
 export interface HiddenActionSummary {
   /** Stable graph-node id (matches `getActionNodeId`). */
@@ -97,6 +100,8 @@ export interface HiddenActionSummary {
   label: string;
   /** The eligibility segment that proved false, e.g. `if=talent.foo`. */
   reason: string;
+  /** Short cause label, e.g. `forced off by override` or `rank check`. */
+  reasonLabel: string;
 }
 
 /**

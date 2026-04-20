@@ -10,7 +10,11 @@ import {
 
 test("round-trip preserves global and per-profile entries", () => {
   const overrides: ConditionOverrides = {
-    global: { "buff.ascendance.up": true, "talent.storm_unleashed.enabled": false },
+    global: {
+      "buff.ascendance.up": true,
+      "cooldown.doom_winds.remains": 3.5,
+      "talent.storm_unleashed.enabled": false,
+    },
     byProfile: {
       Test: { "buff.hot_hand.up": false },
     },
@@ -40,11 +44,11 @@ test("wrong version blob is treated as empty", () => {
   );
 });
 
-test("non-boolean override values are filtered out", () => {
+test("non-boolean / non-number override values are filtered out", () => {
   const dirty = JSON.stringify({
     v: 1,
     global: { "buff.x.up": true, "buff.y.up": "yes", "buff.z.up": 1 },
   });
   const parsed = deserializeConditionOverrides(dirty);
-  expect(parsed.global).toEqual({ "buff.x.up": true });
+  expect(parsed.global).toEqual({ "buff.x.up": true, "buff.z.up": 1 });
 });

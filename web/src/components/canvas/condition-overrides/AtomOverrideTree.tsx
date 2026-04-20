@@ -1,6 +1,8 @@
 import { AtomOverrideRow } from "./AtomOverrideRow";
-import type { TriStateValue } from "./TriStateOverridePill";
-import type { ConditionAtom } from "@/utils/conditions/types";
+import type {
+  AtomOverrideValue,
+  ConditionAtom,
+} from "@/utils/conditions/types";
 import type { AtomGroup } from "@/utils/conditions/group-atoms";
 
 /**
@@ -19,16 +21,20 @@ import type { AtomGroup } from "@/utils/conditions/group-atoms";
 
 export interface AtomOverrideTreeProps {
   groups: readonly AtomGroup[];
-  getValue: (atom: ConditionAtom) => TriStateValue;
-  onChange: (atom: ConditionAtom, next: TriStateValue) => void;
+  getValue: (atom: ConditionAtom) => AtomOverrideValue | undefined;
+  onChange: (atom: ConditionAtom, next: AtomOverrideValue | undefined) => void;
+  onRemove?: (atom: ConditionAtom) => void;
   isDisabled?: (atom: ConditionAtom) => boolean;
+  getDisabledReason?: (atom: ConditionAtom) => string | undefined;
 }
 
 export function AtomOverrideTree({
   groups,
   getValue,
   onChange,
+  onRemove,
   isDisabled,
+  getDisabledReason,
 }: AtomOverrideTreeProps) {
   return (
     <ul
@@ -41,7 +47,9 @@ export function AtomOverrideTree({
           group={group}
           getValue={getValue}
           onChange={onChange}
+          onRemove={onRemove}
           isDisabled={isDisabled}
+          getDisabledReason={getDisabledReason}
         />
       ))}
     </ul>
@@ -50,21 +58,25 @@ export function AtomOverrideTree({
 
 interface NamespaceGroupProps {
   group: AtomGroup;
-  getValue: (atom: ConditionAtom) => TriStateValue;
-  onChange: (atom: ConditionAtom, next: TriStateValue) => void;
+  getValue: (atom: ConditionAtom) => AtomOverrideValue | undefined;
+  onChange: (atom: ConditionAtom, next: AtomOverrideValue | undefined) => void;
+  onRemove?: (atom: ConditionAtom) => void;
   isDisabled?: (atom: ConditionAtom) => boolean;
+  getDisabledReason?: (atom: ConditionAtom) => string | undefined;
 }
 
 function NamespaceGroup({
   group,
   getValue,
   onChange,
+  onRemove,
   isDisabled,
+  getDisabledReason,
 }: NamespaceGroupProps) {
   return (
     <li data-condition-override-namespace={group.namespace} className="m-0">
       <div className="select-none px-1 text-[10px] font-semibold uppercase tracking-wide text-gray-500">
-        {group.namespace}
+        {group.label}
       </div>
       <ul className="m-0 flex list-none flex-col p-0">
         {group.subjects.map((subgroup) => (
@@ -85,6 +97,14 @@ function NamespaceGroup({
                   atom={atom}
                   value={getValue(atom)}
                   disabled={isDisabled ? isDisabled(atom) : false}
+                  disabledReason={getDisabledReason?.(atom)}
+                  onRemove={
+                    onRemove
+                      ? () => {
+                          onRemove(atom);
+                        }
+                      : undefined
+                  }
                   onChange={(next) => {
                     onChange(atom, next);
                   }}

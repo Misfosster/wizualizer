@@ -189,6 +189,7 @@ function markConditionHandleUsage(
 function withSubtreeTalentState(
   nodes: GraphFlowNode[],
   talentState: TalentState | undefined,
+  talentReason: string | undefined,
 ): GraphFlowNode[] {
   if (!talentState) {
     return nodes;
@@ -205,7 +206,11 @@ function withSubtreeTalentState(
 
     return {
       ...node,
-      data: { ...node.data, talentState },
+      data: {
+        ...node.data,
+        talentState,
+        ...(talentReason ? { talentReason } : {}),
+      },
     } as GraphFlowNode;
   });
 }
@@ -277,6 +282,7 @@ function createActionNodeData(
   conditionCount: number,
   isCollapsed: boolean,
   talentState: TalentState | undefined,
+  talentReason: string | undefined,
 ):
   | ActionNodeData
   | VariableNodeData
@@ -292,7 +298,9 @@ function createActionNodeData(
     hasChildren,
     isCollapsed: hasChildren && isCollapsed,
   };
-  const talentData = talentState ? { talentState } : {};
+  const talentData = talentState
+    ? { talentState, ...(talentReason ? { talentReason } : {}) }
+    : {};
 
   switch (kind) {
     case "variable": {
@@ -430,6 +438,7 @@ function buildActionGraph(
   row: number,
   collapsedActions: ReadonlySet<string>,
   talentState: TalentState | undefined,
+  talentReason: string | undefined,
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
@@ -439,6 +448,7 @@ function buildActionGraph(
     conditionSegments.length,
     collapsedActions.has(actionId),
     talentState,
+    talentReason,
   );
   const isImpossible = talentState === "impossible";
   const childEdgeStyle: Edge["style"] | undefined = isImpossible
@@ -500,7 +510,13 @@ function buildActionGraph(
       },
     }));
 
-    nodes.push(...withSubtreeTalentState(valueExpressionGraph.nodes, talentState));
+    nodes.push(
+      ...withSubtreeTalentState(
+        valueExpressionGraph.nodes,
+        talentState,
+        talentReason,
+      ),
+    );
     edges.push(...valueExpressionGraph.edges);
     edges.push(
       createEdge(
@@ -534,7 +550,13 @@ function buildActionGraph(
     );
     alignActionToConditionEntry(conditionOrigin, conditionGraph);
 
-    nodes.push(...withSubtreeTalentState(conditionGraph.nodes, talentState));
+    nodes.push(
+      ...withSubtreeTalentState(
+        conditionGraph.nodes,
+        talentState,
+        talentReason,
+      ),
+    );
     edges.push(...conditionGraph.edges);
     edges.push(
       createEdge(
@@ -610,6 +632,11 @@ function buildBlockGraph(
       actionIndex,
       context,
     );
+    const actionId = getActionNodeId(profileIndex, block.name, actionIndex);
+    const talentReason =
+      talentState === "impossible"
+        ? context.hiddenActionById.get(actionId)?.reasonLabel
+        : undefined;
     const actionGraph = buildActionGraph(
       block.actions[actionIndex],
       profileIndex,
@@ -618,6 +645,7 @@ function buildBlockGraph(
       rowCursor,
       collapsedActions,
       talentState,
+      talentReason,
     );
 
     nodes.push(...actionGraph.nodes);

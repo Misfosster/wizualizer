@@ -15,6 +15,7 @@ interface NodeCardProps {
    * in Off mode the value is undefined.
    */
   talentState?: TalentState;
+  talentReason?: string;
 }
 
 interface HandleProps {
@@ -29,12 +30,20 @@ interface MetaPillProps {
   children: ReactNode;
 }
 
-export function NodeCard({ className, children, talentState }: NodeCardProps) {
+export function NodeCard({
+  className,
+  children,
+  talentState,
+  talentReason,
+}: NodeCardProps) {
   const impossibleClass =
     talentState === "impossible" ? "lc-node-card--impossible" : undefined;
+  const reasonLabel =
+    talentState === "impossible" ? (talentReason ?? "filtered") : undefined;
   return (
     <div
       data-talent-state={talentState ?? "normal"}
+      data-talent-reason={reasonLabel}
       className={cn("lc-node-card", className, impossibleClass)}
     >
       {children}

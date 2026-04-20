@@ -2,6 +2,7 @@ import {
   EMPTY_ATOM_OVERRIDES,
   EMPTY_CONDITION_OVERRIDES,
   type AtomOverrides,
+  type AtomOverrideValue,
   type ConditionOverrides,
 } from "./types";
 
@@ -20,8 +21,8 @@ const CURRENT_VERSION = 1;
 
 interface SerializedV1 {
   v: 1;
-  global?: Record<string, boolean>;
-  byProfile?: Record<string, Record<string, boolean>>;
+  global?: Record<string, AtomOverrideValue>;
+  byProfile?: Record<string, Record<string, AtomOverrideValue>>;
 }
 
 export function serializeConditionOverrides(
@@ -70,15 +71,15 @@ export function deserializeConditionOverrides(
 
 function toPlainOverrides(
   overrides: AtomOverrides,
-): Record<string, boolean> | undefined {
+): Record<string, AtomOverrideValue> | undefined {
   const keys = Object.keys(overrides);
   if (keys.length === 0) {
     return undefined;
   }
-  const out: Record<string, boolean> = {};
+  const out: Record<string, AtomOverrideValue> = {};
   for (const key of keys) {
     const value = overrides[key];
-    if (typeof value === "boolean") {
+    if (isValidOverrideValue(value)) {
       out[key] = value;
     }
   }
@@ -87,8 +88,8 @@ function toPlainOverrides(
 
 function toPlainByProfile(
   byProfile: Readonly<Record<string, AtomOverrides>>,
-): Record<string, Record<string, boolean>> | undefined {
-  const out: Record<string, Record<string, boolean>> = {};
+): Record<string, Record<string, AtomOverrideValue>> | undefined {
+  const out: Record<string, Record<string, AtomOverrideValue>> = {};
   for (const profileName of Object.keys(byProfile)) {
     const overrides = byProfile[profileName] ?? EMPTY_ATOM_OVERRIDES;
     const plain = toPlainOverrides(overrides);
@@ -103,10 +104,10 @@ function readAtomOverrides(value: unknown): AtomOverrides {
   if (!isPlainRecord(value)) {
     return EMPTY_ATOM_OVERRIDES;
   }
-  const out: Record<string, boolean> = {};
+  const out: Record<string, AtomOverrideValue> = {};
   for (const key of Object.keys(value)) {
     const candidate = value[key];
-    if (typeof candidate === "boolean") {
+    if (isValidOverrideValue(candidate)) {
       out[key] = candidate;
     }
   }
@@ -134,5 +135,12 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
     typeof value === "object" &&
     value !== null &&
     !Array.isArray(value)
+  );
+}
+
+function isValidOverrideValue(value: unknown): value is AtomOverrideValue {
+  return (
+    typeof value === "boolean" ||
+    (typeof value === "number" && Number.isFinite(value))
   );
 }

@@ -30,6 +30,16 @@ test("setOverride toggles boolean values without losing other entries", () => {
   expect(c.global).toEqual({ "buff.x.up": false, "buff.y.up": false });
 });
 
+test("setOverride stores numeric values", () => {
+  const next = setOverride(
+    EMPTY_CONDITION_OVERRIDES,
+    "global",
+    "cooldown.x.remains",
+    2.5,
+  );
+  expect(next.global).toEqual({ "cooldown.x.remains": 2.5 });
+});
+
 test("clearOverride removes one key while keeping siblings", () => {
   const overrides: ConditionOverrides = {
     global: { "buff.x.up": true, "buff.y.up": false },

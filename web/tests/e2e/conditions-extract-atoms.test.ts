@@ -50,6 +50,30 @@ test("extractConditionAtoms tags talent atoms via isTalent", () => {
   }
 });
 
+test("extractConditionAtoms identifies boolean and numeric atoms", () => {
+  const doc = parseOrThrow(SHAMAN_DOC);
+  const atoms = extractConditionAtoms(doc);
+  const byKey = new Map(atoms.all.map((atom) => [atom.key, atom]));
+  expect(byKey.get("buff.hot_hand.up")?.valueKind).toBe("boolean");
+  expect(byKey.get("talent.lashing_flames.enabled")?.valueKind).toBe(
+    "boolean",
+  );
+  expect(byKey.get("cooldown.doom_winds.remains")?.valueKind).toBe("number");
+});
+
+test("extractConditionAtoms treats bare action cooldown checks as boolean", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+spec=enhancement
+actions=fireblood,if=action.fireblood.cooldown
+actions+=/berserking,if=action.berserking.cooldown>0
+`);
+  const atoms = extractConditionAtoms(doc);
+  const byKey = new Map(atoms.all.map((atom) => [atom.key, atom]));
+  expect(byKey.get("action.fireblood.cooldown")?.valueKind).toBe("boolean");
+  expect(byKey.get("action.berserking.cooldown")?.valueKind).toBe("number");
+});
+
 test("extractConditionAtoms ignores numeric literals and segment kinds besides if/target_if", () => {
   const doc = parseOrThrow(SHAMAN_DOC);
   const atoms = extractConditionAtoms(doc);
