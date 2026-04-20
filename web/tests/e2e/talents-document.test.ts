@@ -113,6 +113,82 @@ test("copy= override does not mutate the source profile", () => {
   });
 });
 
+test("copy= clones the previous profile action lists", () => {
+  const doc = parseOrThrow(
+    [
+      'shaman="Source"',
+      "actions+=/bloodlust",
+      "actions.cds+=/ascendance",
+      'copy="Mirror"',
+    ].join("\n"),
+  );
+
+  const [source, mirror] = doc.profiles;
+  expect(source.blocks.map((block) => block.name)).toEqual(["actions", "actions.cds"]);
+  expect(mirror.blocks.map((block) => block.name)).toEqual(["actions", "actions.cds"]);
+  expect(mirror.blocks[0]?.actions[0]?.rawLine.trim()).toBe("actions+=/bloodlust");
+  expect(mirror.blocks[1]?.actions[0]?.rawLine.trim()).toBe("actions.cds+=/ascendance");
+});
+
+test("copy= appends on top of cloned blocks without mutating source blocks", () => {
+  const doc = parseOrThrow(
+    [
+      'shaman="Source"',
+      "actions+=/bloodlust",
+      'copy="Mirror"',
+      "actions+=/windfury_weapon",
+    ].join("\n"),
+  );
+
+  const [source, mirror] = doc.profiles;
+  const sourceActions = source.blocks.find((block) => block.name === "actions");
+  const mirrorActions = mirror.blocks.find((block) => block.name === "actions");
+  expect(sourceActions?.actions.map((line) => line.rawLine.trim())).toEqual(["actions+=/bloodlust"]);
+  expect(mirrorActions?.actions.map((line) => line.rawLine.trim())).toEqual([
+    "actions+=/bloodlust",
+    "actions+=/windfury_weapon",
+  ]);
+});
+
+test("actions= replaces previous actions in the same block", () => {
+  const doc = parseOrThrow(
+    [
+      'shaman="Source"',
+      "actions+=/bloodlust",
+      "actions+=/windfury_weapon",
+      "actions=lava_lash",
+    ].join("\n"),
+  );
+
+  const actions = doc.profiles[0]?.blocks.find((block) => block.name === "actions");
+  expect(actions?.actions.map((line) => line.rawLine.trim())).toEqual([
+    "actions=lava_lash",
+  ]);
+});
+
+test("copy= with actions= replaces inherited list instead of appending to it", () => {
+  const doc = parseOrThrow(
+    [
+      'shaman="Source"',
+      "actions+=/bloodlust",
+      "actions+=/windfury_weapon",
+      'copy="Mirror"',
+      "actions=lava_lash",
+    ].join("\n"),
+  );
+
+  const [source, mirror] = doc.profiles;
+  const sourceActions = source.blocks.find((block) => block.name === "actions");
+  const mirrorActions = mirror.blocks.find((block) => block.name === "actions");
+  expect(sourceActions?.actions.map((line) => line.rawLine.trim())).toEqual([
+    "actions+=/bloodlust",
+    "actions+=/windfury_weapon",
+  ]);
+  expect(mirrorActions?.actions.map((line) => line.rawLine.trim())).toEqual([
+    "actions=lava_lash",
+  ]);
+});
+
 test("spec= and talents= before any class profile attach to the implicit Untitled profile", () => {
   const doc = parseOrThrow(
     [

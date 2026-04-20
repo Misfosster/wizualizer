@@ -60,14 +60,18 @@ export function AtomOverrideRow({
       data-condition-override-disabled={disabled ? "true" : "false"}
       data-condition-override-overridden={isOverridden ? "true" : "false"}
       aria-describedby={isOverridden ? overrideDescriptionId : undefined}
-      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 py-0.5 pl-4 pr-1 text-[11px] text-gray-700"
+      className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded border px-2 py-1 text-[11px] ${
+        isOverridden
+          ? "border-gray-300 bg-white text-gray-700"
+          : "border-gray-200 bg-gray-50/70 text-gray-700"
+      }`}
     >
       {isOverridden ? (
         <span id={overrideDescriptionId} className="sr-only">
           This condition has an active override.
         </span>
       ) : null}
-      <span className="flex min-w-0 items-center gap-1">
+      <span className="flex min-w-0 items-center gap-1 pl-2">
         <span
           aria-hidden="true"
           className={

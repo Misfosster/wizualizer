@@ -30,6 +30,7 @@ export interface TalentRenderContext {
   mode: TalentRenderMode;
   impossibleActionIds: ReadonlySet<string>;
   referencedBlocksByProfile: ReadonlyMap<number, ReadonlySet<string>>;
+  copiedProfileIndices: ReadonlySet<number>;
   hiddenCountByProfile: ReadonlyMap<number, number>;
   hiddenActionById: ReadonlyMap<string, HiddenActionSummary>;
   profileAtomResolvers: ReadonlyMap<number, AtomResolver>;
@@ -43,6 +44,7 @@ export interface TalentRenderContext {
 }
 
 const EMPTY_ACTIONS: ReadonlySet<string> = new Set();
+const EMPTY_PROFILE_INDICES: ReadonlySet<number> = new Set();
 const EMPTY_REFS: ReadonlyMap<number, ReadonlySet<string>> = new Map();
 const EMPTY_COUNTS: ReadonlyMap<number, number> = new Map();
 const EMPTY_HIDDEN: ReadonlyMap<number, readonly HiddenActionSummary[]> =
@@ -54,6 +56,7 @@ const OFF_CONTEXT: TalentRenderContext = {
   mode: "off",
   impossibleActionIds: EMPTY_ACTIONS,
   referencedBlocksByProfile: EMPTY_REFS,
+  copiedProfileIndices: EMPTY_PROFILE_INDICES,
   hiddenCountByProfile: EMPTY_COUNTS,
   hiddenActionById: EMPTY_HIDDEN_BY_ID,
   profileAtomResolvers: new Map(),
@@ -78,6 +81,7 @@ export function buildTalentRenderContext(
     conditionOverrides: mergedOverrides,
   });
   const hiddenActionById = indexHiddenActions(impossible.hiddenActionsByProfile);
+  const copiedProfileIndices = getCopiedProfileIndices(document);
   const profileAtomResolvers = buildProfileAtomResolvers(
     document,
     selectionsByProfile,
@@ -89,6 +93,7 @@ export function buildTalentRenderContext(
       mode,
       impossibleActionIds: impossible.actionIds,
       referencedBlocksByProfile: EMPTY_REFS,
+      copiedProfileIndices,
       hiddenCountByProfile: impossible.hiddenCountByProfile,
       hiddenActionById,
       profileAtomResolvers,
@@ -103,11 +108,22 @@ export function buildTalentRenderContext(
       document,
       impossible,
     ),
+    copiedProfileIndices,
     hiddenCountByProfile: impossible.hiddenCountByProfile,
     hiddenActionById,
     profileAtomResolvers,
     hiddenActionsByProfile: impossible.hiddenActionsByProfile,
   };
+}
+
+function getCopiedProfileIndices(document: AplDocument): ReadonlySet<number> {
+  const indices = new Set<number>();
+  for (let profileIndex = 0; profileIndex < document.profiles.length; profileIndex++) {
+    if (document.profiles[profileIndex]?.isCopy) {
+      indices.add(profileIndex);
+    }
+  }
+  return indices;
 }
 
 function buildProfileAtomResolvers(
@@ -253,7 +269,7 @@ export function shouldKeepBlockInHide(
   block: AplBlock,
   profileIndex: number,
   context: TalentRenderContext,
-  _survivingActionCount: number,
+  survivingActionCount: number,
 ): boolean {
   if (context.mode !== "hide") {
     return true;
@@ -261,7 +277,13 @@ export function shouldKeepBlockInHide(
   // Entrypoint lists are executed directly by SimC and should always remain
   // visible when Hide is active if they still have surviving actions.
   if (isDirectEntrypointBlock(block.name)) {
-    return _survivingActionCount > 0;
+    return survivingActionCount > 0;
+  }
+
+  // Copy profiles should continue to expose their surviving lists even when a
+  // surviving caller is not present inside the copied profile itself.
+  if (context.copiedProfileIndices.has(profileIndex)) {
+    return survivingActionCount > 0;
   }
 
   // Non-entrypoint lists are only meaningful when a surviving call path can

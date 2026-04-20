@@ -441,6 +441,34 @@
     filter: saturate(0.55);
   }
 
+  .lc-flow .react-flow__node.lc-node-jump-highlight .lc-node-card {
+    isolation: isolate;
+  }
+
+  .lc-flow .react-flow__node.lc-node-jump-highlight .lc-node-card::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: calc(1rem + 3px);
+    pointer-events: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.62),
+      0 0 16px rgba(255, 255, 255, 0.34);
+    opacity: 0;
+    animation: lc-node-jump-glow-ring 1.6s ease-out forwards;
+    z-index: -1;
+  }
+
+  @keyframes lc-node-jump-glow-ring {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
   .lc-node-card--impossible::after {
     content: attr(data-talent-reason);
     position: absolute;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Background,
   BackgroundVariant,
@@ -11,6 +11,7 @@ import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
 import { nodeTypes } from "@components/nodes";
 import type { GraphFlowNode } from "@components/nodes/types";
+import { GraphSearchBox } from "./canvas/graph-search-box";
 import { TalentModePanel } from "./canvas/talent-mode-panel";
 import { EmptyGraphPlaceholder } from "./canvas/empty-graph-placeholder";
 
@@ -39,6 +40,8 @@ export default function Canvas() {
   const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
   const shouldFitAfterBulkToggleRef = useRef(false);
   const didInitialFitRef = useRef(false);
+  const jumpHighlightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
   const {
     nodes,
     edges,
@@ -82,6 +85,21 @@ export default function Canvas() {
     };
   }, [nodes]);
   const toggleAllLabel = shouldExpandAll ? "Expand All" : "Collapse All";
+  const renderedNodes = useMemo(
+    () =>
+      nodes.map((node) => {
+        if (node.id !== highlightedNodeId) {
+          return node;
+        }
+        return {
+          ...node,
+          className: [node.className, "lc-node-jump-highlight"]
+            .filter(Boolean)
+            .join(" "),
+        };
+      }),
+    [highlightedNodeId, nodes],
+  );
   const handleToggleAllBlocksCollapse = useCallback(() => {
     shouldFitAfterBulkToggleRef.current = !shouldExpandAll;
     toggleAllBlocksCollapse();
@@ -144,6 +162,14 @@ export default function Canvas() {
   }, [nodes]);
 
   useEffect(() => {
+    return () => {
+      if (jumpHighlightTimerRef.current) {
+        clearTimeout(jumpHighlightTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (!graphJumpTarget) {
       return;
     }
@@ -152,7 +178,7 @@ export default function Canvas() {
       return;
     }
 
-    const targetNode = flow.getNode(graphJumpTarget.actionId);
+    const targetNode = flow.getNode(graphJumpTarget.nodeId);
     if (!targetNode) {
       if (talentRenderMode === "hide") {
         // Hidden actions are not present as nodes; switch to Dim so users can jump.
@@ -163,14 +189,22 @@ export default function Canvas() {
       return;
     }
 
-    const bounds = flow.getNodesBounds([targetNode.id]);
-    const centerX = bounds.x + bounds.width / 2;
-    const centerY = bounds.y + bounds.height / 2;
-    const currentZoom = flow.getViewport().zoom;
+    setHighlightedNodeId(targetNode.id);
+    if (jumpHighlightTimerRef.current) {
+      clearTimeout(jumpHighlightTimerRef.current);
+    }
+    jumpHighlightTimerRef.current = setTimeout(() => {
+      setHighlightedNodeId((current) =>
+        current === targetNode.id ? null : current,
+      );
+    }, 1600);
+
     void flow
-      .setCenter(centerX, centerY, {
+      .fitView({
+        nodes: [targetNode],
+        padding: 0.45,
+        maxZoom: 0.9,
         duration: 250,
-        zoom: currentZoom,
       })
       .finally(() => {
         clearGraphJumpTarget();
@@ -191,11 +225,15 @@ export default function Canvas() {
       <ReactFlow
         className="lc-flow"
         style={reactFlowStyle}
-        nodes={nodes}
+        nodes={renderedNodes}
         edges={edges}
         nodeTypes={nodeTypes}
         onInit={(instance) => {
           flowRef.current = instance;
+          if (!didInitialFitRef.current && nodes.length > 0) {
+            didInitialFitRef.current = true;
+            void instance.fitView({ padding: 0.35, maxZoom: 1 });
+          }
         }}
         connectionLineType={ConnectionLineType.Step}
         defaultEdgeOptions={defaultEdgeOptions}
@@ -234,9 +272,12 @@ export default function Canvas() {
         </Panel>
         <Panel
           position="top-right"
-          className="m-3 h-[calc(100%-1.5rem)] overflow-hidden"
+          className="m-3 h-[calc(100%-1.5rem)] overflow-y-auto"
         >
-          <TalentModePanel />
+          <div className="flex flex-col gap-2 pb-[10px]">
+            <GraphSearchBox />
+            <TalentModePanel />
+          </div>
         </Panel>
         <Background
           variant={BackgroundVariant.Dots}
