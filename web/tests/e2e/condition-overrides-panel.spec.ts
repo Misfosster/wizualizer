@@ -52,7 +52,7 @@ test("per-profile talent atom pills are disabled while global talent atoms are e
   );
   await expect(
     profileTalentPill.locator('[data-condition-override-value="default"]'),
-  ).toBeDisabled();
+  ).toHaveCount(0);
   await expect(
     profileTalentPill.locator('[data-condition-override-value="true"]'),
   ).toBeDisabled();
