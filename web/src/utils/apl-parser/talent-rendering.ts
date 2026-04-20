@@ -253,18 +253,31 @@ export function shouldKeepBlockInHide(
   block: AplBlock,
   profileIndex: number,
   context: TalentRenderContext,
-  survivingActionCount: number,
+  _survivingActionCount: number,
 ): boolean {
   if (context.mode !== "hide") {
     return true;
   }
-  if (survivingActionCount > 0) {
-    return true;
+  // Entrypoint lists are executed directly by SimC and should always remain
+  // visible when Hide is active if they still have surviving actions.
+  if (isDirectEntrypointBlock(block.name)) {
+    return _survivingActionCount > 0;
   }
-  return (
+
+  // Non-entrypoint lists are only meaningful when a surviving call path can
+  // reach them. Even if they still contain actions, hide unreachable lists so
+  // the graph reflects actual execution flow under the active filter.
+  if (
     context.referencedBlocksByProfile.get(profileIndex)?.has(block.name) ??
     false
-  );
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function isDirectEntrypointBlock(blockName: string): boolean {
+  return blockName === "actions" || blockName === "actions.precombat";
 }
 
 /**

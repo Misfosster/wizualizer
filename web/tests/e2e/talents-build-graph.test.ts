@@ -315,6 +315,22 @@ test("Hide mode drops a block when its only invoker is itself impossible", () =>
   expect(nodeById(result, getRootNodeId(0))).toBeUndefined();
 });
 
+test("Hide mode drops unreachable non-entrypoint block even when it has surviving actions", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=call_action_list,name=single_sb,if=talent.surging_totem.enabled",
+    "actions.single_sb=stormstrike",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "hide",
+    talentSelectionsByProfile: new Map([[0, decoded({})]]),
+  });
+
+  expect(nodeById(result, getActionNodeId(0, "actions", 0))).toBeUndefined();
+  expect(nodeById(result, getBlockNodeId(0, "actions.single_sb"))).toBeUndefined();
+});
+
 test("Hide mode preserves stable IDs for surviving actions across modes", () => {
   const document = parseOrThrow(SIMPLE_APL);
   const off = buildGraph(document);

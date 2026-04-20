@@ -85,7 +85,9 @@ export function TalentModePanel() {
         event.stopPropagation();
         element.scrollTop += event.deltaY;
       }}
-      className="nodrag nopan flex h-full w-72 max-w-xs flex-col overflow-y-auto rounded-md border border-gray-300 bg-white/95 p-3 text-gray-700 shadow-sm"
+      className={`nodrag nopan flex w-72 max-w-xs flex-col rounded-md border border-gray-300 bg-white/95 p-3 text-gray-700 shadow-sm ${
+        isCollapsed ? "h-auto overflow-hidden" : "h-auto max-h-full overflow-y-auto"
+      }`}
     >
       <header className="flex items-center justify-between gap-2">
         <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -111,7 +113,7 @@ export function TalentModePanel() {
         </button>
       </header>
       {isCollapsed ? null : (
-        <div id={contentId} className="mt-2 min-h-0 flex-1 pr-1">
+        <div id={contentId} className="mt-2 pr-1 pb-[10px]">
           <TalentModeSegmentedControl
             value={talentRenderMode}
             onChange={setTalentRenderMode}

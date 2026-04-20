@@ -34,48 +34,54 @@ export function HiddenActionsList({
     <ul
       data-hidden-actions-list=""
       data-profile-index={profileIndex}
+      onWheel={(event) => {
+        event.stopPropagation();
+      }}
       className="m-0 mt-1 flex max-h-36 min-w-0 list-none flex-col gap-0.5 overflow-x-hidden overflow-y-auto p-0 pl-3 pr-1 text-[11px] text-gray-600"
     >
       {actions.map((action) => (
         <li
           key={action.actionId}
           data-hidden-action=""
-          className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 leading-snug"
+          className="rounded border border-gray-200 bg-white/70 px-1.5 py-1"
         >
-          <span className="font-mono text-gray-500">
-            {action.blockName}
-          </span>
-          <span className="text-gray-400">-</span>
-          <span className="font-mono text-gray-500">
-            line {String(action.lineNumber)}
-          </span>
-          <span className="text-gray-400">-</span>
-          <span className="font-semibold text-gray-800">{action.label}</span>
-          <span className="font-medium text-amber-700">
-            {action.reasonLabel}
-          </span>
-          <span
-            className="min-w-0 break-all font-mono text-amber-700"
-            title={action.reason}
-          >
-            {action.reason}
-          </span>
-          <button
-            type="button"
-            data-hidden-action-jump={action.actionId}
-            aria-label={`Jump to ${action.label} in graph`}
-            title="Jump to graph node"
-            onPointerDown={(event) => {
-              event.stopPropagation();
-            }}
-            onClick={(event) => {
-              event.stopPropagation();
-              requestGraphJump(action.actionId);
-            }}
-            className="inline-flex items-center justify-center rounded border border-gray-300 bg-white p-0.5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-          </button>
+          <div className="flex min-w-0 items-center justify-between gap-1.5">
+            <span className="min-w-0 truncate">
+              <span className="font-mono text-gray-500">{action.blockName}</span>
+              <span className="text-gray-400"> - </span>
+              <span className="font-mono text-gray-500">
+                line {String(action.lineNumber)}
+              </span>
+              <span className="text-gray-400"> - </span>
+              <span className="font-semibold text-gray-800">{action.label}</span>
+            </span>
+            <button
+              type="button"
+              data-hidden-action-jump={action.actionId}
+              aria-label={`Jump to ${action.label} in graph`}
+              title="Jump to graph node"
+              onPointerDown={(event) => {
+                event.stopPropagation();
+              }}
+              onClick={(event) => {
+                event.stopPropagation();
+                requestGraphJump(action.actionId);
+              }}
+              className="inline-flex shrink-0 items-center justify-center rounded border border-gray-300 bg-white p-0.5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <ChevronRight className="h-3 w-3" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="mt-0.5 min-w-0">
+            <span className="font-medium text-amber-700">{action.reasonLabel}</span>
+            <span className="text-gray-400"> </span>
+            <span
+              className="min-w-0 break-all font-mono text-amber-700"
+              title={action.reason}
+            >
+              {action.reason}
+            </span>
+          </div>
         </li>
       ))}
     </ul>
