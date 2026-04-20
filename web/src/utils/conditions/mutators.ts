@@ -39,7 +39,7 @@ export function setOverride(
   value: AtomOverrideValue,
 ): ConditionOverrides {
   const current = readScope(overrides, scope);
-  if (current[key] === value) {
+  if (isSameOverrideValue(current[key], value)) {
     return overrides;
   }
   return writeScope(overrides, scope, { ...current, [key]: value });
@@ -158,4 +158,22 @@ function collapseEmpty(overrides: ConditionOverrides): ConditionOverrides {
     return EMPTY_CONDITION_OVERRIDES;
   }
   return overrides;
+}
+
+function isSameOverrideValue(
+  left: AtomOverrideValue | undefined,
+  right: AtomOverrideValue,
+): boolean {
+  if (left === right) {
+    return true;
+  }
+  if (!left || typeof left !== "object" || typeof right !== "object") {
+    return false;
+  }
+  return (
+    left.kind === "comparison" &&
+    right.kind === "comparison" &&
+    left.op === right.op &&
+    left.value === right.value
+  );
 }

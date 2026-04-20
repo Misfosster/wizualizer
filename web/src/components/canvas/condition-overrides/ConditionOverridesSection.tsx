@@ -140,14 +140,6 @@ export function ConditionOverridesSection() {
     [conditionOverrides, setConditionOverrides],
   );
 
-  const handleResetAll = useCallback(() => {
-    const cleared = clearScope(conditionOverrides, "global");
-    setSelectedKeys([]);
-    if (cleared !== conditionOverrides) {
-      setConditionOverrides(cleared);
-    }
-  }, [conditionOverrides, setConditionOverrides]);
-
   const handleClearEverywhere = useCallback(() => {
     let cleared = clearScope(conditionOverrides, "global");
     for (const profileName of Object.keys(cleared.byProfile)) {
@@ -172,7 +164,6 @@ export function ConditionOverridesSection() {
       <SectionHeader
         overriddenCount={overriddenCount}
         totalOverrideCount={totalOverrideCount}
-        onReset={handleResetAll}
         onClearEverywhere={handleClearEverywhere}
       />
 
@@ -297,43 +288,29 @@ export function ConditionOverridesSection() {
 interface SectionHeaderProps {
   overriddenCount: number;
   totalOverrideCount: number;
-  onReset: () => void;
   onClearEverywhere: () => void;
 }
 
 function SectionHeader({
   overriddenCount,
   totalOverrideCount,
-  onReset,
   onClearEverywhere,
 }: SectionHeaderProps) {
   const hasAny = overriddenCount > 0;
   const hasAnyAnywhere = totalOverrideCount > 0;
   return (
-    <header className="flex items-center justify-between gap-2">
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+    <header className="flex items-center justify-between gap-1.5">
+      <h3 className="whitespace-nowrap text-[11px] font-semibold uppercase text-gray-500">
         Condition overrides
       </h3>
-      <div className="flex items-center gap-2 text-[10px] text-gray-500">
-        {hasAny ? (
-          <span data-condition-overrides-count="">
-            {overriddenCount} active
-          </span>
-        ) : null}
-        <button
-          type="button"
-          data-condition-overrides-reset=""
-          disabled={!hasAny}
-          onClick={onReset}
-          className={
-            hasAny
-              ? "rounded border border-gray-300 px-1.5 py-0.5 text-[10px] font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              : "rounded border border-transparent px-1.5 py-0.5 text-[10px] font-medium text-gray-400"
-          }
-          aria-label="Reset all global condition overrides"
+      <div className="flex items-center gap-1 text-[10px] text-gray-500">
+        <span
+          data-condition-overrides-count=""
+          aria-hidden={!hasAny}
+          className={hasAny ? "w-[4.5rem] whitespace-nowrap" : "invisible w-[4.5rem] whitespace-nowrap"}
         >
-          Reset
-        </button>
+          {overriddenCount} active
+        </span>
         <button
           type="button"
           data-condition-overrides-clear-all=""
@@ -341,8 +318,8 @@ function SectionHeader({
           onClick={onClearEverywhere}
           className={
             hasAnyAnywhere
-              ? "rounded border border-gray-300 px-1.5 py-0.5 text-[10px] font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              : "rounded border border-transparent px-1.5 py-0.5 text-[10px] font-medium text-gray-400"
+              ? "whitespace-nowrap rounded border border-gray-300 px-1.5 py-0.5 text-[10px] font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              : "whitespace-nowrap rounded border border-transparent px-1.5 py-0.5 text-[10px] font-medium text-gray-400"
           }
           aria-label="Clear all condition overrides"
         >

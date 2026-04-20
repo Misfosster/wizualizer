@@ -8,6 +8,8 @@ import {
 import { canonicalAtomKey, parseAtomKey } from "./atom-key";
 import type { AtomOverrideValue, AtomOverrides } from "./types";
 
+const STRICT_COMPARISON_EPSILON = 1e-6;
+
 /**
  * Resolve a single condition atom to a concrete `EvalValue` using the
  * layered lookup defined for the override system:
@@ -293,19 +295,57 @@ function firstSetOverride(
 function isOverrideSet(
   value: AtomOverrideValue | undefined,
 ): value is AtomOverrideValue {
-  return typeof value === "boolean" || typeof value === "number";
+  return (
+    typeof value === "boolean" ||
+    typeof value === "number" ||
+    isNumericComparisonOverride(value)
+  );
 }
 
 function toEvalValue(value: AtomOverrideValue): EvalValue {
-  return typeof value === "boolean" ? boolValue(value) : numberValue(value);
+  return typeof value === "boolean"
+    ? boolValue(value)
+    : numberValue(toNumber(value));
 }
 
 function toNumber(value: AtomOverrideValue): number {
-  return typeof value === "number" ? value : value ? 1 : 0;
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value === "boolean") {
+    return value ? 1 : 0;
+  }
+  switch (value.op) {
+    case ">":
+      return value.value + STRICT_COMPARISON_EPSILON;
+    case "<":
+      return value.value - STRICT_COMPARISON_EPSILON;
+    case "=":
+    case ">=":
+    case "<=":
+      return value.value;
+  }
 }
 
 function toBoolean(value: AtomOverrideValue): boolean {
-  return typeof value === "number" ? value !== 0 : value;
+  return typeof value === "boolean" ? value : toNumber(value) !== 0;
+}
+
+function isNumericComparisonOverride(
+  value: AtomOverrideValue | undefined,
+): value is { kind: "comparison"; op: "=" | "<" | "<=" | ">" | ">="; value: number } {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    value.kind === "comparison" &&
+    (value.op === "=" ||
+      value.op === "<" ||
+      value.op === "<=" ||
+      value.op === ">" ||
+      value.op === ">=") &&
+    typeof value.value === "number" &&
+    Number.isFinite(value.value)
+  );
 }
 
 function lastSegment(value: string): string {

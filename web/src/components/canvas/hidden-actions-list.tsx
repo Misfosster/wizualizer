@@ -30,13 +30,13 @@ export function HiddenActionsList({
     <ul
       data-hidden-actions-list=""
       data-profile-index={profileIndex}
-      className="m-0 mt-1 flex list-none flex-col gap-0.5 p-0 pl-3 text-[11px] text-gray-600"
+      className="m-0 mt-1 flex min-w-0 list-none flex-col gap-0.5 overflow-x-hidden p-0 pl-3 text-[11px] text-gray-600"
     >
       {actions.map((action) => (
         <li
           key={action.actionId}
           data-hidden-action=""
-          className="flex flex-wrap items-baseline gap-x-1.5 leading-snug"
+          className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 leading-snug"
         >
           <span className="font-mono text-gray-500">
             {action.blockName}
@@ -51,7 +51,7 @@ export function HiddenActionsList({
             {action.reasonLabel}
           </span>
           <span
-            className="font-mono text-amber-700"
+            className="min-w-0 break-all font-mono text-amber-700"
             title={action.reason}
           >
             {action.reason}

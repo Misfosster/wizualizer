@@ -4,6 +4,7 @@ import {
   type AtomOverrides,
   type AtomOverrideValue,
   type ConditionOverrides,
+  type NumericOverrideOperator,
 } from "./types";
 
 /**
@@ -141,6 +142,23 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
 function isValidOverrideValue(value: unknown): value is AtomOverrideValue {
   return (
     typeof value === "boolean" ||
-    (typeof value === "number" && Number.isFinite(value))
+    (typeof value === "number" && Number.isFinite(value)) ||
+    isValidNumericComparisonOverride(value)
   );
+}
+
+function isValidNumericComparisonOverride(
+  value: unknown,
+): value is { kind: "comparison"; op: NumericOverrideOperator; value: number } {
+  if (!isPlainRecord(value)) {
+    return false;
+  }
+  if (value.kind !== "comparison") {
+    return false;
+  }
+  const op = value.op;
+  if (op !== "=" && op !== "<" && op !== "<=" && op !== ">" && op !== ">=") {
+    return false;
+  }
+  return typeof value.value === "number" && Number.isFinite(value.value);
 }

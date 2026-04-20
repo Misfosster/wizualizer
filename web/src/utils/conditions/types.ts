@@ -38,7 +38,15 @@ export interface AtomParts {
 /** Canonical atom identifier - the source string itself, lower-cased. */
 export type AtomKey = string;
 export type ConditionAtomValueKind = "boolean" | "number";
-export type AtomOverrideValue = boolean | number;
+export type NumericOverrideOperator = "=" | "<" | "<=" | ">" | ">=";
+
+export interface NumericAtomOverride {
+  kind: "comparison";
+  op: NumericOverrideOperator;
+  value: number;
+}
+
+export type AtomOverrideValue = boolean | number | NumericAtomOverride;
 
 export interface ConditionAtom {
   key: AtomKey;

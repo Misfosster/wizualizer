@@ -160,7 +160,7 @@ export function ProfileConditionOverridesSection({
     <section
       data-profile-condition-overrides-section={profileName}
       aria-label={`Condition overrides for ${profileName || "profile"}`}
-      className="mt-1 rounded border border-gray-200 bg-gray-50 px-2 py-2"
+      className="mt-1 rounded border border-gray-300 bg-white px-2 py-2"
     >
       <SectionHeader
         profileName={profileName}
@@ -196,7 +196,7 @@ export function ProfileConditionOverridesSection({
       )}
 
       <div
-        className="relative mt-2"
+        className="relative mt-2 border-t border-gray-200 pt-2"
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget)) {
             setPickerOpen(false);

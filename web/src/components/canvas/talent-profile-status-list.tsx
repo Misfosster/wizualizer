@@ -43,7 +43,7 @@ export function TalentProfileStatusList({
   return (
     <ul
       data-talent-status-list=""
-      className="m-0 mt-2 flex list-none flex-col gap-1 p-0 text-xs text-gray-700"
+      className="m-0 mt-2 flex list-none flex-col gap-2 p-0 text-xs text-gray-700"
     >
       {profiles.map((profile, profileIndex) => {
         const selection = selectionsByProfile.get(profileIndex);

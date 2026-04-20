@@ -250,6 +250,37 @@ test("numeric per-profile overrides use a number field", async ({ page }) => {
   await expect(bloodFury.locator('[data-talent-state="normal"]')).toBeVisible();
 });
 
+test("hide mode removes override-impossible actions from the graph", async ({
+  page,
+}) => {
+  await gotoPreview(page, PROFILE_WITH_CONDITIONS);
+
+  await page.locator('[data-talent-mode="hide"]').click();
+  await page
+    .locator('[data-profile-condition-overrides-toggle="Demo Profile"]')
+    .click();
+
+  const profileSection = page.locator(
+    '[data-profile-condition-overrides-section="Demo Profile"]',
+  );
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .fill("buff.hot_hand.up");
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .press("Enter");
+  await profileSection
+    .locator(
+      '[data-condition-override-pill="buff.hot_hand.up"] [data-condition-override-value="false"]',
+    )
+    .click();
+
+  await expect(
+    page.locator('[data-talent-row-summary]').getByText("1 override action hidden"),
+  ).toBeVisible();
+  await expect(page.getByTestId("rf__node-action__0__actions__1")).toHaveCount(0);
+});
+
 test("global overrides can add custom alias conditions", async ({ page }) => {
   await gotoPreview(page, PROFILE_WITH_CONDITIONS);
 
