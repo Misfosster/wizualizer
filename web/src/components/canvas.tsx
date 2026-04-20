@@ -38,12 +38,15 @@ export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
   const shouldFitAfterBulkToggleRef = useRef(false);
+  const didInitialFitRef = useRef(false);
   const {
     nodes,
     edges,
     toggleAllBlocksCollapse,
     talentRenderMode,
     setTalentRenderMode,
+    clearGraphJumpTarget,
+    graphJumpTarget,
     document,
   } = useEditorStore(
     useShallow((state) => ({
@@ -52,6 +55,8 @@ export default function Canvas() {
       toggleAllBlocksCollapse: state.toggleAllBlocksCollapse,
       talentRenderMode: state.talentRenderMode,
       setTalentRenderMode: state.setTalentRenderMode,
+      clearGraphJumpTarget: state.clearGraphJumpTarget,
+      graphJumpTarget: state.graphJumpTarget,
       document: state.document,
     })),
   );
@@ -126,6 +131,57 @@ export default function Canvas() {
     });
   }, [nodes]);
 
+  useEffect(() => {
+    if (didInitialFitRef.current || nodes.length === 0) {
+      return;
+    }
+    const flow = flowRef.current;
+    if (!flow) {
+      return;
+    }
+    didInitialFitRef.current = true;
+    void flow.fitView({ padding: 0.35, maxZoom: 1 });
+  }, [nodes]);
+
+  useEffect(() => {
+    if (!graphJumpTarget) {
+      return;
+    }
+    const flow = flowRef.current;
+    if (!flow) {
+      return;
+    }
+
+    const targetNode = flow.getNode(graphJumpTarget.actionId);
+    if (!targetNode) {
+      if (talentRenderMode === "hide") {
+        // Hidden actions are not present as nodes; switch to Dim so users can jump.
+        setTalentRenderMode("dim");
+        return;
+      }
+      clearGraphJumpTarget();
+      return;
+    }
+
+    const bounds = flow.getNodesBounds([targetNode.id]);
+    const centerX = bounds.x + bounds.width / 2;
+    const centerY = bounds.y + bounds.height / 2;
+    const currentZoom = flow.getViewport().zoom;
+    void flow
+      .setCenter(centerX, centerY, {
+        duration: 250,
+        zoom: currentZoom,
+      })
+      .finally(() => {
+        clearGraphJumpTarget();
+      });
+  }, [
+    clearGraphJumpTarget,
+    graphJumpTarget,
+    setTalentRenderMode,
+    talentRenderMode,
+  ]);
+
   return (
     <div
       ref={canvasRef}
@@ -143,7 +199,7 @@ export default function Canvas() {
         }}
         connectionLineType={ConnectionLineType.Step}
         defaultEdgeOptions={defaultEdgeOptions}
-        fitView={true}
+        fitView={false}
         onlyRenderVisibleElements={true}
         nodesDraggable={false}
         nodesConnectable={false}
@@ -176,7 +232,10 @@ export default function Canvas() {
             {toggleAllLabel}
           </button>
         </Panel>
-        <Panel position="top-right" className="m-3">
+        <Panel
+          position="top-right"
+          className="m-3 h-[calc(100%-1.5rem)] overflow-hidden"
+        >
           <TalentModePanel />
         </Panel>
         <Background

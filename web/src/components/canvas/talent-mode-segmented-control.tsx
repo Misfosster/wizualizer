@@ -84,13 +84,12 @@ export function TalentModeSegmentedControl({
             }
             onPointerDown={(event) => {
               event.stopPropagation();
-              if (event.button !== 0) return;
-              event.preventDefault();
-              handleSelect(option.value);
+              if (event.button !== 0) {
+                return;
+              }
             }}
             onClick={(event) => {
               event.stopPropagation();
-              if (event.detail > 0) return;
               handleSelect(option.value);
             }}
           >

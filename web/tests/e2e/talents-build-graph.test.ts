@@ -216,6 +216,63 @@ test("Hide mode reports per-profile hidden counts in talentSummary", () => {
   expect(result.talentSummary?.hiddenActionCountByProfile.get(0)).toBe(1);
 });
 
+test("Hide mode keeps mixed OR action when other branch is unknown and prunes false override branch in rendered condition", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=crash_lightning,if=!buff.crash_lightning.up|talent.storm_unleashed.enabled",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "hide",
+    talentSelectionsByProfile: new Map([
+      [0, { status: { kind: "decoder_pending" }, selections: {} }],
+    ]),
+    conditionOverrides: {
+      global: { "buff.crash_lightning.up": true },
+      byProfile: {},
+    },
+  });
+
+  expect(nodeById(result, getActionNodeId(0, "actions", 0))).toBeTruthy();
+  const conditionLabels = result.nodes
+    .filter((node) => node.type === "condition")
+    .map((node) => String((node.data as { label?: string }).label ?? ""));
+  expect(
+    conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
+  ).toBe(false);
+  expect(
+    conditionLabels.some((label) => label.includes("talent.storm_unleashed.enabled")),
+  ).toBe(true);
+});
+
+test("Dim mode prunes false override branch while keeping unknown OR branch", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=crash_lightning,if=!buff.crash_lightning.up|talent.storm_unleashed.enabled",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "dim",
+    talentSelectionsByProfile: new Map([
+      [0, { status: { kind: "decoder_pending" }, selections: {} }],
+    ]),
+    conditionOverrides: {
+      global: { "buff.crash_lightning.up": true },
+      byProfile: {},
+    },
+  });
+
+  const conditionLabels = result.nodes
+    .filter((node) => node.type === "condition")
+    .map((node) => String((node.data as { label?: string }).label ?? ""));
+  expect(
+    conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
+  ).toBe(false);
+  expect(
+    conditionLabels.some((label) => label.includes("talent.storm_unleashed.enabled")),
+  ).toBe(true);
+});
+
 test("Hide mode drops empty unreferenced block and its profile root", () => {
   const apl = [
     'shaman="Demo"',

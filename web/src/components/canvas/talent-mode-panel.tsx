@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
@@ -57,6 +57,7 @@ export function TalentModePanel() {
   const [isCollapsed, setCollapsed] = useState<boolean>(() =>
     readStoredTalentPanelCollapsed(),
   );
+  const panelRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
     writeStoredTalentPanelCollapsed(isCollapsed);
   }, [isCollapsed]);
@@ -68,10 +69,23 @@ export function TalentModePanel() {
 
   return (
     <section
+      ref={panelRef}
       data-talent-mode-panel=""
       data-talent-panel-collapsed={isCollapsed ? "true" : "false"}
       aria-label="Condition filter"
-      className="nodrag nopan w-72 max-w-xs rounded-md border border-gray-300 bg-white/95 p-3 text-gray-700 shadow-sm"
+      onWheel={(event) => {
+        const element = panelRef.current;
+        if (!element) {
+          return;
+        }
+        if (element.scrollHeight <= element.clientHeight) {
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        element.scrollTop += event.deltaY;
+      }}
+      className="nodrag nopan flex h-full w-72 max-w-xs flex-col overflow-y-auto rounded-md border border-gray-300 bg-white/95 p-3 text-gray-700 shadow-sm"
     >
       <header className="flex items-center justify-between gap-2">
         <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -97,7 +111,7 @@ export function TalentModePanel() {
         </button>
       </header>
       {isCollapsed ? null : (
-        <div id={contentId} className="mt-2">
+        <div id={contentId} className="mt-2 min-h-0 flex-1 pr-1">
           <TalentModeSegmentedControl
             value={talentRenderMode}
             onChange={setTalentRenderMode}

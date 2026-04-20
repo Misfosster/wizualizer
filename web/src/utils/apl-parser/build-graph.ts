@@ -22,6 +22,8 @@ import type {
   TalentState,
 } from "@/utils/talents/types";
 import type { ConditionOverrides } from "@/utils/conditions/types";
+import type { AtomResolver } from "@/utils/talents/evaluate-condition";
+import { simplifyConditionForRender } from "@/utils/talents/simplify-condition";
 import {
   EXPRESSION_NODE_BOUNDS,
   PROFILE_PADDING_ROWS,
@@ -439,13 +441,28 @@ function buildActionGraph(
   collapsedActions: ReadonlySet<string>,
   talentState: TalentState | undefined,
   talentReason: string | undefined,
+  resolveAtomForRender: AtomResolver | undefined,
+  simplifyConditionsForRender: boolean,
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
   const conditionSegments = getConditionSegments(actionLine.action.segments);
+  const renderedConditionSegments =
+    simplifyConditionsForRender && resolveAtomForRender !== undefined
+      ? conditionSegments.flatMap((segment) => {
+          const simplified = simplifyConditionForRender(
+            segment.expr,
+            resolveAtomForRender,
+          );
+          if (!simplified) {
+            return [];
+          }
+          return [{ ...segment, expr: simplified }];
+        })
+      : conditionSegments;
   const actionNodeData = createActionNodeData(
     actionLine,
-    conditionSegments.length,
+    renderedConditionSegments.length,
     collapsedActions.has(actionId),
     talentState,
     talentReason,
@@ -537,7 +554,7 @@ function buildActionGraph(
 
   let conditionRowOffset = 0;
 
-  for (const segment of shouldBuildChildren ? conditionSegments : []) {
+  for (const segment of shouldBuildChildren ? renderedConditionSegments : []) {
     const conditionRow = conditionStartRow + conditionRowOffset;
     const conditionId =
       `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
@@ -622,6 +639,9 @@ function buildBlockGraph(
     return { nodes, edges, rowsUsed: 1 };
   }
 
+  const resolveAtomForRender = context.profileAtomResolvers.get(profileIndex);
+  const simplifyConditionsForRender = context.mode !== "off";
+
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;
   for (let i = 0; i < survivingIndices.length; i++) {
@@ -646,6 +666,8 @@ function buildBlockGraph(
       collapsedActions,
       talentState,
       talentReason,
+      resolveAtomForRender,
+      simplifyConditionsForRender,
     );
 
     nodes.push(...actionGraph.nodes);

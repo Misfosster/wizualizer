@@ -281,6 +281,48 @@ test("hide mode removes override-impossible actions from the graph", async ({
   await expect(page.getByTestId("rf__node-action__0__actions__1")).toHaveCount(0);
 });
 
+test("jump to hidden action switches hide mode to dim and focuses graph target", async ({
+  page,
+}) => {
+  await gotoPreview(page, PROFILE_WITH_CONDITIONS);
+
+  await page.locator('[data-talent-mode="hide"]').click();
+  await page
+    .locator('[data-profile-condition-overrides-toggle="Demo Profile"]')
+    .click();
+
+  const profileSection = page.locator(
+    '[data-profile-condition-overrides-section="Demo Profile"]',
+  );
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .fill("buff.hot_hand.up");
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .press("Enter");
+  await profileSection
+    .locator(
+      '[data-condition-override-pill="buff.hot_hand.up"] [data-condition-override-value="false"]',
+    )
+    .click();
+
+  await page.locator("[data-talent-row-summary]").first().click();
+  await page
+    .locator('[data-hidden-action-jump="action__0__actions__1"]')
+    .first()
+    .click();
+
+  await expect(page.locator('[data-talent-mode="dim"]')).toHaveAttribute(
+    "aria-checked",
+    "true",
+  );
+  await expect(
+    page
+      .getByTestId("rf__node-action__0__actions__1")
+      .locator('[data-talent-state="impossible"]'),
+  ).toBeVisible();
+});
+
 test("global overrides can add custom alias conditions", async ({ page }) => {
   await gotoPreview(page, PROFILE_WITH_CONDITIONS);
 

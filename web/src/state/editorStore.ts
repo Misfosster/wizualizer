@@ -78,12 +78,15 @@ interface EditorState {
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   talentSummary: TalentRenderSummary | null;
   conditionOverrides: ConditionOverrides;
+  graphJumpTarget: { actionId: string; nonce: number } | null;
   applyAplText: (text: string) => void;
   toggleActionCollapse: (actionId: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
   setTalentRenderMode: (mode: TalentRenderMode) => void;
   setConditionOverrides: (overrides: ConditionOverrides) => void;
+  requestGraphJump: (actionId: string) => void;
+  clearGraphJumpTarget: () => void;
 }
 
 function decodeSelections(
@@ -112,6 +115,8 @@ function getInitialEditorState(): Omit<
   | "toggleAllBlocksCollapse"
   | "setTalentRenderMode"
   | "setConditionOverrides"
+  | "requestGraphJump"
+  | "clearGraphJumpTarget"
 > {
   const aplText = readStoredText(APL_STORAGE_KEY);
   const lastGoodText = readStoredText(LAST_GOOD_APL_STORAGE_KEY);
@@ -154,6 +159,7 @@ function getInitialEditorState(): Omit<
       talentRenderMode,
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
+      graphJumpTarget: null,
     };
   }
 
@@ -173,6 +179,7 @@ function getInitialEditorState(): Omit<
       talentRenderMode,
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
+      graphJumpTarget: null,
     };
   }
 
@@ -198,6 +205,7 @@ function getInitialEditorState(): Omit<
     talentRenderMode,
     talentSelectionsByProfile: fallbackSelections,
     conditionOverrides,
+    graphJumpTarget: null,
   };
 }
 
@@ -405,6 +413,17 @@ export const useEditorStore = create<EditorState>((set, get) => {
         });
         return { conditionOverrides: overrides, ...graph };
       });
+    },
+    requestGraphJump: (actionId) => {
+      set((state) => ({
+        graphJumpTarget: {
+          actionId,
+          nonce: (state.graphJumpTarget?.nonce ?? 0) + 1,
+        },
+      }));
+    },
+    clearGraphJumpTarget: () => {
+      set({ graphJumpTarget: null });
     },
   };
 });

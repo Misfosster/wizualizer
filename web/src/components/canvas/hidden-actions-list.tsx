@@ -1,4 +1,6 @@
 import type { HiddenActionSummary } from "@/utils/talents/types";
+import { useEditorStore } from "@/state/editorStore";
+import { ChevronRight } from "lucide-react";
 
 /**
  * Expanded inspector rendered under a profile row when the condition filter
@@ -22,6 +24,8 @@ export function HiddenActionsList({
   profileIndex,
   actions,
 }: HiddenActionsListProps) {
+  const requestGraphJump = useEditorStore((state) => state.requestGraphJump);
+
   if (actions.length === 0) {
     return null;
   }
@@ -30,7 +34,7 @@ export function HiddenActionsList({
     <ul
       data-hidden-actions-list=""
       data-profile-index={profileIndex}
-      className="m-0 mt-1 flex min-w-0 list-none flex-col gap-0.5 overflow-x-hidden p-0 pl-3 text-[11px] text-gray-600"
+      className="m-0 mt-1 flex max-h-36 min-w-0 list-none flex-col gap-0.5 overflow-x-hidden overflow-y-auto p-0 pl-3 pr-1 text-[11px] text-gray-600"
     >
       {actions.map((action) => (
         <li
@@ -56,6 +60,22 @@ export function HiddenActionsList({
           >
             {action.reason}
           </span>
+          <button
+            type="button"
+            data-hidden-action-jump={action.actionId}
+            aria-label={`Jump to ${action.label} in graph`}
+            title="Jump to graph node"
+            onPointerDown={(event) => {
+              event.stopPropagation();
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              requestGraphJump(action.actionId);
+            }}
+            className="inline-flex items-center justify-center rounded border border-gray-300 bg-white p-0.5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <ChevronRight className="h-3 w-3" aria-hidden="true" />
+          </button>
         </li>
       ))}
     </ul>

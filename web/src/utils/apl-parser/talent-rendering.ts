@@ -2,13 +2,19 @@ import {
   computeImpossibleSet,
   type ImpossibleSetResult,
 } from "@/utils/filters/compute-impossible-set";
-import type { ConditionOverrides } from "@/utils/conditions/types";
+import { resolveAtom, type ProfileResolutionContext } from "@/utils/conditions/resolve-atom";
+import {
+  EMPTY_ATOM_OVERRIDES,
+  EMPTY_CONDITION_OVERRIDES,
+  type ConditionOverrides,
+} from "@/utils/conditions/types";
 import type {
   HiddenActionSummary,
   TalentRenderMode,
   TalentSelectionResult,
   TalentState,
 } from "@/utils/talents/types";
+import type { AtomResolver } from "@/utils/talents/evaluate-condition";
 import { extractCallTarget } from "./action-data";
 import type { AplBlock, AplDocument } from "./document";
 import { getActionNodeId } from "./node-ids";
@@ -26,6 +32,7 @@ export interface TalentRenderContext {
   referencedBlocksByProfile: ReadonlyMap<number, ReadonlySet<string>>;
   hiddenCountByProfile: ReadonlyMap<number, number>;
   hiddenActionById: ReadonlyMap<string, HiddenActionSummary>;
+  profileAtomResolvers: ReadonlyMap<number, AtomResolver>;
   /**
    * Per-profile, ordered list of hidden actions with enough context to
    * power the panel's "see what was filtered" inspector. Passed through
@@ -49,6 +56,7 @@ const OFF_CONTEXT: TalentRenderContext = {
   referencedBlocksByProfile: EMPTY_REFS,
   hiddenCountByProfile: EMPTY_COUNTS,
   hiddenActionById: EMPTY_HIDDEN_BY_ID,
+  profileAtomResolvers: new Map(),
   hiddenActionsByProfile: EMPTY_HIDDEN,
 };
 
@@ -64,11 +72,17 @@ export function buildTalentRenderContext(
     return OFF_CONTEXT;
   }
 
+  const mergedOverrides = conditionOverrides ?? EMPTY_CONDITION_OVERRIDES;
   const impossible = computeImpossibleSet(document, {
     talentSelectionsByProfile: selectionsByProfile,
-    conditionOverrides,
+    conditionOverrides: mergedOverrides,
   });
   const hiddenActionById = indexHiddenActions(impossible.hiddenActionsByProfile);
+  const profileAtomResolvers = buildProfileAtomResolvers(
+    document,
+    selectionsByProfile,
+    mergedOverrides,
+  );
 
   if (mode === "dim") {
     return {
@@ -77,6 +91,7 @@ export function buildTalentRenderContext(
       referencedBlocksByProfile: EMPTY_REFS,
       hiddenCountByProfile: impossible.hiddenCountByProfile,
       hiddenActionById,
+      profileAtomResolvers,
       hiddenActionsByProfile: impossible.hiddenActionsByProfile,
     };
   }
@@ -90,8 +105,38 @@ export function buildTalentRenderContext(
     ),
     hiddenCountByProfile: impossible.hiddenCountByProfile,
     hiddenActionById,
+    profileAtomResolvers,
     hiddenActionsByProfile: impossible.hiddenActionsByProfile,
   };
+}
+
+function buildProfileAtomResolvers(
+  document: AplDocument,
+  selectionsByProfile: ReadonlyMap<number, TalentSelectionResult> | undefined,
+  overrides: ConditionOverrides,
+): ReadonlyMap<number, AtomResolver> {
+  const resolvers = new Map<number, AtomResolver>();
+
+  for (let profileIndex = 0; profileIndex < document.profiles.length; profileIndex++) {
+    const profile = document.profiles[profileIndex];
+    const selectionResult = selectionsByProfile?.get(profileIndex);
+    const trustedSelections =
+      selectionResult?.status.kind === "decoded"
+        ? selectionResult.selections
+        : null;
+    const profileOverrides =
+      overrides.byProfile[profile.name] ?? EMPTY_ATOM_OVERRIDES;
+    const context: ProfileResolutionContext = {
+      selections: trustedSelections ?? {},
+      selectionsTrusted: trustedSelections !== null,
+      globalOverrides: overrides.global,
+      profileOverrides,
+    };
+
+    resolvers.set(profileIndex, (ident) => resolveAtom(ident, context));
+  }
+
+  return resolvers;
 }
 
 function indexHiddenActions(

@@ -169,3 +169,4 @@ test("missing-catalog talents stay untouched but a manual override still applies
   const summaries = result.hiddenActionsByProfile.get(0) ?? [];
   expect(summaries.map((summary) => summary.spell)).toEqual(["lava_lash"]);
 });
+
