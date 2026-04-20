@@ -7,13 +7,13 @@ import {
 } from "react";
 
 /**
- * Three-way tri-state toggle: `Default` (no opinion - undefined),
- * `On` (true), `Off` (false). Used by the condition override panel
+ * Two-way toggle: `On` (true), `Off` (false). Used by the
+ * condition override panel
  * to drive the value of one atom in one scope.
  *
  * Accessibility:
  *   - `radiogroup` semantics so screen readers and keyboard users
- *     perceive the three buttons as a single mutually-exclusive
+ *     perceive the two buttons as a single mutually-exclusive
  *     choice (Nielsen #4 - platform conventions).
  *   - The active button uses both colour and weight for the contrast
  *     ratio (visibility of system status; WCAG 1.4.1).
@@ -24,8 +24,8 @@ import {
  *   - Compact horizontal pill so it fits on the right of an atom row
  *     without wrapping; matches the existing TalentModeSegmentedControl
  *     visual language so the panel feels cohesive.
- *   - `Default` is the rest state and uses the lightest treatment so
- *     glance scans pick out actively-overridden rows immediately.
+ *   - No `Default` button: clearing an override is explicit through
+ *     the row-level remove action, avoiding accidental "unset" clicks.
  */
 
 export type TriStateValue = boolean | undefined;
@@ -126,11 +126,12 @@ export function TriStateOverridePill({
       id={groupId}
       data-condition-override-pill={atomKey}
       data-testid={testId}
-      className="nodrag nopan grid w-[7.75rem] grid-cols-[3.25rem_2.25rem_2.25rem] rounded-md border border-gray-300 bg-white p-0.5 shadow-sm"
+      className="nodrag nopan grid w-[5rem] grid-cols-2 rounded-md border border-gray-300 bg-white p-0.5 shadow-sm"
       onKeyDown={handleKeyDown}
     >
       {options.map((option, index) => {
         const isActive = option.value === value;
+        const hasSelection = options.some((candidate) => candidate.value === value);
         return (
           <button
             key={option.label}
@@ -142,13 +143,9 @@ export function TriStateOverridePill({
             aria-checked={isActive}
             aria-label={option.description(atomKey)}
             disabled={disabled}
-            tabIndex={isActive ? 0 : -1}
+            tabIndex={isActive || (!hasSelection && index === 0) ? 0 : -1}
             data-condition-override-value={
-              option.value === undefined
-                ? "default"
-                : option.value
-                  ? "true"
-                  : "false"
+              option.value ? "true" : "false"
             }
             data-active={isActive ? "true" : "false"}
             className={buttonClassName(isActive, disabled)}
@@ -177,11 +174,6 @@ function buildOptions(
   falseLabel: string,
 ): readonly PillOption[] {
   return [
-    {
-      value: undefined,
-      label: "Default",
-      description: (key) => `Use the default value for ${key}`,
-    },
     {
       value: true,
       label: trueLabel,

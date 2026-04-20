@@ -1,5 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { Minus, Plus } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useEditorStore } from "@/state/editorStore";
 import {
@@ -11,9 +10,15 @@ import type { ConditionAtom } from "@/utils/conditions/types";
 import { TalentModeSegmentedControl } from "./talent-mode-segmented-control";
 import { TalentProfileStatusList } from "./talent-profile-status-list";
 import { ConditionOverridesSection } from "./condition-overrides/ConditionOverridesSection";
+import { CollapsiblePanelShell } from "./collapsible-panel-shell";
 
 const EMPTY_PROFILE_ATOMS: ReadonlyMap<string, readonly ConditionAtom[]> =
   new Map();
+
+interface TalentModePanelProps {
+  isCollapsed?: boolean;
+  onToggleCollapsed?: () => void;
+}
 
 /**
  * Compact canvas panel that exposes the talent render mode and reports the
@@ -28,7 +33,10 @@ const EMPTY_PROFILE_ATOMS: ReadonlyMap<string, readonly ConditionAtom[]> =
  * come from the editor store, and the segmented control + per-profile
  * list are pure presentational components.
  */
-export function TalentModePanel() {
+export function TalentModePanel({
+  isCollapsed: controlledCollapsed,
+  onToggleCollapsed,
+}: TalentModePanelProps = {}) {
   const {
     document,
     talentRenderMode,
@@ -54,80 +62,48 @@ export function TalentModePanel() {
   // Local state because no graph derivation depends on this; the store
   // would be over-wiring. Persisted to localStorage so the choice rides
   // across sessions like the render mode.
-  const [isCollapsed, setCollapsed] = useState<boolean>(() =>
+  const [localCollapsed, setLocalCollapsed] = useState<boolean>(() =>
     readStoredTalentPanelCollapsed(),
   );
-  const panelRef = useRef<HTMLElement | null>(null);
+  const isCollapsed = controlledCollapsed ?? localCollapsed;
   useEffect(() => {
-    writeStoredTalentPanelCollapsed(isCollapsed);
-  }, [isCollapsed]);
-
-  const contentId = useId();
-  const toggleLabel = isCollapsed
-    ? "Expand condition filter"
-    : "Collapse condition filter";
+    if (controlledCollapsed !== undefined) {
+      return;
+    }
+    writeStoredTalentPanelCollapsed(localCollapsed);
+  }, [controlledCollapsed, localCollapsed]);
 
   return (
-    <section
-      ref={panelRef}
-      data-talent-mode-panel=""
-      data-talent-panel-collapsed={isCollapsed ? "true" : "false"}
-      aria-label="Condition filter"
-      onWheel={(event) => {
-        const element = panelRef.current;
-        if (!element) {
+    <CollapsiblePanelShell
+      dataPanelAttr="data-talent-mode-panel"
+      dataCollapsedAttr="data-talent-panel-collapsed"
+      toggleDataAttr="data-talent-panel-toggle"
+      ariaLabel="Condition filter"
+      title="Condition filter"
+      isCollapsed={isCollapsed}
+      expandedClassName="h-auto max-h-full overflow-y-auto"
+      onToggle={() => {
+        if (onToggleCollapsed) {
+          onToggleCollapsed();
           return;
         }
-        if (element.scrollHeight <= element.clientHeight) {
-          return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        element.scrollTop += event.deltaY;
+        setLocalCollapsed((prev) => !prev);
       }}
-      className={`nodrag nopan flex w-72 max-w-xs flex-col rounded-md border border-gray-300 bg-white/95 p-3 text-gray-700 shadow-sm ${
-        isCollapsed ? "h-auto overflow-hidden" : "h-auto max-h-full overflow-y-auto"
-      }`}
     >
-      <header className="flex items-center justify-between gap-2">
-        <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-          Condition filter
-        </h2>
-        <button
-          type="button"
-          data-talent-panel-toggle=""
-          aria-expanded={!isCollapsed}
-          aria-controls={contentId}
-          aria-label={toggleLabel}
-          title={toggleLabel}
-          onClick={() => {
-            setCollapsed((prev) => !prev);
-          }}
-          className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
-        >
-          {isCollapsed ? (
-            <Plus className="h-3.5 w-3.5" aria-hidden="true" />
-          ) : (
-            <Minus className="h-3.5 w-3.5" aria-hidden="true" />
-          )}
-        </button>
-      </header>
-      {isCollapsed ? null : (
-        <div id={contentId} className="mt-2 pr-1 pb-[10px]">
-          <TalentModeSegmentedControl
-            value={talentRenderMode}
-            onChange={setTalentRenderMode}
-          />
-          <TalentProfileStatusList
-            profiles={profiles}
-            selectionsByProfile={talentSelectionsByProfile}
-            talentSummary={talentSummary}
-            mode={talentRenderMode}
-            profileAtomsByName={profileAtomsByName}
-          />
-          <ConditionOverridesSection />
-        </div>
-      )}
-    </section>
+      <div className="mt-2">
+        <TalentModeSegmentedControl
+          value={talentRenderMode}
+          onChange={setTalentRenderMode}
+        />
+      </div>
+      <TalentProfileStatusList
+        profiles={profiles}
+        selectionsByProfile={talentSelectionsByProfile}
+        talentSummary={talentSummary}
+        mode={talentRenderMode}
+        profileAtomsByName={profileAtomsByName}
+      />
+      <ConditionOverridesSection />
+    </CollapsiblePanelShell>
   );
 }

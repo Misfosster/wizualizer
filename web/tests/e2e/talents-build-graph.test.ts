@@ -216,7 +216,7 @@ test("Hide mode reports per-profile hidden counts in talentSummary", () => {
   expect(result.talentSummary?.hiddenActionCountByProfile.get(0)).toBe(1);
 });
 
-test("Hide mode keeps mixed OR action when other branch is unknown and prunes false override branch in rendered condition", () => {
+test("Hide mode keeps mixed OR action and preserves both branches for context", () => {
   const apl = [
     'shaman="Demo"',
     "actions=crash_lightning,if=!buff.crash_lightning.up|talent.storm_unleashed.enabled",
@@ -239,13 +239,13 @@ test("Hide mode keeps mixed OR action when other branch is unknown and prunes fa
     .map((node) => String((node.data as { label?: string }).label ?? ""));
   expect(
     conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
-  ).toBe(false);
+  ).toBe(true);
   expect(
     conditionLabels.some((label) => label.includes("talent.storm_unleashed.enabled")),
   ).toBe(true);
 });
 
-test("Dim mode prunes false override branch while keeping unknown OR branch", () => {
+test("Dim mode keeps both OR branches visible for context", () => {
   const apl = [
     'shaman="Demo"',
     "actions=crash_lightning,if=!buff.crash_lightning.up|talent.storm_unleashed.enabled",
@@ -267,7 +267,7 @@ test("Dim mode prunes false override branch while keeping unknown OR branch", ()
     .map((node) => String((node.data as { label?: string }).label ?? ""));
   expect(
     conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
-  ).toBe(false);
+  ).toBe(true);
   expect(
     conditionLabels.some((label) => label.includes("talent.storm_unleashed.enabled")),
   ).toBe(true);

@@ -21,7 +21,7 @@ const CLASS_KEYWORDS = [
 const CLASS_PROFILE_RE = new RegExp(
   `^(${CLASS_KEYWORDS.join("|")})="([^"]+)"$`,
 );
-// copy="Name" starts a new profile that inherits from the previous one
+// copy="Name" starts a new profile cloned from the previous one
 const COPY_PROFILE_RE = /^copy="([^"]+)"$/;
 // spec=<spec_name>, e.g. spec=enhancement
 const SPEC_LINE_RE = /^spec=(\S+)$/;
@@ -37,6 +37,11 @@ export interface ParsedActionLine {
   action: Action;
   rawLine: string;
   lineNumber: number;
+  /**
+   * True when this line was inherited from a previous profile via `copy=`.
+   * It does not map to a concrete line owned by the current profile.
+   */
+  isInherited?: boolean;
 }
 
 export interface AplBlock {
@@ -47,6 +52,7 @@ export interface AplBlock {
 export interface AplProfile {
   name: string;
   className: string;
+  isCopy?: boolean;
   blocks: AplBlock[];
   // Free-form syntactic metadata captured from SimC profile lines. Decoded
   // talent selections live in derived editor state, not here.
@@ -69,8 +75,12 @@ export type ParseDocumentResult =
   | { ok: true; document: AplDocument }
   | ParseDocumentFailure;
 
-function createProfile(name: string, className: string): AplProfile {
-  return { name, className, blocks: [] };
+function createProfile(
+  name: string,
+  className: string,
+  isCopy: boolean = false,
+): AplProfile {
+  return { name, className, isCopy, blocks: [] };
 }
 
 function parseProfileDefinition(line: string): AplProfile | null {
@@ -85,7 +95,7 @@ function parseProfileDefinition(line: string): AplProfile | null {
     return null;
   }
 
-  return createProfile(profileName, className);
+  return createProfile(profileName, className, false);
 }
 
 function parseCopyDefinition(
@@ -99,7 +109,10 @@ function parseCopyDefinition(
   }
 
   const className = previousProfile?.className ?? "unknown";
-  const profile = createProfile(profileName, className);
+  const profile = createProfile(profileName, className, true);
+  if (previousProfile) {
+    profile.blocks = cloneBlocks(previousProfile.blocks);
+  }
   // Snapshot syntactic metadata by value. Later spec=/talents= lines on the
   // copy override only the copy; the source profile is unaffected.
   if (previousProfile?.specName !== undefined) {
@@ -150,6 +163,26 @@ function applyProfileMetadata(
   return false;
 }
 
+function cloneBlocks(blocks: readonly AplBlock[]): AplBlock[] {
+  return blocks.map((block) => ({
+    name: block.name,
+    actions: block.actions.map((line) => ({
+      action: line.action,
+      rawLine: line.rawLine,
+      lineNumber: line.lineNumber,
+      isInherited: true,
+    })),
+  }));
+}
+
+function buildBlockIndex(blocks: readonly AplBlock[]): Map<string, AplBlock> {
+  const byName = new Map<string, AplBlock>();
+  for (const block of blocks) {
+    byName.set(block.name, block);
+  }
+  return byName;
+}
+
 function getOrCreateBlock(
   blocksByName: Map<string, AplBlock>,
   profile: AplProfile,
@@ -164,6 +197,16 @@ function getOrCreateBlock(
   blocksByName.set(blockName, block);
   profile.blocks.push(block);
   return block;
+}
+
+function applyActionToBlock(block: AplBlock, actionLine: ParsedActionLine): void {
+  // SimC semantics: `actions.foo=...` replaces the list, while
+  // `actions.foo+=/...` appends to the existing list.
+  if (actionLine.action.op === "=") {
+    block.actions = [actionLine];
+    return;
+  }
+  block.actions.push(actionLine);
 }
 
 function parseActionLine(
@@ -226,7 +269,7 @@ export function parseDocument(text: string): ParseDocumentResult {
     if (copiedProfile) {
       currentProfile = copiedProfile;
       document.profiles.push(currentProfile);
-      blocksByName = new Map<string, AplBlock>();
+      blocksByName = buildBlockIndex(currentProfile.blocks);
       continue;
     }
 
@@ -251,7 +294,7 @@ export function parseDocument(text: string): ParseDocumentResult {
       currentProfile,
       parsedActionLine.action.category,
     );
-    block.actions.push(parsedActionLine);
+    applyActionToBlock(block, parsedActionLine);
   }
 
   return { ok: true, document };

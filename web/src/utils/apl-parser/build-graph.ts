@@ -640,7 +640,10 @@ function buildBlockGraph(
   }
 
   const resolveAtomForRender = context.profileAtomResolvers.get(profileIndex);
-  const simplifyConditionsForRender = context.mode !== "off";
+  // Keep condition context fully visible in both Dim and Hide modes.
+  // Filtering should hide/dim impossible actions, not remove proven-true
+  // condition branches from surviving actions.
+  const simplifyConditionsForRender = false;
 
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;

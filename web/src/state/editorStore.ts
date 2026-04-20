@@ -78,13 +78,14 @@ interface EditorState {
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   talentSummary: TalentRenderSummary | null;
   conditionOverrides: ConditionOverrides;
-  graphJumpTarget: { actionId: string; nonce: number } | null;
+  graphJumpTarget: { nodeId: string; nonce: number } | null;
   applyAplText: (text: string) => void;
   toggleActionCollapse: (actionId: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
   setTalentRenderMode: (mode: TalentRenderMode) => void;
   setConditionOverrides: (overrides: ConditionOverrides) => void;
+  requestGraphJumpToNode: (nodeId: string) => void;
   requestGraphJump: (actionId: string) => void;
   clearGraphJumpTarget: () => void;
 }
@@ -115,6 +116,7 @@ function getInitialEditorState(): Omit<
   | "toggleAllBlocksCollapse"
   | "setTalentRenderMode"
   | "setConditionOverrides"
+  | "requestGraphJumpToNode"
   | "requestGraphJump"
   | "clearGraphJumpTarget"
 > {
@@ -414,10 +416,18 @@ export const useEditorStore = create<EditorState>((set, get) => {
         return { conditionOverrides: overrides, ...graph };
       });
     },
+    requestGraphJumpToNode: (nodeId) => {
+      set((state) => ({
+        graphJumpTarget: {
+          nodeId,
+          nonce: (state.graphJumpTarget?.nonce ?? 0) + 1,
+        },
+      }));
+    },
     requestGraphJump: (actionId) => {
       set((state) => ({
         graphJumpTarget: {
-          actionId,
+          nodeId: actionId,
           nonce: (state.graphJumpTarget?.nonce ?? 0) + 1,
         },
       }));
