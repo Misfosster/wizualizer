@@ -1,9 +1,11 @@
-import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type {
   TalentChoiceVariant,
   TalentNodeEntry,
   TalentSpecCatalog,
+  TalentStreamNode,
+  TalentStreamVariant,
 } from "../../src/utils/talents/types";
 import { simmifyTalentName } from "../../src/utils/talents/simc-key";
 import {
@@ -48,8 +50,7 @@ export function emitCatalog(
   rows: readonly TraitRow[],
   options: EmitCatalogOptions,
 ): EmitCatalogResult {
-  rmSync(options.outDir, { recursive: true, force: true });
-  mkdirSync(options.outDir, { recursive: true });
+  clearGeneratedCatalogs(options.outDir);
 
   const warnings: string[] = [];
   const classesWritten: string[] = [];
@@ -124,6 +125,7 @@ function buildSpecCatalog(
   const classNodes = collectTreeNodes(classRows, "class", specId);
   const specNodes = collectTreeNodes(classRows, "spec", specId);
   const heroNodes = collectTreeNodes(classRows, "hero", specId);
+  const streamNodes = collectStreamNodes(classRows, specId);
 
   const classInfo = findClassById(classRows[0]?.classId ?? 0);
   const specInfo = findSpecById(specId);
@@ -140,12 +142,42 @@ function buildSpecCatalog(
     classNodes,
     specNodes,
     ...(heroNodes.length > 0 ? { heroNodes } : {}),
+    ...(streamNodes.length > 0 ? { streamNodes } : {}),
   };
 
   return {
     catalog,
     nodes: classNodes.length + specNodes.length + heroNodes.length,
   };
+}
+
+function clearGeneratedCatalogs(outDir: string): void {
+  mkdirSync(outDir, { recursive: true });
+  for (const entry of readdirSync(outDir, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith(".json")) {
+      continue;
+    }
+    rmSync(join(outDir, entry.name), { force: true });
+  }
+}
+
+function collectStreamNodes(
+  classRows: readonly TraitRow[],
+  specId: number,
+): TalentStreamNode[] {
+  // Blizzard serializes the full class tree here, not just the active
+  // spec's visible nodes. `C_Traits.GetTreeNodes(treeID)` returns every
+  // class/spec/hero node for the class, ordered by ascending node id, and
+  // only the active spec's nodes are marked selected in the bitstream.
+  const filtered = classRows.filter((row) =>
+    row.treeKind === "class" ||
+    row.treeKind === "spec" ||
+    row.treeKind === "hero",
+  );
+
+  return Array.from(groupByNodeId(filtered).values())
+    .sort((a, b) => a.nodeId - b.nodeId)
+    .map((bucket) => toTalentStreamNode(bucket, specId));
 }
 
 function collectTreeNodes(
@@ -264,6 +296,57 @@ function toTalentNodeEntry(bucket: NodeBucket): TalentNodeEntry {
   };
 }
 
+function toTalentStreamNode(
+  bucket: NodeBucket,
+  specId: number,
+): TalentStreamNode {
+  const sorted = sortChoiceEntries(bucket.entries);
+  const primary = sorted[0];
+  const isChoice = sorted.every((row) => row.nodeType === 2);
+  const isSubtreeSelection = sorted.every((row) => row.nodeType === 3);
+  const maxRank =
+    isChoice || isSubtreeSelection
+      ? primary.maxRank > 0
+        ? primary.maxRank
+        : 1
+      : computeNormalMaxRank(sorted);
+
+  let entries: TalentStreamVariant[];
+  let nodeType: TalentStreamNode["nodeType"];
+  if (isSubtreeSelection) {
+    nodeType = "subtree_selection";
+    entries = sorted.map((row) => ({
+      entryId: row.entryId,
+      displayName: row.displayName,
+      ...(row.subTreeId > 0 ? { subTreeId: row.subTreeId } : {}),
+    }));
+  } else if (isChoice) {
+    nodeType = "choice";
+    entries = sorted.map((row) => ({
+      entryId: row.entryId,
+      displayName: row.displayName,
+      simcKey: simmifyTalentName(row.displayName),
+    }));
+  } else {
+    nodeType = "normal";
+    entries = [
+      {
+        entryId: primary.entryId,
+        displayName: primary.displayName,
+        simcKey: simmifyTalentName(primary.displayName),
+      },
+    ];
+  }
+
+  return {
+    nodeId: bucket.nodeId,
+    maxRank,
+    grantedRanks: isStarterNodeForSpec(sorted, specId) ? maxRank : 0,
+    nodeType,
+    entries,
+  };
+}
+
 function computeNormalMaxRank(entries: readonly TraitRow[]): number {
   // Single-row nodes use their own max_rank. Staged-rank nodes split a
   // talent across multiple rows (each encoding one upgrade tier), so we
@@ -274,6 +357,13 @@ function computeNormalMaxRank(entries: readonly TraitRow[]): number {
   }
   const total = entries.reduce((sum, entry) => sum + Math.max(entry.maxRank, 0), 0);
   return total > 0 ? total : 1;
+}
+
+function isStarterNodeForSpec(
+  entries: readonly TraitRow[],
+  specId: number,
+): boolean {
+  return entries.some((entry) => entry.starterSpecIds.includes(specId));
 }
 
 function sortChoiceEntries(entries: readonly TraitRow[]): TraitRow[] {

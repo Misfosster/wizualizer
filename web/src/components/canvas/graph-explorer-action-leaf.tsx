@@ -241,7 +241,7 @@ export function GraphExplorerActionLeaf({
         <ul className="m-0 mt-2 list-none space-y-1 p-0">
           {conditionEntries.map((entry) => (
             <ConditionEditorRow
-              key={`${actionLine.lineNumber}:${entry.conditionIndex}:${entry.segment.type}`}
+              key={`${String(actionLine.lineNumber)}:${String(entry.conditionIndex)}:${entry.segment.type}`}
               conditionIndex={entry.conditionIndex}
               segment={entry.segment}
               actionLine={actionLine}

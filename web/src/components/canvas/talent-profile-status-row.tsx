@@ -117,16 +117,12 @@ function renderSummary(
 ): ReactNode {
   return (
     <span className="block min-w-0">
-      <span className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-        <span className="font-semibold text-gray-800">{row.heading}</span>
-        <span className={statusToneClass}>{row.statusMessage}</span>
-      </span>
-      <span className="mt-0.5 flex min-w-0 min-h-[1.15rem] items-center justify-between gap-1 py-px">
-        <span
-          data-talent-hidden-suffix=""
-          className="min-w-0 flex-1 truncate whitespace-nowrap text-gray-500"
-        >
-          {row.hiddenActionsMessage}
+      <span className="flex min-w-0 items-start justify-between gap-1">
+        <span className="min-w-0 flex-1">
+          <span className="block font-semibold text-gray-800">{row.heading}</span>
+          <span className={`mt-0.5 block ${statusToneClass}`}>
+            {row.statusMessage}
+          </span>
         </span>
         {showArrow ? (
           <ChevronRight
@@ -136,6 +132,14 @@ function renderSummary(
             }`}
           />
         ) : null}
+      </span>
+      <span className="mt-0.5 block min-w-0 min-h-[1.15rem] py-px">
+        <span
+          data-talent-hidden-suffix=""
+          className="block min-w-0 truncate whitespace-nowrap text-gray-500"
+        >
+          {row.hiddenActionsMessage}
+        </span>
       </span>
     </span>
   );

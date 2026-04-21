@@ -22,8 +22,9 @@ import { parseHeader, parseTraitData } from "./parse-trait-data";
  *   4. ../../simc/engine/dbc/generated/trait_data.inc (sibling checkout)
  *
  * The script never mutates state outside `web/src/data/talents/` and
- * always rewrites that folder from scratch, so partial runs don't leave
- * stale class files on disk.
+ * rewrites every generated `*.json` file in that folder, so partial runs
+ * don't leave stale class files on disk and non-generated docs can stay
+ * alongside the catalogs.
  */
 
 interface CliOptions {

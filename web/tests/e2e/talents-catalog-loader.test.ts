@@ -75,7 +75,7 @@ test("a null fetch result is remembered so we do not re-fetch", async () => {
   expect(loader.peek("druid")).toBeNull();
 });
 
-test("lookupSpec distinguishes loading, unknown-class, and loaded", async () => {
+test("lookupSpec distinguishes loading, unknown-class, unsupported-spec, and loaded", async () => {
   const gate = deferred<TalentCatalog>();
   const loader = createCatalogLoader(async () => gate.promise);
 
@@ -93,7 +93,7 @@ test("lookupSpec distinguishes loading, unknown-class, and loaded", async () => 
   expect(hit.catalog?.specId).toBe(263);
 
   const miss = loader.lookupSpec("shaman", "elemental");
-  expect(miss.status).toBe("unknown-class");
+  expect(miss.status).toBe("unsupported-spec");
 });
 
 test("onLoaded fires after the cache is populated and supports unsubscription", async () => {

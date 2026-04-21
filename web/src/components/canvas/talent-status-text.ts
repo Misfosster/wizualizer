@@ -8,16 +8,15 @@ import type {
  * Pure mapping from a profile's decode result to the panel's per-row text.
  *
  * Kept out of the React component so the copy is unit-testable and so
- * Phase D (real decoder) only has to extend the `decoded` branch with a
- * loaded-talent count without touching JSX.
+ * decoder changes do not need to touch JSX.
  *
  * Display rules:
  * - `absent` is not a failure: the user simply did not paste a `talents=`
  *   line. Surfaced as a quiet info row, never with an alert tone.
- * - `decoded` is the success state. v1 stub never produces this; Phase D
- *   replaces the stub and starts populating `selections`, at which point
- *   the row begins reporting "{N} talents loaded".
- * - The remaining four kinds map to specific, actionable warnings.
+ * - `decoded` is the success state. Keep the copy intentionally terse:
+ *   this row is mostly a debugging hint that the import worked, not a
+ *   primary summary of the selected build.
+ * - The remaining kinds map to specific info / warning rows.
  */
 export interface TalentRowDescriptor {
   /** Human-friendly profile heading: "Enhancement", "Demo Profile", ... */
@@ -47,7 +46,7 @@ export function describeTalentRow(
 ): TalentRowDescriptor {
   const heading = formatHeading(profile);
   const status = selection?.status ?? { kind: "absent" as const };
-  const { statusMessage, tone } = describeStatus(status, selection);
+  const { statusMessage, tone } = describeStatus(status);
   return {
     heading,
     statusMessage,
@@ -85,7 +84,6 @@ function capitalize(value: string): string {
 
 function describeStatus(
   status: TalentStatus,
-  selection: TalentSelectionResult | undefined,
 ): { statusMessage: string; tone: "info" | "warning" } {
   switch (status.kind) {
     case "absent":
@@ -94,18 +92,15 @@ function describeStatus(
       // Transient state while the catalog JSON is being fetched. Tone is
       // info, not warning: nothing is wrong, the user just sees the row
       // settle into its real status a moment later.
-      return { statusMessage: "loading talent catalog…", tone: "info" };
+      return { statusMessage: "loading talent catalog...", tone: "info" };
     case "decoder_pending":
       return {
-        statusMessage: "talent decoder not implemented yet - no filtering",
+        statusMessage: "talent decoding unavailable - no filtering",
         tone: "info",
       };
     case "decoded": {
-      const count = selection
-        ? Object.values(selection.selections).filter((rank) => rank > 0).length
-        : 0;
       return {
-        statusMessage: `${String(count)} talents loaded`,
+        statusMessage: "talents loaded",
         tone: "info",
       };
     }
@@ -122,7 +117,7 @@ function describeStatus(
     case "version_mismatch":
       return {
         statusMessage:
-          "talents= was generated for a different talent tree version",
+          "talents= was generated for a different spec or talent tree version",
         tone: "warning",
       };
     case "malformed_export":

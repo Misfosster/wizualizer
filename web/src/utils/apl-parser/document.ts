@@ -78,7 +78,7 @@ export type ParseDocumentResult =
 function createProfile(
   name: string,
   className: string,
-  isCopy: boolean = false,
+  isCopy = false,
 ): AplProfile {
   return { name, className, isCopy, blocks: [] };
 }

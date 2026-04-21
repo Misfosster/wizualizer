@@ -13,9 +13,8 @@ import type { TalentSelectionResult } from "../../src/utils/talents/types";
  * Regression tests for the "trust gate" in the condition filter.
  *
  * Before this gate existed, a profile that carried a `talents=` line but
- * whose decoder had returned `missing_catalog` (the Phase C stub always
- * does that, and Phase D can still return it when the spec is new) had
- * every `talent.*` reference collapse to `rank=0` -> `false`. That
+ * whose decoder had returned an untrusted status like `missing_catalog`
+ * had every `talent.*` reference collapse to `rank=0` -> `false`. That
  * silently nuked real actions like `call_action_list,name=single_totemic`
  * the user's APL contained. The fix: only profiles with
  * `status.kind === "decoded"` participate in filtering.

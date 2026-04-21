@@ -78,9 +78,6 @@ export function moveLine(
   }
 
   const [line] = lines.splice(sourceIndex, 1);
-  if (line === undefined) {
-    return text;
-  }
   let insertIndex = targetIndex;
   if (sourceIndex < targetIndex) {
     insertIndex -= 1;

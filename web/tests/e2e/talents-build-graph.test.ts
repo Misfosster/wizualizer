@@ -236,7 +236,7 @@ test("Hide mode keeps mixed OR action and preserves both branches for context", 
   expect(nodeById(result, getActionNodeId(0, "actions", 0))).toBeTruthy();
   const conditionLabels = result.nodes
     .filter((node) => node.type === "condition")
-    .map((node) => String((node.data as { label?: string }).label ?? ""));
+    .map((node) => (node.data as { label?: string }).label ?? "");
   expect(
     conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
   ).toBe(true);
@@ -264,7 +264,7 @@ test("Dim mode keeps both OR branches visible for context", () => {
 
   const conditionLabels = result.nodes
     .filter((node) => node.type === "condition")
-    .map((node) => String((node.data as { label?: string }).label ?? ""));
+    .map((node) => (node.data as { label?: string }).label ?? "");
   expect(
     conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
   ).toBe(true);

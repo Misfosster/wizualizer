@@ -100,6 +100,39 @@ test("renders parsed APL text in the preview graph", async ({ page }) => {
   await expect(page.getByTestId("rf__node-condition__0__actions__0__if")).toContainText("active_enemies>1");
 });
 
+test("graph search starts with matching blocks collapsed", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, VALID_APL);
+  await page.getByRole("tab", { name: "Preview" }).click();
+
+  const searchInput = page.locator("[data-graph-search-input]");
+  await searchInput.fill("actions");
+
+  const precombatSummary = page.locator(
+    '[data-graph-search-block-summary="actions.precombat"]',
+  );
+  const actionsSummary = page.locator(
+    '[data-graph-search-block-summary="actions"]',
+  );
+  const precombatAction = page.locator(
+    '[data-graph-search-action="action__0__actions.precombat__0"]',
+  );
+  const actionsAction = page.locator(
+    '[data-graph-search-action="action__0__actions__0"]',
+  );
+  await expect(precombatSummary).toBeVisible();
+  await expect(actionsSummary).toBeVisible();
+
+  // Search results keep the block list compact by default; expand only the
+  // block you care about to reveal its matching actions.
+  await expect(precombatAction).toBeHidden();
+  await expect(actionsAction).toBeHidden();
+
+  await precombatSummary.click();
+  await expect(precombatAction).toBeVisible();
+  await expect(actionsAction).toBeHidden();
+});
+
 test("remembers the last active editor tab", async ({ page }) => {
   await page.goto("/");
 

@@ -11,8 +11,9 @@
  *       { starter0, starter1, starter2, starter3 },
  *       id_sub_tree, node_type }
  *
- * `tree_index` values (from SimC's `talent_tree` enum):
- *   0 = INVALID, 1 = CLASS, 2 = SPECIALIZATION, 3 = HERO
+ * `tree_index` values drifted across branches:
+ *   older builds: 0 = INVALID, 1 = CLASS, 2 = SPECIALIZATION, 3 = HERO
+ *   Midnight:     0 = INVALID, 1 = CLASS, 2 = SPECIALIZATION, 4 = HERO
  *
  * `node_type` values:
  *   1 = normal, 2 = choice (two entries share an `id_node`),
@@ -125,6 +126,7 @@ function toTreeKind(value: number): TraitTreeKind {
     case 2:
       return "spec";
     case 3:
+    case 4:
       return "hero";
     default:
       return "other";

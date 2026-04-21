@@ -1,6 +1,6 @@
 # Generated talent catalog
 
-This folder is **generated**. Do not hand-edit.
+This folder is **generated**. Do not hand-edit the JSON files.
 
 Each `<class>.json` file is a `TalentCatalog` for a single class with one
 entry per spec in `byClassSpec`. `index.json` lists which class slugs
@@ -23,15 +23,20 @@ npm run generate:talents -- --source C:\path\to\simc\engine\dbc\generated\trait_
 ```
 
 The committed catalogs in this folder were produced from SimC's
-`midnight` branch reporting WoW build **`12.0.1.66838`** (11.2 /
-Midnight pre-patch). Regenerate whenever the live game advances past
-that build or when SimC pushes a new `trait_data.inc`.
+`midnight` branch reporting WoW build **`12.0.1.66838`**. Regenerate
+whenever the live game advances past that build or when SimC pushes a
+new `trait_data.inc`.
 
-Runtime impact while the catalog is stale: `decode-export.ts` will
-refuse to decode talent strings whose spec is absent or whose tree hash
-fails to match, surfacing `unsupported_spec` / `version_mismatch`
-statuses in the Preview panel. Nothing fails silently - actions are
-simply not filtered for those profiles.
+`streamNodes` inside each spec catalog intentionally contains the full
+class-tree import/export order, not just that spec's visible nodes. That
+matches Blizzard's `C_Traits.GetTreeNodes(treeID)` behavior, which
+serializes all class/spec/hero nodes for the class in ascending
+`nodeId` order.
+
+Runtime impact while the catalog is stale: `decode-export.ts` can still
+reject talent strings with `unsupported_spec`, `version_mismatch`, or
+`malformed_export`, surfacing that state in the Preview panel instead of
+silently filtering actions from the graph.
 
 ## When to regenerate
 
@@ -43,5 +48,6 @@ simply not filtered for those profiles.
   happens at major revamps; if export strings stop decoding after a
   content patch, regenerate first.
 
-The generator writes the full folder from scratch on each run, so stale
-class files never linger across regenerations.
+The generator rewrites every generated `*.json` file in this folder on
+each run, so stale class files never linger across regenerations while
+this README can stay in place.

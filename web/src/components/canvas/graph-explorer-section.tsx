@@ -133,7 +133,7 @@ export function GraphExplorerSection() {
       >
         {filteredProfiles.map((profile) => (
           <ProfileFolder
-            key={`${profile.profileIndex}:${profile.profileName}`}
+            key={`${String(profile.profileIndex)}:${profile.profileName}`}
             profile={profile}
             isReadOnly={isReadOnly}
             onReplaceSourceLine={replaceSourceLine}
@@ -198,7 +198,7 @@ function ProfileFolder({
                 <ul className="m-0 mt-2 list-none space-y-2 p-0">
                   {block.actions.map((entry) => (
                     <GraphExplorerActionLeaf
-                      key={`${profile.profileIndex}:${block.blockName}:${entry.actionIndex}:${entry.actionLine.lineNumber}`}
+                      key={`${String(profile.profileIndex)}:${block.blockName}:${String(entry.actionIndex)}:${String(entry.actionLine.lineNumber)}`}
                       profileIndex={profile.profileIndex}
                       blockName={block.blockName}
                       actionIndex={entry.actionIndex}

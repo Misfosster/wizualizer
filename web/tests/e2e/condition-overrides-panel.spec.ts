@@ -1,9 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
+import { MIDNIGHT_ENHANCEMENT_TOTEMIC_EXPORT } from "./support/talent-export";
 
 const PROFILE_WITH_CONDITIONS = [
   'shaman="Demo Profile"',
   "spec=enhancement",
-  "talents=CIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA",
+  `talents=${MIDNIGHT_ENHANCEMENT_TOTEMIC_EXPORT}`,
   "actions=auto_attack",
   "actions+=/lava_lash,if=buff.hot_hand.up",
   "actions+=/stormstrike,if=talent.storm_unleashed.enabled",

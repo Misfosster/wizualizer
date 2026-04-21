@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { MIDNIGHT_ENHANCEMENT_TOTEMIC_EXPORT } from "./support/talent-export";
 
 const SHAMAN_WITHOUT_TALENTS = [
   'shaman="Demo Profile"',
@@ -10,7 +11,7 @@ const SHAMAN_WITHOUT_TALENTS = [
 const SHAMAN_WITH_TALENTS = [
   'shaman="Demo Profile"',
   "spec=enhancement",
-  "talents=CIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA",
+  `talents=${MIDNIGHT_ENHANCEMENT_TOTEMIC_EXPORT}`,
   "actions.precombat=windfury_weapon",
   "actions+=/auto_attack",
 ].join("\n");
@@ -111,7 +112,7 @@ test("a profile without a talents= line surfaces the absent info row", async ({
   await expect(row).toHaveAttribute("data-talent-row-tone", "info");
 });
 
-test("a profile whose class has a committed catalog shows the decoder_pending info row", async ({
+test("a profile whose class has a committed catalog decodes its talents string", async ({
   page,
 }) => {
   await gotoPreview(page, SHAMAN_WITH_TALENTS);
@@ -123,7 +124,8 @@ test("a profile whose class has a committed catalog shows the decoder_pending in
   // The catalog resolves asynchronously, so wait for the row to settle
   // into its final state instead of the transient "loading" phase.
   await expect(row).toContainText("Demo Profile");
-  await expect(row).toContainText("decoder");
+  await expect(row).toContainText("talents loaded");
+  await expect(row).not.toContainText(/\d+\s+talents loaded/);
   await expect(row).toHaveAttribute("data-talent-row-tone", "info");
 });
 
@@ -136,15 +138,16 @@ test("each parsed profile gets its own status row in panel order", async ({ page
   await expect(rows).toHaveCount(2);
 
   // Both classes have committed catalogs, so the first row lands on
-  // `absent` (no talents= line) and the second on `decoder_pending`
-  // (catalog loaded, stub bit-decoder).
+  // `absent` (no talents= line) and the second on a version mismatch.
   await expect(rows.nth(0)).toContainText("Enhance Profile");
   await expect(rows.nth(0)).toContainText("no talents= line");
   await expect(rows.nth(0)).toHaveAttribute("data-talent-row-tone", "info");
 
   await expect(rows.nth(1)).toContainText("Fire Profile");
-  await expect(rows.nth(1)).toContainText("decoder");
-  await expect(rows.nth(1)).toHaveAttribute("data-talent-row-tone", "info");
+  await expect(rows.nth(1)).toContainText(
+    "different spec or talent tree version",
+  );
+  await expect(rows.nth(1)).toHaveAttribute("data-talent-row-tone", "warning");
 });
 
 test("switching to Off persists and removes the active styling from Dim", async ({
@@ -174,9 +177,9 @@ test("the empty-graph placeholder is not shown when nodes are present", async ({
     .locator("[data-talent-mode-panel] [data-talent-mode=\"hide\"]")
     .click();
 
-  // With the v1 stub, no actions are filtered, so the graph stays populated
-  // and the placeholder must remain hidden. This guards against the
-  // placeholder leaking into the normal Hide-mode path.
+  // The graph stays populated for this simple sample and the placeholder
+  // must remain hidden. This guards against the placeholder leaking into
+  // the normal Hide-mode path.
   await expect(page.locator("[data-empty-graph-placeholder]")).toHaveCount(0);
   await expect(page.getByTestId("rf__node-action__0__actions__0")).toBeVisible();
 });

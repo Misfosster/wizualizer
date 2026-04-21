@@ -29,6 +29,31 @@ export interface TalentChoiceVariant {
 }
 
 /**
+ * One entry inside the export-string stream order.
+ *
+ * Unlike `TalentNodeEntry`, this shape is decoder-facing: it preserves the
+ * exact node order Blizzard serializes. For committed class catalogs this is
+ * the full class-tree order returned by `C_Traits.GetTreeNodes(treeID)`:
+ * every class/spec/hero node for the class, sorted by ascending `nodeId`,
+ * including hero-tree selector nodes that are not meaningful as
+ * `talent.<key>` atoms on their own.
+ */
+export interface TalentStreamVariant {
+  entryId: number;
+  displayName: string;
+  simcKey?: string;
+  subTreeId?: number;
+}
+
+export interface TalentStreamNode {
+  nodeId: number;
+  maxRank: number;
+  grantedRanks: number;
+  nodeType: "normal" | "choice" | "subtree_selection";
+  entries: readonly TalentStreamVariant[];
+}
+
+/**
  * One talent node from a class, spec, or hero tree.
  *
  * Normal nodes (`nodeType === "normal"`) carry `talentId` / `displayName`
@@ -60,6 +85,7 @@ export interface TalentSpecCatalog {
   classNodes: TalentNodeEntry[];
   specNodes: TalentNodeEntry[];
   heroNodes?: TalentNodeEntry[];
+  streamNodes?: TalentStreamNode[];
 }
 
 export interface TalentCatalog {

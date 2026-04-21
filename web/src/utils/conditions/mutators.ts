@@ -170,10 +170,5 @@ function isSameOverrideValue(
   if (!left || typeof left !== "object" || typeof right !== "object") {
     return false;
   }
-  return (
-    left.kind === "comparison" &&
-    right.kind === "comparison" &&
-    left.op === right.op &&
-    left.value === right.value
-  );
+  return left.op === right.op && left.value === right.value;
 }

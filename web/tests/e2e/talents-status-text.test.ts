@@ -18,14 +18,14 @@ test("absent profile renders the quiet info row", () => {
   expect(row.hiddenActionsMessage).toBe("");
 });
 
-test("decoded selection counts only ranks > 0 as loaded", () => {
+test("decoded status uses terse debug copy without a loaded count", () => {
   const selection: TalentSelectionResult = {
     status: { kind: "decoded" },
     selections: { hot_hand: 1, lashing_flames: 2, fire_nova: 0 },
   };
   const row = describeTalentRow(ENHANCEMENT, selection, 0, "dim");
   expect(row.tone).toBe("info");
-  expect(row.statusMessage).toBe("2 talents loaded");
+  expect(row.statusMessage).toBe("talents loaded");
 });
 
 test("missing_catalog renders an actionable warning", () => {
@@ -48,14 +48,14 @@ test("loading renders a transient info row with no warning tone", () => {
   expect(row.statusMessage).toContain("loading");
 });
 
-test("decoder_pending is honest about the stub and keeps tone info", () => {
+test("decoder_pending falls back to a non-filtering info row", () => {
   const selection: TalentSelectionResult = {
     status: { kind: "decoder_pending" },
     selections: {},
   };
   const row = describeTalentRow(ENHANCEMENT, selection, 0, "dim");
   expect(row.tone).toBe("info");
-  expect(row.statusMessage).toContain("decoder");
+  expect(row.statusMessage).toContain("unavailable");
   expect(row.statusMessage).toContain("no filtering");
 });
 

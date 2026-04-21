@@ -273,13 +273,6 @@ function isNumericComparisonOverrideValue(
 ): value is { kind: "comparison"; op: NumericOverrideOperator; value: number } {
   return (
     typeof value === "object" &&
-    value !== null &&
-    value.kind === "comparison" &&
-    (value.op === "=" ||
-      value.op === ">" ||
-      value.op === ">=" ||
-      value.op === "<" ||
-      value.op === "<=") &&
     typeof value.value === "number" &&
     Number.isFinite(value.value)
   );

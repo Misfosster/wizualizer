@@ -19,7 +19,7 @@ export type CatalogFetcher = (
 export type CatalogLoadListener = (classSlug: string) => void;
 
 export interface CatalogLookupResult {
-  status: "loaded" | "loading" | "unknown-class";
+  status: "loaded" | "loading" | "unknown-class" | "unsupported-spec";
   catalog?: TalentSpecCatalog;
 }
 
@@ -119,7 +119,7 @@ export function createCatalogLoader(fetcher: CatalogFetcher): CatalogLoader {
     const key = `${classSlug}/${specSlug}`;
     const { byClassSpec } = cached.catalog;
     if (!(key in byClassSpec)) {
-      return { status: "unknown-class" };
+      return { status: "unsupported-spec" };
     }
     return { status: "loaded", catalog: byClassSpec[key] };
   }

@@ -45,10 +45,7 @@ export function GraphSearchBox() {
   const firstMatchNodeId = useMemo(() => {
     for (const profile of matches) {
       for (const block of profile.blocks) {
-        const firstAction = block.actions[0];
-        if (firstAction) {
-          return firstAction.nodeId;
-        }
+        return block.actions[0].nodeId;
       }
     }
     return null;
@@ -83,6 +80,7 @@ export function GraphSearchBox() {
           className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400"
         />
         <input
+          data-graph-search-input=""
           type="text"
           value={query}
           onChange={(event) => {
@@ -117,60 +115,75 @@ export function GraphSearchBox() {
             <p className="mt-2 text-[10px] text-gray-500">
               {String(actionMatchCount)} matching action{actionMatchCount === 1 ? "" : "s"}
             </p>
-          <ul
-            className="m-0 mt-1 max-h-52 list-none space-y-2 overflow-y-auto p-0"
-            onWheel={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            {matches.map((profile) => (
-              <li key={`profile:${profile.profileIndex}:${profile.profileName}`} className="rounded border border-gray-200 bg-gray-50/70 p-1.5">
-                <p className="text-[11px] font-semibold text-gray-700">
-                  profile: {profile.profileName}
-                </p>
-                <ul className="m-0 mt-1 list-none space-y-1 p-0">
-                  {profile.blocks.map((block) => (
-                    <li key={`${profile.profileIndex}:${block.blockName}`} className="rounded border border-gray-200 bg-white p-1.5">
-                      <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-500">
-                        block: {block.blockName}
-                      </p>
-                      <ul className="m-0 mt-1 list-none space-y-1 p-0">
-                        {block.actions.map((action) => (
-                          <li key={action.nodeId}>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                requestGraphJumpToNode(action.nodeId);
-                              }}
-                              className="flex w-full items-center justify-between rounded border border-gray-200 bg-white px-1.5 py-1 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                              <span className="min-w-0">
-                                <span className="block truncate font-mono text-[11px] text-gray-800">
-                                  {action.actionLine.action.spell}
-                                </span>
-                                <span className="block truncate text-[10px] text-gray-500">
-                                  line {String(action.actionLine.lineNumber)}
-                                </span>
-                                {action.matchingConditions.length > 0 ? (
-                                  <span className="block truncate text-[10px] text-gray-600">
-                                    {action.matchingConditions.join(" | ")}
+            <ul
+              data-graph-search-results=""
+              className="m-0 mt-1 max-h-52 list-none space-y-2 overflow-y-auto p-0"
+              onWheel={(event) => {
+                event.stopPropagation();
+              }}
+            >
+              {matches.map((profile) => (
+                <li
+                  key={`profile:${String(profile.profileIndex)}:${profile.profileName}`}
+                  data-graph-search-profile={profile.profileName}
+                  className="rounded border border-gray-200 bg-gray-50/70 p-1.5"
+                >
+                  <p className="text-[11px] font-semibold text-gray-700">
+                    profile: {profile.profileName}
+                  </p>
+                  <ul className="m-0 mt-1 list-none space-y-1 p-0">
+                    {profile.blocks.map((block) => (
+                      <li
+                        key={`${String(profile.profileIndex)}:${block.blockName}`}
+                        data-graph-search-block={block.blockName}
+                        className="rounded border border-gray-200 bg-white p-1.5"
+                      >
+                        <details>
+                          <summary
+                            data-graph-search-block-summary={block.blockName}
+                            className="cursor-pointer select-none text-[10px] font-semibold uppercase tracking-wide text-gray-500"
+                          >
+                            block: {block.blockName} ({String(block.actions.length)})
+                          </summary>
+                          <ul className="m-0 mt-1 list-none space-y-1 p-0">
+                            {block.actions.map((action) => (
+                              <li key={action.nodeId}>
+                                <button
+                                  type="button"
+                                  data-graph-search-action={action.nodeId}
+                                  onClick={() => {
+                                    requestGraphJumpToNode(action.nodeId);
+                                  }}
+                                  className="flex w-full items-center justify-between rounded border border-gray-200 bg-white px-1.5 py-1 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                  <span className="min-w-0">
+                                    <span className="block truncate font-mono text-[11px] text-gray-800">
+                                      {action.actionLine.action.spell}
+                                    </span>
+                                    <span className="block truncate text-[10px] text-gray-500">
+                                      line {String(action.actionLine.lineNumber)}
+                                    </span>
+                                    {action.matchingConditions.length > 0 ? (
+                                      <span className="block truncate text-[10px] text-gray-600">
+                                        {action.matchingConditions.join(" | ")}
+                                      </span>
+                                    ) : null}
                                   </span>
-                                ) : null}
-                              </span>
-                              <ChevronRight
-                                className="h-3 w-3 shrink-0 text-gray-500"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+                                  <ChevronRight
+                                    className="h-3 w-3 shrink-0 text-gray-500"
+                                    aria-hidden="true"
+                                  />
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
           </>
         ) : (
           <p className="mt-2 text-[11px] italic text-gray-500">No matches.</p>
@@ -195,9 +208,6 @@ function buildTreeMatches(
   let actionCount = 0;
   for (let profileIndex = 0; profileIndex < profiles.length; profileIndex++) {
     const profile = profiles[profileIndex];
-    if (!profile) {
-      continue;
-    }
     const profileMatch = normalizedIncludes(profile.name, query);
     const blockMatches: BlockMatch[] = [];
     for (const block of profile.blocks) {
@@ -208,9 +218,6 @@ function buildTreeMatches(
           break;
         }
         const actionLine = block.actions[actionIndex];
-        if (!actionLine) {
-          continue;
-        }
         const actionText = `${actionLine.action.spell} ${actionLine.rawLine}`;
         const matchingConditions = getConditionSegments(actionLine.action.segments)
           .map((segment) => prettyCond(segment.expr))
