@@ -16,6 +16,7 @@ export const APL_STORAGE_KEY = "logiccraft.aplText";
 export const LAST_GOOD_APL_STORAGE_KEY = "logiccraft.lastGoodAplText";
 export const APL_LIBRARY_STORAGE_KEY = "logiccraft.aplLibrary.v1";
 export const ACTIVE_APL_ID_STORAGE_KEY = "logiccraft.activeAplId";
+export const APL_AUTO_SAVE_STORAGE_KEY = "logiccraft.aplAutoSave";
 export const TALENT_RENDER_MODE_STORAGE_KEY = "logiccraft.talentRenderMode";
 export const TALENT_PANEL_COLLAPSED_STORAGE_KEY =
   "logiccraft.talentPanelCollapsed";
@@ -151,6 +152,17 @@ export function writeStoredActiveAplSnapshot(
 ): void {
   writeStoredText(APL_STORAGE_KEY, apl.text);
   writeStoredText(LAST_GOOD_APL_STORAGE_KEY, apl.lastGoodText);
+}
+
+export function readStoredAplAutoSave(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+  return window.localStorage.getItem(APL_AUTO_SAVE_STORAGE_KEY) === "1";
+}
+
+export function writeStoredAplAutoSave(enabled: boolean): void {
+  writeStoredText(APL_AUTO_SAVE_STORAGE_KEY, enabled ? "1" : "0");
 }
 
 /**

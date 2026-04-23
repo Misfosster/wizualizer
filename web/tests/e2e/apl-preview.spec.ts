@@ -69,6 +69,46 @@ async function fillAplEditor(page: Page, text: string): Promise<void> {
   await page.getByRole("textbox", { name: "APL editor" }).fill(text);
 }
 
+async function saveApl(page: Page): Promise<void> {
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+}
+
+async function openAplLibrary(page: Page): Promise<void> {
+  if (!(await page.getByTestId("apl-library-menu").isVisible())) {
+    await page.getByTestId("apl-library-button").click();
+  }
+}
+
+async function openAplRowActions(page: Page, aplName: string): Promise<void> {
+  await page
+    .getByTestId("apl-library-row")
+    .filter({ hasText: aplName })
+    .getByRole("button", { name: `Actions for ${aplName}` })
+    .click();
+}
+
+async function renameApl(
+  page: Page,
+  currentName: string,
+  nextName: string,
+): Promise<void> {
+  await openAplLibrary(page);
+  await openAplRowActions(page, currentName);
+  await page
+    .getByTestId("apl-library-row")
+    .filter({ hasText: currentName })
+    .getByRole("menuitem", { name: "Rename" })
+    .click();
+  await page.getByRole("textbox", { name: `Rename ${currentName}` }).fill(nextName);
+  await page.getByRole("button", { name: "Apply" }).click();
+}
+
+async function renameCurrentApl(page: Page, nextName: string): Promise<void> {
+  await page.getByRole("button", { name: /^Rename / }).click();
+  await page.getByRole("textbox", { name: "Rename current APL" }).fill(nextName);
+  await page.getByRole("button", { name: "Apply" }).click();
+}
+
 async function clickFoldMarkerForLine(
   page: Page,
   lineText: string,
@@ -160,36 +200,70 @@ test("saves named APLs and switches between them", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VALID_APL);
 
-  const nameInput = page.getByRole("textbox", { name: "APL name" });
-  const aplSelect = page.getByRole("combobox", { name: "Saved APL" });
-  await nameInput.fill("Single target");
-  await expect(aplSelect).toContainText("Single target");
+  await expect(page.getByTestId("apl-save-status")).toHaveAttribute(
+    "aria-label",
+    "Save APL",
+  );
+  await expect(
+    page.getByRole("button", { name: "Save", exact: true }),
+  ).toBeEnabled();
+  await page.keyboard.press("Control+S");
+  await expect(page.getByTestId("apl-save-status")).toHaveAttribute(
+    "aria-label",
+    "Saved",
+  );
+  await expect(
+    page.getByRole("button", { name: "Save", exact: true }),
+  ).toBeDisabled();
+  await renameCurrentApl(page, "Single target");
 
-  await page.getByRole("button", { name: "Save Copy" }).click();
-  await expect(nameInput).toHaveValue("Single target copy");
+  await openAplLibrary(page);
+  await page.getByTestId("new-apl-option").click();
+  await expect(page.getByTestId("apl-library-button")).toContainText(
+    "Untitled APL",
+  );
 
   await fillAplEditor(page, STRUCTURAL_APL);
-  await nameInput.fill("Structure test");
+  await saveApl(page);
+  await renameApl(page, "Untitled APL", "Structure test");
 
-  const singleTargetId = await aplSelect
-    .locator("option", { hasText: "Single target" })
-    .first()
-    .getAttribute("value");
-  const structureTestId = await aplSelect
-    .locator("option", { hasText: "Structure test" })
-    .first()
-    .getAttribute("value");
-  if (!singleTargetId || !structureTestId) {
-    throw new Error("Expected both saved APL options to exist");
-  }
+  await openAplLibrary(page);
+  await openAplRowActions(page, "Structure test");
+  await expect(
+    page
+      .getByTestId("apl-library-row")
+      .filter({ hasText: "Structure test" })
+      .getByRole("menuitem", { name: "Delete" }),
+  ).toBeVisible();
+  await page
+    .getByTestId("apl-library-row")
+    .filter({ hasText: "Structure test" })
+    .getByRole("menuitem", { name: "Create copy" })
+    .click();
+  await expect(page.getByTestId("apl-library-button")).toContainText(
+    "Structure test",
+  );
+  await expect(page.getByTestId("apl-library-menu")).toBeVisible();
+  await expect(
+    page.getByTestId("apl-library-row").filter({ hasText: "Structure test copy" }),
+  ).toBeVisible();
 
-  await aplSelect.selectOption(singleTargetId);
+  await page
+    .getByTestId("apl-library-row")
+    .filter({ hasText: "Single target" })
+    .getByRole("button", { name: "Single target", exact: true })
+    .click();
   await expect(page.getByTestId("apl-code-editor")).toContainText("auto_attack");
   await expect(page.getByTestId("apl-code-editor")).not.toContainText(
     "aoe_threshold",
   );
 
-  await aplSelect.selectOption(structureTestId);
+  await openAplLibrary(page);
+  await page
+    .getByTestId("apl-library-row")
+    .filter({ hasText: "Structure test" })
+    .getByRole("button", { name: "Structure test", exact: true })
+    .click();
   await expect(page.getByTestId("apl-code-editor")).toContainText(
     "aoe_threshold",
   );
@@ -210,12 +284,27 @@ test("saves named APLs and switches between them", async ({ page }) => {
   );
   await page.reload();
 
-  await expect(page.getByRole("textbox", { name: "APL name" })).toHaveValue(
+  await expect(page.getByTestId("apl-library-button")).toContainText(
     "Structure test",
   );
   await expect(page.getByTestId("apl-code-editor")).toContainText(
     "aoe_threshold",
   );
+});
+
+test("auto-save persists editor changes without pressing Save", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("checkbox", { name: "Auto-save APL" }).check();
+  await fillAplEditor(page, VALID_APL);
+
+  await page.waitForFunction(
+    () =>
+      window.localStorage.getItem("logiccraft.aplText")?.includes("auto_attack"),
+  );
+
+  await page.reload();
+  await expect(page.getByRole("checkbox", { name: "Auto-save APL" })).toBeChecked();
+  await expect(page.getByTestId("apl-code-editor")).toContainText("auto_attack");
 });
 
 test("renders custom structural node components in the preview graph", async ({ page }) => {
@@ -391,6 +480,7 @@ test("highlights a restored parse error when a saved fallback graph exists", asy
   );
 
   await expect(page.getByText("Line 1:")).toBeVisible();
+  await saveApl(page);
   await page.waitForFunction(
     () =>
       window.localStorage.getItem("logiccraft.aplText")?.includes("asdasd"),

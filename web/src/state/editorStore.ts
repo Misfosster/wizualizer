@@ -26,15 +26,20 @@ import {
   type DerivedEditorState,
 } from "./derivation";
 import {
+  readStoredAplAutoSave,
   readStoredAplLibrary,
   readStoredConditionOverrides,
   readStoredTalentRenderMode,
   type StoredApl,
+  writeStoredActiveAplSnapshot,
+  writeStoredAplAutoSave,
+  writeStoredAplLibrary,
   writeStoredConditionOverrides,
   writeStoredTalentRenderMode,
 } from "./storage";
 
 export {
+  APL_AUTO_SAVE_STORAGE_KEY,
   ACTIVE_APL_ID_STORAGE_KEY,
   APL_LIBRARY_STORAGE_KEY,
   APL_STORAGE_KEY,
@@ -68,6 +73,9 @@ function prefetchCatalogsFor(document: AplDocument | null): void {
 interface EditorState {
   savedApls: StoredApl[];
   activeAplId: string;
+  draftAplName: string;
+  autoSaveEnabled: boolean;
+  hasUnsavedChanges: boolean;
   aplText: string;
   lastGoodText: string;
   parseError: string | null;
@@ -83,11 +91,13 @@ interface EditorState {
   conditionOverrides: ConditionOverrides;
   graphJumpTarget: { nodeId: string; nonce: number } | null;
   applyAplText: (text: string) => void;
+  saveActiveApl: () => void;
+  setAutoSaveEnabled: (enabled: boolean) => void;
   switchApl: (aplId: string) => void;
   createApl: () => void;
-  duplicateActiveApl: () => void;
-  renameActiveApl: (name: string) => void;
-  deleteActiveApl: () => void;
+  duplicateApl: (aplId: string) => void;
+  renameApl: (aplId: string, name: string) => void;
+  deleteApl: (aplId: string) => void;
   toggleActionCollapse: (actionId: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
@@ -108,11 +118,13 @@ function decodeSelections(
 
 type EditorActions =
   | "applyAplText"
+  | "saveActiveApl"
+  | "setAutoSaveEnabled"
   | "switchApl"
   | "createApl"
-  | "duplicateActiveApl"
-  | "renameActiveApl"
-  | "deleteActiveApl"
+  | "duplicateApl"
+  | "renameApl"
+  | "deleteApl"
   | "toggleActionCollapse"
   | "toggleBlockCollapse"
   | "toggleAllBlocksCollapse"
@@ -124,7 +136,12 @@ type EditorActions =
 
 type RuntimeEditorState = Omit<
   EditorState,
-  EditorActions | "savedApls" | "activeAplId"
+  | EditorActions
+  | "savedApls"
+  | "activeAplId"
+  | "draftAplName"
+  | "autoSaveEnabled"
+  | "hasUnsavedChanges"
 >;
 
 function createAplId(): string {
@@ -168,6 +185,39 @@ function getActiveStoredApl(
   state: Pick<EditorState, "savedApls" | "activeAplId">,
 ): StoredApl | undefined {
   return state.savedApls.find((apl) => apl.id === state.activeAplId);
+}
+
+function hasUnsavedAplChanges(
+  state: Pick<
+    EditorState,
+    "savedApls" | "activeAplId" | "draftAplName" | "aplText" | "lastGoodText"
+  >,
+): boolean {
+  const activeApl = getActiveStoredApl(state);
+  if (!activeApl) {
+    return true;
+  }
+  return (
+    activeApl.name !== state.draftAplName ||
+    activeApl.text !== state.aplText ||
+    activeApl.lastGoodText !== state.lastGoodText
+  );
+}
+
+function persistAplLibrary(apls: StoredApl[], activeAplId: string): void {
+  writeStoredAplLibrary({ apls, activeAplId });
+  const activeApl = apls.find((apl) => apl.id === activeAplId);
+  if (activeApl) {
+    writeStoredActiveAplSnapshot(activeApl);
+  }
+}
+
+function saveDraftToLibrary(state: EditorState): StoredApl[] {
+  return updateStoredApl(state.savedApls, state.activeAplId, {
+    name: state.draftAplName,
+    text: state.aplText,
+    lastGoodText: state.lastGoodText,
+  });
 }
 
 /**
@@ -280,12 +330,16 @@ function getInitialEditorState(): Omit<EditorState, EditorActions> {
   const activeApl =
     library.apls.find((apl) => apl.id === library.activeAplId) ??
     library.apls[0];
+  const autoSaveEnabled = readStoredAplAutoSave();
   const talentRenderMode = readStoredTalentRenderMode();
   const conditionOverrides = readStoredConditionOverrides();
 
   return {
     savedApls: library.apls,
     activeAplId: activeApl.id,
+    draftAplName: activeApl.name,
+    autoSaveEnabled,
+    hasUnsavedChanges: false,
     ...buildRuntimeStateForApl(
       activeApl.text,
       activeApl.lastGoodText,
@@ -357,13 +411,34 @@ export const useEditorStore = create<EditorState>((set, get) => {
         );
 
         if (!derived.document || derived.document === state.document) {
-          return {
-            savedApls: updateStoredApl(state.savedApls, state.activeAplId, {
-              text,
-              lastGoodText: derived.lastGoodText,
-            }),
+          const nextState = {
             aplText: text,
             ...derived,
+          };
+          if (!state.autoSaveEnabled) {
+            return {
+              ...nextState,
+              hasUnsavedChanges: hasUnsavedAplChanges({
+                ...state,
+                aplText: text,
+                lastGoodText: derived.lastGoodText,
+              }),
+            };
+          }
+          const savedApls = updateStoredApl(
+            state.savedApls,
+            state.activeAplId,
+            {
+              name: state.draftAplName,
+              text,
+              lastGoodText: derived.lastGoodText,
+            },
+          );
+          persistAplLibrary(savedApls, state.activeAplId);
+          return {
+            savedApls,
+            ...nextState,
+            hasUnsavedChanges: false,
           };
         }
 
@@ -378,14 +453,60 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextSelections,
           state.conditionOverrides,
         );
-        return {
-          savedApls: updateStoredApl(state.savedApls, state.activeAplId, {
-            text,
-            lastGoodText: rebuilt.lastGoodText,
-          }),
+        const nextState = {
           aplText: text,
           ...rebuilt,
           talentSelectionsByProfile: nextSelections,
+        };
+        if (!state.autoSaveEnabled) {
+          return {
+            ...nextState,
+            hasUnsavedChanges: hasUnsavedAplChanges({
+              ...state,
+              aplText: text,
+              lastGoodText: rebuilt.lastGoodText,
+            }),
+          };
+        }
+        const savedApls = updateStoredApl(
+          state.savedApls,
+          state.activeAplId,
+          {
+            name: state.draftAplName,
+            text,
+            lastGoodText: rebuilt.lastGoodText,
+          },
+        );
+        persistAplLibrary(savedApls, state.activeAplId);
+        return {
+          savedApls,
+          ...nextState,
+          hasUnsavedChanges: false,
+        };
+      });
+    },
+    saveActiveApl: () => {
+      set((state) => {
+        const savedApls = saveDraftToLibrary(state);
+        persistAplLibrary(savedApls, state.activeAplId);
+        return {
+          savedApls,
+          hasUnsavedChanges: false,
+        };
+      });
+    },
+    setAutoSaveEnabled: (enabled) => {
+      writeStoredAplAutoSave(enabled);
+      set((state) => {
+        if (!enabled) {
+          return { autoSaveEnabled: false };
+        }
+        const savedApls = saveDraftToLibrary(state);
+        persistAplLibrary(savedApls, state.activeAplId);
+        return {
+          autoSaveEnabled: true,
+          savedApls,
+          hasUnsavedChanges: false,
         };
       });
     },
@@ -405,8 +526,11 @@ export const useEditorStore = create<EditorState>((set, get) => {
           state.conditionOverrides,
         );
         prefetchCatalogsFor(runtime.document);
+        persistAplLibrary(state.savedApls, nextApl.id);
         return {
           activeAplId: nextApl.id,
+          draftAplName: nextApl.name,
+          hasUnsavedChanges: false,
           ...runtime,
         };
       });
@@ -420,69 +544,90 @@ export const useEditorStore = create<EditorState>((set, get) => {
           lastGoodText: "",
           updatedAt: Date.now(),
         };
+        const savedApls = [...state.savedApls, nextApl];
         const runtime = buildRuntimeStateForApl(
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
           state.conditionOverrides,
         );
+        persistAplLibrary(savedApls, nextApl.id);
         return {
-          savedApls: [...state.savedApls, nextApl],
+          savedApls,
           activeAplId: nextApl.id,
+          draftAplName: nextApl.name,
+          hasUnsavedChanges: false,
           ...runtime,
         };
       });
     },
-    duplicateActiveApl: () => {
+    duplicateApl: (aplId) => {
       set((state) => {
-        const activeApl = getActiveStoredApl(state);
-        if (!activeApl) {
+        const sourceIndex = state.savedApls.findIndex((apl) => apl.id === aplId);
+        if (sourceIndex === -1) {
           return {};
         }
+        const sourceApl = state.savedApls[sourceIndex];
+        const isActiveApl = sourceApl.id === state.activeAplId;
         const nextApl: StoredApl = {
           id: createAplId(),
           name: getUniqueAplName(
-            `${getAplDisplayName(activeApl)} copy`,
+            `${getAplDisplayName({
+              name: isActiveApl ? state.draftAplName : sourceApl.name,
+            })} copy`,
             state.savedApls,
           ),
-          text: state.aplText,
-          lastGoodText: state.lastGoodText,
+          text: isActiveApl ? state.aplText : sourceApl.text,
+          lastGoodText: isActiveApl
+            ? state.lastGoodText
+            : sourceApl.lastGoodText,
           updatedAt: Date.now(),
         };
-        const runtime = buildRuntimeStateForApl(
-          nextApl.text,
-          nextApl.lastGoodText,
-          state.talentRenderMode,
-          state.conditionOverrides,
-        );
-        prefetchCatalogsFor(runtime.document);
+        const savedApls = [...state.savedApls];
+        savedApls.splice(sourceIndex + 1, 0, nextApl);
+        persistAplLibrary(savedApls, state.activeAplId);
+        return { savedApls };
+      });
+    },
+    renameApl: (aplId, name) => {
+      set((state) => {
+        const nextName = name.slice(0, 80);
+        const savedApls = updateStoredApl(state.savedApls, aplId, {
+          name: nextName,
+        });
+        persistAplLibrary(savedApls, state.activeAplId);
+        if (aplId !== state.activeAplId) {
+          return { savedApls };
+        }
         return {
-          savedApls: [...state.savedApls, nextApl],
-          activeAplId: nextApl.id,
-          ...runtime,
+          savedApls,
+          draftAplName: nextName,
+          hasUnsavedChanges: hasUnsavedAplChanges({
+            ...state,
+            savedApls,
+            draftAplName: nextName,
+          }),
         };
       });
     },
-    renameActiveApl: (name) => {
-      set((state) => ({
-        savedApls: updateStoredApl(state.savedApls, state.activeAplId, {
-          name: name.slice(0, 80),
-        }),
-      }));
-    },
-    deleteActiveApl: () => {
+    deleteApl: (aplId) => {
       set((state) => {
         if (state.savedApls.length <= 1) {
           return {};
         }
 
-        const activeIndex = state.savedApls.findIndex(
-          (apl) => apl.id === state.activeAplId,
-        );
-        const nextApls = state.savedApls.filter(
-          (apl) => apl.id !== state.activeAplId,
-        );
-        const nextIndex = Math.min(Math.max(activeIndex, 0), nextApls.length - 1);
+        const deleteIndex = state.savedApls.findIndex((apl) => apl.id === aplId);
+        if (deleteIndex === -1) {
+          return {};
+        }
+
+        const nextApls = state.savedApls.filter((apl) => apl.id !== aplId);
+        if (aplId !== state.activeAplId) {
+          persistAplLibrary(nextApls, state.activeAplId);
+          return { savedApls: nextApls };
+        }
+
+        const nextIndex = Math.min(deleteIndex, nextApls.length - 1);
         const nextApl = nextApls[nextIndex];
         const runtime = buildRuntimeStateForApl(
           nextApl.text,
@@ -491,9 +636,12 @@ export const useEditorStore = create<EditorState>((set, get) => {
           state.conditionOverrides,
         );
         prefetchCatalogsFor(runtime.document);
+        persistAplLibrary(nextApls, nextApl.id);
         return {
           savedApls: nextApls,
           activeAplId: nextApl.id,
+          draftAplName: nextApl.name,
+          hasUnsavedChanges: false,
           ...runtime,
         };
       });

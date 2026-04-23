@@ -19,6 +19,7 @@ async function fillAplEditor(page: Page, text: string): Promise<void> {
 async function gotoPreview(page: Page, apl: string): Promise<void> {
   await page.goto("/");
   await fillAplEditor(page, apl);
+  await page.getByRole("button", { name: "Save", exact: true }).click();
   await page.getByRole("tab", { name: "Preview" }).click();
 }
 
