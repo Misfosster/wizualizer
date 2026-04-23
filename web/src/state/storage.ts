@@ -14,17 +14,35 @@ import type { ConditionOverrides } from "@/utils/conditions/types";
 
 export const APL_STORAGE_KEY = "logiccraft.aplText";
 export const LAST_GOOD_APL_STORAGE_KEY = "logiccraft.lastGoodAplText";
+export const APL_LIBRARY_STORAGE_KEY = "logiccraft.aplLibrary.v1";
+export const ACTIVE_APL_ID_STORAGE_KEY = "logiccraft.activeAplId";
 export const TALENT_RENDER_MODE_STORAGE_KEY = "logiccraft.talentRenderMode";
 export const TALENT_PANEL_COLLAPSED_STORAGE_KEY =
   "logiccraft.talentPanelCollapsed";
 export const CONDITION_OVERRIDES_STORAGE_KEY =
   "logiccraft.conditionOverrides.v1";
 
+export interface StoredApl {
+  id: string;
+  name: string;
+  text: string;
+  lastGoodText: string;
+  updatedAt: number;
+}
+
+export interface StoredAplLibrary {
+  apls: StoredApl[];
+  activeAplId: string;
+}
+
 const VALID_RENDER_MODES: ReadonlySet<TalentRenderMode> = new Set([
   "off",
   "dim",
   "hide",
 ]);
+
+const DEFAULT_APL_ID = "default";
+const DEFAULT_APL_NAME = "Default APL";
 
 export function readStoredText(key: string): string {
   if (typeof window === "undefined") {
@@ -38,6 +56,101 @@ export function writeStoredText(key: string, value: string): void {
     return;
   }
   window.localStorage.setItem(key, value);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function normalizeStoredApl(value: unknown): StoredApl | null {
+  if (!isRecord(value)) {
+    return null;
+  }
+
+  const { id, name, text, lastGoodText, updatedAt } = value;
+  if (typeof id !== "string" || id.length === 0) {
+    return null;
+  }
+
+  return {
+    id,
+    name: typeof name === "string" ? name : DEFAULT_APL_NAME,
+    text: typeof text === "string" ? text : "",
+    lastGoodText: typeof lastGoodText === "string" ? lastGoodText : "",
+    updatedAt: typeof updatedAt === "number" ? updatedAt : Date.now(),
+  };
+}
+
+function getDefaultStoredApl(): StoredApl {
+  return {
+    id: DEFAULT_APL_ID,
+    name: DEFAULT_APL_NAME,
+    text: readStoredText(APL_STORAGE_KEY),
+    lastGoodText: readStoredText(LAST_GOOD_APL_STORAGE_KEY),
+    updatedAt: Date.now(),
+  };
+}
+
+export function readStoredAplLibrary(): StoredAplLibrary {
+  if (typeof window === "undefined") {
+    const apl = getDefaultStoredApl();
+    return { apls: [apl], activeAplId: apl.id };
+  }
+
+  const raw = window.localStorage.getItem(APL_LIBRARY_STORAGE_KEY);
+  if (raw) {
+    try {
+      const parsed: unknown = JSON.parse(raw);
+      if (isRecord(parsed) && Array.isArray(parsed.apls)) {
+        const seen = new Set<string>();
+        const apls = parsed.apls.reduce<StoredApl[]>((result, value) => {
+          const apl = normalizeStoredApl(value);
+          if (!apl || seen.has(apl.id)) {
+            return result;
+          }
+          seen.add(apl.id);
+          result.push(apl);
+          return result;
+        }, []);
+        const storedActiveId =
+          typeof parsed.activeAplId === "string"
+            ? parsed.activeAplId
+            : window.localStorage.getItem(ACTIVE_APL_ID_STORAGE_KEY);
+
+        if (apls.length > 0) {
+          const activeAplId =
+            typeof storedActiveId === "string" &&
+            apls.some((apl) => apl.id === storedActiveId)
+              ? storedActiveId
+              : apls[0].id;
+          return { apls, activeAplId };
+        }
+      }
+    } catch {
+      // Fall through to the legacy single-APL migration path.
+    }
+  }
+
+  const apl = getDefaultStoredApl();
+  return { apls: [apl], activeAplId: apl.id };
+}
+
+export function writeStoredAplLibrary(library: StoredAplLibrary): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+  window.localStorage.setItem(
+    APL_LIBRARY_STORAGE_KEY,
+    JSON.stringify({ version: 1, ...library }),
+  );
+  window.localStorage.setItem(ACTIVE_APL_ID_STORAGE_KEY, library.activeAplId);
+}
+
+export function writeStoredActiveAplSnapshot(
+  apl: Pick<StoredApl, "text" | "lastGoodText">,
+): void {
+  writeStoredText(APL_STORAGE_KEY, apl.text);
+  writeStoredText(LAST_GOOD_APL_STORAGE_KEY, apl.lastGoodText);
 }
 
 /**

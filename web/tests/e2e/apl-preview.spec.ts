@@ -156,6 +156,68 @@ test("remembers the last active editor tab", async ({ page }) => {
   );
 });
 
+test("saves named APLs and switches between them", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, VALID_APL);
+
+  const nameInput = page.getByRole("textbox", { name: "APL name" });
+  const aplSelect = page.getByRole("combobox", { name: "Saved APL" });
+  await nameInput.fill("Single target");
+  await expect(aplSelect).toContainText("Single target");
+
+  await page.getByRole("button", { name: "Save Copy" }).click();
+  await expect(nameInput).toHaveValue("Single target copy");
+
+  await fillAplEditor(page, STRUCTURAL_APL);
+  await nameInput.fill("Structure test");
+
+  const singleTargetId = await aplSelect
+    .locator("option", { hasText: "Single target" })
+    .first()
+    .getAttribute("value");
+  const structureTestId = await aplSelect
+    .locator("option", { hasText: "Structure test" })
+    .first()
+    .getAttribute("value");
+  if (!singleTargetId || !structureTestId) {
+    throw new Error("Expected both saved APL options to exist");
+  }
+
+  await aplSelect.selectOption(singleTargetId);
+  await expect(page.getByTestId("apl-code-editor")).toContainText("auto_attack");
+  await expect(page.getByTestId("apl-code-editor")).not.toContainText(
+    "aoe_threshold",
+  );
+
+  await aplSelect.selectOption(structureTestId);
+  await expect(page.getByTestId("apl-code-editor")).toContainText(
+    "aoe_threshold",
+  );
+  await page.getByRole("tab", { name: "Preview" }).click();
+  await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText(
+    "aoe_threshold",
+  );
+
+  await page.getByRole("tab", { name: "Write" }).click();
+  await page.waitForFunction(
+    () =>
+      window.localStorage
+        .getItem("logiccraft.aplLibrary.v1")
+        ?.includes("Structure test") &&
+      window.localStorage
+        .getItem("logiccraft.aplLibrary.v1")
+        ?.includes("aoe_threshold"),
+  );
+  await page.reload();
+
+  await expect(page.getByRole("textbox", { name: "APL name" })).toHaveValue(
+    "Structure test",
+  );
+  await expect(page.getByTestId("apl-code-editor")).toContainText(
+    "aoe_threshold",
+  );
+});
+
 test("renders custom structural node components in the preview graph", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, STRUCTURAL_APL);

@@ -26,16 +26,17 @@ import {
   type DerivedEditorState,
 } from "./derivation";
 import {
-  APL_STORAGE_KEY,
-  LAST_GOOD_APL_STORAGE_KEY,
+  readStoredAplLibrary,
   readStoredConditionOverrides,
   readStoredTalentRenderMode,
-  readStoredText,
+  type StoredApl,
   writeStoredConditionOverrides,
   writeStoredTalentRenderMode,
 } from "./storage";
 
 export {
+  ACTIVE_APL_ID_STORAGE_KEY,
+  APL_LIBRARY_STORAGE_KEY,
   APL_STORAGE_KEY,
   CONDITION_OVERRIDES_STORAGE_KEY,
   LAST_GOOD_APL_STORAGE_KEY,
@@ -65,6 +66,8 @@ function prefetchCatalogsFor(document: AplDocument | null): void {
 }
 
 interface EditorState {
+  savedApls: StoredApl[];
+  activeAplId: string;
   aplText: string;
   lastGoodText: string;
   parseError: string | null;
@@ -80,6 +83,11 @@ interface EditorState {
   conditionOverrides: ConditionOverrides;
   graphJumpTarget: { nodeId: string; nonce: number } | null;
   applyAplText: (text: string) => void;
+  switchApl: (aplId: string) => void;
+  createApl: () => void;
+  duplicateActiveApl: () => void;
+  renameActiveApl: (name: string) => void;
+  deleteActiveApl: () => void;
   toggleActionCollapse: (actionId: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
@@ -98,19 +106,13 @@ function decodeSelections(
     : EMPTY_SELECTIONS;
 }
 
-/**
- * Picks up where the user left off by reading localStorage.
- *
- * 1. Their text still works -> show it
- * 2. Their text is broken, but we kept a backup that works -> show the backup graph + the error
- * 3. Nothing works -> blank canvas + the error
- *
- * The talent render mode is read independently so a corrupted APL never
- * resets the user's preferred mode.
- */
-function getInitialEditorState(): Omit<
-  EditorState,
+type EditorActions =
   | "applyAplText"
+  | "switchApl"
+  | "createApl"
+  | "duplicateActiveApl"
+  | "renameActiveApl"
+  | "deleteActiveApl"
   | "toggleActionCollapse"
   | "toggleBlockCollapse"
   | "toggleAllBlocksCollapse"
@@ -118,12 +120,69 @@ function getInitialEditorState(): Omit<
   | "setConditionOverrides"
   | "requestGraphJumpToNode"
   | "requestGraphJump"
-  | "clearGraphJumpTarget"
-> {
-  const aplText = readStoredText(APL_STORAGE_KEY);
-  const lastGoodText = readStoredText(LAST_GOOD_APL_STORAGE_KEY);
-  const talentRenderMode = readStoredTalentRenderMode();
-  const conditionOverrides = readStoredConditionOverrides();
+  | "clearGraphJumpTarget";
+
+type RuntimeEditorState = Omit<
+  EditorState,
+  EditorActions | "savedApls" | "activeAplId"
+>;
+
+function createAplId(): string {
+  if (typeof crypto !== "undefined") {
+    return crypto.randomUUID();
+  }
+  return `apl-${Date.now().toString(36)}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}`;
+}
+
+function getAplDisplayName(apl: Pick<StoredApl, "name">): string {
+  const trimmed = apl.name.trim();
+  return trimmed.length > 0 ? trimmed : "Untitled APL";
+}
+
+function getUniqueAplName(baseName: string, apls: readonly StoredApl[]): string {
+  const used = new Set(apls.map((apl) => getAplDisplayName(apl).toLowerCase()));
+  if (!used.has(baseName.toLowerCase())) {
+    return baseName;
+  }
+  for (let index = 2; ; index += 1) {
+    const candidate = `${baseName} ${String(index)}`;
+    if (!used.has(candidate.toLowerCase())) {
+      return candidate;
+    }
+  }
+}
+
+function updateStoredApl(
+  apls: readonly StoredApl[],
+  aplId: string,
+  updates: Partial<Omit<StoredApl, "id">>,
+): StoredApl[] {
+  return apls.map((apl) =>
+    apl.id === aplId ? { ...apl, ...updates, updatedAt: Date.now() } : apl,
+  );
+}
+
+function getActiveStoredApl(
+  state: Pick<EditorState, "savedApls" | "activeAplId">,
+): StoredApl | undefined {
+  return state.savedApls.find((apl) => apl.id === state.activeAplId);
+}
+
+/**
+ * Converts a saved APL record into live editor state.
+ *
+ * 1. Its text still works -> show it
+ * 2. Its text is broken, but we kept a backup that works -> show the backup graph + the error
+ * 3. Nothing works -> blank canvas + the error
+ */
+function buildRuntimeStateForApl(
+  aplText: string,
+  lastGoodText: string,
+  talentRenderMode: TalentRenderMode,
+  conditionOverrides: ConditionOverrides,
+): RuntimeEditorState {
   const collapsedBlocks = new Set<string>();
   const collapsedActions = new Set<string>();
 
@@ -211,6 +270,31 @@ function getInitialEditorState(): Omit<
   };
 }
 
+/**
+ * Picks up where the user left off by reading the saved APL library from
+ * localStorage. The talent render mode remains global, so a corrupted APL
+ * never resets the user's preferred preview mode.
+ */
+function getInitialEditorState(): Omit<EditorState, EditorActions> {
+  const library = readStoredAplLibrary();
+  const activeApl =
+    library.apls.find((apl) => apl.id === library.activeAplId) ??
+    library.apls[0];
+  const talentRenderMode = readStoredTalentRenderMode();
+  const conditionOverrides = readStoredConditionOverrides();
+
+  return {
+    savedApls: library.apls,
+    activeAplId: activeApl.id,
+    ...buildRuntimeStateForApl(
+      activeApl.text,
+      activeApl.lastGoodText,
+      talentRenderMode,
+      conditionOverrides,
+    ),
+  };
+}
+
 function snapshotFallback(state: EditorState): DerivedEditorState {
   return {
     lastGoodText: state.lastGoodText,
@@ -273,7 +357,14 @@ export const useEditorStore = create<EditorState>((set, get) => {
         );
 
         if (!derived.document || derived.document === state.document) {
-          return { aplText: text, ...derived };
+          return {
+            savedApls: updateStoredApl(state.savedApls, state.activeAplId, {
+              text,
+              lastGoodText: derived.lastGoodText,
+            }),
+            aplText: text,
+            ...derived,
+          };
         }
 
         prefetchCatalogsFor(derived.document);
@@ -288,9 +379,122 @@ export const useEditorStore = create<EditorState>((set, get) => {
           state.conditionOverrides,
         );
         return {
+          savedApls: updateStoredApl(state.savedApls, state.activeAplId, {
+            text,
+            lastGoodText: rebuilt.lastGoodText,
+          }),
           aplText: text,
           ...rebuilt,
           talentSelectionsByProfile: nextSelections,
+        };
+      });
+    },
+    switchApl: (aplId) => {
+      set((state) => {
+        if (aplId === state.activeAplId) {
+          return {};
+        }
+        const nextApl = state.savedApls.find((apl) => apl.id === aplId);
+        if (!nextApl) {
+          return {};
+        }
+        const runtime = buildRuntimeStateForApl(
+          nextApl.text,
+          nextApl.lastGoodText,
+          state.talentRenderMode,
+          state.conditionOverrides,
+        );
+        prefetchCatalogsFor(runtime.document);
+        return {
+          activeAplId: nextApl.id,
+          ...runtime,
+        };
+      });
+    },
+    createApl: () => {
+      set((state) => {
+        const nextApl: StoredApl = {
+          id: createAplId(),
+          name: getUniqueAplName("Untitled APL", state.savedApls),
+          text: "",
+          lastGoodText: "",
+          updatedAt: Date.now(),
+        };
+        const runtime = buildRuntimeStateForApl(
+          nextApl.text,
+          nextApl.lastGoodText,
+          state.talentRenderMode,
+          state.conditionOverrides,
+        );
+        return {
+          savedApls: [...state.savedApls, nextApl],
+          activeAplId: nextApl.id,
+          ...runtime,
+        };
+      });
+    },
+    duplicateActiveApl: () => {
+      set((state) => {
+        const activeApl = getActiveStoredApl(state);
+        if (!activeApl) {
+          return {};
+        }
+        const nextApl: StoredApl = {
+          id: createAplId(),
+          name: getUniqueAplName(
+            `${getAplDisplayName(activeApl)} copy`,
+            state.savedApls,
+          ),
+          text: state.aplText,
+          lastGoodText: state.lastGoodText,
+          updatedAt: Date.now(),
+        };
+        const runtime = buildRuntimeStateForApl(
+          nextApl.text,
+          nextApl.lastGoodText,
+          state.talentRenderMode,
+          state.conditionOverrides,
+        );
+        prefetchCatalogsFor(runtime.document);
+        return {
+          savedApls: [...state.savedApls, nextApl],
+          activeAplId: nextApl.id,
+          ...runtime,
+        };
+      });
+    },
+    renameActiveApl: (name) => {
+      set((state) => ({
+        savedApls: updateStoredApl(state.savedApls, state.activeAplId, {
+          name: name.slice(0, 80),
+        }),
+      }));
+    },
+    deleteActiveApl: () => {
+      set((state) => {
+        if (state.savedApls.length <= 1) {
+          return {};
+        }
+
+        const activeIndex = state.savedApls.findIndex(
+          (apl) => apl.id === state.activeAplId,
+        );
+        const nextApls = state.savedApls.filter(
+          (apl) => apl.id !== state.activeAplId,
+        );
+        const nextIndex = Math.min(Math.max(activeIndex, 0), nextApls.length - 1);
+        const nextApl = nextApls[nextIndex];
+        const runtime = buildRuntimeStateForApl(
+          nextApl.text,
+          nextApl.lastGoodText,
+          state.talentRenderMode,
+          state.conditionOverrides,
+        );
+        prefetchCatalogsFor(runtime.document);
+        return {
+          savedApls: nextApls,
+          activeAplId: nextApl.id,
+          ...runtime,
         };
       });
     },
