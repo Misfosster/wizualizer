@@ -1,4 +1,4 @@
-import type { Action, BinExpr, BinOp, Condition, IdentRef, Segment } from "./types";
+import type { Action, BinExpr, BinOp, Condition, Segment, SequenceEntry } from "./types";
 
 function assertNever(value: never): never {
   throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
@@ -99,10 +99,10 @@ function prettyBinary(b: BinExpr): string {
   return `${l}${b.op}${r}`;
 }
 
-function prettySequence(e: IdentRef[]): string {
+function prettySequence(e: SequenceEntry[]): string {
   let str = "";
   for (let i = 0; i < e.length; i++) {
-    str += e[i].name;
+    str += e[i].text;
     if (i != e.length - 1) {
       str += ":";
     }

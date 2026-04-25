@@ -34,7 +34,7 @@ function ConditionAstNode({
           <ul className="m-0 mt-1 list-none space-y-1 p-0 pl-3">
             {expr.expr.map((entry, index) => (
               <li key={`${path}:seq:${String(index)}`}>
-                <LeafNode label={`ident: ${entry.name}`} />
+                <LeafNode label={`entry: ${entry.text}`} />
               </li>
             ))}
           </ul>

@@ -1,5 +1,5 @@
 import { prettyCond } from "./pretty-log";
-import type { Condition, IdentRef, Segment } from "./types";
+import type { Condition, Segment } from "./types";
 
 const DEFAULT_VARIABLE_OP = "set";
 const UNNAMED_VARIABLE = "(unnamed)";
@@ -104,5 +104,5 @@ export function extractSequenceSpells(segments: Segment[]): string[] {
     return [];
   }
 
-  return sequenceSegment.expr.expr.map((ident: IdentRef) => ident.name);
+  return sequenceSegment.expr.expr.map((entry) => entry.text);
 }

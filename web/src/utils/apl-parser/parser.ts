@@ -5,8 +5,8 @@ import type {
   CallName,
   CallExpr,
   Condition,
-  IdentRef,
   SeqExpr,
+  SequenceEntry,
   UnaryOp,
 } from "./types";
 import { setConditionSource } from "./condition-source";
@@ -83,16 +83,6 @@ export function parseAction(line: string): Action | null {
     // The latter is treated as conditions for now
     // Not sure if we need to change it though?
 
-    // Sequences are spell names seperated by : following a comma
-    // We need to check above spell because they are not formatted like usual
-    if (spell === "sequence" && ts.peek(0)?.type === "ident") {
-      // Don't remove any because the first token is the first spell
-      const expr = parseSequence(ts);
-      expectSegmentBoundary(ts);
-      segments.push({ type: "sequence", expr });
-      continue;
-    }
-
     // if=<expr>
     if (
       ts.peek()?.type === "ident" &&
@@ -117,6 +107,16 @@ export function parseAction(line: string): Action | null {
         type: "target_if",
         expr: parseSegmentCondition(ts, line),
       });
+      continue;
+    }
+
+    // Sequences are spell names separated by : following a comma.
+    // This check must come after if=/target_if= so those top-level segments do
+    // not get swallowed back into the sequence payload.
+    if (spell === "sequence" && ts.peek(0)?.type === "ident") {
+      const expr = parseSequence(ts);
+      expectSegmentBoundary(ts);
+      segments.push({ type: "sequence", expr });
       continue;
     }
 
@@ -235,27 +235,49 @@ function tokToUnaryOp(t: AplToken): UnaryOp | null {
   }
 }
 
-// Goes through an identified sequence and stores the idents for all
+function isSequenceSegmentBoundary(ts: TokenStream): boolean {
+  return (
+    ts.peek()?.type === "comma" &&
+    ts.peek(1)?.type === "ident" &&
+    (ts.peek(1)?.value === "if" || ts.peek(1)?.value === "target_if") &&
+    ts.peek(2)?.type === "eq"
+  );
+}
+
+// Goes through a sequence and stores the raw text for each entry. SimC
+// sequence items may include inline arguments such as `use_items,slots=...`,
+// so the parser cannot restrict entries to bare identifiers.
 function parseSequence(ts: TokenStream): SeqExpr {
-  const idents: IdentRef[] = [];
+  const entries: SequenceEntry[] = [];
   for (; ;) {
-    const t = ts.peek(); // Should always be a new ident
-    if (!t) {
-      break;
+    let text = "";
+
+    for (; ;) {
+      const t = ts.peek();
+      if (!t || t.type === "colon" || isSequenceSegmentBoundary(ts)) {
+        break;
+      }
+
+      text += t.text;
+      ts.next();
     }
 
-    const type = t.type;
-    if (type != "ident") {
-      throw new Error(`Malformatted sequence: ${t.type}`);
+    if (text.length === 0) {
+      const t = ts.peek();
+      if (t?.type === "colon") {
+        throw new Error("Expected sequence entry before ':'");
+      }
+      throw new Error(`Malformatted sequence: ${t?.type ?? "EOF"}`);
     }
 
-    idents.push({ kind: "ident", name: t.value });
-    ts.next(); // Consume token
-    // console.log(t.value)
+    entries.push({ text });
 
     const sep = ts.peek();
     if (sep?.type === "colon") {
       ts.next(); // consume ':'
+      if (!ts.peek()) {
+        throw new Error("Expected sequence entry after ':'");
+      }
       continue; // expect another ident next
     }
 
@@ -263,11 +285,11 @@ function parseSequence(ts: TokenStream): SeqExpr {
     break;
   }
 
-  if (idents.length === 0) {
-    throw new Error("Expected at least one ident in sequence");
+  if (entries.length === 0) {
+    throw new Error("Expected at least one entry in sequence");
   }
 
-  return { kind: "sequence", expr: idents };
+  return { kind: "sequence", expr: entries };
 }
 
 // https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html

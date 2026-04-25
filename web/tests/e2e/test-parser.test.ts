@@ -242,6 +242,33 @@ test("parser supports identifiers with numeric prefixes", () => {
   });
 });
 
+test("parser supports sequence entries with inline arguments", () => {
+  const source =
+    "actions.opener=sequence,shadowstrike:use_items,slots=trinket1,if=fight_remains<=20";
+  const action = parseOrThrow(source, 1);
+
+  expect(action.segments[0]).toMatchObject({
+    type: "sequence",
+    expr: {
+      kind: "sequence",
+      expr: [
+        { text: "shadowstrike" },
+        { text: "use_items,slots=trinket1" },
+      ],
+    },
+  });
+  expect(action.segments[1]).toMatchObject({
+    type: "if",
+    expr: {
+      kind: "binary",
+      op: "<=",
+      left: { kind: "ident", name: "fight_remains" },
+      right: { kind: "number", value: 20 },
+    },
+  });
+  expect(prettyAction(action)).toBe(source);
+});
+
 test("parser rejects unsupported function calls", () => {
   expect(() => {
     parseAction("actions+=/spell_name,if=round(1.5)");

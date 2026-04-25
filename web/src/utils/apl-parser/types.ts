@@ -36,6 +36,10 @@ export interface IdentRef {
   name: string;
 }
 
+export interface SequenceEntry {
+  text: string;
+}
+
 // Function call, floor(x) / ceil(x)
 export interface CallExpr {
   kind: "call";
@@ -66,7 +70,7 @@ export interface BinExpr {
 
 export interface SeqExpr {
   kind: "sequence";
-  expr: IdentRef[];
+  expr: SequenceEntry[];
 }
 
 export interface Num {

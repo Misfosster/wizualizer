@@ -257,9 +257,9 @@ test("buildGraph keeps sequence conditions when the parsed document includes the
                       expr: {
                         kind: "sequence",
                         expr: [
-                          { kind: "ident", name: "stormstrike" },
-                          { kind: "ident", name: "lavalash" },
-                          { kind: "ident", name: "crashlightning" },
+                          { text: "stormstrike" },
+                          { text: "lavalash" },
+                          { text: "crashlightning" },
                         ],
                       },
                     },
@@ -291,6 +291,31 @@ test("buildGraph keeps sequence conditions when the parsed document includes the
   expect(conditionNode.data).toMatchObject({
     kind: "condition",
     label: "active_enemies>2",
+  });
+});
+
+test("buildGraph keeps sequence entries with inline arguments", () => {
+  const graph = buildGraphFromText([
+    'rogue="Sequence Args Demo"',
+    "actions.opener=sequence,shadowstrike:use_items,slots=trinket1,if=fight_remains<=20",
+  ].join("\n"));
+
+  const sequenceNode = getNode(graph.nodes, "action__0__actions.opener__0");
+  expect(sequenceNode.type).toBe("sequence");
+  if (sequenceNode.type !== "sequence") {
+    throw new Error("Expected sequence node");
+  }
+  expect(sequenceNode.data).toMatchObject({
+    spells: ["shadowstrike", "use_items,slots=trinket1"],
+  });
+
+  const conditionNode = getNode(
+    graph.nodes,
+    "condition__0__actions.opener__0__if",
+  );
+  expect(conditionNode.type).toBe("condition");
+  expect(conditionNode.data).toMatchObject({
+    label: "fight_remains<=20",
   });
 });
 
