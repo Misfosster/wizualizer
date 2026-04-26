@@ -10,6 +10,7 @@ import type {
   UnaryOp,
 } from "./types";
 import { setConditionSource } from "./condition-source";
+import { ParseDiagnosticError } from "./diagnostics";
 import { TokenStream } from "./token-stream";
 
 function isCallName(name: string): name is CallName {
@@ -43,9 +44,7 @@ export function parseConditionExpression(source: string): Condition {
   const expr = parseCondition(ts, 0, source);
   if (!ts.eof()) {
     const t = ts.peek();
-    throw new Error(
-      `Unexpected trailing token: ${String(t?.type)} ${JSON.stringify(t?.value)}`,
-    );
+    throwUnexpectedTrailingToken(t);
   }
   return expr;
 }
@@ -66,7 +65,11 @@ export function parseAction(line: string): Action | null {
     : ts.match("plusEqSlash")
       ? "+="
       : (() => {
-        throw new Error("Expected '=' or '+=/' after category");
+        throw new ParseDiagnosticError({
+          code: "bad_action_assignment",
+          message: "Expected '=' or '+=/' after action list name",
+          suggestion: getActionAssignmentSuggestion(ts.peek()),
+        });
       })();
 
   const spell = ts.expect("ident").value;
@@ -113,7 +116,10 @@ export function parseAction(line: string): Action | null {
     // Sequences are spell names separated by : following a comma.
     // This check must come after if=/target_if= so those top-level segments do
     // not get swallowed back into the sequence payload.
-    if (spell === "sequence" && ts.peek(0)?.type === "ident") {
+    if (
+      spell === "sequence" &&
+      (ts.peek(0)?.type === "ident" || ts.peek(0)?.type === "colon")
+    ) {
       const expr = parseSequence(ts);
       expectSegmentBoundary(ts);
       segments.push({ type: "sequence", expr });
@@ -135,9 +141,7 @@ export function parseAction(line: string): Action | null {
 
   if (!ts.eof()) {
     const t = ts.peek();
-    throw new Error(
-      `Unexpected trailing token: ${String(t?.type)} ${JSON.stringify(t?.value)}`,
-    );
+    throwUnexpectedTrailingToken(t);
   }
 
   return { category, spell, op, segments };
@@ -244,6 +248,23 @@ function isSequenceSegmentBoundary(ts: TokenStream): boolean {
   );
 }
 
+function throwUnexpectedTrailingToken(token: AplToken | undefined): never {
+  throw new ParseDiagnosticError({
+    code: "unexpected_trailing_token",
+    message: `Unexpected trailing token: ${String(token?.type)} ${JSON.stringify(token?.value)}`,
+  });
+}
+
+function getActionAssignmentSuggestion(token: AplToken | undefined): string {
+  if (token?.type === "plusEq") {
+    return "Use +=/ when appending an action, for example actions+=/spell.";
+  }
+  if (token?.type === "slash") {
+    return "Use actions=spell to replace a list, or actions+=/spell to append.";
+  }
+  return "Use actions=spell to replace a list, or actions+=/spell to append.";
+}
+
 // Goes through a sequence and stores the raw text for each entry. SimC
 // sequence items may include inline arguments such as `use_items,slots=...`,
 // so the parser cannot restrict entries to bare identifiers.
@@ -265,9 +286,16 @@ function parseSequence(ts: TokenStream): SeqExpr {
     if (text.length === 0) {
       const t = ts.peek();
       if (t?.type === "colon") {
-        throw new Error("Expected sequence entry before ':'");
+        throw new ParseDiagnosticError({
+          code: "malformed_sequence",
+          message: "Expected sequence entry before ':'",
+          suggestion: "Remove the extra ':' or add an action before it.",
+        });
       }
-      throw new Error(`Malformatted sequence: ${t?.type ?? "EOF"}`);
+      throw new ParseDiagnosticError({
+        code: "malformed_sequence",
+        message: `Malformed sequence: ${t?.type ?? "EOF"}`,
+      });
     }
 
     entries.push({ text });
@@ -276,7 +304,11 @@ function parseSequence(ts: TokenStream): SeqExpr {
     if (sep?.type === "colon") {
       ts.next(); // consume ':'
       if (!ts.peek()) {
-        throw new Error("Expected sequence entry after ':'");
+        throw new ParseDiagnosticError({
+          code: "malformed_sequence",
+          message: "Expected sequence entry after ':'",
+          suggestion: "Add another sequence action after ':' or remove the trailing ':'.",
+        });
       }
       continue; // expect another ident next
     }
@@ -286,7 +318,10 @@ function parseSequence(ts: TokenStream): SeqExpr {
   }
 
   if (entries.length === 0) {
-    throw new Error("Expected at least one entry in sequence");
+    throw new ParseDiagnosticError({
+      code: "malformed_sequence",
+      message: "Expected at least one entry in sequence",
+    });
   }
 
   return { kind: "sequence", expr: entries };
@@ -316,7 +351,10 @@ function parseCondition(
     ts.next(); // Consumes operator
     const op = tokToBinOp(t);
     if (!op) {
-      throw new Error(`Unhandled operator token: ${t.type}`);
+      throw new ParseDiagnosticError({
+        code: "malformed_condition",
+        message: `Unhandled operator token: ${t.type}`,
+      });
     }
 
     const right = parseCondition(ts, prec + 1, sourceLine); // left-assoc
@@ -361,15 +399,19 @@ function expectSegmentBoundary(ts: TokenStream): void {
     return;
   }
 
-  throw new Error(
-    `Unexpected token after segment expression: ${t.type} ${JSON.stringify(t.value)}`,
-  );
+  throw new ParseDiagnosticError({
+    code: "malformed_action_segment",
+    message: `Unexpected token after segment expression: ${t.type} ${JSON.stringify(t.value)}`,
+  });
 }
 
 function parsePrefix(ts: TokenStream, sourceLine?: string): Condition {
   const t = ts.peek();
   if (!t) {
-    throw new Error("Unexpected EOF in condition");
+    throw new ParseDiagnosticError({
+      code: "malformed_condition",
+      message: "Unexpected EOF in condition",
+    });
   }
 
   const op = tokToUnaryOp(t);
@@ -384,7 +426,10 @@ function parsePrefix(ts: TokenStream, sourceLine?: string): Condition {
 function parsePrimary(ts: TokenStream, sourceLine?: string): Condition {
   const t = ts.peek();
   if (!t) {
-    throw new Error("Unexpected EOF in condition");
+    throw new ParseDiagnosticError({
+      code: "malformed_condition",
+      message: "Unexpected EOF in condition",
+    });
   }
 
   if (t.type === "lparen") {
@@ -410,9 +455,10 @@ function parsePrimary(ts: TokenStream, sourceLine?: string): Condition {
     return { kind: "ident", name };
   }
 
-  throw new Error(
-    `Unexpected token in condition: ${t.type} ${JSON.stringify(t.value)}`,
-  );
+  throw new ParseDiagnosticError({
+    code: "malformed_condition",
+    message: `Unexpected token in condition: ${t.type} ${JSON.stringify(t.value)}`,
+  });
 }
 
 function parseCall(
@@ -421,16 +467,25 @@ function parseCall(
   sourceLine?: string,
 ): CallExpr {
   if (!isCallName(name)) {
-    throw new Error(`Unsupported function call: ${name}`);
+    throw new ParseDiagnosticError({
+      code: "malformed_condition",
+      message: `Unsupported function call: ${name}`,
+    });
   }
 
   if (ts.peek()?.type === "rparen") {
-    throw new Error(`Function '${name}' expects exactly one argument`);
+    throw new ParseDiagnosticError({
+      code: "malformed_condition",
+      message: `Function '${name}' expects exactly one argument`,
+    });
   }
 
   const arg = parseCondition(ts, 0, sourceLine);
   if (ts.match("comma")) {
-    throw new Error(`Function '${name}' only supports a single argument`);
+    throw new ParseDiagnosticError({
+      code: "malformed_condition",
+      message: `Function '${name}' only supports a single argument`,
+    });
   }
 
   ts.expect("rparen");

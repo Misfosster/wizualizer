@@ -17,9 +17,9 @@
  *   - `global`     - applies to every profile. Allowed to override
  *                    `talent.*` atoms (a what-if knob across the
  *                    whole document).
- *   - `byProfile`  - per-profile, keyed by profile name. Restricted to
- *                    non-talent atoms; talent state per profile comes
- *                    only from the import string.
+ *   - `byProfile`  - per-profile, keyed by deterministic profile scope key.
+ *                    Restricted to non-talent atoms; talent state per
+ *                    profile comes only from the import string.
  *
  * Resolution order is enforced by `resolve-atom.ts` rather than baked
  * into the data shape, so the structure stays a flat record that's
@@ -62,7 +62,7 @@ export type AtomOverrides = Readonly<Record<AtomKey, AtomOverrideValue>>;
 
 export interface ConditionOverrides {
   global: AtomOverrides;
-  /** Per-profile overrides keyed by `AplProfile.name`. */
+  /** Per-profile overrides keyed by `getProfileScopeKey(profile)`. */
   byProfile: Readonly<Record<string, AtomOverrides>>;
 }
 

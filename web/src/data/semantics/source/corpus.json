@@ -1,0 +1,31 @@
+{
+  "gameVersion": "12.0.1-foundation",
+  "entries": [
+    {
+      "classSlug": "evoker",
+      "specSlug": "augmentation",
+      "actions": ["eruption", "upheaval", "prescience", "breath_of_eons"],
+      "buffs": ["ebon_might", "prescience", "essence_burst"],
+      "debuffs": [],
+      "cooldowns": ["upheaval", "breath_of_eons"],
+      "dots": [],
+      "trinkets": [],
+      "equipped": [],
+      "setBonuses": [],
+      "options": ["if", "target_if", "name", "value", "op", "slots"]
+    },
+    {
+      "classSlug": "shaman",
+      "specSlug": "enhancement",
+      "actions": ["stormstrike", "lava_lash", "crash_lightning", "ascendance"],
+      "buffs": ["hot_hand", "ascendance", "maelstrom_weapon"],
+      "debuffs": ["lashing_flames"],
+      "cooldowns": ["doom_winds", "ascendance", "lava_lash"],
+      "dots": ["flame_shock"],
+      "trinkets": [],
+      "equipped": [],
+      "setBonuses": [],
+      "options": ["if", "target_if", "name", "value", "op", "slots"]
+    }
+  ]
+}

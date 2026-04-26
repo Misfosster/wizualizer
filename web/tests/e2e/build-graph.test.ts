@@ -239,6 +239,7 @@ test("buildGraph keeps sequence conditions when the parsed document includes the
       {
         name: "Manual Sequence Demo",
         className: "shaman",
+        ordinalAmongSameNameSiblings: 0,
         blocks: [
           {
             name: "actions",
@@ -502,6 +503,7 @@ test("bare OR chain produces leaf nodes with OR edges, no container", () => {
       {
         name: "Chain Demo",
         className: "shaman",
+        ordinalAmongSameNameSiblings: 0,
         blocks: [
           {
             name: "actions",
@@ -796,6 +798,7 @@ test("parenthesized OR in AND chain produces container for the grouped part", ()
       {
         name: "Paren Demo",
         className: "shaman",
+        ordinalAmongSameNameSiblings: 0,
         blocks: [
           {
             name: "actions",
@@ -880,6 +883,7 @@ test("AND with parenthesized OR on the right: A&(B|C)", () => {
       {
         name: "Right Paren Demo",
         className: "shaman",
+        ordinalAmongSameNameSiblings: 0,
         blocks: [
           {
             name: "actions",

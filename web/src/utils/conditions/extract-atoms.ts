@@ -1,4 +1,5 @@
 import type { AplDocument } from "@/utils/apl-parser/document";
+import { getProfileScopeKey } from "@/utils/apl-parser/profile-scope";
 import type { Condition } from "@/utils/apl-parser/types";
 import {
   canonicalAtomKey,
@@ -21,9 +22,9 @@ import type { ConditionAtom, ConditionAtomValueKind } from "./types";
  * Output is intentionally split:
  *   - `all`         - deduped atoms across the whole document, used by
  *                     the global panel.
- *   - `byProfile`   - deduped atoms per profile, used by the per-
- *                     profile expander so each row only lists atoms
- *                     that profile actually references.
+ *   - `byProfile`   - deduped atoms per deterministic profile scope key,
+ *                     used by the per-profile expander so each row only
+ *                     lists atoms that profile actually references.
  *
  * Both lists are sorted by key for stable rendering and stable test
  * snapshots; the UI re-sorts into a tree separately.
@@ -43,7 +44,7 @@ export function extractConditionAtoms(
 
   for (const profile of document.profiles) {
     const profileAtoms = new Map<string, ConditionAtom>();
-    byProfile.set(profile.name, profileAtoms);
+    byProfile.set(getProfileScopeKey(profile), profileAtoms);
 
     for (const block of profile.blocks) {
       for (const actionLine of block.actions) {

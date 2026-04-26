@@ -1,5 +1,5 @@
 import "@styles/tailwind.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Tabs, TabsContent } from "@components/ui/tabs";
 import { useShallow } from "zustand/react/shallow";
 import { AplCodeEditor } from "@components/apl-editor/AplCodeEditor";
@@ -9,6 +9,7 @@ import { AplToolbar } from "@components/apl-shell/AplToolbar";
 import { EditorSaveIndicator } from "@components/apl-shell/EditorSaveIndicator";
 import Canvas from "@components/canvas";
 import { useEditorStore } from "@/state/editorStore";
+import { semanticCatalogLoader } from "@/utils/semantics/catalog-loader-browser";
 
 const ACTIVE_TAB_STORAGE_KEY = "logiccraft.activeAplTab";
 type AplInputTab = "write" | "preview";
@@ -38,6 +39,8 @@ function AplInput() {
     aplText,
     parseError,
     parseErrorLineNumber,
+    diagnostics,
+    document,
     applyAplText,
     saveActiveApl,
     setAutoSaveEnabled,
@@ -55,6 +58,8 @@ function AplInput() {
       aplText: state.aplText,
       parseError: state.parseError,
       parseErrorLineNumber: state.parseErrorLineNumber,
+      diagnostics: state.diagnostics,
+      document: state.document,
       applyAplText: state.applyAplText,
       saveActiveApl: state.saveActiveApl,
       setAutoSaveEnabled: state.setAutoSaveEnabled,
@@ -64,6 +69,19 @@ function AplInput() {
       renameApl: state.renameApl,
       deleteApl: state.deleteApl,
     })),
+  );
+  const warningDiagnostics = parseError
+    ? []
+    : diagnostics
+        .filter((diagnostic) => diagnostic.severity === "warning")
+        .slice(0, 4);
+  const completionContext = useMemo(
+    () => ({
+      document,
+      lookupSemanticSpec: (classSlug: string, specSlug: string) =>
+        semanticCatalogLoader.lookupSpec(classSlug, specSlug),
+    }),
+    [document],
   );
 
   useEffect(() => {
@@ -128,6 +146,7 @@ function AplInput() {
               value={aplText}
               parseErrorLineNumber={parseErrorLineNumber}
               lineJumpRequest={lineJumpRequest}
+              completionContext={completionContext}
               onChange={applyAplText}
             />
             <EditorSaveIndicator
@@ -153,6 +172,27 @@ function AplInput() {
                   Go to line {parseErrorLineNumber}
                 </button>
               ) : null}
+            </div>
+          ) : null}
+          {!parseError && warningDiagnostics.length > 0 ? (
+            <div
+              data-apl-diagnostics="warnings"
+              className="mt-3 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-950 dark:border-sky-400/25 dark:bg-sky-400/10 dark:text-sky-100"
+            >
+              <p className="font-semibold">APL suggestions</p>
+              <ul className="mt-1 list-none space-y-1 p-0">
+                {warningDiagnostics.map((diagnostic) => (
+                  <li
+                    key={`${String(diagnostic.lineNumber)}:${diagnostic.code}:${diagnostic.message}`}
+                    data-apl-diagnostic-line={diagnostic.lineNumber}
+                  >
+                    Line {diagnostic.lineNumber}: {diagnostic.message}
+                    {diagnostic.suggestion ? (
+                      <span> {diagnostic.suggestion}</span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : null}
         </TabsContent>

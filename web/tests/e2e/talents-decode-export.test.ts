@@ -22,6 +22,7 @@ function profile(
   return {
     name: overrides.name,
     className: overrides.className,
+    ordinalAmongSameNameSiblings: overrides.ordinalAmongSameNameSiblings ?? 0,
     blocks: overrides.blocks ?? [],
     ...(overrides.specName ? { specName: overrides.specName } : {}),
     ...(overrides.talentExport ? { talentExport: overrides.talentExport } : {}),

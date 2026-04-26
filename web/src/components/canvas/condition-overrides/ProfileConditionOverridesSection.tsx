@@ -36,11 +36,13 @@ interface AtomSuggestion {
 
 export interface ProfileConditionOverridesSectionProps {
   profileName: string;
+  profileScopeKey: string;
   profileAtoms: readonly ConditionAtom[];
 }
 
 export function ProfileConditionOverridesSection({
   profileName,
+  profileScopeKey,
   profileAtoms,
 }: ProfileConditionOverridesSectionProps) {
   const { conditionOverrides, setConditionOverrides } = useEditorStore(
@@ -56,9 +58,10 @@ export function ProfileConditionOverridesSection({
   const inputId = useId();
   const listboxId = useId();
 
-  // TODO: Profile scopes are keyed by profile.name, so duplicate profile
-  // names share one override scope until profiles get stable ids.
-  const scope = useMemo(() => ({ profile: profileName }), [profileName]);
+  const scope = useMemo(
+    () => ({ profile: profileScopeKey }),
+    [profileScopeKey],
+  );
 
   const knownAtomsByKey = useMemo(() => {
     const byKey = new Map<string, ConditionAtom>();
@@ -68,7 +71,7 @@ export function ProfileConditionOverridesSection({
     return byKey;
   }, [profileAtoms]);
 
-  const profileOverrides = conditionOverrides.byProfile[profileName] ?? {};
+  const profileOverrides = conditionOverrides.byProfile[profileScopeKey] ?? {};
   const displayedKeys = useMemo(() => {
     const keys = new Set<string>(Object.keys(profileOverrides));
     for (const key of selectedKeys) {
@@ -159,6 +162,7 @@ export function ProfileConditionOverridesSection({
   return (
     <section
       data-profile-condition-overrides-section={profileName}
+      data-profile-scope-key={profileScopeKey}
       aria-label={`Condition overrides for ${profileName || "profile"}`}
       className="mt-1 rounded border border-gray-300 bg-white px-2 py-2"
     >

@@ -5,6 +5,7 @@ import {
   type AplDocument,
   type ParseDocumentResult,
 } from "@/utils/apl-parser/document";
+import type { AplDiagnostic } from "@/utils/apl-parser/diagnostics";
 import type { GraphFlowNode } from "@components/nodes/types";
 import type {
   TalentRenderMode,
@@ -32,6 +33,7 @@ export interface DerivedEditorState {
   lastGoodText: string;
   parseError: string | null;
   parseErrorLineNumber: number | null;
+  diagnostics: readonly AplDiagnostic[];
   document: AplDocument | null;
   collapsedBlocks: Set<string>;
   collapsedActions: Set<string>;
@@ -49,7 +51,10 @@ export interface RebuildInputs {
 }
 
 function formatParseError(result: ParseFailure): string {
-  return `Line ${String(result.lineNumber)}: ${result.error}`;
+  const suggestion = result.suggestion
+    ? ` Suggestion: ${result.suggestion}`
+    : "";
+  return `Line ${String(result.lineNumber)}: ${result.error}${suggestion}`;
 }
 
 /**
@@ -94,6 +99,7 @@ export function buildDerivedState(
   talentRenderMode: TalentRenderMode,
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>,
   conditionOverrides: ConditionOverrides = EMPTY_CONDITION_OVERRIDES,
+  diagnostics: readonly AplDiagnostic[] = [],
 ): DerivedEditorState {
   const nextCollapsedBlocks = pruneCollapsedBlocks(document, collapsedBlocks);
   const nextCollapsedActions = pruneCollapsedActions(document, collapsedActions);
@@ -108,6 +114,7 @@ export function buildDerivedState(
     lastGoodText: text,
     parseError: null,
     parseErrorLineNumber: null,
+    diagnostics,
     document,
     collapsedBlocks: nextCollapsedBlocks,
     collapsedActions: nextCollapsedActions,
@@ -125,6 +132,7 @@ function buildFailedState(
     ...fallback,
     parseError: formatParseError(result),
     parseErrorLineNumber: result.lineNumber,
+    diagnostics: result.diagnostics,
   };
 }
 
@@ -152,6 +160,7 @@ export function deriveStateFromText(
       talentRenderMode,
       talentSelectionsByProfile,
       conditionOverrides,
+      parsed.diagnostics,
     );
   }
   return buildFailedState(parsed, fallback);
@@ -162,6 +171,7 @@ export function getEmptyDerivedState(lastGoodText = ""): DerivedEditorState {
     lastGoodText,
     parseError: null,
     parseErrorLineNumber: null,
+    diagnostics: [],
     document: null,
     collapsedBlocks: new Set<string>(),
     collapsedActions: new Set<string>(),

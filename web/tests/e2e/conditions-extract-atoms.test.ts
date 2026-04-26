@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { parseDocument } from "../../src/utils/apl-parser/document";
+import { getProfileScopeKey } from "../../src/utils/apl-parser/profile-scope";
 import { extractConditionAtoms } from "../../src/utils/conditions/extract-atoms";
 
 const SHAMAN_DOC = `
@@ -80,11 +81,36 @@ test("extractConditionAtoms ignores numeric literals and segment kinds besides i
   expect(atoms.all.some((a) => a.key === "sec")).toBe(false);
 });
 
-test("extractConditionAtoms partitions atoms per profile name", () => {
+test("extractConditionAtoms partitions atoms per profile scope key", () => {
   const doc = parseOrThrow(TWO_PROFILE_DOC);
   const atoms = extractConditionAtoms(doc);
-  const oneKeys = atoms.byProfile.get("One")?.map((a) => a.key) ?? [];
-  const twoKeys = atoms.byProfile.get("Two")?.map((a) => a.key) ?? [];
+  const oneKeys =
+    atoms.byProfile.get(getProfileScopeKey(doc.profiles[0]))?.map((a) => a.key) ??
+    [];
+  const twoKeys =
+    atoms.byProfile.get(getProfileScopeKey(doc.profiles[1]))?.map((a) => a.key) ??
+    [];
   expect(oneKeys).toEqual(["buff.hot_hand.up"]);
   expect(twoKeys).toEqual(["buff.combustion.up"]);
+});
+
+test("extractConditionAtoms uses one bucket per duplicate profile scope key", () => {
+  const doc = parseOrThrow(`
+shaman="Same"
+actions=lava_lash,if=buff.hot_hand.up
+
+shaman="Same"
+actions=stormstrike,if=buff.ascendance.up
+`);
+  const atoms = extractConditionAtoms(doc);
+  const firstScopeKey = getProfileScopeKey(doc.profiles[0]);
+  const secondScopeKey = getProfileScopeKey(doc.profiles[1]);
+
+  expect(firstScopeKey).not.toBe(secondScopeKey);
+  expect(atoms.byProfile.get(firstScopeKey)?.map((a) => a.key)).toEqual([
+    "buff.hot_hand.up",
+  ]);
+  expect(atoms.byProfile.get(secondScopeKey)?.map((a) => a.key)).toEqual([
+    "buff.ascendance.up",
+  ]);
 });

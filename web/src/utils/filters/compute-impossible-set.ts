@@ -1,6 +1,7 @@
 import { extractCallTarget } from "@/utils/apl-parser/action-data";
 import type { AplBlock, AplDocument } from "@/utils/apl-parser/document";
 import { getActionNodeId } from "@/utils/apl-parser/node-ids";
+import { getProfileScopeKey } from "@/utils/apl-parser/profile-scope";
 import { prettySegment } from "@/utils/apl-parser/pretty-log";
 import type { Condition, Segment } from "@/utils/apl-parser/types";
 import { canonicalAtomKey, parseAtomKey } from "@/utils/conditions/atom-key";
@@ -56,7 +57,7 @@ export interface ComputeImpossibleSetOptions {
   /**
    * Manual override panel state. A profile is evaluated when it has
    * either trustworthy talents or at least one applicable override
-   * (global, or per-profile by name). Profiles with neither stay
+   * (global, or per-profile by scope key). Profiles with neither stay
    * untouched - matching the v0 behaviour.
    */
   conditionOverrides?: ConditionOverrides;
@@ -112,7 +113,7 @@ export function computeImpossibleSet(
         ? selectionResult.selections
         : null;
     const profileOverrides =
-      overrides.byProfile[profile.name] ?? EMPTY_ATOM_OVERRIDES;
+      overrides.byProfile[getProfileScopeKey(profile)] ?? EMPTY_ATOM_OVERRIDES;
 
     // Trust gate (broadened): we only evaluate when at least one source
     // of truth is available for this profile. Without any of them

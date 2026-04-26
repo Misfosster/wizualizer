@@ -1,3 +1,8 @@
+import { getActionLineAdvisories } from "./advisories";
+import {
+  parseErrorToDiagnostic,
+  type AplDiagnostic,
+} from "./diagnostics";
 import { parseAction } from "./parser";
 import type { Action } from "./types";
 
@@ -52,6 +57,7 @@ export interface AplBlock {
 export interface AplProfile {
   name: string;
   className: string;
+  ordinalAmongSameNameSiblings: number;
   isCopy?: boolean;
   blocks: AplBlock[];
   // Free-form syntactic metadata captured from SimC profile lines. Decoded
@@ -66,13 +72,16 @@ export interface AplDocument {
 
 interface ParseDocumentFailure {
   ok: false;
+  code: AplDiagnostic["code"];
   error: string;
   lineNumber: number;
   lineText: string;
+  suggestion?: string;
+  diagnostics: readonly AplDiagnostic[];
 }
 
 export type ParseDocumentResult =
-  | { ok: true; document: AplDocument }
+  | { ok: true; document: AplDocument; diagnostics: readonly AplDiagnostic[] }
   | ParseDocumentFailure;
 
 function createProfile(
@@ -80,7 +89,31 @@ function createProfile(
   className: string,
   isCopy = false,
 ): AplProfile {
-  return { name, className, isCopy, blocks: [] };
+  return {
+    name,
+    className,
+    ordinalAmongSameNameSiblings: 0,
+    isCopy,
+    blocks: [],
+  };
+}
+
+function appendProfile(
+  profiles: AplProfile[],
+  profile: AplProfile,
+): AplProfile {
+  let ordinal = 0;
+  for (const existingProfile of profiles) {
+    if (
+      existingProfile.className === profile.className &&
+      existingProfile.name === profile.name
+    ) {
+      ordinal++;
+    }
+  }
+  profile.ordinalAmongSameNameSiblings = ordinal;
+  profiles.push(profile);
+  return profile;
 }
 
 function parseProfileDefinition(line: string): AplProfile | null {
@@ -133,8 +166,7 @@ function ensureProfile(
   }
 
   const defaultProfile = createProfile("Untitled", "unknown");
-  profiles.push(defaultProfile);
-  return defaultProfile;
+  return appendProfile(profiles, defaultProfile);
 }
 
 // Returns true when the line was recognized as profile metadata (spec=, talents=)
@@ -212,6 +244,7 @@ function applyActionToBlock(block: AplBlock, actionLine: ParsedActionLine): void
 function parseActionLine(
   rawLine: string,
   lineNumber: number,
+  fallbackSuggestion?: string,
 ): ParsedActionLine | ParseDocumentFailure {
   const line = rawLine.trim();
 
@@ -220,16 +253,40 @@ function parseActionLine(
     if (!action) {
       return {
         ok: false,
+        code: "malformed_action_segment",
         error: "Expected an action line, but nothing was parsed",
         lineNumber,
         lineText: rawLine,
+        diagnostics: [
+          {
+            code: "malformed_action_segment",
+            message: "Expected an action line, but nothing was parsed",
+            lineNumber,
+            lineText: rawLine,
+            severity: "error",
+            ...(fallbackSuggestion ? { suggestion: fallbackSuggestion } : {}),
+          },
+        ],
       };
     }
 
     return { action, rawLine, lineNumber };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    return { ok: false, error: message, lineNumber, lineText: rawLine };
+    const diagnostic = parseErrorToDiagnostic(
+      error,
+      lineNumber,
+      rawLine,
+      fallbackSuggestion,
+    );
+    return {
+      ok: false,
+      code: diagnostic.code,
+      error: diagnostic.message,
+      lineNumber,
+      lineText: rawLine,
+      ...(diagnostic.suggestion ? { suggestion: diagnostic.suggestion } : {}),
+      diagnostics: [diagnostic],
+    };
   }
 }
 
@@ -242,6 +299,7 @@ function isParseFailure(
 
 export function parseDocument(text: string): ParseDocumentResult {
   const document: AplDocument = { profiles: [] };
+  const diagnostics: AplDiagnostic[] = [];
   let currentProfile: AplProfile | null = null;
   let blocksByName = new Map<string, AplBlock>();
 
@@ -256,8 +314,7 @@ export function parseDocument(text: string): ParseDocumentResult {
 
     const definedProfile = parseProfileDefinition(line);
     if (definedProfile) {
-      currentProfile = definedProfile;
-      document.profiles.push(currentProfile);
+      currentProfile = appendProfile(document.profiles, definedProfile);
       blocksByName = new Map<string, AplBlock>();
       continue;
     }
@@ -267,8 +324,7 @@ export function parseDocument(text: string): ParseDocumentResult {
       document.profiles[document.profiles.length - 1] ?? null,
     );
     if (copiedProfile) {
-      currentProfile = copiedProfile;
-      document.profiles.push(currentProfile);
+      currentProfile = appendProfile(document.profiles, copiedProfile);
       blocksByName = buildBlockIndex(currentProfile.blocks);
       continue;
     }
@@ -283,10 +339,22 @@ export function parseDocument(text: string): ParseDocumentResult {
       continue;
     }
 
+    const lineAdvisories = getActionLineAdvisories(rawLine, index + 1);
+    diagnostics.push(...lineAdvisories);
     currentProfile = ensureProfile(currentProfile, document.profiles);
-    const parsedActionLine = parseActionLine(rawLine, index + 1);
+    const parsedActionLine = parseActionLine(
+      rawLine,
+      index + 1,
+      lineAdvisories[0]?.suggestion,
+    );
     if (isParseFailure(parsedActionLine)) {
-      return parsedActionLine;
+      return {
+        ...parsedActionLine,
+        diagnostics: mergeFatalDiagnostic(
+          diagnostics,
+          parsedActionLine.diagnostics[0],
+        ),
+      };
     }
 
     const block = getOrCreateBlock(
@@ -297,5 +365,27 @@ export function parseDocument(text: string): ParseDocumentResult {
     applyActionToBlock(block, parsedActionLine);
   }
 
-  return { ok: true, document };
+  return { ok: true, document, diagnostics };
+}
+
+function mergeFatalDiagnostic(
+  diagnostics: readonly AplDiagnostic[],
+  fatalDiagnostic: AplDiagnostic | undefined,
+): readonly AplDiagnostic[] {
+  if (!fatalDiagnostic) {
+    return diagnostics;
+  }
+
+  if (!fatalDiagnostic.suggestion) {
+    return [...diagnostics, fatalDiagnostic];
+  }
+
+  return [
+    ...diagnostics.filter(
+      (diagnostic) =>
+        diagnostic.lineNumber !== fatalDiagnostic.lineNumber ||
+        diagnostic.suggestion !== fatalDiagnostic.suggestion,
+    ),
+    fatalDiagnostic,
+  ];
 }

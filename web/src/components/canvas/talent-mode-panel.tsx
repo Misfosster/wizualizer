@@ -54,7 +54,7 @@ export function TalentModePanel({
   );
 
   const profiles = document?.profiles ?? [];
-  const profileAtomsByName = useMemo(
+  const profileAtomsByScopeKey = useMemo(
     () => (document ? extractConditionAtoms(document).byProfile : EMPTY_PROFILE_ATOMS),
     [document],
   );
@@ -101,7 +101,7 @@ export function TalentModePanel({
         selectionsByProfile={talentSelectionsByProfile}
         talentSummary={talentSummary}
         mode={talentRenderMode}
-        profileAtomsByName={profileAtomsByName}
+        profileAtomsByScopeKey={profileAtomsByScopeKey}
       />
       <ConditionOverridesSection />
     </CollapsiblePanelShell>

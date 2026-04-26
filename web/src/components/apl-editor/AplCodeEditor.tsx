@@ -18,6 +18,10 @@ import {
 } from "@codemirror/view";
 import { bracketMatching, syntaxHighlighting } from "@codemirror/language";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
+import {
+  createAplCompletionContextExtension,
+  createAplCompletionExtension,
+} from "./completion";
 import { createErrorLineExtension } from "./error-line";
 import { createAplFoldingExtension } from "./folding";
 import {
@@ -42,8 +46,10 @@ function createEditorExtensions(
   errorLineCompartment: Compartment,
   jumpTargetCompartment: Compartment,
   variableHoverCompartment: Compartment,
+  completionContextCompartment: Compartment,
   onChangeRef: ChangeRef,
   parseErrorLineNumber: number | null,
+  completionContext: AplCodeEditorProps["completionContext"],
 ): Extension[] {
   return [
     lineNumbers(),
@@ -57,6 +63,7 @@ function createEditorExtensions(
     aplLanguage,
     syntaxHighlighting(aplHighlightStyle),
     aplEditorTheme,
+    createAplCompletionExtension(),
     createAplFoldingExtension(),
     createVariableReferenceMarksExtension(),
     placeholder("Paste APL..."),
@@ -81,6 +88,9 @@ function createEditorExtensions(
     variableHoverCompartment.of(
       createVariableReferenceHoverExtension(null),
     ),
+    completionContextCompartment.of(
+      createAplCompletionContextExtension(completionContext),
+    ),
   ];
 }
 
@@ -88,17 +98,20 @@ export function AplCodeEditor({
   value,
   parseErrorLineNumber,
   lineJumpRequest,
+  completionContext,
   onChange,
 }: AplCodeEditorProps) {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const viewRef = useRef<EditorView | null>(null);
   const initialValueRef = useRef(value);
+  const initialCompletionContextRef = useRef(completionContext);
   const onChangeRef = useRef(onChange);
   const parseErrorLineNumberRef = useRef(parseErrorLineNumber);
   const jumpTargetTimeoutRef = useRef<number | null>(null);
   const errorLineCompartment = useMemo(() => new Compartment(), []);
   const jumpTargetCompartment = useMemo(() => new Compartment(), []);
   const variableHoverCompartment = useMemo(() => new Compartment(), []);
+  const completionContextCompartment = useMemo(() => new Compartment(), []);
 
   useEffect(() => {
     onChangeRef.current = onChange;
@@ -122,8 +135,10 @@ export function AplCodeEditor({
           errorLineCompartment,
           jumpTargetCompartment,
           variableHoverCompartment,
+          completionContextCompartment,
           onChangeRef,
           parseErrorLineNumberRef.current,
+          initialCompletionContextRef.current,
         ),
       }),
     });
@@ -165,7 +180,12 @@ export function AplCodeEditor({
       view.destroy();
       viewRef.current = null;
     };
-  }, [errorLineCompartment, jumpTargetCompartment, variableHoverCompartment]);
+  }, [
+    completionContextCompartment,
+    errorLineCompartment,
+    jumpTargetCompartment,
+    variableHoverCompartment,
+  ]);
 
   useEffect(() => {
     const view = viewRef.current;
@@ -199,6 +219,19 @@ export function AplCodeEditor({
       ),
     });
   }, [errorLineCompartment, parseErrorLineNumber]);
+
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) {
+      return;
+    }
+
+    view.dispatch({
+      effects: completionContextCompartment.reconfigure(
+        createAplCompletionContextExtension(completionContext),
+      ),
+    });
+  }, [completionContext, completionContextCompartment]);
 
   useEffect(() => {
     const view = viewRef.current;

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { parseDocument } from "../../src/utils/apl-parser/document";
+import { getProfileScopeKey } from "../../src/utils/apl-parser/profile-scope";
 import { computeImpossibleSet } from "../../src/utils/filters/compute-impossible-set";
 import {
   EMPTY_CONDITION_OVERRIDES,
@@ -144,12 +145,33 @@ actions=lava_lash,if=buff.hot_hand.up
   const overrides: ConditionOverrides = {
     global: {},
     byProfile: {
-      A: { "buff.hot_hand.up": false },
+      [getProfileScopeKey(doc.profiles[0])]: { "buff.hot_hand.up": false },
     },
   };
   const result = computeImpossibleSet(doc, { conditionOverrides: overrides });
   expect(result.hiddenCountByProfile.get(0)).toBe(1);
   expect(result.hiddenCountByProfile.has(1)).toBe(false);
+});
+
+test("same-name profiles can be overridden independently by scope key", () => {
+  const doc = parseOrThrow(`
+shaman="Same"
+actions=lava_lash,if=buff.hot_hand.up
+
+shaman="Same"
+actions=stormstrike,if=buff.hot_hand.up
+`);
+  const overrides: ConditionOverrides = {
+    global: {},
+    byProfile: {
+      [getProfileScopeKey(doc.profiles[1])]: { "buff.hot_hand.up": false },
+    },
+  };
+
+  const result = computeImpossibleSet(doc, { conditionOverrides: overrides });
+
+  expect(result.hiddenCountByProfile.has(0)).toBe(false);
+  expect(result.hiddenCountByProfile.get(1)).toBe(1);
 });
 
 test("missing-catalog talents stay untouched but a manual override still applies", () => {

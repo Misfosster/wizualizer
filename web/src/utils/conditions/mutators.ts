@@ -77,11 +77,11 @@ export function clearScope(
     };
     return collapseEmpty(next);
   }
-  const profileName = scope.profile;
-  if (!(profileName in overrides.byProfile)) {
+  const profileScopeKey = scope.profile;
+  if (!(profileScopeKey in overrides.byProfile)) {
     return overrides;
   }
-  const nextByProfile = omitRecordKey(overrides.byProfile, profileName);
+  const nextByProfile = omitRecordKey(overrides.byProfile, profileScopeKey);
   return collapseEmpty({
     global: overrides.global,
     byProfile: nextByProfile,
@@ -116,15 +116,15 @@ function writeScope(
       byProfile: overrides.byProfile,
     });
   }
-  const profileName = scope.profile;
+  const profileScopeKey = scope.profile;
   const nextByProfile: Record<string, AtomOverrides> = { ...overrides.byProfile };
   if (Object.keys(next).length === 0) {
     return collapseEmpty({
       global: overrides.global,
-      byProfile: omitRecordKey(nextByProfile, profileName),
+      byProfile: omitRecordKey(nextByProfile, profileScopeKey),
     });
   } else {
-    nextByProfile[profileName] = next;
+    nextByProfile[profileScopeKey] = next;
   }
   return collapseEmpty({
     global: overrides.global,

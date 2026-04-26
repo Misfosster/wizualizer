@@ -16,6 +16,7 @@ import { ProfileConditionOverridesSection } from "./condition-overrides/ProfileC
 export interface TalentProfileStatusRowProps {
   profileIndex: number;
   profileName: string;
+  profileScopeKey: string;
   row: TalentRowDescriptor;
   hiddenActions: readonly HiddenActionSummary[];
   profileAtoms: readonly ConditionAtom[];
@@ -24,6 +25,7 @@ export interface TalentProfileStatusRowProps {
 export function TalentProfileStatusRow({
   profileIndex,
   profileName,
+  profileScopeKey,
   row,
   hiddenActions,
   profileAtoms,
@@ -46,6 +48,7 @@ export function TalentProfileStatusRow({
     <li
       key={`${String(profileIndex)}__${profileName}`}
       data-talent-row-tone={row.tone}
+      data-profile-scope-key={profileScopeKey}
       className="rounded-md border border-gray-200 bg-gray-50/70 p-2 leading-snug shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]"
     >
       <div className="flex items-start gap-2">
@@ -99,6 +102,7 @@ export function TalentProfileStatusRow({
             <div id={overridesId}>
               <ProfileConditionOverridesSection
                 profileName={profileName}
+                profileScopeKey={profileScopeKey}
                 profileAtoms={profileAtoms}
               />
             </div>

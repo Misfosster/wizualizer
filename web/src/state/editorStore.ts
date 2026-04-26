@@ -1,19 +1,26 @@
-import type { Edge } from "@xyflow/react";
 import { create } from "zustand";
-import type { AplDocument } from "@/utils/apl-parser/document";
-import type { GraphFlowNode } from "@components/nodes/types";
-import {
-  decodeDocumentTalents,
-  makeProfileCatalogLookup,
-  type ProfileCatalogLookup,
-} from "@/utils/talents/decode-export";
-import { catalogLoader } from "@/utils/talents/catalog-loader-browser";
-import type {
-  TalentRenderMode,
-  TalentRenderSummary,
-  TalentSelectionResult,
-} from "@/utils/talents/types";
+import type { TalentRenderMode } from "@/utils/talents/types";
 import type { ConditionOverrides } from "@/utils/conditions/types";
+import { validateDocumentSemantics } from "@/utils/semantics/validate";
+import {
+  createAplId,
+  getAplDisplayName,
+  getUniqueAplName,
+  hasUnsavedAplChanges,
+  persistAplLibrary,
+  saveDraftToLibrary,
+  updateStoredApl,
+} from "./apl-library-manager";
+import {
+  buildRuntimeStateForApl,
+  snapshotFallback,
+  withSemanticDiagnostics,
+  type RuntimeEditorState,
+} from "./apl-runtime-builder";
+import {
+  migrateStoredOverridesForDocument,
+  prepareConditionOverridesForDocument,
+} from "./condition-override-coordinator";
 import {
   getBlockActionIds,
   getDocumentBlockIds,
@@ -21,20 +28,22 @@ import {
 import {
   buildDerivedState,
   deriveStateFromText,
-  getEmptyDerivedState,
   rebuildGraph,
-  type DerivedEditorState,
 } from "./derivation";
+import {
+  catalogLoader,
+  decodeSelections,
+  prefetchCatalogsFor,
+  selectionsEqual,
+  semanticCatalogLoader,
+} from "./talent-catalog-coordinator";
 import {
   readStoredAplAutoSave,
   readStoredAplLibrary,
   readStoredConditionOverrides,
   readStoredTalentRenderMode,
   type StoredApl,
-  writeStoredActiveAplSnapshot,
   writeStoredAplAutoSave,
-  writeStoredAplLibrary,
-  writeStoredConditionOverrides,
   writeStoredTalentRenderMode,
 } from "./storage";
 
@@ -48,48 +57,12 @@ export {
   TALENT_RENDER_MODE_STORAGE_KEY,
 } from "./storage";
 
-const EMPTY_SELECTIONS: ReadonlyMap<number, TalentSelectionResult> = new Map();
-
-const resolveCatalogForProfile: ProfileCatalogLookup =
-  makeProfileCatalogLookup(catalogLoader);
-
-/**
- * Kick off catalog fetches for every distinct class referenced by the
- * document. The loader dedupes, so calling this on every document
- * change is cheap. We do not await: the store reacts to catalog
- * arrivals via the `onLoaded` subscription below.
- */
-function prefetchCatalogsFor(document: AplDocument | null): void {
-  if (!document) return;
-  const seen = new Set<string>();
-  for (const profile of document.profiles) {
-    const slug = profile.className;
-    if (!slug || slug === "unknown" || seen.has(slug)) continue;
-    seen.add(slug);
-    void catalogLoader.ensure(slug);
-  }
-}
-
-interface EditorState {
+interface EditorState extends RuntimeEditorState {
   savedApls: StoredApl[];
   activeAplId: string;
   draftAplName: string;
   autoSaveEnabled: boolean;
   hasUnsavedChanges: boolean;
-  aplText: string;
-  lastGoodText: string;
-  parseError: string | null;
-  parseErrorLineNumber: number | null;
-  document: AplDocument | null;
-  collapsedBlocks: Set<string>;
-  collapsedActions: Set<string>;
-  nodes: GraphFlowNode[];
-  edges: Edge[];
-  talentRenderMode: TalentRenderMode;
-  talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
-  talentSummary: TalentRenderSummary | null;
-  conditionOverrides: ConditionOverrides;
-  graphJumpTarget: { nodeId: string; nonce: number } | null;
   applyAplText: (text: string) => void;
   saveActiveApl: () => void;
   setAutoSaveEnabled: (enabled: boolean) => void;
@@ -106,14 +79,6 @@ interface EditorState {
   requestGraphJumpToNode: (nodeId: string) => void;
   requestGraphJump: (actionId: string) => void;
   clearGraphJumpTarget: () => void;
-}
-
-function decodeSelections(
-  document: AplDocument | null,
-): ReadonlyMap<number, TalentSelectionResult> {
-  return document
-    ? decodeDocumentTalents(document, resolveCatalogForProfile)
-    : EMPTY_SELECTIONS;
 }
 
 type EditorActions =
@@ -134,190 +99,31 @@ type EditorActions =
   | "requestGraphJump"
   | "clearGraphJumpTarget";
 
-type RuntimeEditorState = Omit<
-  EditorState,
-  | EditorActions
-  | "savedApls"
-  | "activeAplId"
-  | "draftAplName"
-  | "autoSaveEnabled"
-  | "hasUnsavedChanges"
->;
-
-function createAplId(): string {
-  if (typeof crypto !== "undefined") {
-    return crypto.randomUUID();
-  }
-  return `apl-${Date.now().toString(36)}-${Math.random()
-    .toString(36)
-    .slice(2, 8)}`;
-}
-
-function getAplDisplayName(apl: Pick<StoredApl, "name">): string {
-  const trimmed = apl.name.trim();
-  return trimmed.length > 0 ? trimmed : "Untitled APL";
-}
-
-function getUniqueAplName(baseName: string, apls: readonly StoredApl[]): string {
-  const used = new Set(apls.map((apl) => getAplDisplayName(apl).toLowerCase()));
-  if (!used.has(baseName.toLowerCase())) {
-    return baseName;
-  }
-  for (let index = 2; ; index += 1) {
-    const candidate = `${baseName} ${String(index)}`;
-    if (!used.has(candidate.toLowerCase())) {
-      return candidate;
-    }
-  }
-}
-
-function updateStoredApl(
-  apls: readonly StoredApl[],
-  aplId: string,
-  updates: Partial<Omit<StoredApl, "id">>,
-): StoredApl[] {
-  return apls.map((apl) =>
-    apl.id === aplId ? { ...apl, ...updates, updatedAt: Date.now() } : apl,
-  );
-}
-
-function getActiveStoredApl(
-  state: Pick<EditorState, "savedApls" | "activeAplId">,
-): StoredApl | undefined {
-  return state.savedApls.find((apl) => apl.id === state.activeAplId);
-}
-
-function hasUnsavedAplChanges(
-  state: Pick<
-    EditorState,
-    "savedApls" | "activeAplId" | "draftAplName" | "aplText" | "lastGoodText"
-  >,
-): boolean {
-  const activeApl = getActiveStoredApl(state);
-  if (!activeApl) {
-    return true;
-  }
-  return (
-    activeApl.name !== state.draftAplName ||
-    activeApl.text !== state.aplText ||
-    activeApl.lastGoodText !== state.lastGoodText
-  );
-}
-
-function persistAplLibrary(apls: StoredApl[], activeAplId: string): void {
-  writeStoredAplLibrary({ apls, activeAplId });
-  const activeApl = apls.find((apl) => apl.id === activeAplId);
-  if (activeApl) {
-    writeStoredActiveAplSnapshot(activeApl);
-  }
-}
-
-function saveDraftToLibrary(state: EditorState): StoredApl[] {
-  return updateStoredApl(state.savedApls, state.activeAplId, {
-    name: state.draftAplName,
-    text: state.aplText,
-    lastGoodText: state.lastGoodText,
-  });
-}
-
-/**
- * Converts a saved APL record into live editor state.
- *
- * 1. Its text still works -> show it
- * 2. Its text is broken, but we kept a backup that works -> show the backup graph + the error
- * 3. Nothing works -> blank canvas + the error
- */
-function buildRuntimeStateForApl(
+function buildRuntimeStateForAplWithOverrideMigration(
   aplText: string,
   lastGoodText: string,
   talentRenderMode: TalentRenderMode,
   conditionOverrides: ConditionOverrides,
 ): RuntimeEditorState {
-  const collapsedBlocks = new Set<string>();
-  const collapsedActions = new Set<string>();
-
-  const initialFallback = getEmptyDerivedState(lastGoodText);
-  const initialState = deriveStateFromText(
+  const runtime = buildRuntimeStateForApl(
     aplText,
-    initialFallback,
-    collapsedBlocks,
-    collapsedActions,
+    lastGoodText,
     talentRenderMode,
-    EMPTY_SELECTIONS,
     conditionOverrides,
   );
-
-  // The decoder runs against the document we actually keep, so we resolve it
-  // after the initial parse. This avoids an extra parse when the text is
-  // empty or malformed.
-  const initialSelections = decodeSelections(initialState.document);
-  const initialDerived = initialState.document
-    ? buildDerivedState(
-        initialState.lastGoodText,
-        initialState.document,
-        collapsedBlocks,
-        collapsedActions,
-        talentRenderMode,
-        initialSelections,
-        conditionOverrides,
-      )
-    : initialState;
-
-  if (!initialDerived.parseError || !lastGoodText) {
-    return {
-      aplText,
-      ...initialDerived,
-      talentRenderMode,
-      talentSelectionsByProfile: initialSelections,
-      conditionOverrides,
-      graphJumpTarget: null,
-    };
-  }
-
-  const fallbackState = deriveStateFromText(
-    lastGoodText,
-    initialFallback,
-    collapsedBlocks,
-    collapsedActions,
-    talentRenderMode,
-    EMPTY_SELECTIONS,
+  const migratedOverrides = migrateStoredOverridesForDocument(
     conditionOverrides,
+    runtime.document,
   );
-  if (fallbackState.parseError) {
-    return {
-      aplText,
-      ...initialDerived,
-      talentRenderMode,
-      talentSelectionsByProfile: initialSelections,
-      conditionOverrides,
-      graphJumpTarget: null,
-    };
+  if (migratedOverrides === conditionOverrides) {
+    return runtime;
   }
-
-  const fallbackSelections = decodeSelections(fallbackState.document);
-  const fallbackDerived = fallbackState.document
-    ? buildDerivedState(
-        fallbackState.lastGoodText,
-        fallbackState.document,
-        collapsedBlocks,
-        collapsedActions,
-        talentRenderMode,
-        fallbackSelections,
-        conditionOverrides,
-      )
-    : fallbackState;
-
-  return {
+  return buildRuntimeStateForApl(
     aplText,
-    ...fallbackDerived,
     lastGoodText,
-    parseError: initialDerived.parseError,
-    parseErrorLineNumber: initialDerived.parseErrorLineNumber,
     talentRenderMode,
-    talentSelectionsByProfile: fallbackSelections,
-    conditionOverrides,
-    graphJumpTarget: null,
-  };
+    migratedOverrides,
+  );
 }
 
 /**
@@ -340,26 +146,12 @@ function getInitialEditorState(): Omit<EditorState, EditorActions> {
     draftAplName: activeApl.name,
     autoSaveEnabled,
     hasUnsavedChanges: false,
-    ...buildRuntimeStateForApl(
+    ...buildRuntimeStateForAplWithOverrideMigration(
       activeApl.text,
       activeApl.lastGoodText,
       talentRenderMode,
       conditionOverrides,
     ),
-  };
-}
-
-function snapshotFallback(state: EditorState): DerivedEditorState {
-  return {
-    lastGoodText: state.lastGoodText,
-    parseError: state.parseError,
-    parseErrorLineNumber: state.parseErrorLineNumber,
-    document: state.document,
-    collapsedBlocks: state.collapsedBlocks,
-    collapsedActions: state.collapsedActions,
-    nodes: state.nodes,
-    edges: state.edges,
-    talentSummary: state.talentSummary,
   };
 }
 
@@ -390,6 +182,25 @@ export const useEditorStore = create<EditorState>((set, get) => {
     set({
       ...rebuilt,
       talentSelectionsByProfile: nextSelections,
+    });
+  });
+
+  semanticCatalogLoader.onLoaded(() => {
+    const state = get();
+    if (!state.document || state.parseError) {
+      return;
+    }
+
+    const syntaxDiagnostics = state.diagnostics.filter(
+      (diagnostic) => diagnostic.code !== "semantic_warning",
+    );
+    const semanticDiagnostics = validateDocumentSemantics(
+      state.document,
+      (classSlug, specSlug) =>
+        semanticCatalogLoader.lookupSpec(classSlug, specSlug),
+    );
+    set({
+      diagnostics: [...syntaxDiagnostics, ...semanticDiagnostics],
     });
   });
 
@@ -443,20 +254,28 @@ export const useEditorStore = create<EditorState>((set, get) => {
         }
 
         prefetchCatalogsFor(derived.document);
-        const nextSelections = decodeSelections(derived.document);
-        const rebuilt = buildDerivedState(
-          derived.lastGoodText,
-          derived.document,
-          derived.collapsedBlocks,
-          derived.collapsedActions,
-          state.talentRenderMode,
-          nextSelections,
+        const nextConditionOverrides = migrateStoredOverridesForDocument(
           state.conditionOverrides,
+          derived.document,
+        );
+        const nextSelections = decodeSelections(derived.document);
+        const rebuilt = withSemanticDiagnostics(
+          buildDerivedState(
+            derived.lastGoodText,
+            derived.document,
+            derived.collapsedBlocks,
+            derived.collapsedActions,
+            state.talentRenderMode,
+            nextSelections,
+            nextConditionOverrides,
+            derived.diagnostics,
+          ),
         );
         const nextState = {
           aplText: text,
           ...rebuilt,
           talentSelectionsByProfile: nextSelections,
+          conditionOverrides: nextConditionOverrides,
         };
         if (!state.autoSaveEnabled) {
           return {
@@ -519,7 +338,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         if (!nextApl) {
           return {};
         }
-        const runtime = buildRuntimeStateForApl(
+        const runtime = buildRuntimeStateForAplWithOverrideMigration(
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
@@ -545,7 +364,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           updatedAt: Date.now(),
         };
         const savedApls = [...state.savedApls, nextApl];
-        const runtime = buildRuntimeStateForApl(
+        const runtime = buildRuntimeStateForAplWithOverrideMigration(
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
@@ -629,7 +448,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
 
         const nextIndex = Math.min(deleteIndex, nextApls.length - 1);
         const nextApl = nextApls[nextIndex];
-        const runtime = buildRuntimeStateForApl(
+        const runtime = buildRuntimeStateForAplWithOverrideMigration(
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
@@ -750,22 +569,25 @@ export const useEditorStore = create<EditorState>((set, get) => {
       });
     },
     setConditionOverrides: (overrides) => {
-      writeStoredConditionOverrides(overrides);
       set((state) => {
-        if (state.conditionOverrides === overrides) {
+        const nextOverrides = prepareConditionOverridesForDocument(
+          overrides,
+          state.document,
+        );
+        if (state.conditionOverrides === nextOverrides) {
           return {};
         }
         if (!state.document) {
-          return { conditionOverrides: overrides };
+          return { conditionOverrides: nextOverrides };
         }
         const graph = rebuildGraph(state.document, {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions: state.collapsedActions,
           talentRenderMode: state.talentRenderMode,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: overrides,
+          conditionOverrides: nextOverrides,
         });
-        return { conditionOverrides: overrides, ...graph };
+        return { conditionOverrides: nextOverrides, ...graph };
       });
     },
     requestGraphJumpToNode: (nodeId) => {
@@ -790,28 +612,3 @@ export const useEditorStore = create<EditorState>((set, get) => {
   };
 });
 
-/**
- * Structural equality for the per-profile selection map. Catalog
- * arrivals can resolve to the same value the store already held (e.g.
- * `missing_catalog` stays `missing_catalog` when a fetch returns
- * `null`), and rebuilding the graph in that case would be pure waste.
- */
-function selectionsEqual(
-  a: ReadonlyMap<number, TalentSelectionResult>,
-  b: ReadonlyMap<number, TalentSelectionResult>,
-): boolean {
-  if (a === b) return true;
-  if (a.size !== b.size) return false;
-  for (const [index, left] of a) {
-    const right = b.get(index);
-    if (!right) return false;
-    if (left.status.kind !== right.status.kind) return false;
-    const leftKeys = Object.keys(left.selections);
-    const rightKeys = Object.keys(right.selections);
-    if (leftKeys.length !== rightKeys.length) return false;
-    for (const key of leftKeys) {
-      if (left.selections[key] !== right.selections[key]) return false;
-    }
-  }
-  return true;
-}

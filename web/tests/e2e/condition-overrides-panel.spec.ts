@@ -12,6 +12,14 @@ const PROFILE_WITH_CONDITIONS = [
   "actions+=/fireblood,if=action.fireblood.cooldown",
 ].join("\n");
 
+const DUPLICATE_PROFILE_NAMES = [
+  'shaman="Same"',
+  "actions+=/lava_lash,if=buff.first.up",
+  "",
+  'shaman="Same"',
+  "actions+=/stormstrike,if=buff.second.up",
+].join("\n");
+
 async function fillAplEditor(page: Page, text: string): Promise<void> {
   await page.getByRole("textbox", { name: "APL editor" }).fill(text);
 }
@@ -198,6 +206,39 @@ test("per-profile override dims the matching action and persists across reload",
     page
       .getByTestId("rf__node-action__0__actions__1")
       .locator('[data-talent-state="impossible"]'),
+  ).toBeVisible();
+});
+
+test("duplicate profile rows expose display-name and scope-key attributes", async ({
+  page,
+}) => {
+  await gotoPreview(page, DUPLICATE_PROFILE_NAMES);
+
+  await expect(
+    page.locator('[data-profile-condition-overrides-toggle="Same"]'),
+  ).toHaveCount(2);
+
+  const firstRow = page.locator(
+    '[data-talent-row-tone][data-profile-scope-key="profile:shaman:Same:0"]',
+  );
+  const secondRow = page.locator(
+    '[data-talent-row-tone][data-profile-scope-key="profile:shaman:Same:1"]',
+  );
+  await firstRow.locator('[data-profile-condition-overrides-toggle="Same"]').click();
+  await secondRow.locator('[data-profile-condition-overrides-toggle="Same"]').click();
+
+  await expect(
+    page.locator('[data-profile-condition-overrides-section="Same"]'),
+  ).toHaveCount(2);
+  await expect(
+    page.locator(
+      '[data-profile-condition-overrides-section="Same"][data-profile-scope-key="profile:shaman:Same:0"]',
+    ),
+  ).toBeVisible();
+  await expect(
+    page.locator(
+      '[data-profile-condition-overrides-section="Same"][data-profile-scope-key="profile:shaman:Same:1"]',
+    ),
   ).toBeVisible();
 });
 

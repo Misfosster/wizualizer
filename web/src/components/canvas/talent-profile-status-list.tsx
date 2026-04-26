@@ -1,4 +1,5 @@
 import type { AplProfile } from "@/utils/apl-parser/document";
+import { getProfileScopeKey } from "@/utils/apl-parser/profile-scope";
 import type { ConditionAtom } from "@/utils/conditions/types";
 import type {
   TalentRenderMode,
@@ -26,7 +27,7 @@ export interface TalentProfileStatusListProps {
   selectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   talentSummary: TalentRenderSummary | null;
   mode: TalentRenderMode;
-  profileAtomsByName: ReadonlyMap<string, readonly ConditionAtom[]>;
+  profileAtomsByScopeKey: ReadonlyMap<string, readonly ConditionAtom[]>;
 }
 
 export function TalentProfileStatusList({
@@ -34,7 +35,7 @@ export function TalentProfileStatusList({
   selectionsByProfile,
   talentSummary,
   mode,
-  profileAtomsByName,
+  profileAtomsByScopeKey,
 }: TalentProfileStatusListProps) {
   if (profiles.length === 0) {
     return null;
@@ -61,12 +62,15 @@ export function TalentProfileStatusList({
           mode,
           overrideHiddenCount,
         );
-        const profileAtoms = profileAtomsByName.get(profile.name) ?? [];
+        const profileScopeKey = getProfileScopeKey(profile);
+        const profileAtoms =
+          profileAtomsByScopeKey.get(profileScopeKey) ?? [];
         return (
           <TalentProfileStatusRow
-            key={`${String(profileIndex)}__${profile.name}`}
+            key={profileScopeKey}
             profileIndex={profileIndex}
             profileName={profile.name}
+            profileScopeKey={profileScopeKey}
             row={row}
             hiddenActions={hiddenActions}
             profileAtoms={profileAtoms}

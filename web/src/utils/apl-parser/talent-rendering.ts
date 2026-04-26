@@ -18,6 +18,7 @@ import type { AtomResolver } from "@/utils/talents/evaluate-condition";
 import { extractCallTarget } from "./action-data";
 import type { AplBlock, AplDocument } from "./document";
 import { getActionNodeId } from "./node-ids";
+import { getProfileScopeKey } from "./profile-scope";
 
 /**
  * Pre-computed input for the talent-aware passes in `build-graph.ts`.
@@ -141,7 +142,7 @@ function buildProfileAtomResolvers(
         ? selectionResult.selections
         : null;
     const profileOverrides =
-      overrides.byProfile[profile.name] ?? EMPTY_ATOM_OVERRIDES;
+      overrides.byProfile[getProfileScopeKey(profile)] ?? EMPTY_ATOM_OVERRIDES;
     const context: ProfileResolutionContext = {
       selections: trustedSelections ?? {},
       selectionsTrusted: trustedSelections !== null,

@@ -316,7 +316,8 @@ test("document parser rejects malformed base action append operators", () => {
   expect(result).toMatchObject({
     ok: false,
     lineNumber: 2,
-    error: "Expected '=' or '+=/' after category",
+    code: "bad_action_assignment",
+    error: "Expected '=' or '+=/' after action list name",
   });
 });
 
@@ -331,6 +332,102 @@ test("document parser rejects append actions missing their slash", () => {
   expect(result).toMatchObject({
     ok: false,
     lineNumber: 2,
-    error: "Expected '=' or '+=/' after category",
+    code: "bad_action_assignment",
+    error: "Expected '=' or '+=/' after action list name",
+    suggestion: "Use +=/ when appending an action, for example actions+=/spell.",
   });
+});
+
+test("document parser reports structured diagnostics for malformed sequences", () => {
+  const trailing = parseDocument(
+    [
+      'rogue="Demo"',
+      "actions.opener=sequence,shadowstrike:",
+    ].join("\n"),
+  );
+
+  expect(trailing).toMatchObject({
+    ok: false,
+    code: "malformed_sequence",
+    lineNumber: 2,
+    error: "Expected sequence entry after ':'",
+    suggestion: "Add another sequence action after ':' or remove the trailing ':'.",
+  });
+
+  const leading = parseDocument(
+    [
+      'rogue="Demo"',
+      "actions.opener=sequence,:shadowstrike",
+    ].join("\n"),
+  );
+
+  expect(leading).toMatchObject({
+    ok: false,
+    code: "malformed_sequence",
+    lineNumber: 2,
+    error: "Expected sequence entry before ':'",
+  });
+});
+
+test("document parser reports advisory suggestions on parseable lines", () => {
+  const result = parseDocument(
+    [
+      'shaman="Demo"',
+      "actions+=/stormstrike,traget_if=active_enemies>1",
+    ].join("\n"),
+  );
+
+  expect(result.ok).toBe(true);
+  if (!result.ok) {
+    return;
+  }
+  expect(result.diagnostics).toContainEqual(
+    expect.objectContaining({
+      code: "syntax_advisory",
+      severity: "warning",
+      lineNumber: 2,
+      suggestion: "Use target_if= instead of traget_if=.",
+    }),
+  );
+  expect(result.document.profiles[0]?.blocks[0]?.actions).toHaveLength(1);
+});
+
+test("document parser combines fatal token typo diagnostics with suggestions", () => {
+  const result = parseDocument(
+    [
+      'shaman="Demo"',
+      "actions+=/stormstrike,if=buff.foo.up&&buff.bar.up",
+    ].join("\n"),
+  );
+
+  expect(result).toMatchObject({
+    ok: false,
+    code: "malformed_condition",
+    lineNumber: 2,
+    suggestion: "Use & instead of &&.",
+  });
+  if (result.ok) {
+    throw new Error("Expected parse failure");
+  }
+  expect(result.diagnostics).toHaveLength(1);
+  expect(result.diagnostics[0]).toMatchObject({
+    severity: "error",
+    suggestion: "Use & instead of &&.",
+  });
+});
+
+test("document parser ignores advisory rules inside comments", () => {
+  const result = parseDocument(
+    [
+      'shaman="Demo"',
+      "# actions+=/stormstrike,if=buff.foo.up&&buff.bar.up",
+      "actions+=/stormstrike,if=buff.foo.up",
+    ].join("\n"),
+  );
+
+  expect(result.ok).toBe(true);
+  if (!result.ok) {
+    return;
+  }
+  expect(result.diagnostics).toEqual([]);
 });
