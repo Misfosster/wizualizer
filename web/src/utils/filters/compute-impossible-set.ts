@@ -5,6 +5,7 @@ import { getProfileScopeKey } from "@/utils/apl-parser/profile-scope";
 import { prettySegment } from "@/utils/apl-parser/pretty-log";
 import type { Condition, Segment } from "@/utils/apl-parser/types";
 import { canonicalAtomKey, parseAtomKey } from "@/utils/conditions/atom-key";
+import { resolveAtom } from "@/utils/conditions/resolve-atom";
 import { describeActionEligibilityIn } from "@/utils/talents/action-eligibility";
 import {
   EMPTY_ATOM_OVERRIDES,
@@ -16,6 +17,8 @@ import type {
   HiddenActionSummary,
   TalentSelectionResult,
 } from "@/utils/talents/types";
+import type { SemanticSpecCatalog } from "@/utils/semantics/types";
+import { findSelfAvailabilityFailure } from "./self-action-availability";
 
 /**
  * Combine every active filter dimension into the final set of impossible
@@ -61,6 +64,12 @@ export interface ComputeImpossibleSetOptions {
    * untouched - matching the v0 behaviour.
    */
   conditionOverrides?: ConditionOverrides;
+  /**
+   * Optional spec metadata used for self-action availability aliases such as
+   * `stormstrike` sharing `cooldown.strike`. Missing catalogs keep the
+   * exact-name fallback behavior.
+   */
+  semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>;
 }
 
 const EMPTY_SET: ReadonlySet<string> = new Set();
@@ -82,17 +91,13 @@ export function computeImpossibleSet(
   document: AplDocument,
   options: ComputeImpossibleSetOptions = {},
 ): ImpossibleSetResult {
-  const { talentSelectionsByProfile, conditionOverrides } = options;
+  const {
+    talentSelectionsByProfile,
+    conditionOverrides,
+    semanticCatalogsByProfile,
+  } = options;
   const overrides = conditionOverrides ?? EMPTY_CONDITION_OVERRIDES;
   const hasGlobalOverrides = countKeys(overrides.global) > 0;
-
-  if (
-    (!talentSelectionsByProfile || talentSelectionsByProfile.size === 0) &&
-    !hasGlobalOverrides &&
-    countByProfileKeys(overrides.byProfile) === 0
-  ) {
-    return EMPTY_RESULT;
-  }
 
   const actionIds = new Set<string>();
   const hiddenCountByProfile = new Map<number, number>();
@@ -114,18 +119,13 @@ export function computeImpossibleSet(
         : null;
     const profileOverrides =
       overrides.byProfile[getProfileScopeKey(profile)] ?? EMPTY_ATOM_OVERRIDES;
+    const canEvaluateConditions =
+      trustedSelections !== null ||
+      hasGlobalOverrides ||
+      countKeys(profileOverrides) > 0;
 
-    // Trust gate (broadened): we only evaluate when at least one source
-    // of truth is available for this profile. Without any of them
-    // every atom resolves to `unknown` and nothing can be impossible -
-    // running the loop would just be wasted work.
-    if (
-      !trustedSelections &&
-      !hasGlobalOverrides &&
-      countKeys(profileOverrides) === 0
-    ) {
-      continue;
-    }
+    // Override/talent evaluation still needs a source of truth. Self-action
+    // availability checks are syntactic and can run without one.
 
     const context = {
       selections: trustedSelections ?? {},
@@ -143,11 +143,32 @@ export function computeImpossibleSet(
         actionIndex++
       ) {
         const actionLine = block.actions[actionIndex];
-        const { state, failingSegment } = describeActionEligibilityIn(
-          actionLine.action,
-          context,
+        const selfAvailabilityFailure = findSelfAvailabilityFailure(
+          actionLine.action.spell,
+          actionLine.action.segments,
+          {
+            catalog: semanticCatalogsByProfile?.get(profileIndex),
+            resolveAtom: canEvaluateConditions
+              ? (ident) => resolveAtom(ident, context)
+              : undefined,
+          },
         );
-        if (state !== "impossible") {
+        let failingSegment = selfAvailabilityFailure;
+        const reasonLabelOverride = selfAvailabilityFailure
+          ? "action unavailable"
+          : undefined;
+
+        if (!failingSegment && canEvaluateConditions) {
+          const eligibility = describeActionEligibilityIn(
+            actionLine.action,
+            context,
+          );
+          if (eligibility.state === "impossible") {
+            failingSegment = eligibility.failingSegment;
+          }
+        }
+
+        if (!failingSegment) {
           continue;
         }
 
@@ -166,6 +187,7 @@ export function computeImpossibleSet(
             actionLine.lineNumber,
             failingSegment,
             context,
+            reasonLabelOverride,
           ),
         );
       }
@@ -184,16 +206,6 @@ function countKeys(overrides: AtomOverrides): number {
   return Object.keys(overrides).length;
 }
 
-function countByProfileKeys(
-  byProfile: Readonly<Record<string, AtomOverrides>>,
-): number {
-  let total = 0;
-  for (const key of Object.keys(byProfile)) {
-    total += countKeys(byProfile[key] ?? EMPTY_ATOM_OVERRIDES);
-  }
-  return total;
-}
-
 function summarizeHiddenAction(
   actionId: string,
   block: AplBlock,
@@ -205,6 +217,7 @@ function summarizeHiddenAction(
     globalOverrides: AtomOverrides;
     profileOverrides: AtomOverrides;
   },
+  reasonLabelOverride?: string,
 ): HiddenActionSummary {
   return {
     actionId,
@@ -215,7 +228,8 @@ function summarizeHiddenAction(
     reason: failingSegment
       ? prettySegment(failingSegment)
       : "condition filter",
-    reasonLabel: classifyFailingSegment(failingSegment, context),
+    reasonLabel:
+      reasonLabelOverride ?? classifyFailingSegment(failingSegment, context),
   };
 }
 

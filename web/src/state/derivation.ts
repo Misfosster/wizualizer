@@ -16,10 +16,12 @@ import {
   EMPTY_CONDITION_OVERRIDES,
   type ConditionOverrides,
 } from "@/utils/conditions/types";
+import type { SemanticSpecCatalog } from "@/utils/semantics/types";
 import {
   pruneCollapsedActions,
   pruneCollapsedBlocks,
 } from "./document-ids";
+import { lookupLoadedSemanticCatalogs } from "./talent-catalog-coordinator";
 
 type ParseFailure = Exclude<ParseDocumentResult, { ok: true }>;
 
@@ -48,6 +50,7 @@ export interface RebuildInputs {
   talentRenderMode: TalentRenderMode;
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   conditionOverrides?: ConditionOverrides;
+  semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>;
 }
 
 function formatParseError(result: ParseFailure): string {
@@ -83,6 +86,9 @@ export function rebuildGraph(
     talentRenderMode,
     talentSelectionsByProfile,
     conditionOverrides: conditionOverrides ?? EMPTY_CONDITION_OVERRIDES,
+    semanticCatalogsByProfile:
+      inputs.semanticCatalogsByProfile ??
+      lookupLoadedSemanticCatalogs(document),
   });
   return {
     nodes: result.nodes,

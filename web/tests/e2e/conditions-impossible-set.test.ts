@@ -6,6 +6,7 @@ import {
   EMPTY_CONDITION_OVERRIDES,
   type ConditionOverrides,
 } from "../../src/utils/conditions/types";
+import type { SemanticSpecCatalog } from "../../src/utils/semantics/types";
 import type { TalentSelectionResult } from "../../src/utils/talents/types";
 
 const SHAMAN_DOC = `
@@ -29,6 +30,23 @@ function selectionsFor(
   result: TalentSelectionResult,
 ): ReadonlyMap<number, TalentSelectionResult> {
   return new Map([[index, result]]);
+}
+
+function catalogFor(
+  catalog: Partial<SemanticSpecCatalog>,
+): SemanticSpecCatalog {
+  return {
+    actions: catalog.actions ?? [],
+    buffs: catalog.buffs ?? [],
+    debuffs: catalog.debuffs ?? [],
+    cooldowns: catalog.cooldowns ?? [],
+    dots: catalog.dots ?? [],
+    talents: catalog.talents ?? [],
+    trinkets: catalog.trinkets ?? [],
+    equipped: catalog.equipped ?? [],
+    setBonuses: catalog.setBonuses ?? [],
+    options: catalog.options ?? [],
+  };
 }
 
 test("no selections, no overrides -> nothing filtered", () => {
@@ -172,6 +190,164 @@ actions=stormstrike,if=buff.hot_hand.up
 
   expect(result.hiddenCountByProfile.has(0)).toBe(false);
   expect(result.hiddenCountByProfile.get(1)).toBe(1);
+});
+
+test("self cooldown remains condition hides the unavailable action without overrides", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=cooldown.doom_winds.remains>0
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["doom_winds"]);
+  expect(summaries[0]?.reasonLabel).toBe("action unavailable");
+});
+
+test("negated self action ready hides the unavailable action", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=!action.doom_winds.ready
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["doom_winds"]);
+  expect(summaries[0]?.reasonLabel).toBe("action unavailable");
+});
+
+test("self charge-zero condition hides charged cooldown action", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=cooldown.doom_winds.charges=0
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["doom_winds"]);
+});
+
+test("self charge greater-than-one stays possible because exact charge count is unknown", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=cooldown.doom_winds.charges>1
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  expect(result.actionIds.size).toBe(0);
+  expect(result.hiddenCountByProfile.size).toBe(0);
+});
+
+test("metadata aliases shared cooldown names back to the current action", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+spec=enhancement
+actions=stormstrike,if=cooldown.strike.remains>0
+`);
+
+  const result = computeImpossibleSet(doc, {
+    semanticCatalogsByProfile: new Map([
+      [
+        0,
+        catalogFor({
+          actions: ["stormstrike"],
+          cooldowns: ["strike"],
+        }),
+      ],
+    ]),
+  });
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["stormstrike"]);
+  expect(summaries[0]?.reasonLabel).toBe("action unavailable");
+});
+
+test("shared cooldown aliases are ignored without matching metadata", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=stormstrike,if=cooldown.strike.remains>0
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  expect(result.actionIds.size).toBe(0);
+  expect(result.hiddenCountByProfile.size).toBe(0);
+});
+
+test("other-action cooldown condition does not hide the current action", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=stormstrike,if=cooldown.doom_winds.remains>0
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  expect(result.actionIds.size).toBe(0);
+  expect(result.hiddenCountByProfile.size).toBe(0);
+});
+
+test("self cooldown OR another branch stays possible", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=cooldown.doom_winds.remains>0|buff.ascendance.up
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  expect(result.actionIds.size).toBe(0);
+  expect(result.hiddenCountByProfile.size).toBe(0);
+});
+
+test("self availability combines with overrides in mixed OR conditions", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=cooldown.doom_winds.remains>0|buff.ascendance.up
+`);
+  const overrides: ConditionOverrides = {
+    ...EMPTY_CONDITION_OVERRIDES,
+    global: { "buff.ascendance.up": false },
+  };
+
+  const result = computeImpossibleSet(doc, { conditionOverrides: overrides });
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["doom_winds"]);
+  expect(summaries[0]?.reasonLabel).toBe("action unavailable");
+});
+
+test("self availability combines with decoded talents in mixed OR conditions", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=cooldown.doom_winds.remains>0|talent.storm_unleashed.enabled
+`);
+  const selections = selectionsFor(0, {
+    status: { kind: "decoded" },
+    selections: { storm_unleashed: 0 },
+  });
+
+  const result = computeImpossibleSet(doc, {
+    talentSelectionsByProfile: selections,
+  });
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["doom_winds"]);
+  expect(summaries[0]?.reasonLabel).toBe("action unavailable");
+});
+
+test("self cooldown under AND hides the unavailable action", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=doom_winds,if=buff.ascendance.up&cooldown.doom_winds.remains>0
+`);
+
+  const result = computeImpossibleSet(doc);
+
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual(["doom_winds"]);
 });
 
 test("missing-catalog talents stay untouched but a manual override still applies", () => {

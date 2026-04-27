@@ -1,5 +1,6 @@
 import type { AplDocument } from "@/utils/apl-parser/document";
 import { semanticCatalogLoader } from "@/utils/semantics/catalog-loader-browser";
+import type { SemanticSpecCatalog } from "@/utils/semantics/types";
 import { catalogLoader } from "@/utils/talents/catalog-loader-browser";
 import {
   decodeDocumentTalents,
@@ -33,6 +34,30 @@ export function decodeSelections(
   return document
     ? decodeDocumentTalents(document, resolveCatalogForProfile)
     : EMPTY_SELECTIONS;
+}
+
+export function lookupLoadedSemanticCatalogs(
+  document: AplDocument,
+): ReadonlyMap<number, SemanticSpecCatalog> {
+  const byProfile = new Map<number, SemanticSpecCatalog>();
+  for (
+    let profileIndex = 0;
+    profileIndex < document.profiles.length;
+    profileIndex++
+  ) {
+    const profile = document.profiles[profileIndex];
+    if (!profile.specName) {
+      continue;
+    }
+    const lookup = semanticCatalogLoader.lookupSpec(
+      profile.className,
+      profile.specName,
+    );
+    if (lookup.status === "loaded" && lookup.catalog) {
+      byProfile.set(profileIndex, lookup.catalog);
+    }
+  }
+  return byProfile;
 }
 
 export function selectionsEqual(

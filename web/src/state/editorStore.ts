@@ -199,7 +199,15 @@ export const useEditorStore = create<EditorState>((set, get) => {
       (classSlug, specSlug) =>
         semanticCatalogLoader.lookupSpec(classSlug, specSlug),
     );
+    const rebuilt = rebuildGraph(state.document, {
+      collapsedBlocks: state.collapsedBlocks,
+      collapsedActions: state.collapsedActions,
+      talentRenderMode: state.talentRenderMode,
+      talentSelectionsByProfile: state.talentSelectionsByProfile,
+      conditionOverrides: state.conditionOverrides,
+    });
     set({
+      ...rebuilt,
       diagnostics: [...syntaxDiagnostics, ...semanticDiagnostics],
     });
   });

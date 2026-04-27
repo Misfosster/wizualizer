@@ -8,6 +8,7 @@ import {
   EMPTY_CONDITION_OVERRIDES,
   type ConditionOverrides,
 } from "@/utils/conditions/types";
+import type { SemanticSpecCatalog } from "@/utils/semantics/types";
 import type {
   HiddenActionSummary,
   TalentRenderMode,
@@ -71,6 +72,7 @@ export function buildTalentRenderContext(
     | ReadonlyMap<number, TalentSelectionResult>
     | undefined,
   conditionOverrides?: ConditionOverrides,
+  semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>,
 ): TalentRenderContext {
   if (mode === "off") {
     return OFF_CONTEXT;
@@ -80,6 +82,7 @@ export function buildTalentRenderContext(
   const impossible = computeImpossibleSet(document, {
     talentSelectionsByProfile: selectionsByProfile,
     conditionOverrides: mergedOverrides,
+    semanticCatalogsByProfile,
   });
   const hiddenActionById = indexHiddenActions(impossible.hiddenActionsByProfile);
   const copiedProfileIndices = getCopiedProfileIndices(document);

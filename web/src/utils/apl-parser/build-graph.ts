@@ -22,6 +22,7 @@ import type {
   TalentState,
 } from "@/utils/talents/types";
 import type { ConditionOverrides } from "@/utils/conditions/types";
+import type { SemanticSpecCatalog } from "@/utils/semantics/types";
 import type { AtomResolver } from "@/utils/talents/evaluate-condition";
 import { simplifyConditionForRender } from "@/utils/talents/simplify-condition";
 import {
@@ -124,6 +125,7 @@ export interface BuildGraphOptions {
    * case behaviour is identical to the talents-only flow.
    */
   conditionOverrides?: ConditionOverrides;
+  semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>;
 }
 
 interface EdgeOptions {
@@ -769,6 +771,7 @@ export function buildGraph(
     mode,
     options.talentSelectionsByProfile,
     options.conditionOverrides,
+    options.semanticCatalogsByProfile,
   );
   const nodes: GraphFlowNode[] = [];
   const edges: Edge[] = [];
