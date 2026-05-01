@@ -22,7 +22,7 @@ export function prettySegment(s: Segment): string {
     case "if":
       return `if=${prettyCond(s.expr)}`;
     case "target_if":
-      return `target_if=${prettyCond(s.expr)}`;
+      return `target_if=${s.mode ? `${s.mode}:` : ""}${prettyCond(s.expr)}`;
     case "sequence":
       return prettyCond(s.expr); // NOTE: No need to print sequence= because that is handeled by pretty action
     case "other":

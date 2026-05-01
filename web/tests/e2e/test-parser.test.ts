@@ -242,6 +242,35 @@ test("parser supports identifiers with numeric prefixes", () => {
   });
 });
 
+test("parser supports target_if target selection modes", () => {
+  const action = parseOrThrow(
+    "actions=auto_attack,target_if=max:target.time_to_die",
+    1,
+  );
+
+  expect(action.segments[0]).toMatchObject({
+    type: "target_if",
+    mode: "max",
+    expr: { kind: "ident", name: "target.time_to_die" },
+  });
+  expect(prettyAction(action)).toBe(
+    "actions=auto_attack,target_if=max:target.time_to_die",
+  );
+});
+
+test("parser supports target_if first mode as a filter", () => {
+  const action = parseOrThrow(
+    "actions+=/x,target_if=first:talent.foo",
+    1,
+  );
+
+  expect(action.segments[0]).toMatchObject({
+    type: "target_if",
+    mode: "first",
+    expr: { kind: "ident", name: "talent.foo" },
+  });
+});
+
 test("parser supports sequence entries with inline arguments", () => {
   const source =
     "actions.opener=sequence,shadowstrike:use_items,slots=trinket1,if=fight_remains<=20";

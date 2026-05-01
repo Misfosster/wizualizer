@@ -1,10 +1,22 @@
 export type SegmentType = "if" | "target_if" | "sequence";
+export type TargetIfMode = "first" | "min" | "max";
 export type CallName = "floor" | "ceil";
 
-export type Segment = SegmentBase | SegmentKeyed;
+export type Segment = IfSegment | TargetIfSegment | SequenceSegment | SegmentKeyed;
 
-export interface SegmentBase {
-  type: SegmentType;
+export interface IfSegment {
+  type: "if";
+  expr: Condition;
+}
+
+export interface TargetIfSegment {
+  type: "target_if";
+  mode?: TargetIfMode;
+  expr: Condition;
+}
+
+export interface SequenceSegment {
+  type: "sequence";
   expr: Condition;
 }
 

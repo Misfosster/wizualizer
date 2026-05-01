@@ -52,6 +52,12 @@ export function extractConditionAtoms(
           if (segment.type !== "if" && segment.type !== "target_if") {
             continue;
           }
+          if (
+            segment.type === "target_if" &&
+            (segment.mode === "min" || segment.mode === "max")
+          ) {
+            continue;
+          }
           collectAtoms(segment.expr, all, profileAtoms, "boolean");
         }
       }

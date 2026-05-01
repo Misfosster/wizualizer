@@ -18,10 +18,7 @@ import type { TalentState } from "./types";
  *   target can match, so the action is impossible.
  * - `target_if=min:<expr>` and `target_if=max:<expr>` are *ranking* modes
  *   that always pick some target and therefore can never make an action
- *   impossible. The current parser does not yet accept the `min:` / `max:`
- *   prefix outside `sequence` segments, so any ranking-mode action fails
- *   to parse upstream and never reaches this function. When the parser
- *   learns those prefixes, this module must learn to skip them.
+ *   impossible.
  *
  * Anything else (`other` segments such as `name=foo`, `op=set`,
  * `value=...`) has no bearing on eligibility.
@@ -70,6 +67,12 @@ export function describeActionEligibilityIn(
 
   for (const segment of action.segments) {
     if (segment.type !== "if" && segment.type !== "target_if") {
+      continue;
+    }
+    if (
+      segment.type === "target_if" &&
+      (segment.mode === "min" || segment.mode === "max")
+    ) {
       continue;
     }
 

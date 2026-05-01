@@ -81,6 +81,17 @@ test("extractConditionAtoms ignores numeric literals and segment kinds besides i
   expect(atoms.all.some((a) => a.key === "sec")).toBe(false);
 });
 
+test("extractConditionAtoms ignores ranking target_if expressions", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+actions=auto_attack,target_if=max:target.time_to_die
+actions+=/lava_lash,target_if=min:talent.foo
+actions+=/stormstrike,target_if=first:talent.bar
+`);
+  const atoms = extractConditionAtoms(doc);
+  expect(atoms.all.map((a) => a.key)).toEqual(["talent.bar"]);
+});
+
 test("extractConditionAtoms partitions atoms per profile scope key", () => {
   const doc = parseOrThrow(TWO_PROFILE_DOC);
   const atoms = extractConditionAtoms(doc);

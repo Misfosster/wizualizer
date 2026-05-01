@@ -44,6 +44,20 @@ test("target_if=<expr> is treated as a filter and can mark impossible", () => {
   expect(evaluateActionEligibility(action, { foo: 1 })).toBe("normal");
 });
 
+test("target_if=first:<expr> is treated as a filter and can mark impossible", () => {
+  const action = parseOrThrow("actions+=/x,target_if=first:talent.foo");
+  expect(evaluateActionEligibility(action, {})).toBe("impossible");
+  expect(evaluateActionEligibility(action, { foo: 1 })).toBe("normal");
+});
+
+test("target_if min and max modes are rankings, not eligibility filters", () => {
+  const minAction = parseOrThrow("actions+=/x,target_if=min:talent.foo");
+  const maxAction = parseOrThrow("actions+=/x,target_if=max:talent.foo");
+
+  expect(evaluateActionEligibility(minAction, {})).toBe("normal");
+  expect(evaluateActionEligibility(maxAction, {})).toBe("normal");
+});
+
 test("if and target_if combine: any provably-false segment makes impossible", () => {
   const action = parseOrThrow(
     "actions+=/x,if=talent.a,target_if=talent.b",

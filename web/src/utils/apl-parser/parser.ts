@@ -7,6 +7,7 @@ import type {
   Condition,
   SeqExpr,
   SequenceEntry,
+  TargetIfMode,
   UnaryOp,
 } from "./types";
 import { setConditionSource } from "./condition-source";
@@ -47,6 +48,10 @@ export function parseConditionExpression(source: string): Condition {
     throwUnexpectedTrailingToken(t);
   }
   return expr;
+}
+
+function isTargetIfMode(name: string): name is TargetIfMode {
+  return name === "first" || name === "min" || name === "max";
 }
 
 export function parseAction(line: string): Action | null {
@@ -106,8 +111,10 @@ export function parseAction(line: string): Action | null {
     ) {
       ts.next(); // consume tifKw
       ts.next(); // consume eq
+      const mode = parseTargetIfMode(ts);
       segments.push({
         type: "target_if",
+        ...(mode ? { mode } : {}),
         expr: parseSegmentCondition(ts, line),
       });
       continue;
@@ -368,6 +375,21 @@ function parseSegmentCondition(ts: TokenStream, sourceLine: string): Condition {
   const expr = parseCondition(ts, 0, sourceLine);
   expectSegmentBoundary(ts);
   return expr;
+}
+
+function parseTargetIfMode(ts: TokenStream): TargetIfMode | undefined {
+  const modeToken = ts.peek();
+  if (
+    modeToken?.type !== "ident" ||
+    !isTargetIfMode(modeToken.value) ||
+    ts.peek(1)?.type !== "colon"
+  ) {
+    return undefined;
+  }
+
+  ts.next(); // consume mode
+  ts.next(); // consume ':'
+  return modeToken.value;
 }
 
 function setSourceFromTokens<T extends Condition>(
