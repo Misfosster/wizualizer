@@ -143,6 +143,37 @@
     color: #075b61;
   }
 
+  .lc-node-card--targetCondition {
+    --lc-node-background: linear-gradient(180deg, #f2c56b 0%, #dfa447 100%);
+    --lc-node-border: rgba(245, 188, 82, 0.55);
+    --lc-node-accent: #6d3d00;
+    color: #3f2500;
+  }
+
+  .lc-node-card--targetCondition .lc-node-title {
+    color: #3f2500;
+  }
+
+  .lc-node-card--targetCondition .lc-node-eyebrow {
+    color: #6d3d00;
+  }
+
+  .lc-node-card--targetRanking {
+    --lc-node-background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --lc-node-border: rgba(251, 191, 36, 0.55);
+    --lc-node-accent: #fffbeb;
+    --lc-node-note: rgba(255, 251, 235, 0.82);
+    --lc-node-shadow:
+      8px 20px 36px rgba(0, 0, 0, 0.42),
+      3px 8px 14px rgba(0, 0, 0, 0.3);
+    width: max-content;
+    max-width: none;
+  }
+
+  .lc-node-card--targetRanking .lc-node-eyebrow {
+    color: rgba(255, 251, 235, 0.86);
+  }
+
   .lc-node-card--valueExpression {
     --lc-node-background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     --lc-node-accent: rgba(237, 233, 254, 0.9);
@@ -211,6 +242,7 @@
   .lc-node-card--variable .lc-node-title,
   .lc-node-card--useItem .lc-node-title,
   .lc-node-card--callActionList .lc-node-title,
+  .lc-node-card--targetRanking .lc-node-title,
   .lc-node-card--sequence .lc-node-title,
   .lc-node-note {
     white-space: nowrap;
@@ -409,6 +441,7 @@
     .lc-node-card--variable,
     .lc-node-card--useItem,
     .lc-node-card--callActionList,
+    .lc-node-card--targetRanking,
     .lc-node-card--sequence {
       max-width: none;
     }

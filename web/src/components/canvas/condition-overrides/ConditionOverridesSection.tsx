@@ -35,11 +35,12 @@ interface AtomSuggestion {
 }
 
 /**
- * Global condition overrides section for the canvas filter panel.
+ * Shared condition overrides section for the canvas filter panel.
  *
- * The panel starts empty and lets the user add detected atoms through
- * the bottom picker. That keeps large APLs from turning the filter
- * panel into a wall of every condition in the document.
+ * The panel starts empty and lets the user add conditions referenced by
+ * every profile through the bottom picker. Profile-specific conditions
+ * stay in the profile rows, which keeps large APLs from turning this
+ * global section into a wall of unrelated conditions.
  */
 export function ConditionOverridesSection() {
   const { document, conditionOverrides, setConditionOverrides } = useEditorStore(
@@ -56,18 +57,18 @@ export function ConditionOverridesSection() {
   const inputId = useId();
   const listboxId = useId();
 
-  const allAtoms = useMemo<readonly ConditionAtom[]>(() => {
+  const sharedAtoms = useMemo<readonly ConditionAtom[]>(() => {
     if (!document) return [];
-    return extractConditionAtoms(document).all;
+    return extractConditionAtoms(document).shared;
   }, [document]);
 
   const knownAtomsByKey = useMemo(() => {
     const byKey = new Map<string, ConditionAtom>();
-    for (const atom of allAtoms) {
+    for (const atom of sharedAtoms) {
       byKey.set(atom.key, atom);
     }
     return byKey;
-  }, [allAtoms]);
+  }, [sharedAtoms]);
 
   const displayedKeys = useMemo(() => {
     const keys = new Set<string>(Object.keys(conditionOverrides.global));
@@ -96,11 +97,11 @@ export function ConditionOverridesSection() {
   const normalizedDraft = canonicalAtomKey(draft);
   const suggestions = useMemo(
     () =>
-      getSuggestions(allAtoms, draft, normalizedDraft, displayedKeySet).slice(
+      getSuggestions(sharedAtoms, draft, normalizedDraft, displayedKeySet).slice(
         0,
         MAX_SUGGESTIONS,
       ),
-    [allAtoms, displayedKeySet, draft, normalizedDraft],
+    [displayedKeySet, draft, normalizedDraft, sharedAtoms],
   );
 
   const addKey = useCallback((rawKey: string) => {
@@ -153,7 +154,7 @@ export function ConditionOverridesSection() {
 
   const overriddenCount = countOverrides(conditionOverrides, "global");
   const totalOverrideCount = countAllOverrides(conditionOverrides);
-  const totalAtoms = allAtoms.length;
+  const totalAtoms = sharedAtoms.length;
 
   return (
     <section
@@ -169,8 +170,9 @@ export function ConditionOverridesSection() {
 
       {totalAtoms === 0 ? (
         <p className="mt-1 text-[11px] italic text-gray-500">
-          No conditions to override yet - add an action with an{" "}
-          <code className="font-mono">if=</code> clause to populate this list.
+          No shared conditions here. Use a profile row for profile-specific
+          conditions, or add a shared <code className="font-mono">if=</code>{" "}
+          clause to populate this list.
         </p>
       ) : (
         <>
@@ -234,7 +236,7 @@ export function ConditionOverridesSection() {
                     addKey(suggestions[0].atom.key);
                   }
                 }}
-                placeholder={`Search or add ${String(totalAtoms)} condition${
+                placeholder={`Search or add ${String(totalAtoms)} shared condition${
                   totalAtoms === 1 ? "" : "s"
                 }...`}
                 data-condition-overrides-search=""

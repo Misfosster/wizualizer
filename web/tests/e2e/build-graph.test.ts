@@ -972,6 +972,113 @@ test("buildGraph keeps simple comparison conditions as single nodes", () => {
   expect(graph.nodes.find((n) => n.id === "condition__0__actions__0__if__0")).toBeUndefined();
 });
 
+test("buildGraph tags target_if condition nodes separately from if nodes", () => {
+  const graph = buildGraphFromText([
+    'monk="Target If Demo"',
+    "actions+=/rising_sun_kick,if=buff.foo.up,target_if=first:target.time_to_die",
+  ].join("\n"));
+
+  const ifCondition = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(ifCondition.type).toBe("condition");
+  expect(ifCondition.data).toMatchObject({
+    label: "buff.foo.up",
+    segmentKind: "if",
+  });
+
+  const targetCondition = getNode(
+    graph.nodes,
+    "condition__0__actions__0__target_if",
+  );
+  expect(targetCondition.type).toBe("condition");
+  expect(targetCondition.data).toMatchObject({
+    label: "target.time_to_die",
+    segmentKind: "target_if",
+  });
+});
+
+test("buildGraph renders ranking target_if selectors outside the condition graph", () => {
+  const graph = buildGraphFromText([
+    'monk="Target Ranking Demo"',
+    "actions+=/rising_sun_kick,target_if=max:target.time_to_die,if=buff.foo.up",
+  ].join("\n"));
+
+  const targetRanking = getNode(
+    graph.nodes,
+    "targetRanking__0__actions__0__0__max",
+  );
+  expect(targetRanking.type).toBe("targetRanking");
+  expect(targetRanking.data).toMatchObject({
+    label: "max:target.time_to_die",
+    mode: "max",
+  });
+
+  const ifCondition = getNode(graph.nodes, "condition__0__actions__0__if");
+  expect(ifCondition.type).toBe("condition");
+  expect(ifCondition.data).toMatchObject({
+    label: "buff.foo.up",
+    segmentKind: "if",
+  });
+  expect(targetRanking.position.x).toBe(ifCondition.position.x);
+
+  expect(
+    graph.nodes.find(
+      (node) => node.id === "condition__0__actions__0__target_if",
+    ),
+  ).toBeUndefined();
+
+  const targetRankingEdge = getNode(
+    graph.edges,
+    "edge__action__0__actions__0__targetRanking__0",
+  );
+  expect(targetRankingEdge).toMatchObject({
+    source: "action__0__actions__0",
+    target: "targetRanking__0__actions__0__0__max",
+    targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+  });
+});
+
+test("buildGraph aligns ranking target_if selectors to the first condition entry", () => {
+  const graph = buildGraphFromText([
+    'monk="Target Ranking Alignment Demo"',
+    "actions+=/rising_sun_kick,target_if=max:target.time_to_die,if=a|very.long.condition.identifier.enabled",
+  ].join("\n"));
+
+  const targetRanking = getNode(
+    graph.nodes,
+    "targetRanking__0__actions__0__0__max",
+  );
+  const firstCondition = getNode(graph.nodes, "condition__0__actions__0__if__0");
+
+  expect(firstCondition.position.x).toBeGreaterThan(expressionLaneX);
+  expect(targetRanking.position.x).toBe(firstCondition.position.x);
+});
+
+test("buildGraph shows target ranking selectors when no if condition exists", () => {
+  const graph = buildGraphFromText([
+    'monk="Target Ranking Only Demo"',
+    "actions=auto_attack,target_if=max:target.time_to_die",
+  ].join("\n"));
+
+  const action = getNode(graph.nodes, "action__0__actions__0");
+  expect(action.type).toBe("action");
+  expect(action.data).toMatchObject({
+    hasChildren: true,
+    hasCondition: false,
+  });
+
+  const targetRanking = getNode(
+    graph.nodes,
+    "targetRanking__0__actions__0__0__max",
+  );
+  expect(targetRanking.type).toBe("targetRanking");
+  expect(targetRanking.data).toMatchObject({
+    label: "max:target.time_to_die",
+    mode: "max",
+  });
+  expect(targetRanking.position.x).toBe(expressionLaneX);
+  expect(targetRanking.position.y).toBe(action.position.y);
+});
+
 test("comparison with arithmetic on the right stays an atomic condition node", () => {
   const expression =
     "cooldown.lava_lash.remains < gcd.max + buff.maelstrom_weapon.stack * 0.3";

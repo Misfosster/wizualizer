@@ -1,3 +1,4 @@
+import { isTargetRankingSegment } from "@/utils/apl-parser/action-data";
 import type { Condition, IdentRef, Segment } from "@/utils/apl-parser/types";
 import { canonicalAtomKey, parseAtomKey } from "@/utils/conditions/atom-key";
 import {
@@ -30,10 +31,7 @@ export function findSelfAvailabilityFailure(
     if (segment.type !== "if" && segment.type !== "target_if") {
       continue;
     }
-    if (
-      segment.type === "target_if" &&
-      (segment.mode === "min" || segment.mode === "max")
-    ) {
+    if (isTargetRankingSegment(segment)) {
       continue;
     }
     if (!conditionReferencesSelfAvailability(segment.expr, spell, context.catalog)) {

@@ -105,6 +105,40 @@ test("extractConditionAtoms partitions atoms per profile scope key", () => {
   expect(twoKeys).toEqual(["buff.combustion.up"]);
 });
 
+test("extractConditionAtoms reports atoms shared by every profile", () => {
+  const doc = parseOrThrow(`
+shaman="Enhance"
+actions=stormstrike,if=cooldown.doom_winds.remains>0&fight_remains<30
+
+monk="Windwalker"
+actions=tiger_palm,if=energy>50&fight_remains<30
+`);
+  const atoms = extractConditionAtoms(doc);
+
+  expect(atoms.all.map((a) => a.key)).toEqual([
+    "cooldown.doom_winds.remains",
+    "energy",
+    "fight_remains",
+  ]);
+  expect(atoms.shared.map((a) => a.key)).toEqual(["fight_remains"]);
+});
+
+test("extractConditionAtoms promotes shared atoms using document-wide usage", () => {
+  const doc = parseOrThrow(`
+shaman="One"
+actions=fireblood,if=action.fireblood.cooldown
+
+shaman="Two"
+actions=fireblood,if=action.fireblood.cooldown>0
+`);
+  const atoms = extractConditionAtoms(doc);
+  const fireblood = atoms.shared.find(
+    (atom) => atom.key === "action.fireblood.cooldown",
+  );
+
+  expect(fireblood?.valueKind).toBe("number");
+});
+
 test("extractConditionAtoms uses one bucket per duplicate profile scope key", () => {
   const doc = parseOrThrow(`
 shaman="Same"

@@ -57,6 +57,7 @@ const NODE_Z_INDEX: Record<GraphNodeData["kind"], number> = {
   callActionList: 30,
   sequence: 30,
   condition: 20,
+  targetRanking: 20,
   valueExpression: 20,
   container: 10,
 };

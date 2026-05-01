@@ -20,6 +20,16 @@ const DUPLICATE_PROFILE_NAMES = [
   "actions+=/stormstrike,if=buff.second.up",
 ].join("\n");
 
+const MULTI_PROFILE_CONDITION_SCOPES = [
+  'shaman="Enhance"',
+  "spec=enhancement",
+  "actions=stormstrike,if=cooldown.doom_winds.remains>0&fight_remains<30",
+  "",
+  'monk="Windwalker"',
+  "spec=windwalker",
+  "actions=tiger_palm,if=energy>50&fight_remains<30",
+].join("\n");
+
 async function fillAplEditor(page: Page, text: string): Promise<void> {
   await page.getByRole("textbox", { name: "APL editor" }).fill(text);
 }
@@ -240,6 +250,57 @@ test("duplicate profile rows expose display-name and scope-key attributes", asyn
       '[data-profile-condition-overrides-section="Same"][data-profile-scope-key="profile:shaman:Same:1"]',
     ),
   ).toBeVisible();
+});
+
+test("condition suggestions stay scoped to the matching profile", async ({
+  page,
+}) => {
+  await gotoPreview(page, MULTI_PROFILE_CONDITION_SCOPES);
+
+  const globalSection = page.locator("[data-condition-overrides-section]");
+  await globalSection.locator("[data-condition-overrides-search]").fill("fight");
+  await expect(
+    globalSection.locator(
+      '[data-condition-overrides-suggestion="fight_remains"]',
+    ),
+  ).toBeVisible();
+
+  await globalSection.locator("[data-condition-overrides-search]").fill("doom");
+  await expect(
+    globalSection.locator(
+      '[data-condition-overrides-suggestion="cooldown.doom_winds.remains"]',
+    ),
+  ).toHaveCount(0);
+
+  await page
+    .locator('[data-profile-condition-overrides-toggle="Enhance"]')
+    .click();
+  const enhanceSection = page.locator(
+    '[data-profile-condition-overrides-section="Enhance"]',
+  );
+  await enhanceSection
+    .locator("[data-profile-condition-overrides-search]")
+    .fill("doom");
+  await expect(
+    enhanceSection.locator(
+      '[data-profile-condition-overrides-suggestion="cooldown.doom_winds.remains"]',
+    ),
+  ).toBeVisible();
+
+  await page
+    .locator('[data-profile-condition-overrides-toggle="Windwalker"]')
+    .click();
+  const windwalkerSection = page.locator(
+    '[data-profile-condition-overrides-section="Windwalker"]',
+  );
+  await windwalkerSection
+    .locator("[data-profile-condition-overrides-search]")
+    .fill("doom");
+  await expect(
+    windwalkerSection.locator(
+      '[data-profile-condition-overrides-suggestion="cooldown.doom_winds.remains"]',
+    ),
+  ).toHaveCount(0);
 });
 
 test("numeric per-profile overrides use a number field", async ({ page }) => {

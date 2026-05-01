@@ -13,6 +13,12 @@ export interface ConditionSegment {
   expr: Condition;
 }
 
+export interface TargetRankingSegment {
+  type: "target_if";
+  mode: "min" | "max";
+  expr: Condition;
+}
+
 interface SequenceSegment {
   type: "sequence";
   expr: Condition;
@@ -30,6 +36,15 @@ export function getConditionSegments(segments: Segment[]): ConditionSegment[] {
   return segments.filter(
     (segment): segment is ConditionSegment =>
       segment.type === "if" || segment.type === "target_if",
+  );
+}
+
+export function isTargetRankingSegment(
+  segment: ConditionSegment,
+): segment is TargetRankingSegment {
+  return (
+    segment.type === "target_if" &&
+    (segment.mode === "min" || segment.mode === "max")
   );
 }
 

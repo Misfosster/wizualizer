@@ -1,4 +1,5 @@
 import type { AplDocument } from "@/utils/apl-parser/document";
+import { isTargetRankingSegment } from "@/utils/apl-parser/action-data";
 import { getProfileScopeKey } from "@/utils/apl-parser/profile-scope";
 import type { Condition } from "@/utils/apl-parser/types";
 import {
@@ -21,7 +22,10 @@ import type { ConditionAtom, ConditionAtomValueKind } from "./types";
  *
  * Output is intentionally split:
  *   - `all`         - deduped atoms across the whole document, used by
- *                     the global panel.
+ *                     broad document-level consumers.
+ *   - `shared`      - deduped atoms present in every profile, used by
+ *                     the global panel so profile-specific conditions
+ *                     stay in the profile rows.
  *   - `byProfile`   - deduped atoms per deterministic profile scope key,
  *                     used by the per-profile expander so each row only
  *                     lists atoms that profile actually references.
@@ -31,6 +35,7 @@ import type { ConditionAtom, ConditionAtomValueKind } from "./types";
  */
 export interface ExtractedConditionAtoms {
   all: readonly ConditionAtom[];
+  shared: readonly ConditionAtom[];
   byProfile: ReadonlyMap<string, readonly ConditionAtom[]>;
 }
 
@@ -52,10 +57,7 @@ export function extractConditionAtoms(
           if (segment.type !== "if" && segment.type !== "target_if") {
             continue;
           }
-          if (
-            segment.type === "target_if" &&
-            (segment.mode === "min" || segment.mode === "max")
-          ) {
+          if (isTargetRankingSegment(segment)) {
             continue;
           }
           collectAtoms(segment.expr, all, profileAtoms, "boolean");
@@ -66,6 +68,7 @@ export function extractConditionAtoms(
 
   return {
     all: sortAtoms(Array.from(all.values())),
+    shared: getSharedAtoms(all, byProfile),
     byProfile: freezeByProfile(byProfile),
   };
 }
@@ -169,4 +172,29 @@ function freezeByProfile(
     );
   }
   return result;
+}
+
+function getSharedAtoms(
+  all: Map<string, ConditionAtom>,
+  byProfile: Map<string, Map<string, ConditionAtom>>,
+): readonly ConditionAtom[] {
+  if (byProfile.size === 0) {
+    return EMPTY_ATOMS;
+  }
+
+  const [firstProfileAtoms, ...remainingProfiles] = Array.from(
+    byProfile.values(),
+  );
+  if (firstProfileAtoms.size === 0) {
+    return EMPTY_ATOMS;
+  }
+
+  const sharedAtoms: ConditionAtom[] = [];
+  for (const [key, atom] of firstProfileAtoms) {
+    if (remainingProfiles.every((atoms) => atoms.has(key))) {
+      sharedAtoms.push(all.get(key) ?? atom);
+    }
+  }
+
+  return sharedAtoms.length === 0 ? EMPTY_ATOMS : sortAtoms(sharedAtoms);
 }

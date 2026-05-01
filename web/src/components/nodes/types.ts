@@ -20,6 +20,7 @@ export type GraphNodeKind =
   | "callActionList"
   | "sequence"
   | "condition"
+  | "targetRanking"
   | "valueExpression"
   | "container";
 
@@ -105,12 +106,22 @@ export type ConditionExpressionKind =
   | "comparison"
   | "arithmetic"
   | "expression";
+export type ConditionSegmentKind = "if" | "target_if";
 
 export interface ConditionNodeData extends Record<string, unknown> {
   label: string;
   kind: "condition";
+  segmentKind?: ConditionSegmentKind;
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
+  talentState?: TalentState;
+  talentReason?: string;
+}
+
+export interface TargetRankingNodeData extends Record<string, unknown> {
+  label: string;
+  kind: "targetRanking";
+  mode: "min" | "max";
   talentState?: TalentState;
   talentReason?: string;
 }
@@ -143,6 +154,7 @@ export type GraphNodeData =
   | CallActionListNodeData
   | SequenceNodeData
   | ConditionNodeData
+  | TargetRankingNodeData
   | ValueExpressionNodeData
   | ContainerNodeData;
 
@@ -157,6 +169,10 @@ export type CallActionListFlowNode = Node<
 >;
 export type SequenceFlowNode = Node<SequenceNodeData, "sequence">;
 export type ConditionFlowNode = Node<ConditionNodeData, "condition">;
+export type TargetRankingFlowNode = Node<
+  TargetRankingNodeData,
+  "targetRanking"
+>;
 export type ValueExpressionFlowNode = Node<
   ValueExpressionNodeData,
   "valueExpression"
@@ -172,6 +188,7 @@ export type GraphFlowNode =
   | CallActionListFlowNode
   | SequenceFlowNode
   | ConditionFlowNode
+  | TargetRankingFlowNode
   | ValueExpressionFlowNode
   | ContainerFlowNode;
 

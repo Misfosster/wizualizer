@@ -6,11 +6,13 @@ import {
   type ActionNodeData,
   type BlockNodeData,
   type CallActionListNodeData,
+  type ConditionSegmentKind,
   type ConditionHandleUsage,
   type GraphFlowNode,
   type GraphNodeData,
   type RootNodeData,
   type SequenceNodeData,
+  type TargetRankingNodeData,
   type UseItemNodeData,
   type ValueExpressionNodeData,
   type VariableNodeData,
@@ -33,11 +35,14 @@ import {
   type Point,
 } from "./grid-layout";
 import {
+  type ConditionSegment,
   extractCallTarget,
   extractSequenceSpells,
   extractUseItemName,
   extractVariableData,
   getConditionSegments,
+  isTargetRankingSegment,
+  type TargetRankingSegment,
 } from "./action-data";
 import {
   placeConditionGraph,
@@ -56,11 +61,17 @@ import {
   shouldKeepBlockInHide,
   type TalentRenderContext,
 } from "./talent-rendering";
+import { prettyCond } from "./pretty-log";
 export type { Point, Size } from "./grid-layout";
 export { getActionNodeId, getBlockNodeId, getRootNodeId } from "./node-ids";
 
 const DEFAULT_EDGE_STYLE = { stroke: "#6b7280" } as const;
 const VALUE_EDGE_STYLE = { stroke: "#8b5cf6" } as const;
+const TARGET_RANKING_EDGE_STYLE = { stroke: "#d97706" } as const;
+const TARGET_RANKING_NODE_BOUNDS = {
+  width: 280,
+  height: 66,
+} as const;
 // Faded gray with reduced opacity for edges that touch a talent-impossible
 // action in Dim mode. Keeps the visual hierarchy correct: a dimmed action
 // should not anchor a fully bright connector.
@@ -81,6 +92,7 @@ const NODE_Z_INDEX: Record<GraphNodeData["kind"], number> = {
   callActionList: 30,
   sequence: 30,
   condition: 20,
+  targetRanking: 20,
   valueExpression: 20,
   container: 10,
 };
@@ -99,6 +111,10 @@ interface GraphSectionResult {
   edges: Edge[];
   rowsUsed: number;
 }
+
+type RenderedActionDetail =
+  | { kind: "condition"; segment: ConditionSegment }
+  | { kind: "targetRanking"; segment: TargetRankingSegment };
 
 export interface GraphResult {
   nodes: GraphFlowNode[];
@@ -202,6 +218,7 @@ function withSubtreeTalentState(
   return nodes.map((node) => {
     if (
       node.type !== "condition" &&
+      node.type !== "targetRanking" &&
       node.type !== "valueExpression" &&
       node.type !== "container"
     ) {
@@ -214,6 +231,25 @@ function withSubtreeTalentState(
         ...node.data,
         talentState,
         ...(talentReason ? { talentReason } : {}),
+      },
+    } as GraphFlowNode;
+  });
+}
+
+function withConditionSegmentKind(
+  nodes: GraphFlowNode[],
+  segmentKind: ConditionSegmentKind,
+): GraphFlowNode[] {
+  return nodes.map((node) => {
+    if (node.type !== "condition") {
+      return node;
+    }
+
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        segmentKind,
       },
     } as GraphFlowNode;
   });
@@ -284,6 +320,7 @@ export function getActionNodeKind(spell: string): ActionGraphNodeKind {
 function createActionNodeData(
   actionLine: ParsedActionLine,
   conditionCount: number,
+  targetRankingCount: number,
   isCollapsed: boolean,
   talentState: TalentState | undefined,
   talentReason: string | undefined,
@@ -296,7 +333,8 @@ function createActionNodeData(
   const { action } = actionLine;
   const kind = getActionNodeKind(action.spell);
   const hasCondition = conditionCount > 0;
-  const hasChildren = kind === "variable" || hasCondition;
+  const hasChildren =
+    kind === "variable" || hasCondition || targetRankingCount > 0;
   const collapseData = {
     hasCondition,
     hasChildren,
@@ -361,6 +399,10 @@ function assertNever(value: never): never {
 }
 
 function estimateDefaultSourceCenterY(data: GraphNodeData): number {
+  return estimateActionNodeHeight(data) / 2;
+}
+
+function estimateActionNodeHeight(data: GraphNodeData): number {
   let height = NODE_BORDER_HEIGHT + NODE_VERTICAL_PADDING + NODE_HEADER_HEIGHT;
 
   if (
@@ -371,7 +413,7 @@ function estimateDefaultSourceCenterY(data: GraphNodeData): number {
     height += NODE_NOTE_GAP + NODE_NOTE_LINE_HEIGHT;
   }
 
-  return height / 2;
+  return height;
 }
 
 function estimateVariableValueSourceCenterY(
@@ -415,6 +457,49 @@ function buildValueExpressionGraph(
   };
 }
 
+function buildTargetRankingGraph(
+  segment: TargetRankingSegment,
+  nodeId: string,
+  origin: Point,
+): ConditionGraphResult {
+  const data: TargetRankingNodeData = {
+    kind: "targetRanking",
+    label: `${segment.mode}:${prettyCond(segment.expr)}`,
+    mode: segment.mode,
+  };
+
+  return {
+    nodes: [
+      createGraphNode(
+        nodeId,
+        data,
+        origin,
+        {
+          style: { width: TARGET_RANKING_NODE_BOUNDS.width },
+        },
+      ),
+    ],
+    edges: [],
+    size: TARGET_RANKING_NODE_BOUNDS,
+    rowsUsed: rowsFromBounds(TARGET_RANKING_NODE_BOUNDS),
+    entryNodeId: nodeId,
+    entryCenterY: TARGET_RANKING_NODE_BOUNDS.height / 2,
+  };
+}
+
+function getConditionEntryX(segment: ConditionSegment, originX: number): number {
+  const conditionGraph = placeConditionGraph(
+    segment.expr,
+    "condition__entry_probe",
+    originX,
+    0,
+  );
+  return (
+    conditionGraph.nodes.find((node) => node.id === conditionGraph.entryNodeId)
+      ?.position.x ?? originX
+  );
+}
+
 function buildVariableValueExpressionGraph(
   actionLine: ParsedActionLine,
   actionNodeData: Extract<GraphNodeData, { kind: "variable" }>,
@@ -448,23 +533,41 @@ function buildActionGraph(
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
-  const conditionSegments = getConditionSegments(actionLine.action.segments);
-  const renderedConditionSegments =
-    simplifyConditionsForRender && resolveAtomForRender !== undefined
-      ? conditionSegments.flatMap((segment) => {
-          const simplified = simplifyConditionForRender(
-            segment.expr,
-            resolveAtomForRender,
-          );
-          if (!simplified) {
-            return [];
-          }
-          return [{ ...segment, expr: simplified }];
-        })
-      : conditionSegments;
+  const renderedDetails = getConditionSegments(actionLine.action.segments)
+    .flatMap<RenderedActionDetail>((segment) => {
+      if (isTargetRankingSegment(segment)) {
+        return [{ kind: "targetRanking", segment }];
+      }
+
+      if (simplifyConditionsForRender && resolveAtomForRender !== undefined) {
+        const simplified = simplifyConditionForRender(
+          segment.expr,
+          resolveAtomForRender,
+        );
+        if (!simplified) {
+          return [];
+        }
+        return [
+          { kind: "condition", segment: { ...segment, expr: simplified } },
+        ];
+      }
+
+      return [{ kind: "condition", segment }];
+    });
+  const renderedConditionDetails = renderedDetails.filter(
+    (detail): detail is Extract<RenderedActionDetail, { kind: "condition" }> =>
+      detail.kind === "condition",
+  );
+  const renderedTargetRankingDetails = renderedDetails.filter(
+    (
+      detail,
+    ): detail is Extract<RenderedActionDetail, { kind: "targetRanking" }> =>
+      detail.kind === "targetRanking",
+  );
   const actionNodeData = createActionNodeData(
     actionLine,
-    renderedConditionSegments.length,
+    renderedConditionDetails.length,
+    renderedTargetRankingDetails.length,
     collapsedActions.has(actionId),
     talentState,
     talentReason,
@@ -478,14 +581,21 @@ function buildActionGraph(
   ];
   const edges: Edge[] = [];
   let rowsUsed = 1;
-  let conditionStartRow = row;
+  let detailStartRow = row;
   let didAlignActionToCondition = false;
   const shouldBuildChildren =
     actionNodeData.hasChildren && !actionNodeData.isCollapsed;
+  const firstConditionEntryX =
+    renderedConditionDetails.length > 0
+      ? getConditionEntryX(
+          renderedConditionDetails[0].segment,
+          gridPoint("expression", 0).x,
+        )
+      : gridPoint("expression", 0).x;
 
-  function alignActionToConditionEntry(
-    conditionOrigin: Point,
-    conditionGraph: ConditionGraphResult,
+  function alignActionToDetailEntry(
+    detailOrigin: Point,
+    detailGraph: ConditionGraphResult,
   ): void {
     if (actionNodeData.kind === "variable" || didAlignActionToCondition) {
       return;
@@ -498,8 +608,8 @@ function buildActionGraph(
       position: {
         ...currentAction.position,
         y:
-          conditionOrigin.y +
-          conditionGraph.entryCenterY -
+          detailOrigin.y +
+          detailGraph.entryCenterY -
           estimateDefaultSourceCenterY(actionNodeData),
       },
     };
@@ -551,27 +661,74 @@ function buildActionGraph(
     );
 
     rowsUsed = Math.max(rowsUsed, valueExpressionGraph.rowsUsed);
-    conditionStartRow = row + valueExpressionGraph.rowsUsed;
+    detailStartRow = row + valueExpressionGraph.rowsUsed;
   }
 
-  let conditionRowOffset = 0;
+  let detailRowOffset = 0;
+  let detailIndex = 0;
 
-  for (const segment of shouldBuildChildren ? renderedConditionSegments : []) {
-    const conditionRow = conditionStartRow + conditionRowOffset;
+  for (const detail of shouldBuildChildren ? renderedDetails : []) {
+    const detailRow = detailStartRow + detailRowOffset;
+    const detailOrigin = gridPoint("expression", detailRow);
+    const detailIdPrefix =
+      `${profileId}__${blockName}__${String(actionIndex)}`;
+
+    if (detail.kind === "targetRanking") {
+      const targetRankingOrigin = {
+        ...detailOrigin,
+        x: firstConditionEntryX,
+      };
+      const targetRankingId =
+        `targetRanking__${detailIdPrefix}__${String(detailIndex)}__${detail.segment.mode}`;
+      const targetRankingGraph = buildTargetRankingGraph(
+        detail.segment,
+        targetRankingId,
+        targetRankingOrigin,
+      );
+      alignActionToDetailEntry(targetRankingOrigin, targetRankingGraph);
+
+      nodes.push(
+        ...withSubtreeTalentState(
+          targetRankingGraph.nodes,
+          talentState,
+          talentReason,
+        ),
+      );
+      edges.push(
+        createEdge(
+          `edge__${actionId}__targetRanking__${String(detailIndex)}`,
+          actionId,
+          targetRankingGraph.entryNodeId,
+          {
+            targetHandle: CONDITION_HANDLE_IDS.targetLeft,
+            style: { ...TARGET_RANKING_EDGE_STYLE, ...(childEdgeStyle ?? {}) },
+          },
+        ),
+      );
+
+      rowsUsed = Math.max(
+        rowsUsed,
+        detailRow - row + targetRankingGraph.rowsUsed,
+      );
+      detailRowOffset += targetRankingGraph.rowsUsed;
+      detailIndex += 1;
+      continue;
+    }
+
+    const segment = detail.segment;
     const conditionId =
-      `condition__${profileId}__${blockName}__${String(actionIndex)}__${segment.type}`;
-    const conditionOrigin = gridPoint("expression", conditionRow);
+      `condition__${detailIdPrefix}__${segment.type}`;
     const conditionGraph = placeConditionGraph(
       segment.expr,
       conditionId,
-      conditionOrigin.x,
-      conditionOrigin.y,
+      detailOrigin.x,
+      detailOrigin.y,
     );
-    alignActionToConditionEntry(conditionOrigin, conditionGraph);
+    alignActionToDetailEntry(detailOrigin, conditionGraph);
 
     nodes.push(
       ...withSubtreeTalentState(
-        conditionGraph.nodes,
+        withConditionSegmentKind(conditionGraph.nodes, segment.type),
         talentState,
         talentReason,
       ),
@@ -592,9 +749,10 @@ function buildActionGraph(
 
     rowsUsed = Math.max(
       rowsUsed,
-      conditionRow - row + conditionGraph.rowsUsed,
+      detailRow - row + conditionGraph.rowsUsed,
     );
-    conditionRowOffset += conditionGraph.rowsUsed;
+    detailRowOffset += conditionGraph.rowsUsed;
+    detailIndex += 1;
   }
 
   return { nodes, edges, rowsUsed };

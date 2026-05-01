@@ -1,4 +1,5 @@
 import type { Action, Segment } from "@/utils/apl-parser/types";
+import { isTargetRankingSegment } from "@/utils/apl-parser/action-data";
 import { resolveAtom } from "@/utils/conditions/resolve-atom";
 import type { ProfileResolutionContext } from "@/utils/conditions/resolve-atom";
 import { EMPTY_ATOM_OVERRIDES } from "@/utils/conditions/types";
@@ -69,10 +70,7 @@ export function describeActionEligibilityIn(
     if (segment.type !== "if" && segment.type !== "target_if") {
       continue;
     }
-    if (
-      segment.type === "target_if" &&
-      (segment.mode === "min" || segment.mode === "max")
-    ) {
+    if (isTargetRankingSegment(segment)) {
       continue;
     }
 
