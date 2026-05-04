@@ -60,6 +60,10 @@ function formatParseError(result: ParseFailure): string {
   return `Line ${String(result.lineNumber)}: ${result.error}${suggestion}`;
 }
 
+export interface BuildDerivedStateOptions {
+  buildGraph?: boolean;
+}
+
 /**
  * Build the React Flow graph for a known-good document, applying both the
  * collapse state and the active talent render mode in one pass. Returning
@@ -106,16 +110,20 @@ export function buildDerivedState(
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>,
   conditionOverrides: ConditionOverrides = EMPTY_CONDITION_OVERRIDES,
   diagnostics: readonly AplDiagnostic[] = [],
+  options: BuildDerivedStateOptions = {},
 ): DerivedEditorState {
   const nextCollapsedBlocks = pruneCollapsedBlocks(document, collapsedBlocks);
   const nextCollapsedActions = pruneCollapsedActions(document, collapsedActions);
-  const graph = rebuildGraph(document, {
-    collapsedBlocks: nextCollapsedBlocks,
-    collapsedActions: nextCollapsedActions,
-    talentRenderMode,
-    talentSelectionsByProfile,
-    conditionOverrides,
-  });
+  const shouldBuildGraph = options.buildGraph ?? true;
+  const graph = shouldBuildGraph
+    ? rebuildGraph(document, {
+        collapsedBlocks: nextCollapsedBlocks,
+        collapsedActions: nextCollapsedActions,
+        talentRenderMode,
+        talentSelectionsByProfile,
+        conditionOverrides,
+      })
+    : { nodes: [], edges: [], talentSummary: null };
   return {
     lastGoodText: text,
     parseError: null,
@@ -155,6 +163,7 @@ export function deriveStateFromText(
   talentRenderMode: TalentRenderMode,
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>,
   conditionOverrides: ConditionOverrides = EMPTY_CONDITION_OVERRIDES,
+  options: BuildDerivedStateOptions = {},
 ): DerivedEditorState {
   const parsed = parseDocument(text);
   if (parsed.ok) {
@@ -167,6 +176,7 @@ export function deriveStateFromText(
       talentSelectionsByProfile,
       conditionOverrides,
       parsed.diagnostics,
+      options,
     );
   }
   return buildFailedState(parsed, fallback);

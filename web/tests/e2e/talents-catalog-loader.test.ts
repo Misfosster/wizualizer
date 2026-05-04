@@ -62,6 +62,26 @@ test("ensure dedupes concurrent loads for the same class", async () => {
   expect(loader.isLoading("shaman")).toBe(false);
 });
 
+test("ensure can cache a single spec without loading the full class catalog", async () => {
+  let calls = 0;
+  const loader = createCatalogLoader((classSlug, specSlug) => {
+    calls++;
+    expect(classSlug).toBe("shaman");
+    expect(specSlug).toBe("enhancement");
+    return Promise.resolve(SHAMAN);
+  });
+
+  expect(loader.peek("shaman")).toBeUndefined();
+  const result = await loader.ensure("shaman", "enhancement");
+  expect(result).toBe(SHAMAN);
+  expect(calls).toBe(1);
+  expect(loader.peek("shaman")).toBeUndefined();
+
+  const hit = loader.lookupSpec("shaman", "enhancement");
+  expect(hit.status).toBe("loaded");
+  expect(hit.catalog?.specId).toBe(263);
+});
+
 test("a null fetch result is remembered so we do not re-fetch", async () => {
   let calls = 0;
   const loader = createCatalogLoader(() => {

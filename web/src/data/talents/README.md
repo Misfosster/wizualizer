@@ -2,10 +2,12 @@
 
 This folder is **generated**. Do not hand-edit the JSON files.
 
-Each `<class>.json` file is a `TalentCatalog` for a single class with one
-entry per spec in `byClassSpec`. `index.json` lists which class slugs
-have a committed file. See `web/src/utils/talents/types.ts` for the
-runtime type; see `web/scripts/generate-talents/` for the producer.
+Each `<class>.json` file is a legacy `TalentCatalog` for a single class with
+one entry per spec in `byClassSpec`. Runtime browser loading uses
+`specs/<class>__<spec>.json` so opening one spec does not import the whole
+class catalog. `index.json` lists which class slugs have a committed file. See
+`web/src/utils/talents/types.ts` for the runtime type; see
+`web/scripts/generate-talents/` for the producer.
 
 ## Regenerate
 

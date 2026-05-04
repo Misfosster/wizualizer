@@ -60,16 +60,35 @@ function applyInitialViewport(
   flow: ReactFlowInstance<GraphFlowNode>,
   canvas: HTMLDivElement | null,
   nodeCount: number,
-): void {
+  initialFocusNodeId: string | null,
+): string | null {
+  const initialFocusNode = initialFocusNodeId
+    ? flow.getNode(initialFocusNodeId)
+    : undefined;
+  if (initialFocusNodeId && initialFocusNode) {
+    void flow.fitView({
+      nodes: [initialFocusNode],
+      padding: 0.45,
+      maxZoom: 0.9,
+      duration: 0,
+    });
+    return initialFocusNodeId;
+  }
+
   if (nodeCount > INITIAL_FIT_VIEW_NODE_LIMIT) {
     focusFirstNode(flow, canvas);
-    return;
+    return null;
   }
 
   void flow.fitView(initialFitViewOptions);
+  return null;
 }
 
-export default function Canvas() {
+export interface CanvasProps {
+  initialFocusNodeId?: string | null;
+}
+
+export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
   const shouldFitAfterBulkToggleRef = useRef(false);
@@ -85,6 +104,7 @@ export default function Canvas() {
     clearGraphJumpTarget,
     graphJumpTarget,
     document,
+    graphBuildStatus,
   } = useEditorStore(
     useShallow((state) => ({
       nodes: state.nodes,
@@ -95,6 +115,7 @@ export default function Canvas() {
       clearGraphJumpTarget: state.clearGraphJumpTarget,
       graphJumpTarget: state.graphJumpTarget,
       document: state.document,
+      graphBuildStatus: state.graphBuildStatus,
     })),
   );
   const previousDocumentRef = useRef(document);
@@ -139,6 +160,16 @@ export default function Canvas() {
     shouldFitAfterBulkToggleRef.current = !shouldExpandAll;
     toggleAllBlocksCollapse();
   }, [shouldExpandAll, toggleAllBlocksCollapse]);
+
+  const highlightNodeTemporarily = useCallback((nodeId: string): void => {
+    setHighlightedNodeId(nodeId);
+    if (jumpHighlightTimerRef.current) {
+      clearTimeout(jumpHighlightTimerRef.current);
+    }
+    jumpHighlightTimerRef.current = setTimeout(() => {
+      setHighlightedNodeId((current) => (current === nodeId ? null : current));
+    }, 1600);
+  }, []);
 
   // Hide-mode wipeout: parsed document has at least one profile, but the
   // filter pass dropped every node. Distinguishes "user has not pasted any
@@ -202,8 +233,16 @@ export default function Canvas() {
       return;
     }
     didInitialFitRef.current = true;
-    applyInitialViewport(flow, canvasRef.current, nodes.length);
-  }, [nodes]);
+    const focusedNodeId = applyInitialViewport(
+      flow,
+      canvasRef.current,
+      nodes.length,
+      initialFocusNodeId,
+    );
+    if (focusedNodeId) {
+      highlightNodeTemporarily(focusedNodeId);
+    }
+  }, [highlightNodeTemporarily, initialFocusNodeId, nodes.length]);
 
   useEffect(() => {
     return () => {
@@ -215,6 +254,9 @@ export default function Canvas() {
 
   useEffect(() => {
     if (!graphJumpTarget) {
+      return;
+    }
+    if (graphBuildStatus === "stale") {
       return;
     }
     const flow = flowRef.current;
@@ -255,10 +297,29 @@ export default function Canvas() {
       });
   }, [
     clearGraphJumpTarget,
+    graphBuildStatus,
     graphJumpTarget,
+    nodes.length,
     setTalentRenderMode,
     talentRenderMode,
   ]);
+
+  if (graphBuildStatus === "stale") {
+    return (
+      <div
+        className="flex h-full min-h-[300px] w-full flex-col items-center justify-center gap-3 text-slate-100"
+        style={{ background: canvasBackground }}
+        role="status"
+        aria-live="polite"
+        data-graph-loading
+      >
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-400 border-t-transparent" />
+        <div className="text-sm font-medium text-slate-200">
+          Loading preview...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -276,7 +337,15 @@ export default function Canvas() {
           flowRef.current = instance;
           if (!didInitialFitRef.current && nodes.length > 0) {
             didInitialFitRef.current = true;
-            applyInitialViewport(instance, canvasRef.current, nodes.length);
+            const focusedNodeId = applyInitialViewport(
+              instance,
+              canvasRef.current,
+              nodes.length,
+              initialFocusNodeId,
+            );
+            if (focusedNodeId) {
+              highlightNodeTemporarily(focusedNodeId);
+            }
           }
         }}
         connectionLineType={ConnectionLineType.Step}

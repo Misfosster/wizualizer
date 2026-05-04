@@ -1,0 +1,4993 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "classSpec": "monk/mistweaver",
+  "catalog": {
+    "classId": 10,
+    "specId": 270,
+    "treeHash": "",
+    "classNodes": [
+      {
+        "talentId": 124933,
+        "displayName": "Soothing Mist",
+        "simcKey": "soothing_mist",
+        "maxRank": 1,
+        "row": 1,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124932,
+        "displayName": "Paralysis",
+        "simcKey": "paralysis",
+        "maxRank": 1,
+        "row": 1,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124985,
+        "displayName": "Rising Sun Kick",
+        "simcKey": "rising_sun_kick",
+        "maxRank": 1,
+        "row": 1,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124934,
+        "displayName": "Elusive Mists",
+        "simcKey": "elusive_mists",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124937,
+        "displayName": "Tiger's Lust",
+        "simcKey": "tigers_lust",
+        "maxRank": 1,
+        "row": 2,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124939,
+        "displayName": "Disable",
+        "simcKey": "disable",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124939,
+            "displayName": "Disable",
+            "simcKey": "disable"
+          },
+          {
+            "talentId": 124940,
+            "displayName": "Crashing Momentum",
+            "simcKey": "crashing_momentum"
+          }
+        ]
+      },
+      {
+        "talentId": 124984,
+        "displayName": "Fast Feet",
+        "simcKey": "fast_feet",
+        "maxRank": 1,
+        "row": 2,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124936,
+        "displayName": "Grace of the Crane",
+        "simcKey": "grace_of_the_crane",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124955,
+        "displayName": "Bounding Agility",
+        "simcKey": "bounding_agility",
+        "maxRank": 1,
+        "row": 3,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124944,
+        "displayName": "Calming Presence",
+        "simcKey": "calming_presence",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124938,
+        "displayName": "Wind's Reach",
+        "simcKey": "winds_reach",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124866,
+        "displayName": "Improved Detox",
+        "simcKey": "improved_detox",
+        "maxRank": 1,
+        "row": 3,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136516,
+        "displayName": "Serene Surge",
+        "simcKey": "serene_surge",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 136516,
+            "displayName": "Serene Surge",
+            "simcKey": "serene_surge"
+          },
+          {
+            "talentId": 136519,
+            "displayName": "Vivacious Vivification",
+            "simcKey": "vivacious_vivification"
+          }
+        ]
+      },
+      {
+        "talentId": 136517,
+        "displayName": "Silent Sanctuary",
+        "simcKey": "silent_sanctuary",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124954,
+        "displayName": "Jade Walk",
+        "simcKey": "jade_walk",
+        "maxRank": 1,
+        "row": 4,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124931,
+        "displayName": "Pressure Points",
+        "simcKey": "pressure_points",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136598,
+        "displayName": "Chi Warding",
+        "simcKey": "chi_warding",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136520,
+        "displayName": "Reinvigoration",
+        "simcKey": "reinvigoration",
+        "maxRank": 1,
+        "row": 4,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124983,
+        "displayName": "Ancient Arts",
+        "simcKey": "ancient_arts",
+        "maxRank": 2,
+        "row": 4,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 126500,
+        "displayName": "Chi Wave",
+        "simcKey": "chi_wave",
+        "maxRank": 1,
+        "row": 5,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124962,
+        "displayName": "Transcendence",
+        "simcKey": "transcendence",
+        "maxRank": 1,
+        "row": 5,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124981,
+        "displayName": "Chi Torpedo",
+        "simcKey": "chi_torpedo",
+        "maxRank": 1,
+        "row": 5,
+        "col": 6,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124981,
+            "displayName": "Chi Torpedo",
+            "simcKey": "chi_torpedo"
+          },
+          {
+            "talentId": 124982,
+            "displayName": "Celerity",
+            "simcKey": "celerity"
+          }
+        ]
+      },
+      {
+        "talentId": 136518,
+        "displayName": "Stillstep Coil",
+        "simcKey": "stillstep_coil",
+        "maxRank": 1,
+        "row": 5,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124950,
+        "displayName": "Hasty Provocation",
+        "simcKey": "hasty_provocation",
+        "maxRank": 1,
+        "row": 6,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124950,
+            "displayName": "Hasty Provocation",
+            "simcKey": "hasty_provocation"
+          },
+          {
+            "talentId": 124951,
+            "displayName": "Quick Footed",
+            "simcKey": "quick_footed"
+          }
+        ]
+      },
+      {
+        "talentId": 124961,
+        "displayName": "Ferocity of Xuen",
+        "simcKey": "ferocity_of_xuen",
+        "maxRank": 2,
+        "row": 6,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124925,
+        "displayName": "Song of Chi-Ji",
+        "simcKey": "song_of_chi_ji",
+        "maxRank": 1,
+        "row": 6,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124925,
+            "displayName": "Song of Chi-Ji",
+            "simcKey": "song_of_chi_ji"
+          },
+          {
+            "talentId": 124926,
+            "displayName": "Ring of Peace",
+            "simcKey": "ring_of_peace"
+          }
+        ]
+      },
+      {
+        "talentId": 124928,
+        "displayName": "Spirit's Essence",
+        "simcKey": "spirits_essence",
+        "maxRank": 1,
+        "row": 6,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124980,
+        "displayName": "Tiger Tail Sweep",
+        "simcKey": "tiger_tail_sweep",
+        "maxRank": 1,
+        "row": 6,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124930,
+        "displayName": "Improved Touch of Death",
+        "simcKey": "improved_touch_of_death",
+        "maxRank": 1,
+        "row": 6,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136510,
+        "displayName": "Mist Caller",
+        "simcKey": "mist_caller",
+        "maxRank": 1,
+        "row": 7,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124960,
+        "displayName": "Yu'lon's Grace",
+        "simcKey": "yulons_grace",
+        "maxRank": 1,
+        "row": 7,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124957,
+        "displayName": "Peace and Prosperity",
+        "simcKey": "peace_and_prosperity",
+        "maxRank": 1,
+        "row": 7,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124968,
+        "displayName": "Fortifying Brew",
+        "simcKey": "fortifying_brew",
+        "maxRank": 1,
+        "row": 7,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124929,
+        "displayName": "Dance of the Wind",
+        "simcKey": "dance_of_the_wind",
+        "maxRank": 1,
+        "row": 7,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124949,
+        "displayName": "Save Them All",
+        "simcKey": "save_them_all",
+        "maxRank": 1,
+        "row": 8,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124947,
+        "displayName": "Swift Art",
+        "simcKey": "swift_art",
+        "maxRank": 1,
+        "row": 8,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136512,
+        "displayName": "Vital Clarity",
+        "simcKey": "vital_clarity",
+        "maxRank": 1,
+        "row": 8,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 133997,
+        "displayName": "Summon Jade Serpent Statue",
+        "simcKey": "summon_jade_serpent_statue",
+        "maxRank": 1,
+        "row": 8,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 133997,
+            "displayName": "Summon Jade Serpent Statue",
+            "simcKey": "summon_jade_serpent_statue"
+          },
+          {
+            "talentId": 124958,
+            "displayName": "Jade Infusion",
+            "simcKey": "jade_infusion"
+          }
+        ]
+      },
+      {
+        "talentId": 124969,
+        "displayName": "Expeditious Fortification",
+        "simcKey": "expeditious_fortification",
+        "maxRank": 1,
+        "row": 8,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124969,
+            "displayName": "Expeditious Fortification",
+            "simcKey": "expeditious_fortification"
+          },
+          {
+            "talentId": 124970,
+            "displayName": "Ironshell Brew",
+            "simcKey": "ironshell_brew"
+          }
+        ]
+      },
+      {
+        "talentId": 134029,
+        "displayName": "Diffuse Magic",
+        "simcKey": "diffuse_magic",
+        "maxRank": 1,
+        "row": 8,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124977,
+        "displayName": "Celestial Determination",
+        "simcKey": "celestial_determination",
+        "maxRank": 1,
+        "row": 8,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124964,
+        "displayName": "Chi Proficiency",
+        "simcKey": "chi_proficiency",
+        "maxRank": 2,
+        "row": 9,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124966,
+        "displayName": "Healing Winds",
+        "simcKey": "healing_winds",
+        "maxRank": 1,
+        "row": 9,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124971,
+        "displayName": "Windwalking",
+        "simcKey": "windwalking",
+        "maxRank": 1,
+        "row": 9,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124974,
+        "displayName": "Chi Transfer",
+        "simcKey": "chi_transfer",
+        "maxRank": 1,
+        "row": 9,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124976,
+        "displayName": "Martial Instincts",
+        "simcKey": "martial_instincts",
+        "maxRank": 2,
+        "row": 9,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124963,
+        "displayName": "Lighter Than Air",
+        "simcKey": "lighter_than_air",
+        "maxRank": 1,
+        "row": 10,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124965,
+        "displayName": "Flow of Chi",
+        "simcKey": "flow_of_chi",
+        "maxRank": 1,
+        "row": 10,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124972,
+        "displayName": "Transcendence: Linked Spirits",
+        "simcKey": "transcendence_linked_spirits",
+        "maxRank": 1,
+        "row": 10,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124972,
+            "displayName": "Transcendence: Linked Spirits",
+            "simcKey": "transcendence_linked_spirits"
+          },
+          {
+            "talentId": 124973,
+            "displayName": "Escape from Reality",
+            "simcKey": "escape_from_reality"
+          }
+        ]
+      },
+      {
+        "talentId": 124975,
+        "displayName": "Fatal Touch",
+        "simcKey": "fatal_touch",
+        "maxRank": 1,
+        "row": 10,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124946,
+        "displayName": "Rushing Reflexes",
+        "simcKey": "rushing_reflexes",
+        "maxRank": 1,
+        "row": 10,
+        "col": 7,
+        "nodeType": "normal"
+      }
+    ],
+    "specNodes": [
+      {
+        "talentId": 124922,
+        "displayName": "Enveloping Mist",
+        "simcKey": "enveloping_mist",
+        "maxRank": 1,
+        "row": 1,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124921,
+        "displayName": "Thunder Focus Tea",
+        "simcKey": "thunder_focus_tea",
+        "maxRank": 1,
+        "row": 2,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124888,
+        "displayName": "Misty Coalescence",
+        "simcKey": "misty_coalescence",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124875,
+        "displayName": "Life Cocoon",
+        "simcKey": "life_cocoon",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124920,
+        "displayName": "Mana Tea",
+        "simcKey": "mana_tea",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124891,
+        "displayName": "Invigorating Mists",
+        "simcKey": "invigorating_mists",
+        "maxRank": 1,
+        "row": 3,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124876,
+        "displayName": "Crane Style",
+        "simcKey": "crane_style",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124918,
+        "displayName": "Restoral",
+        "simcKey": "restoral",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124918,
+            "displayName": "Restoral",
+            "simcKey": "restoral"
+          },
+          {
+            "talentId": 124919,
+            "displayName": "Revival",
+            "simcKey": "revival"
+          }
+        ]
+      },
+      {
+        "talentId": 124890,
+        "displayName": "Healing Elixir",
+        "simcKey": "healing_elixir",
+        "maxRank": 1,
+        "row": 4,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124873,
+        "displayName": "Refreshment",
+        "simcKey": "refreshment",
+        "maxRank": 1,
+        "row": 5,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124873,
+            "displayName": "Refreshment",
+            "simcKey": "refreshment"
+          },
+          {
+            "talentId": 124874,
+            "displayName": "Calming Coalescence",
+            "simcKey": "calming_coalescence"
+          }
+        ]
+      },
+      {
+        "talentId": 124869,
+        "displayName": "Uplifted Spirits",
+        "simcKey": "uplifted_spirits",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 134001,
+        "displayName": "Way of the Crane",
+        "simcKey": "way_of_the_crane",
+        "maxRank": 1,
+        "row": 5,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 134001,
+            "displayName": "Way of the Crane",
+            "simcKey": "way_of_the_crane"
+          },
+          {
+            "talentId": 124885,
+            "displayName": "Way of the Serpent",
+            "simcKey": "way_of_the_serpent"
+          }
+        ]
+      },
+      {
+        "talentId": 124916,
+        "displayName": "Lifecycles",
+        "simcKey": "lifecycles",
+        "maxRank": 1,
+        "row": 5,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124916,
+            "displayName": "Lifecycles",
+            "simcKey": "lifecycles"
+          },
+          {
+            "talentId": 124917,
+            "displayName": "Energizing Brew",
+            "simcKey": "energizing_brew"
+          }
+        ]
+      },
+      {
+        "talentId": 124889,
+        "displayName": "Zen Pulse",
+        "simcKey": "zen_pulse",
+        "maxRank": 1,
+        "row": 5,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124879,
+        "displayName": "Mists of Life",
+        "simcKey": "mists_of_life",
+        "maxRank": 1,
+        "row": 6,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124872,
+        "displayName": "Overflowing Mists",
+        "simcKey": "overflowing_mists",
+        "maxRank": 1,
+        "row": 6,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124914,
+        "displayName": "Invoke Chi-Ji, the Red Crane",
+        "simcKey": "invoke_chi_ji_the_red_crane",
+        "maxRank": 1,
+        "row": 6,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124914,
+            "displayName": "Invoke Chi-Ji, the Red Crane",
+            "simcKey": "invoke_chi_ji_the_red_crane"
+          },
+          {
+            "talentId": 124915,
+            "displayName": "Invoke Yu'lon, the Jade Serpent",
+            "simcKey": "invoke_yulon_the_jade_serpent"
+          }
+        ]
+      },
+      {
+        "talentId": 124906,
+        "displayName": "Deep Clarity",
+        "simcKey": "deep_clarity",
+        "maxRank": 1,
+        "row": 6,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124892,
+        "displayName": "Rapid Diffusion",
+        "simcKey": "rapid_diffusion",
+        "maxRank": 2,
+        "row": 6,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124877,
+        "displayName": "Burst of Life",
+        "simcKey": "burst_of_life",
+        "maxRank": 1,
+        "row": 7,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124877,
+            "displayName": "Burst of Life",
+            "simcKey": "burst_of_life"
+          },
+          {
+            "talentId": 124878,
+            "displayName": "Chrysalis",
+            "simcKey": "chrysalis"
+          }
+        ]
+      },
+      {
+        "talentId": 124880,
+        "displayName": "Yu'lon's Whisper",
+        "simcKey": "yulons_whisper",
+        "maxRank": 1,
+        "row": 7,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124870,
+        "displayName": "0",
+        "simcKey": "0",
+        "maxRank": 2,
+        "row": 7,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124913,
+        "displayName": "Celestial Harmony",
+        "simcKey": "celestial_harmony",
+        "maxRank": 1,
+        "row": 7,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124893,
+        "displayName": "Dancing Mists",
+        "simcKey": "dancing_mists",
+        "maxRank": 1,
+        "row": 7,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124905,
+        "displayName": "Lotus Infusion",
+        "simcKey": "lotus_infusion",
+        "maxRank": 1,
+        "row": 7,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124883,
+        "displayName": "0",
+        "simcKey": "0",
+        "maxRank": 2,
+        "row": 8,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125932,
+        "displayName": "Pool of Mists",
+        "simcKey": "pool_of_mists",
+        "maxRank": 1,
+        "row": 8,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124894,
+        "displayName": "Gift of the Celestials",
+        "simcKey": "gift_of_the_celestials",
+        "maxRank": 1,
+        "row": 8,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124894,
+            "displayName": "Gift of the Celestials",
+            "simcKey": "gift_of_the_celestials"
+          },
+          {
+            "talentId": 124895,
+            "displayName": "Jade Bond",
+            "simcKey": "jade_bond"
+          }
+        ]
+      },
+      {
+        "talentId": 124909,
+        "displayName": "Morning Breeze",
+        "simcKey": "morning_breeze",
+        "maxRank": 1,
+        "row": 8,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124909,
+            "displayName": "Morning Breeze",
+            "simcKey": "morning_breeze"
+          },
+          {
+            "talentId": 124910,
+            "displayName": "Jade Empowerment",
+            "simcKey": "jade_empowerment"
+          }
+        ]
+      },
+      {
+        "talentId": 124897,
+        "displayName": "Focused Thunder",
+        "simcKey": "focused_thunder",
+        "maxRank": 1,
+        "row": 8,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124904,
+        "displayName": "Sheilun's Gift",
+        "simcKey": "sheiluns_gift",
+        "maxRank": 1,
+        "row": 8,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 128221,
+        "displayName": "Rushing Wind Kick",
+        "simcKey": "rushing_wind_kick",
+        "maxRank": 1,
+        "row": 9,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 128221,
+            "displayName": "Rushing Wind Kick",
+            "simcKey": "rushing_wind_kick"
+          },
+          {
+            "talentId": 124882,
+            "displayName": "Jadefire Teachings",
+            "simcKey": "jadefire_teachings"
+          }
+        ]
+      },
+      {
+        "talentId": 124911,
+        "displayName": "Resplendent Mist",
+        "simcKey": "resplendent_mist",
+        "maxRank": 2,
+        "row": 9,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124908,
+        "displayName": "Secret Infusion",
+        "simcKey": "secret_infusion",
+        "maxRank": 2,
+        "row": 9,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124896,
+        "displayName": "Misty Peaks",
+        "simcKey": "misty_peaks",
+        "maxRank": 2,
+        "row": 9,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124898,
+        "displayName": "Peaceful Mending",
+        "simcKey": "peaceful_mending",
+        "maxRank": 1,
+        "row": 9,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124902,
+        "displayName": "Tranquil Tea",
+        "simcKey": "tranquil_tea",
+        "maxRank": 1,
+        "row": 9,
+        "col": 7,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124902,
+            "displayName": "Tranquil Tea",
+            "simcKey": "tranquil_tea"
+          },
+          {
+            "talentId": 124903,
+            "displayName": "Veil of Pride",
+            "simcKey": "veil_of_pride"
+          }
+        ]
+      },
+      {
+        "talentId": 124881,
+        "displayName": "Emperor's Elixir",
+        "simcKey": "emperors_elixir",
+        "maxRank": 1,
+        "row": 10,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124887,
+        "displayName": "Dance of Chi-Ji",
+        "simcKey": "dance_of_chi_ji",
+        "maxRank": 1,
+        "row": 10,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124907,
+        "displayName": "Mistline",
+        "simcKey": "mistline",
+        "maxRank": 1,
+        "row": 10,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 124899,
+        "displayName": "Rising Mist",
+        "simcKey": "rising_mist",
+        "maxRank": 1,
+        "row": 10,
+        "col": 6,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 124899,
+            "displayName": "Rising Mist",
+            "simcKey": "rising_mist"
+          },
+          {
+            "talentId": 124900,
+            "displayName": "Tear of Morning",
+            "simcKey": "tear_of_morning"
+          }
+        ]
+      },
+      {
+        "talentId": 128344,
+        "displayName": "Emperor's Favor",
+        "simcKey": "emperors_favor",
+        "maxRank": 1,
+        "row": 10,
+        "col": 8,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 128344,
+            "displayName": "Emperor's Favor",
+            "simcKey": "emperors_favor"
+          },
+          {
+            "talentId": 124901,
+            "displayName": "Legacy of Wisdom",
+            "simcKey": "legacy_of_wisdom"
+          }
+        ]
+      },
+      {
+        "talentId": 137071,
+        "displayName": "Spiritfont",
+        "simcKey": "spiritfont",
+        "maxRank": 4,
+        "row": 11,
+        "col": 4,
+        "nodeType": "normal"
+      }
+    ],
+    "heroNodes": [
+      {
+        "talentId": 125033,
+        "displayName": "Aspect of Harmony",
+        "simcKey": "aspect_of_harmony",
+        "maxRank": 1,
+        "row": 1,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136562,
+        "displayName": "Celestial Conduit",
+        "simcKey": "celestial_conduit",
+        "maxRank": 1,
+        "row": 1,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125032,
+        "displayName": "Manifestation",
+        "simcKey": "manifestation",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125053,
+        "displayName": "Xuen's Guidance",
+        "simcKey": "xuens_guidance",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125053,
+            "displayName": "Xuen's Guidance",
+            "simcKey": "xuens_guidance"
+          },
+          {
+            "talentId": 125054,
+            "displayName": "Temple Training",
+            "simcKey": "temple_training"
+          }
+        ]
+      },
+      {
+        "talentId": 125034,
+        "displayName": "Harmonic Gambit",
+        "simcKey": "harmonic_gambit",
+        "maxRank": 1,
+        "row": 2,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125034,
+            "displayName": "Harmonic Gambit",
+            "simcKey": "harmonic_gambit"
+          },
+          {
+            "talentId": 125035,
+            "displayName": "Purified Spirit",
+            "simcKey": "purified_spirit"
+          }
+        ]
+      },
+      {
+        "talentId": 125061,
+        "displayName": "Courage of the White Tiger",
+        "simcKey": "courage_of_the_white_tiger",
+        "maxRank": 1,
+        "row": 2,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125043,
+        "displayName": "Balanced Stratagem",
+        "simcKey": "balanced_stratagem",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125048,
+        "displayName": "Yu'lon's Knowledge",
+        "simcKey": "yulons_knowledge",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125048,
+            "displayName": "Yu'lon's Knowledge",
+            "simcKey": "yulons_knowledge"
+          },
+          {
+            "talentId": 125049,
+            "displayName": "Restore Balance",
+            "simcKey": "restore_balance"
+          }
+        ]
+      },
+      {
+        "talentId": 135952,
+        "displayName": "Harmonic Surge",
+        "simcKey": "harmonic_surge",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135959,
+        "displayName": "Heart of the Jade Serpent",
+        "simcKey": "heart_of_the_jade_serpent",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125030,
+        "displayName": "Roar from the Heavens",
+        "simcKey": "roar_from_the_heavens",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125030,
+            "displayName": "Roar from the Heavens",
+            "simcKey": "roar_from_the_heavens"
+          },
+          {
+            "talentId": 125031,
+            "displayName": "Tiger's Vigor",
+            "simcKey": "tigers_vigor"
+          }
+        ]
+      },
+      {
+        "talentId": 125055,
+        "displayName": "Chi-Ji's Swiftness",
+        "simcKey": "chi_jis_swiftness",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125036,
+        "displayName": "Endless Draught",
+        "simcKey": "endless_draught",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136747,
+        "displayName": "Strength of the Black Ox",
+        "simcKey": "strength_of_the_black_ox",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125041,
+        "displayName": "Mantra of Tenacity",
+        "simcKey": "mantra_of_tenacity",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125041,
+            "displayName": "Mantra of Tenacity",
+            "simcKey": "mantra_of_tenacity"
+          },
+          {
+            "talentId": 125042,
+            "displayName": "Mantra of Purity",
+            "simcKey": "mantra_of_purity"
+          }
+        ]
+      },
+      {
+        "talentId": 125050,
+        "displayName": "Path of the Falling Star",
+        "simcKey": "path_of_the_falling_star",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135953,
+        "displayName": "Potential Energy",
+        "simcKey": "potential_energy",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136754,
+        "displayName": "Yu'lon's Avatar",
+        "simcKey": "yulons_avatar",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125029,
+        "displayName": "Overwhelming Force",
+        "simcKey": "overwhelming_force",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125056,
+        "displayName": "Jade Sanctuary",
+        "simcKey": "jade_sanctuary",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125056,
+            "displayName": "Jade Sanctuary",
+            "simcKey": "jade_sanctuary"
+          },
+          {
+            "talentId": 125057,
+            "displayName": "Niuzao's Protection",
+            "simcKey": "niuzaos_protection"
+          }
+        ]
+      },
+      {
+        "talentId": 125037,
+        "displayName": "Way of a Thousand Strikes",
+        "simcKey": "way_of_a_thousand_strikes",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125037,
+            "displayName": "Way of a Thousand Strikes",
+            "simcKey": "way_of_a_thousand_strikes"
+          },
+          {
+            "talentId": 125038,
+            "displayName": "Path of Resurgence",
+            "simcKey": "path_of_resurgence"
+          }
+        ]
+      },
+      {
+        "talentId": 125059,
+        "displayName": "Stampede of the Ancients",
+        "simcKey": "stampede_of_the_ancients",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125040,
+        "displayName": "Clarity of Purpose",
+        "simcKey": "clarity_of_purpose",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125051,
+        "displayName": "0",
+        "simcKey": "0",
+        "maxRank": 2,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135954,
+        "displayName": "Meditative Focus",
+        "simcKey": "meditative_focus",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135958,
+        "displayName": "Flowing Wisdom",
+        "simcKey": "flowing_wisdom",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125039,
+        "displayName": "Coalescence",
+        "simcKey": "coalescence",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125058,
+        "displayName": "Unity Within",
+        "simcKey": "unity_within",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      }
+    ],
+    "streamNodes": [
+      {
+        "nodeId": 101035,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124805,
+            "displayName": "Ferociousness",
+            "simcKey": "ferociousness"
+          }
+        ]
+      },
+      {
+        "nodeId": 101036,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124806,
+            "displayName": "Sharp Reflexes",
+            "simcKey": "sharp_reflexes"
+          }
+        ]
+      },
+      {
+        "nodeId": 101037,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124807,
+            "displayName": "Ascension",
+            "simcKey": "ascension"
+          }
+        ]
+      },
+      {
+        "nodeId": 101038,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124809,
+            "displayName": "Brawler's Intensity",
+            "simcKey": "brawlers_intensity"
+          }
+        ]
+      },
+      {
+        "nodeId": 101039,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124810,
+            "displayName": "Glory of the Dawn",
+            "simcKey": "glory_of_the_dawn"
+          }
+        ]
+      },
+      {
+        "nodeId": 101040,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124811,
+            "displayName": "Thunderfist",
+            "simcKey": "thunderfist"
+          }
+        ]
+      },
+      {
+        "nodeId": 101041,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124812,
+            "displayName": "Communion With Wind",
+            "simcKey": "communion_with_wind"
+          }
+        ]
+      },
+      {
+        "nodeId": 101043,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124814,
+            "displayName": "Hurricane's Vault",
+            "simcKey": "hurricanes_vault"
+          },
+          {
+            "entryId": 124815,
+            "displayName": "Airborne Rhythm",
+            "simcKey": "airborne_rhythm"
+          }
+        ]
+      },
+      {
+        "nodeId": 101044,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 126026,
+            "displayName": "Singularly Focused Jade",
+            "simcKey": "singularly_focused_jade"
+          },
+          {
+            "entryId": 124816,
+            "displayName": "Path of Jade",
+            "simcKey": "path_of_jade"
+          }
+        ]
+      },
+      {
+        "nodeId": 101045,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124817,
+            "displayName": "Jadefire Stomp",
+            "simcKey": "jadefire_stomp"
+          }
+        ]
+      },
+      {
+        "nodeId": 101046,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124818,
+            "displayName": "Universal Energy",
+            "simcKey": "universal_energy"
+          }
+        ]
+      },
+      {
+        "nodeId": 101047,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124819,
+            "displayName": "Hardened Soles",
+            "simcKey": "hardened_soles"
+          }
+        ]
+      },
+      {
+        "nodeId": 101048,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124820,
+            "displayName": "Momentum Boost",
+            "simcKey": "momentum_boost"
+          }
+        ]
+      },
+      {
+        "nodeId": 101049,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124821,
+            "displayName": "Touch of the Tiger",
+            "simcKey": "touch_of_the_tiger"
+          }
+        ]
+      },
+      {
+        "nodeId": 101050,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124822,
+            "displayName": "Jade Ignition",
+            "simcKey": "jade_ignition"
+          }
+        ]
+      },
+      {
+        "nodeId": 101051,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124823,
+            "displayName": "Obsidian Spiral",
+            "simcKey": "obsidian_spiral"
+          }
+        ]
+      },
+      {
+        "nodeId": 101052,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124824,
+            "displayName": "Spiritual Focus",
+            "simcKey": "spiritual_focus"
+          },
+          {
+            "entryId": 124825,
+            "displayName": "Drinking Horn Cover",
+            "simcKey": "drinking_horn_cover"
+          }
+        ]
+      },
+      {
+        "nodeId": 101053,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124826,
+            "displayName": "Zenith",
+            "simcKey": "zenith"
+          }
+        ]
+      },
+      {
+        "nodeId": 101054,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124827,
+            "displayName": "Teachings of the Monastery",
+            "simcKey": "teachings_of_the_monastery"
+          }
+        ]
+      },
+      {
+        "nodeId": 101055,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124828,
+            "displayName": "Dual Threat",
+            "simcKey": "dual_threat"
+          }
+        ]
+      },
+      {
+        "nodeId": 101056,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124829,
+            "displayName": "Energy Burst",
+            "simcKey": "energy_burst"
+          }
+        ]
+      },
+      {
+        "nodeId": 101057,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134453,
+            "displayName": "Crashing Fists",
+            "simcKey": "crashing_fists"
+          },
+          {
+            "entryId": 124830,
+            "displayName": "Cyclone's Drift",
+            "simcKey": "cyclones_drift"
+          }
+        ]
+      },
+      {
+        "nodeId": 101059,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124833,
+            "displayName": "Sequenced Strikes",
+            "simcKey": "sequenced_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 101060,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124834,
+            "displayName": "Dance of Chi-Ji",
+            "simcKey": "dance_of_chi_ji"
+          }
+        ]
+      },
+      {
+        "nodeId": 101061,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124835,
+            "displayName": "Meridian Strikes",
+            "simcKey": "meridian_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 101062,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124836,
+            "displayName": "Shadowboxing Treads",
+            "simcKey": "shadowboxing_treads"
+          }
+        ]
+      },
+      {
+        "nodeId": 101063,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124837,
+            "displayName": "Swift as a Coursing River",
+            "simcKey": "swift_as_a_coursing_river"
+          }
+        ]
+      },
+      {
+        "nodeId": 101064,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124838,
+            "displayName": "Purifying Brew",
+            "simcKey": "purifying_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101065,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136148,
+            "displayName": "Quick Sip",
+            "simcKey": "quick_sip"
+          },
+          {
+            "entryId": 124839,
+            "displayName": "Staggering Strikes",
+            "simcKey": "staggering_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 101067,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136146,
+            "displayName": "Celestial Infusion",
+            "simcKey": "celestial_infusion"
+          },
+          {
+            "entryId": 124841,
+            "displayName": "Celestial Brew",
+            "simcKey": "celestial_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101068,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124842,
+            "displayName": "Fortifying Brew: Determination",
+            "simcKey": "fortifying_brew_determination"
+          }
+        ]
+      },
+      {
+        "nodeId": 101069,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124843,
+            "displayName": "Breath of Fire",
+            "simcKey": "breath_of_fire"
+          }
+        ]
+      },
+      {
+        "nodeId": 101070,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124844,
+            "displayName": "Jade Flash",
+            "simcKey": "jade_flash"
+          }
+        ]
+      },
+      {
+        "nodeId": 101071,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124845,
+            "displayName": "Gift of the Ox",
+            "simcKey": "gift_of_the_ox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101072,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124846,
+            "displayName": "Improved Blackout Kick",
+            "simcKey": "improved_blackout_kick"
+          }
+        ]
+      },
+      {
+        "nodeId": 101073,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124847,
+            "displayName": "Mighty Stomp",
+            "simcKey": "mighty_stomp"
+          }
+        ]
+      },
+      {
+        "nodeId": 101074,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124848,
+            "displayName": "Walk with the Ox",
+            "simcKey": "walk_with_the_ox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101075,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124849,
+            "displayName": "Invoke Niuzao, the Black Ox",
+            "simcKey": "invoke_niuzao_the_black_ox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101076,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124850,
+            "displayName": "Celestial Flames",
+            "simcKey": "celestial_flames"
+          }
+        ]
+      },
+      {
+        "nodeId": 101077,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124851,
+            "displayName": "Zen State",
+            "simcKey": "zen_state"
+          }
+        ]
+      },
+      {
+        "nodeId": 101078,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124852,
+            "displayName": "Fluidity of Motion",
+            "simcKey": "fluidity_of_motion"
+          },
+          {
+            "entryId": 124853,
+            "displayName": "Shadowboxing Treads",
+            "simcKey": "shadowboxing_treads"
+          }
+        ]
+      },
+      {
+        "nodeId": 101079,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124854,
+            "displayName": "Counterstrike",
+            "simcKey": "counterstrike"
+          }
+        ]
+      },
+      {
+        "nodeId": 101080,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124855,
+            "displayName": "Face Palm",
+            "simcKey": "face_palm"
+          }
+        ]
+      },
+      {
+        "nodeId": 101081,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124856,
+            "displayName": "Anvil and Stave",
+            "simcKey": "anvil_and_stave"
+          }
+        ]
+      },
+      {
+        "nodeId": 101082,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124857,
+            "displayName": "Training of Niuzao",
+            "simcKey": "training_of_niuzao"
+          },
+          {
+            "entryId": 124858,
+            "displayName": "Light Brewing",
+            "simcKey": "light_brewing"
+          }
+        ]
+      },
+      {
+        "nodeId": 101083,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124860,
+            "displayName": "Tranquil Spirit",
+            "simcKey": "tranquil_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 101084,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124861,
+            "displayName": "Niuzao's Resolve",
+            "simcKey": "niuzaos_resolve"
+          }
+        ]
+      },
+      {
+        "nodeId": 101085,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124862,
+            "displayName": "Elixir of Determination",
+            "simcKey": "elixir_of_determination"
+          }
+        ]
+      },
+      {
+        "nodeId": 101086,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124863,
+            "displayName": "Spirit of the Ox",
+            "simcKey": "spirit_of_the_ox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101087,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124864,
+            "displayName": "Shuffle",
+            "simcKey": "shuffle"
+          }
+        ]
+      },
+      {
+        "nodeId": 101088,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124865,
+            "displayName": "Keg Smash",
+            "simcKey": "keg_smash"
+          }
+        ]
+      },
+      {
+        "nodeId": 101089,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124866,
+            "displayName": "Improved Detox",
+            "simcKey": "improved_detox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101090,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124867,
+            "displayName": "Detox",
+            "simcKey": "detox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101092,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124869,
+            "displayName": "Uplifted Spirits",
+            "simcKey": "uplifted_spirits"
+          }
+        ]
+      },
+      {
+        "nodeId": 101093,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124870,
+            "displayName": "0",
+            "simcKey": "0"
+          }
+        ]
+      },
+      {
+        "nodeId": 101094,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124872,
+            "displayName": "Overflowing Mists",
+            "simcKey": "overflowing_mists"
+          }
+        ]
+      },
+      {
+        "nodeId": 101095,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124873,
+            "displayName": "Refreshment",
+            "simcKey": "refreshment"
+          },
+          {
+            "entryId": 124874,
+            "displayName": "Calming Coalescence",
+            "simcKey": "calming_coalescence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101096,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124875,
+            "displayName": "Life Cocoon",
+            "simcKey": "life_cocoon"
+          }
+        ]
+      },
+      {
+        "nodeId": 101097,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124876,
+            "displayName": "Crane Style",
+            "simcKey": "crane_style"
+          }
+        ]
+      },
+      {
+        "nodeId": 101098,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124877,
+            "displayName": "Burst of Life",
+            "simcKey": "burst_of_life"
+          },
+          {
+            "entryId": 124878,
+            "displayName": "Chrysalis",
+            "simcKey": "chrysalis"
+          }
+        ]
+      },
+      {
+        "nodeId": 101099,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124879,
+            "displayName": "Mists of Life",
+            "simcKey": "mists_of_life"
+          }
+        ]
+      },
+      {
+        "nodeId": 101100,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124880,
+            "displayName": "Yu'lon's Whisper",
+            "simcKey": "yulons_whisper"
+          }
+        ]
+      },
+      {
+        "nodeId": 101101,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124881,
+            "displayName": "Emperor's Elixir",
+            "simcKey": "emperors_elixir"
+          }
+        ]
+      },
+      {
+        "nodeId": 101102,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 128221,
+            "displayName": "Rushing Wind Kick",
+            "simcKey": "rushing_wind_kick"
+          },
+          {
+            "entryId": 124882,
+            "displayName": "Jadefire Teachings",
+            "simcKey": "jadefire_teachings"
+          }
+        ]
+      },
+      {
+        "nodeId": 101103,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124883,
+            "displayName": "0",
+            "simcKey": "0"
+          }
+        ]
+      },
+      {
+        "nodeId": 101104,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134001,
+            "displayName": "Way of the Crane",
+            "simcKey": "way_of_the_crane"
+          },
+          {
+            "entryId": 124885,
+            "displayName": "Way of the Serpent",
+            "simcKey": "way_of_the_serpent"
+          }
+        ]
+      },
+      {
+        "nodeId": 101106,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124887,
+            "displayName": "Dance of Chi-Ji",
+            "simcKey": "dance_of_chi_ji"
+          }
+        ]
+      },
+      {
+        "nodeId": 101107,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124888,
+            "displayName": "Misty Coalescence",
+            "simcKey": "misty_coalescence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101108,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124889,
+            "displayName": "Zen Pulse",
+            "simcKey": "zen_pulse"
+          }
+        ]
+      },
+      {
+        "nodeId": 101109,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124890,
+            "displayName": "Healing Elixir",
+            "simcKey": "healing_elixir"
+          }
+        ]
+      },
+      {
+        "nodeId": 101110,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124891,
+            "displayName": "Invigorating Mists",
+            "simcKey": "invigorating_mists"
+          }
+        ]
+      },
+      {
+        "nodeId": 101111,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124892,
+            "displayName": "Rapid Diffusion",
+            "simcKey": "rapid_diffusion"
+          }
+        ]
+      },
+      {
+        "nodeId": 101112,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124893,
+            "displayName": "Dancing Mists",
+            "simcKey": "dancing_mists"
+          }
+        ]
+      },
+      {
+        "nodeId": 101113,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124894,
+            "displayName": "Gift of the Celestials",
+            "simcKey": "gift_of_the_celestials"
+          },
+          {
+            "entryId": 124895,
+            "displayName": "Jade Bond",
+            "simcKey": "jade_bond"
+          }
+        ]
+      },
+      {
+        "nodeId": 101114,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124896,
+            "displayName": "Misty Peaks",
+            "simcKey": "misty_peaks"
+          }
+        ]
+      },
+      {
+        "nodeId": 101115,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124897,
+            "displayName": "Focused Thunder",
+            "simcKey": "focused_thunder"
+          }
+        ]
+      },
+      {
+        "nodeId": 101116,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124898,
+            "displayName": "Peaceful Mending",
+            "simcKey": "peaceful_mending"
+          }
+        ]
+      },
+      {
+        "nodeId": 101117,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124899,
+            "displayName": "Rising Mist",
+            "simcKey": "rising_mist"
+          },
+          {
+            "entryId": 124900,
+            "displayName": "Tear of Morning",
+            "simcKey": "tear_of_morning"
+          }
+        ]
+      },
+      {
+        "nodeId": 101118,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 128344,
+            "displayName": "Emperor's Favor",
+            "simcKey": "emperors_favor"
+          },
+          {
+            "entryId": 124901,
+            "displayName": "Legacy of Wisdom",
+            "simcKey": "legacy_of_wisdom"
+          }
+        ]
+      },
+      {
+        "nodeId": 101119,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124902,
+            "displayName": "Tranquil Tea",
+            "simcKey": "tranquil_tea"
+          },
+          {
+            "entryId": 124903,
+            "displayName": "Veil of Pride",
+            "simcKey": "veil_of_pride"
+          }
+        ]
+      },
+      {
+        "nodeId": 101120,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124904,
+            "displayName": "Sheilun's Gift",
+            "simcKey": "sheiluns_gift"
+          }
+        ]
+      },
+      {
+        "nodeId": 101121,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124905,
+            "displayName": "Lotus Infusion",
+            "simcKey": "lotus_infusion"
+          }
+        ]
+      },
+      {
+        "nodeId": 101122,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124906,
+            "displayName": "Deep Clarity",
+            "simcKey": "deep_clarity"
+          }
+        ]
+      },
+      {
+        "nodeId": 101123,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124907,
+            "displayName": "Mistline",
+            "simcKey": "mistline"
+          }
+        ]
+      },
+      {
+        "nodeId": 101124,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124908,
+            "displayName": "Secret Infusion",
+            "simcKey": "secret_infusion"
+          }
+        ]
+      },
+      {
+        "nodeId": 101125,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124909,
+            "displayName": "Morning Breeze",
+            "simcKey": "morning_breeze"
+          },
+          {
+            "entryId": 124910,
+            "displayName": "Jade Empowerment",
+            "simcKey": "jade_empowerment"
+          }
+        ]
+      },
+      {
+        "nodeId": 101126,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124911,
+            "displayName": "Resplendent Mist",
+            "simcKey": "resplendent_mist"
+          }
+        ]
+      },
+      {
+        "nodeId": 101127,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125932,
+            "displayName": "Pool of Mists",
+            "simcKey": "pool_of_mists"
+          }
+        ]
+      },
+      {
+        "nodeId": 101128,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124913,
+            "displayName": "Celestial Harmony",
+            "simcKey": "celestial_harmony"
+          }
+        ]
+      },
+      {
+        "nodeId": 101129,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124914,
+            "displayName": "Invoke Chi-Ji, the Red Crane",
+            "simcKey": "invoke_chi_ji_the_red_crane"
+          },
+          {
+            "entryId": 124915,
+            "displayName": "Invoke Yu'lon, the Jade Serpent",
+            "simcKey": "invoke_yulon_the_jade_serpent"
+          }
+        ]
+      },
+      {
+        "nodeId": 101130,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124916,
+            "displayName": "Lifecycles",
+            "simcKey": "lifecycles"
+          },
+          {
+            "entryId": 124917,
+            "displayName": "Energizing Brew",
+            "simcKey": "energizing_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101131,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124918,
+            "displayName": "Restoral",
+            "simcKey": "restoral"
+          },
+          {
+            "entryId": 124919,
+            "displayName": "Revival",
+            "simcKey": "revival"
+          }
+        ]
+      },
+      {
+        "nodeId": 101132,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124920,
+            "displayName": "Mana Tea",
+            "simcKey": "mana_tea"
+          }
+        ]
+      },
+      {
+        "nodeId": 101133,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124921,
+            "displayName": "Thunder Focus Tea",
+            "simcKey": "thunder_focus_tea"
+          }
+        ]
+      },
+      {
+        "nodeId": 101134,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124922,
+            "displayName": "Enveloping Mist",
+            "simcKey": "enveloping_mist"
+          }
+        ]
+      },
+      {
+        "nodeId": 101135,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124923,
+            "displayName": "Profound Rebuttal",
+            "simcKey": "profound_rebuttal"
+          },
+          {
+            "entryId": 124924,
+            "displayName": "Strength of Spirit",
+            "simcKey": "strength_of_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 101136,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124925,
+            "displayName": "Song of Chi-Ji",
+            "simcKey": "song_of_chi_ji"
+          },
+          {
+            "entryId": 124926,
+            "displayName": "Ring of Peace",
+            "simcKey": "ring_of_peace"
+          }
+        ]
+      },
+      {
+        "nodeId": 101137,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124927,
+            "displayName": "Dance of the Wind",
+            "simcKey": "dance_of_the_wind"
+          }
+        ]
+      },
+      {
+        "nodeId": 101138,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124928,
+            "displayName": "Spirit's Essence",
+            "simcKey": "spirits_essence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101139,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124929,
+            "displayName": "Dance of the Wind",
+            "simcKey": "dance_of_the_wind"
+          }
+        ]
+      },
+      {
+        "nodeId": 101140,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124930,
+            "displayName": "Improved Touch of Death",
+            "simcKey": "improved_touch_of_death"
+          }
+        ]
+      },
+      {
+        "nodeId": 101141,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124931,
+            "displayName": "Pressure Points",
+            "simcKey": "pressure_points"
+          }
+        ]
+      },
+      {
+        "nodeId": 101142,
+        "maxRank": 1,
+        "grantedRanks": 1,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124932,
+            "displayName": "Paralysis",
+            "simcKey": "paralysis"
+          }
+        ]
+      },
+      {
+        "nodeId": 101143,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124933,
+            "displayName": "Soothing Mist",
+            "simcKey": "soothing_mist"
+          }
+        ]
+      },
+      {
+        "nodeId": 101144,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124934,
+            "displayName": "Elusive Mists",
+            "simcKey": "elusive_mists"
+          }
+        ]
+      },
+      {
+        "nodeId": 101145,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124935,
+            "displayName": "Vivacious Vivification",
+            "simcKey": "vivacious_vivification"
+          }
+        ]
+      },
+      {
+        "nodeId": 101146,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124936,
+            "displayName": "Grace of the Crane",
+            "simcKey": "grace_of_the_crane"
+          }
+        ]
+      },
+      {
+        "nodeId": 101147,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124937,
+            "displayName": "Tiger's Lust",
+            "simcKey": "tigers_lust"
+          }
+        ]
+      },
+      {
+        "nodeId": 101148,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124938,
+            "displayName": "Wind's Reach",
+            "simcKey": "winds_reach"
+          }
+        ]
+      },
+      {
+        "nodeId": 101149,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124939,
+            "displayName": "Disable",
+            "simcKey": "disable"
+          },
+          {
+            "entryId": 124940,
+            "displayName": "Crashing Momentum",
+            "simcKey": "crashing_momentum"
+          }
+        ]
+      },
+      {
+        "nodeId": 101150,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124941,
+            "displayName": "Detox",
+            "simcKey": "detox"
+          }
+        ]
+      },
+      {
+        "nodeId": 101151,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124942,
+            "displayName": "Energy Transfer",
+            "simcKey": "energy_transfer"
+          }
+        ]
+      },
+      {
+        "nodeId": 101152,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124943,
+            "displayName": "Spear Hand Strike",
+            "simcKey": "spear_hand_strike"
+          }
+        ]
+      },
+      {
+        "nodeId": 101153,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124944,
+            "displayName": "Calming Presence",
+            "simcKey": "calming_presence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101154,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124946,
+            "displayName": "Rushing Reflexes",
+            "simcKey": "rushing_reflexes"
+          }
+        ]
+      },
+      {
+        "nodeId": 101155,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124947,
+            "displayName": "Swift Art",
+            "simcKey": "swift_art"
+          }
+        ]
+      },
+      {
+        "nodeId": 101156,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124948,
+            "displayName": "Vigorous Expulsion",
+            "simcKey": "vigorous_expulsion"
+          }
+        ]
+      },
+      {
+        "nodeId": 101157,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124949,
+            "displayName": "Save Them All",
+            "simcKey": "save_them_all"
+          }
+        ]
+      },
+      {
+        "nodeId": 101158,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124950,
+            "displayName": "Hasty Provocation",
+            "simcKey": "hasty_provocation"
+          },
+          {
+            "entryId": 124951,
+            "displayName": "Quick Footed",
+            "simcKey": "quick_footed"
+          }
+        ]
+      },
+      {
+        "nodeId": 101159,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124953,
+            "displayName": "Tiger Fang",
+            "simcKey": "tiger_fang"
+          }
+        ]
+      },
+      {
+        "nodeId": 101160,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124954,
+            "displayName": "Jade Walk",
+            "simcKey": "jade_walk"
+          }
+        ]
+      },
+      {
+        "nodeId": 101161,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124955,
+            "displayName": "Bounding Agility",
+            "simcKey": "bounding_agility"
+          }
+        ]
+      },
+      {
+        "nodeId": 101162,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124956,
+            "displayName": "Zenith Stomp",
+            "simcKey": "zenith_stomp"
+          }
+        ]
+      },
+      {
+        "nodeId": 101163,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124957,
+            "displayName": "Peace and Prosperity",
+            "simcKey": "peace_and_prosperity"
+          }
+        ]
+      },
+      {
+        "nodeId": 101164,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 133997,
+            "displayName": "Summon Jade Serpent Statue",
+            "simcKey": "summon_jade_serpent_statue"
+          },
+          {
+            "entryId": 124958,
+            "displayName": "Jade Infusion",
+            "simcKey": "jade_infusion"
+          }
+        ]
+      },
+      {
+        "nodeId": 101165,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124960,
+            "displayName": "Yu'lon's Grace",
+            "simcKey": "yulons_grace"
+          }
+        ]
+      },
+      {
+        "nodeId": 101166,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124961,
+            "displayName": "Ferocity of Xuen",
+            "simcKey": "ferocity_of_xuen"
+          }
+        ]
+      },
+      {
+        "nodeId": 101167,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124962,
+            "displayName": "Transcendence",
+            "simcKey": "transcendence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101168,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124963,
+            "displayName": "Lighter Than Air",
+            "simcKey": "lighter_than_air"
+          }
+        ]
+      },
+      {
+        "nodeId": 101169,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124964,
+            "displayName": "Chi Proficiency",
+            "simcKey": "chi_proficiency"
+          }
+        ]
+      },
+      {
+        "nodeId": 101170,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124965,
+            "displayName": "Flow of Chi",
+            "simcKey": "flow_of_chi"
+          }
+        ]
+      },
+      {
+        "nodeId": 101171,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124966,
+            "displayName": "Healing Winds",
+            "simcKey": "healing_winds"
+          }
+        ]
+      },
+      {
+        "nodeId": 101172,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124967,
+            "displayName": "Summon Black Ox Statue",
+            "simcKey": "summon_black_ox_statue"
+          }
+        ]
+      },
+      {
+        "nodeId": 101173,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124968,
+            "displayName": "Fortifying Brew",
+            "simcKey": "fortifying_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101174,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124969,
+            "displayName": "Expeditious Fortification",
+            "simcKey": "expeditious_fortification"
+          },
+          {
+            "entryId": 124970,
+            "displayName": "Ironshell Brew",
+            "simcKey": "ironshell_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101175,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124971,
+            "displayName": "Windwalking",
+            "simcKey": "windwalking"
+          }
+        ]
+      },
+      {
+        "nodeId": 101176,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124972,
+            "displayName": "Transcendence: Linked Spirits",
+            "simcKey": "transcendence_linked_spirits"
+          },
+          {
+            "entryId": 124973,
+            "displayName": "Escape from Reality",
+            "simcKey": "escape_from_reality"
+          }
+        ]
+      },
+      {
+        "nodeId": 101177,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124974,
+            "displayName": "Chi Transfer",
+            "simcKey": "chi_transfer"
+          }
+        ]
+      },
+      {
+        "nodeId": 101178,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124975,
+            "displayName": "Fatal Touch",
+            "simcKey": "fatal_touch"
+          }
+        ]
+      },
+      {
+        "nodeId": 101179,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124976,
+            "displayName": "Martial Instincts",
+            "simcKey": "martial_instincts"
+          }
+        ]
+      },
+      {
+        "nodeId": 101180,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124977,
+            "displayName": "Celestial Determination",
+            "simcKey": "celestial_determination"
+          }
+        ]
+      },
+      {
+        "nodeId": 101181,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124979,
+            "displayName": "Dance of the Wind",
+            "simcKey": "dance_of_the_wind"
+          }
+        ]
+      },
+      {
+        "nodeId": 101182,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124980,
+            "displayName": "Tiger Tail Sweep",
+            "simcKey": "tiger_tail_sweep"
+          }
+        ]
+      },
+      {
+        "nodeId": 101183,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124981,
+            "displayName": "Chi Torpedo",
+            "simcKey": "chi_torpedo"
+          },
+          {
+            "entryId": 124982,
+            "displayName": "Celerity",
+            "simcKey": "celerity"
+          }
+        ]
+      },
+      {
+        "nodeId": 101184,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124983,
+            "displayName": "Ancient Arts",
+            "simcKey": "ancient_arts"
+          }
+        ]
+      },
+      {
+        "nodeId": 101185,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124984,
+            "displayName": "Fast Feet",
+            "simcKey": "fast_feet"
+          }
+        ]
+      },
+      {
+        "nodeId": 101186,
+        "maxRank": 1,
+        "grantedRanks": 1,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124985,
+            "displayName": "Rising Sun Kick",
+            "simcKey": "rising_sun_kick"
+          }
+        ]
+      },
+      {
+        "nodeId": 101187,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124986,
+            "displayName": "Charred Passions",
+            "simcKey": "charred_passions"
+          },
+          {
+            "entryId": 124987,
+            "displayName": "Dragonfire Brew",
+            "simcKey": "dragonfire_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101188,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124988,
+            "displayName": "Sal'salabim's Strength",
+            "simcKey": "salsalabims_strength"
+          },
+          {
+            "entryId": 124989,
+            "displayName": "Scalding Brew",
+            "simcKey": "scalding_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 101189,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124990,
+            "displayName": "High Tolerance",
+            "simcKey": "high_tolerance"
+          }
+        ]
+      },
+      {
+        "nodeId": 101190,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124991,
+            "displayName": "Black Ox Brew",
+            "simcKey": "black_ox_brew"
+          },
+          {
+            "entryId": 124992,
+            "displayName": "Bob and Weave",
+            "simcKey": "bob_and_weave"
+          }
+        ]
+      },
+      {
+        "nodeId": 101193,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 124996,
+            "displayName": "Blackout Combo",
+            "simcKey": "blackout_combo"
+          },
+          {
+            "entryId": 124997,
+            "displayName": "Press the Advantage",
+            "simcKey": "press_the_advantage"
+          }
+        ]
+      },
+      {
+        "nodeId": 101195,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124999,
+            "displayName": "Stormstout's Last Keg",
+            "simcKey": "stormstouts_last_keg"
+          }
+        ]
+      },
+      {
+        "nodeId": 101196,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136149,
+            "displayName": "Vital Flame",
+            "simcKey": "vital_flame"
+          },
+          {
+            "entryId": 125000,
+            "displayName": "Awakening Spirit",
+            "simcKey": "awakening_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 101197,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125001,
+            "displayName": "Exploding Keg",
+            "simcKey": "exploding_keg"
+          }
+        ]
+      },
+      {
+        "nodeId": 101198,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136150,
+            "displayName": "Empty the Cellar",
+            "simcKey": "empty_the_cellar"
+          }
+        ]
+      },
+      {
+        "nodeId": 101199,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125004,
+            "displayName": "Ox Stance",
+            "simcKey": "ox_stance"
+          }
+        ]
+      },
+      {
+        "nodeId": 101201,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125006,
+            "displayName": "Pretense of Instability",
+            "simcKey": "pretense_of_instability"
+          }
+        ]
+      },
+      {
+        "nodeId": 101202,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125007,
+            "displayName": "Rushing Jade Wind",
+            "simcKey": "rushing_jade_wind"
+          },
+          {
+            "entryId": 125008,
+            "displayName": "Special Delivery",
+            "simcKey": "special_delivery"
+          }
+        ]
+      },
+      {
+        "nodeId": 101203,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125009,
+            "displayName": "Echo Technique",
+            "simcKey": "echo_technique"
+          },
+          {
+            "entryId": 125010,
+            "displayName": "Revolving Whirl",
+            "simcKey": "revolving_whirl"
+          }
+        ]
+      },
+      {
+        "nodeId": 101204,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125011,
+            "displayName": "Flurry of Xuen",
+            "simcKey": "flurry_of_xuen"
+          }
+        ]
+      },
+      {
+        "nodeId": 101205,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125012,
+            "displayName": "Rising Star",
+            "simcKey": "rising_star"
+          }
+        ]
+      },
+      {
+        "nodeId": 101206,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125013,
+            "displayName": "Weapon of Wind",
+            "simcKey": "weapon_of_wind"
+          }
+        ]
+      },
+      {
+        "nodeId": 101207,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134452,
+            "displayName": "Whirling Dragon Punch",
+            "simcKey": "whirling_dragon_punch"
+          },
+          {
+            "entryId": 125014,
+            "displayName": "Strike of the Windlord",
+            "simcKey": "strike_of_the_windlord"
+          }
+        ]
+      },
+      {
+        "nodeId": 101208,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125015,
+            "displayName": "Martial Agility",
+            "simcKey": "martial_agility"
+          }
+        ]
+      },
+      {
+        "nodeId": 101209,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125016,
+            "displayName": "Memory of the Monastery",
+            "simcKey": "memory_of_the_monastery"
+          }
+        ]
+      },
+      {
+        "nodeId": 101210,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125017,
+            "displayName": "Xuen's Battlegear",
+            "simcKey": "xuens_battlegear"
+          }
+        ]
+      },
+      {
+        "nodeId": 101211,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125018,
+            "displayName": "Crane Vortex",
+            "simcKey": "crane_vortex"
+          }
+        ]
+      },
+      {
+        "nodeId": 101212,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125019,
+            "displayName": "Knowledge of the Broken Temple",
+            "simcKey": "knowledge_of_the_broken_temple"
+          }
+        ]
+      },
+      {
+        "nodeId": 101213,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125020,
+            "displayName": "Sunfire Spiral",
+            "simcKey": "sunfire_spiral"
+          }
+        ]
+      },
+      {
+        "nodeId": 101214,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125021,
+            "displayName": "Inner Peace",
+            "simcKey": "inner_peace"
+          }
+        ]
+      },
+      {
+        "nodeId": 101215,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125022,
+            "displayName": "Combo Breaker",
+            "simcKey": "combo_breaker"
+          }
+        ]
+      },
+      {
+        "nodeId": 101216,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125023,
+            "displayName": "Hit Combo",
+            "simcKey": "hit_combo"
+          }
+        ]
+      },
+      {
+        "nodeId": 101217,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125025,
+            "displayName": "Combat Wisdom",
+            "simcKey": "combat_wisdom"
+          }
+        ]
+      },
+      {
+        "nodeId": 101218,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125026,
+            "displayName": "Fists of Fury",
+            "simcKey": "fists_of_fury"
+          }
+        ]
+      },
+      {
+        "nodeId": 101219,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 125027,
+            "displayName": "0",
+            "subTreeId": 65
+          },
+          {
+            "entryId": 125028,
+            "displayName": "0",
+            "subTreeId": 66
+          }
+        ]
+      },
+      {
+        "nodeId": 101220,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125029,
+            "displayName": "Overwhelming Force",
+            "simcKey": "overwhelming_force"
+          }
+        ]
+      },
+      {
+        "nodeId": 101221,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125030,
+            "displayName": "Roar from the Heavens",
+            "simcKey": "roar_from_the_heavens"
+          },
+          {
+            "entryId": 125031,
+            "displayName": "Tiger's Vigor",
+            "simcKey": "tigers_vigor"
+          }
+        ]
+      },
+      {
+        "nodeId": 101222,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125032,
+            "displayName": "Manifestation",
+            "simcKey": "manifestation"
+          }
+        ]
+      },
+      {
+        "nodeId": 101223,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125033,
+            "displayName": "Aspect of Harmony",
+            "simcKey": "aspect_of_harmony"
+          }
+        ]
+      },
+      {
+        "nodeId": 101224,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125034,
+            "displayName": "Harmonic Gambit",
+            "simcKey": "harmonic_gambit"
+          },
+          {
+            "entryId": 125035,
+            "displayName": "Purified Spirit",
+            "simcKey": "purified_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 101225,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125036,
+            "displayName": "Endless Draught",
+            "simcKey": "endless_draught"
+          }
+        ]
+      },
+      {
+        "nodeId": 101226,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125037,
+            "displayName": "Way of a Thousand Strikes",
+            "simcKey": "way_of_a_thousand_strikes"
+          },
+          {
+            "entryId": 125038,
+            "displayName": "Path of Resurgence",
+            "simcKey": "path_of_resurgence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101227,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125039,
+            "displayName": "Coalescence",
+            "simcKey": "coalescence"
+          }
+        ]
+      },
+      {
+        "nodeId": 101228,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125040,
+            "displayName": "Clarity of Purpose",
+            "simcKey": "clarity_of_purpose"
+          }
+        ]
+      },
+      {
+        "nodeId": 101229,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125041,
+            "displayName": "Mantra of Tenacity",
+            "simcKey": "mantra_of_tenacity"
+          },
+          {
+            "entryId": 125042,
+            "displayName": "Mantra of Purity",
+            "simcKey": "mantra_of_purity"
+          }
+        ]
+      },
+      {
+        "nodeId": 101230,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125043,
+            "displayName": "Balanced Stratagem",
+            "simcKey": "balanced_stratagem"
+          }
+        ]
+      },
+      {
+        "nodeId": 101231,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 125044,
+            "displayName": "0",
+            "subTreeId": 66
+          },
+          {
+            "entryId": 125045,
+            "displayName": "0",
+            "subTreeId": 64
+          }
+        ]
+      },
+      {
+        "nodeId": 101232,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 125046,
+            "displayName": "0",
+            "subTreeId": 65
+          },
+          {
+            "entryId": 125047,
+            "displayName": "0",
+            "subTreeId": 64
+          }
+        ]
+      },
+      {
+        "nodeId": 101233,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125048,
+            "displayName": "Yu'lon's Knowledge",
+            "simcKey": "yulons_knowledge"
+          },
+          {
+            "entryId": 125049,
+            "displayName": "Restore Balance",
+            "simcKey": "restore_balance"
+          }
+        ]
+      },
+      {
+        "nodeId": 101234,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125050,
+            "displayName": "Path of the Falling Star",
+            "simcKey": "path_of_the_falling_star"
+          }
+        ]
+      },
+      {
+        "nodeId": 101235,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125051,
+            "displayName": "0",
+            "simcKey": "0"
+          }
+        ]
+      },
+      {
+        "nodeId": 101236,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125053,
+            "displayName": "Xuen's Guidance",
+            "simcKey": "xuens_guidance"
+          },
+          {
+            "entryId": 125054,
+            "displayName": "Temple Training",
+            "simcKey": "temple_training"
+          }
+        ]
+      },
+      {
+        "nodeId": 101237,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125055,
+            "displayName": "Chi-Ji's Swiftness",
+            "simcKey": "chi_jis_swiftness"
+          }
+        ]
+      },
+      {
+        "nodeId": 101238,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125056,
+            "displayName": "Jade Sanctuary",
+            "simcKey": "jade_sanctuary"
+          },
+          {
+            "entryId": 125057,
+            "displayName": "Niuzao's Protection",
+            "simcKey": "niuzaos_protection"
+          }
+        ]
+      },
+      {
+        "nodeId": 101239,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125058,
+            "displayName": "Unity Within",
+            "simcKey": "unity_within"
+          }
+        ]
+      },
+      {
+        "nodeId": 101240,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125059,
+            "displayName": "Stampede of the Ancients",
+            "simcKey": "stampede_of_the_ancients"
+          }
+        ]
+      },
+      {
+        "nodeId": 101242,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125061,
+            "displayName": "Courage of the White Tiger",
+            "simcKey": "courage_of_the_white_tiger"
+          }
+        ]
+      },
+      {
+        "nodeId": 101243,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125062,
+            "displayName": "Invoke Xuen, the White Tiger",
+            "simcKey": "invoke_xuen_the_white_tiger"
+          }
+        ]
+      },
+      {
+        "nodeId": 101244,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125063,
+            "displayName": "Vigilant Watch",
+            "simcKey": "vigilant_watch"
+          }
+        ]
+      },
+      {
+        "nodeId": 101245,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125064,
+            "displayName": "Predictive Training",
+            "simcKey": "predictive_training"
+          },
+          {
+            "entryId": 125065,
+            "displayName": "Whirling Steel",
+            "simcKey": "whirling_steel"
+          }
+        ]
+      },
+      {
+        "nodeId": 101246,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125066,
+            "displayName": "Martial Precision",
+            "simcKey": "martial_precision"
+          }
+        ]
+      },
+      {
+        "nodeId": 101247,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125067,
+            "displayName": "High Impact",
+            "simcKey": "high_impact"
+          },
+          {
+            "entryId": 125068,
+            "displayName": "Pride of Pandaria",
+            "simcKey": "pride_of_pandaria"
+          }
+        ]
+      },
+      {
+        "nodeId": 101248,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125069,
+            "displayName": "Flurry Strikes",
+            "simcKey": "flurry_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 101249,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125070,
+            "displayName": "Veteran's Eye",
+            "simcKey": "veterans_eye"
+          }
+        ]
+      },
+      {
+        "nodeId": 101250,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125071,
+            "displayName": "One Versus Many",
+            "simcKey": "one_versus_many"
+          }
+        ]
+      },
+      {
+        "nodeId": 101251,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125072,
+            "displayName": "Efficient Training",
+            "simcKey": "efficient_training"
+          }
+        ]
+      },
+      {
+        "nodeId": 101252,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125073,
+            "displayName": "Wisdom of the Wall",
+            "simcKey": "wisdom_of_the_wall"
+          }
+        ]
+      },
+      {
+        "nodeId": 101253,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125074,
+            "displayName": "Against All Odds",
+            "simcKey": "against_all_odds"
+          }
+        ]
+      },
+      {
+        "nodeId": 101254,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125075,
+            "displayName": "Initiator's Edge",
+            "simcKey": "initiators_edge"
+          },
+          {
+            "entryId": 125076,
+            "displayName": "Combat Stance",
+            "simcKey": "combat_stance"
+          }
+        ]
+      },
+      {
+        "nodeId": 101710,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125611,
+            "displayName": "One With the Wind",
+            "simcKey": "one_with_the_wind"
+          }
+        ]
+      },
+      {
+        "nodeId": 101711,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125002,
+            "displayName": "Empty the Cellar",
+            "simcKey": "empty_the_cellar"
+          }
+        ]
+      },
+      {
+        "nodeId": 102004,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 124859,
+            "displayName": "Gai Plin's Imperial Brew",
+            "simcKey": "gai_plins_imperial_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 102250,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 126307,
+            "displayName": "Slicing Winds",
+            "simcKey": "slicing_winds"
+          }
+        ]
+      },
+      {
+        "nodeId": 102432,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 126500,
+            "displayName": "Chi Wave",
+            "simcKey": "chi_wave"
+          }
+        ]
+      },
+      {
+        "nodeId": 102433,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 126501,
+            "displayName": "Chi Burst",
+            "simcKey": "chi_burst"
+          },
+          {
+            "entryId": 126502,
+            "displayName": "Chi Wave",
+            "simcKey": "chi_wave"
+          }
+        ]
+      },
+      {
+        "nodeId": 104128,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 128711,
+            "displayName": "Skyfire Heel",
+            "simcKey": "skyfire_heel"
+          }
+        ]
+      },
+      {
+        "nodeId": 104129,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 128712,
+            "displayName": "Harmonic Combo",
+            "simcKey": "harmonic_combo"
+          }
+        ]
+      },
+      {
+        "nodeId": 108540,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 134029,
+            "displayName": "Diffuse Magic",
+            "simcKey": "diffuse_magic"
+          }
+        ]
+      },
+      {
+        "nodeId": 108946,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 134543,
+            "displayName": "Rushing Wind Kick",
+            "simcKey": "rushing_wind_kick"
+          }
+        ]
+      },
+      {
+        "nodeId": 109516,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 137071,
+            "displayName": "Spiritfont",
+            "simcKey": "spiritfont"
+          }
+        ]
+      },
+      {
+        "nodeId": 109694,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135952,
+            "displayName": "Harmonic Surge",
+            "simcKey": "harmonic_surge"
+          }
+        ]
+      },
+      {
+        "nodeId": 109695,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135953,
+            "displayName": "Potential Energy",
+            "simcKey": "potential_energy"
+          }
+        ]
+      },
+      {
+        "nodeId": 109696,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135954,
+            "displayName": "Meditative Focus",
+            "simcKey": "meditative_focus"
+          }
+        ]
+      },
+      {
+        "nodeId": 109697,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135955,
+            "displayName": "Shado Over the Battlefield",
+            "simcKey": "shado_over_the_battlefield"
+          }
+        ]
+      },
+      {
+        "nodeId": 109698,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135956,
+            "displayName": "Stand Ready",
+            "simcKey": "stand_ready"
+          }
+        ]
+      },
+      {
+        "nodeId": 109699,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135957,
+            "displayName": "Weapons of the Wall",
+            "simcKey": "weapons_of_the_wall"
+          }
+        ]
+      },
+      {
+        "nodeId": 109700,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135958,
+            "displayName": "Flowing Wisdom",
+            "simcKey": "flowing_wisdom"
+          }
+        ]
+      },
+      {
+        "nodeId": 109701,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135959,
+            "displayName": "Heart of the Jade Serpent",
+            "simcKey": "heart_of_the_jade_serpent"
+          }
+        ]
+      },
+      {
+        "nodeId": 109826,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136085,
+            "displayName": "Fast Feet",
+            "simcKey": "fast_feet"
+          }
+        ]
+      },
+      {
+        "nodeId": 109827,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136086,
+            "displayName": "Stagger",
+            "simcKey": "stagger"
+          }
+        ]
+      },
+      {
+        "nodeId": 109882,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136145,
+            "displayName": "Elusive Footwork",
+            "simcKey": "elusive_footwork"
+          }
+        ]
+      },
+      {
+        "nodeId": 109883,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136147,
+            "displayName": "August Blessing",
+            "simcKey": "august_blessing"
+          }
+        ]
+      },
+      {
+        "nodeId": 109910,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136177,
+            "displayName": "Heart of the Ox",
+            "simcKey": "heart_of_the_ox"
+          }
+        ]
+      },
+      {
+        "nodeId": 110019,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136510,
+            "displayName": "Mist Caller",
+            "simcKey": "mist_caller"
+          }
+        ]
+      },
+      {
+        "nodeId": 110020,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136511,
+            "displayName": "Vigorous Expulsion",
+            "simcKey": "vigorous_expulsion"
+          }
+        ]
+      },
+      {
+        "nodeId": 110021,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136512,
+            "displayName": "Vital Clarity",
+            "simcKey": "vital_clarity"
+          }
+        ]
+      },
+      {
+        "nodeId": 110022,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136513,
+            "displayName": "Profound Rebuttal",
+            "simcKey": "profound_rebuttal"
+          },
+          {
+            "entryId": 136514,
+            "displayName": "Strength of Spirit",
+            "simcKey": "strength_of_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 110023,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136515,
+            "displayName": "Vivacious Vivification",
+            "simcKey": "vivacious_vivification"
+          }
+        ]
+      },
+      {
+        "nodeId": 110024,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136517,
+            "displayName": "Silent Sanctuary",
+            "simcKey": "silent_sanctuary"
+          }
+        ]
+      },
+      {
+        "nodeId": 110025,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136518,
+            "displayName": "Stillstep Coil",
+            "simcKey": "stillstep_coil"
+          }
+        ]
+      },
+      {
+        "nodeId": 110026,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136516,
+            "displayName": "Serene Surge",
+            "simcKey": "serene_surge"
+          },
+          {
+            "entryId": 136519,
+            "displayName": "Vivacious Vivification",
+            "simcKey": "vivacious_vivification"
+          }
+        ]
+      },
+      {
+        "nodeId": 110027,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136520,
+            "displayName": "Reinvigoration",
+            "simcKey": "reinvigoration"
+          }
+        ]
+      },
+      {
+        "nodeId": 110067,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136562,
+            "displayName": "Celestial Conduit",
+            "simcKey": "celestial_conduit"
+          }
+        ]
+      },
+      {
+        "nodeId": 110095,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136596,
+            "displayName": "Energy Transfer",
+            "simcKey": "energy_transfer"
+          }
+        ]
+      },
+      {
+        "nodeId": 110097,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136598,
+            "displayName": "Chi Warding",
+            "simcKey": "chi_warding"
+          }
+        ]
+      },
+      {
+        "nodeId": 110098,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136599,
+            "displayName": "Spear Hand Strike",
+            "simcKey": "spear_hand_strike"
+          }
+        ]
+      },
+      {
+        "nodeId": 110211,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136747,
+            "displayName": "Strength of the Black Ox",
+            "simcKey": "strength_of_the_black_ox"
+          }
+        ]
+      },
+      {
+        "nodeId": 110218,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136754,
+            "displayName": "Yu'lon's Avatar",
+            "simcKey": "yulons_avatar"
+          }
+        ]
+      },
+      {
+        "nodeId": 110220,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136745,
+            "displayName": "Celestial Conduit",
+            "simcKey": "celestial_conduit"
+          }
+        ]
+      },
+      {
+        "nodeId": 110221,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136744,
+            "displayName": "Xuen's Bond",
+            "simcKey": "xuens_bond"
+          },
+          {
+            "entryId": 136760,
+            "displayName": "Restore Balance",
+            "simcKey": "restore_balance"
+          }
+        ]
+      },
+      {
+        "nodeId": 110435,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 137073,
+            "displayName": "Bring Me Another",
+            "simcKey": "bring_me_another"
+          }
+        ]
+      },
+      {
+        "nodeId": 110436,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 137078,
+            "displayName": "Tigereye Brew",
+            "simcKey": "tigereye_brew"
+          }
+        ]
+      }
+    ]
+  }
+}

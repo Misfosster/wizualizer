@@ -17,6 +17,13 @@ export interface SemanticCatalog {
   byClassSpec: Readonly<Record<string, SemanticSpecCatalog>>;
 }
 
+export interface SemanticSpecCatalogModule {
+  v: number;
+  gameVersion: string;
+  classSpec: string;
+  catalog: SemanticSpecCatalog;
+}
+
 export interface SemanticCatalogLookupResult {
   status: "loaded" | "loading" | "unknown-class" | "unsupported-spec";
   catalog?: SemanticSpecCatalog;

@@ -1,0 +1,4032 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "classSpec": "rogue/assassination",
+  "catalog": {
+    "classId": 4,
+    "specId": 259,
+    "treeHash": "",
+    "classNodes": [
+      {
+        "talentId": 112630,
+        "displayName": "Shiv",
+        "simcKey": "shiv",
+        "maxRank": 1,
+        "row": 1,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112572,
+        "displayName": "Blind",
+        "simcKey": "blind",
+        "maxRank": 1,
+        "row": 1,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112585,
+        "displayName": "Cloak of Shadows",
+        "simcKey": "cloak_of_shadows",
+        "maxRank": 1,
+        "row": 1,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136883,
+        "displayName": "Toxic Stiletto",
+        "simcKey": "toxic_stiletto",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112657,
+        "displayName": "Fleet Footed",
+        "simcKey": "fleet_footed",
+        "maxRank": 1,
+        "row": 2,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117740,
+        "displayName": "Airborne Irritant",
+        "simcKey": "airborne_irritant",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 117740,
+            "displayName": "Airborne Irritant",
+            "simcKey": "airborne_irritant"
+          },
+          {
+            "talentId": 112631,
+            "displayName": "Gouge",
+            "simcKey": "gouge"
+          }
+        ]
+      },
+      {
+        "talentId": 112583,
+        "displayName": "Thrill Seeking",
+        "simcKey": "thrill_seeking",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136882,
+        "displayName": "Shadowrunner",
+        "simcKey": "shadowrunner",
+        "maxRank": 1,
+        "row": 2,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112521,
+        "displayName": "Master Poisoner",
+        "simcKey": "master_poisoner",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 114737,
+        "displayName": "Cheat Death",
+        "simcKey": "cheat_death",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 114737,
+            "displayName": "Cheat Death",
+            "simcKey": "cheat_death"
+          },
+          {
+            "talentId": 112632,
+            "displayName": "Elusiveness",
+            "simcKey": "elusiveness"
+          }
+        ]
+      },
+      {
+        "talentId": 117143,
+        "displayName": "Blackjack",
+        "simcKey": "blackjack",
+        "maxRank": 1,
+        "row": 3,
+        "col": 6,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 117143,
+            "displayName": "Blackjack",
+            "simcKey": "blackjack"
+          },
+          {
+            "talentId": 112574,
+            "displayName": "Tricks of the Trade",
+            "simcKey": "tricks_of_the_trade"
+          }
+        ]
+      },
+      {
+        "talentId": 112522,
+        "displayName": "Improved Wound Poison",
+        "simcKey": "improved_wound_poison",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112635,
+        "displayName": "Nimble Fingers",
+        "simcKey": "nimble_fingers",
+        "maxRank": 1,
+        "row": 4,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136881,
+        "displayName": "Deadened Nerves",
+        "simcKey": "deadened_nerves",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112636,
+        "displayName": "Quick Fingers",
+        "simcKey": "quick_fingers",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112575,
+        "displayName": "Improved Sprint",
+        "simcKey": "improved_sprint",
+        "maxRank": 1,
+        "row": 4,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117151,
+        "displayName": "Superior Mixture",
+        "simcKey": "superior_mixture",
+        "maxRank": 1,
+        "row": 5,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112654,
+        "displayName": "Evasion",
+        "simcKey": "evasion",
+        "maxRank": 1,
+        "row": 5,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112634,
+        "displayName": "Iron Stomach",
+        "simcKey": "iron_stomach",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112638,
+        "displayName": "Virulent Poisons",
+        "simcKey": "virulent_poisons",
+        "maxRank": 1,
+        "row": 5,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117146,
+        "displayName": "Stillshroud",
+        "simcKey": "stillshroud",
+        "maxRank": 1,
+        "row": 5,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112646,
+        "displayName": "Graceful Guile",
+        "simcKey": "graceful_guile",
+        "maxRank": 1,
+        "row": 5,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125615,
+        "displayName": "Featherfoot",
+        "simcKey": "featherfoot",
+        "maxRank": 1,
+        "row": 5,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112655,
+        "displayName": "Atrophic Poison",
+        "simcKey": "atrophic_poison",
+        "maxRank": 1,
+        "row": 6,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 112655,
+            "displayName": "Atrophic Poison",
+            "simcKey": "atrophic_poison"
+          },
+          {
+            "talentId": 112656,
+            "displayName": "Numbing Poison",
+            "simcKey": "numbing_poison"
+          }
+        ]
+      },
+      {
+        "talentId": 112633,
+        "displayName": "Deadly Precision",
+        "simcKey": "deadly_precision",
+        "maxRank": 1,
+        "row": 6,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117145,
+        "displayName": "Deep Cuts",
+        "simcKey": "deep_cuts",
+        "maxRank": 1,
+        "row": 6,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117144,
+        "displayName": "Unbreakable Stride",
+        "simcKey": "unbreakable_stride",
+        "maxRank": 1,
+        "row": 6,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112652,
+        "displayName": "Danger Sense",
+        "simcKey": "danger_sense",
+        "maxRank": 1,
+        "row": 7,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112644,
+        "displayName": "Swift Slasher",
+        "simcKey": "swift_slasher",
+        "maxRank": 1,
+        "row": 7,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117152,
+        "displayName": "Tight Spender",
+        "simcKey": "tight_spender",
+        "maxRank": 1,
+        "row": 7,
+        "col": 6,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 117152,
+            "displayName": "Tight Spender",
+            "simcKey": "tight_spender"
+          },
+          {
+            "talentId": 112580,
+            "displayName": "Improved Ambush",
+            "simcKey": "improved_ambush"
+          }
+        ]
+      },
+      {
+        "talentId": 112650,
+        "displayName": "Leeching Poison",
+        "simcKey": "leeching_poison",
+        "maxRank": 1,
+        "row": 8,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112640,
+        "displayName": "Lethality",
+        "simcKey": "lethality",
+        "maxRank": 2,
+        "row": 8,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112526,
+        "displayName": "Recuperator",
+        "simcKey": "recuperator",
+        "maxRank": 1,
+        "row": 8,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112643,
+        "displayName": "Alacrity",
+        "simcKey": "alacrity",
+        "maxRank": 2,
+        "row": 8,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112579,
+        "displayName": "Soothing Darkness",
+        "simcKey": "soothing_darkness",
+        "maxRank": 1,
+        "row": 8,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112651,
+        "displayName": "Vigor",
+        "simcKey": "vigor",
+        "maxRank": 2,
+        "row": 9,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112525,
+        "displayName": "Supercharger",
+        "simcKey": "supercharger",
+        "maxRank": 2,
+        "row": 9,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112576,
+        "displayName": "Subterfuge",
+        "simcKey": "subterfuge",
+        "maxRank": 2,
+        "row": 9,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112648,
+        "displayName": "Thistle Tea",
+        "simcKey": "thistle_tea",
+        "maxRank": 1,
+        "row": 10,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112639,
+        "displayName": "Cold Blooded Killer",
+        "simcKey": "cold_blooded_killer",
+        "maxRank": 1,
+        "row": 10,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112523,
+        "displayName": "Forced Induction",
+        "simcKey": "forced_induction",
+        "maxRank": 1,
+        "row": 10,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 112523,
+            "displayName": "Forced Induction",
+            "simcKey": "forced_induction"
+          },
+          {
+            "talentId": 112524,
+            "displayName": "Echoing Reprimand",
+            "simcKey": "echoing_reprimand"
+          }
+        ]
+      },
+      {
+        "talentId": 112642,
+        "displayName": "Deeper Stratagem",
+        "simcKey": "deeper_stratagem",
+        "maxRank": 1,
+        "row": 10,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125614,
+        "displayName": "Without a Trace",
+        "simcKey": "without_a_trace",
+        "maxRank": 1,
+        "row": 10,
+        "col": 6,
+        "nodeType": "normal"
+      }
+    ],
+    "specNodes": [
+      {
+        "talentId": 112676,
+        "displayName": "Deadly Poison",
+        "simcKey": "deadly_poison",
+        "maxRank": 1,
+        "row": 1,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112513,
+        "displayName": "Motivated Murderer",
+        "simcKey": "motivated_murderer",
+        "maxRank": 1,
+        "row": 2,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112520,
+        "displayName": "Improved Poisons",
+        "simcKey": "improved_poisons",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117106,
+        "displayName": "Path of Blood",
+        "simcKey": "path_of_blood",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117139,
+        "displayName": "Crimson Tempest",
+        "simcKey": "crimson_tempest",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 134840,
+        "displayName": "Internal Bleeding",
+        "simcKey": "internal_bleeding",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 134840,
+            "displayName": "Internal Bleeding",
+            "simcKey": "internal_bleeding"
+          },
+          {
+            "talentId": 112519,
+            "displayName": "Canny Strikes",
+            "simcKey": "canny_strikes"
+          }
+        ]
+      },
+      {
+        "talentId": 112510,
+        "displayName": "Improved Garrote",
+        "simcKey": "improved_garrote",
+        "maxRank": 1,
+        "row": 3,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112515,
+        "displayName": "Thrown Precision",
+        "simcKey": "thrown_precision",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112649,
+        "displayName": "Seal Fate",
+        "simcKey": "seal_fate",
+        "maxRank": 1,
+        "row": 4,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117137,
+        "displayName": "Doomblade",
+        "simcKey": "doomblade",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112673,
+        "displayName": "Razor Wire",
+        "simcKey": "razor_wire",
+        "maxRank": 1,
+        "row": 4,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112518,
+        "displayName": "Bloody Mess",
+        "simcKey": "bloody_mess",
+        "maxRank": 1,
+        "row": 5,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112662,
+        "displayName": "Deathmark",
+        "simcKey": "deathmark",
+        "maxRank": 1,
+        "row": 5,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112672,
+        "displayName": "Caustic Spatter",
+        "simcKey": "caustic_spatter",
+        "maxRank": 1,
+        "row": 5,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117133,
+        "displayName": "Sanguine Stratagem",
+        "simcKey": "sanguine_stratagem",
+        "maxRank": 1,
+        "row": 6,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 134838,
+        "displayName": "Iron Wire",
+        "simcKey": "iron_wire",
+        "maxRank": 1,
+        "row": 6,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 134838,
+            "displayName": "Iron Wire",
+            "simcKey": "iron_wire"
+          },
+          {
+            "talentId": 134839,
+            "displayName": "Intent to Kill",
+            "simcKey": "intent_to_kill"
+          }
+        ]
+      },
+      {
+        "talentId": 112665,
+        "displayName": "Fatal Concoction",
+        "simcKey": "fatal_concoction",
+        "maxRank": 2,
+        "row": 6,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112511,
+        "displayName": "Finish the Job",
+        "simcKey": "finish_the_job",
+        "maxRank": 1,
+        "row": 6,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112509,
+        "displayName": "Lethal Dose",
+        "simcKey": "lethal_dose",
+        "maxRank": 2,
+        "row": 6,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 134836,
+        "displayName": "Secondary Poisoning",
+        "simcKey": "secondary_poisoning",
+        "maxRank": 1,
+        "row": 6,
+        "col": 6,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 134836,
+            "displayName": "Secondary Poisoning",
+            "simcKey": "secondary_poisoning"
+          },
+          {
+            "talentId": 134837,
+            "displayName": "Flying Daggers",
+            "simcKey": "flying_daggers"
+          }
+        ]
+      },
+      {
+        "talentId": 117135,
+        "displayName": "Poison Bomb",
+        "simcKey": "poison_bomb",
+        "maxRank": 1,
+        "row": 6,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112664,
+        "displayName": "Systemic Failure",
+        "simcKey": "systemic_failure",
+        "maxRank": 1,
+        "row": 7,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112661,
+        "displayName": "Venomous Wounds",
+        "simcKey": "venomous_wounds",
+        "maxRank": 1,
+        "row": 7,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112670,
+        "displayName": "Amplifying Poison",
+        "simcKey": "amplifying_poison",
+        "maxRank": 1,
+        "row": 7,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112679,
+        "displayName": "Blindside",
+        "simcKey": "blindside",
+        "maxRank": 1,
+        "row": 8,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112663,
+        "displayName": "Kingsbane",
+        "simcKey": "kingsbane",
+        "maxRank": 1,
+        "row": 8,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112659,
+        "displayName": "Rapid Injection",
+        "simcKey": "rapid_injection",
+        "maxRank": 2,
+        "row": 8,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112669,
+        "displayName": "Shrouded Suffocation",
+        "simcKey": "shrouded_suffocation",
+        "maxRank": 1,
+        "row": 8,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112507,
+        "displayName": "Avulsion",
+        "simcKey": "avulsion",
+        "maxRank": 1,
+        "row": 8,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112678,
+        "displayName": "Zoldyck Recipe",
+        "simcKey": "zoldyck_recipe",
+        "maxRank": 2,
+        "row": 9,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117130,
+        "displayName": "Regicide's Reward",
+        "simcKey": "regicides_reward",
+        "maxRank": 1,
+        "row": 9,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 134835,
+        "displayName": "Poisoner's Drive",
+        "simcKey": "poisoners_drive",
+        "maxRank": 1,
+        "row": 9,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 134835,
+            "displayName": "Poisoner's Drive",
+            "simcKey": "poisoners_drive"
+          },
+          {
+            "talentId": 112660,
+            "displayName": "Inspiring Strike",
+            "simcKey": "inspiring_strike"
+          }
+        ]
+      },
+      {
+        "talentId": 112667,
+        "displayName": "Deadly Momentum",
+        "simcKey": "deadly_momentum",
+        "maxRank": 1,
+        "row": 9,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112668,
+        "displayName": "Scent of Blood",
+        "simcKey": "scent_of_blood",
+        "maxRank": 2,
+        "row": 9,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 112677,
+        "displayName": "Dashing Scoundrel",
+        "simcKey": "dashing_scoundrel",
+        "maxRank": 1,
+        "row": 10,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117131,
+        "displayName": "Dragon-Tempered Blades",
+        "simcKey": "dragon_tempered_blades",
+        "maxRank": 1,
+        "row": 10,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117129,
+        "displayName": "Sudden Demise",
+        "simcKey": "sudden_demise",
+        "maxRank": 1,
+        "row": 10,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 137065,
+        "displayName": "Implacable",
+        "simcKey": "implacable",
+        "maxRank": 4,
+        "row": 11,
+        "col": 4,
+        "nodeType": "normal"
+      }
+    ],
+    "heroNodes": [
+      {
+        "talentId": 117722,
+        "displayName": "Hand of Fate",
+        "simcKey": "hand_of_fate",
+        "maxRank": 1,
+        "row": 1,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117733,
+        "displayName": "Deathstalker's Mark",
+        "simcKey": "deathstalkers_mark",
+        "maxRank": 1,
+        "row": 1,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117707,
+        "displayName": "Clear the Witnesses",
+        "simcKey": "clear_the_witnesses",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125132,
+        "displayName": "Tempted Fate",
+        "simcKey": "tempted_fate",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125132,
+            "displayName": "Tempted Fate",
+            "simcKey": "tempted_fate"
+          },
+          {
+            "talentId": 117735,
+            "displayName": "Chosen's Revelry",
+            "simcKey": "chosens_revelry"
+          }
+        ]
+      },
+      {
+        "talentId": 117719,
+        "displayName": "Mean Streak",
+        "simcKey": "mean_streak",
+        "maxRank": 1,
+        "row": 2,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117729,
+        "displayName": "Hunt Them Down",
+        "simcKey": "hunt_them_down",
+        "maxRank": 1,
+        "row": 2,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117714,
+        "displayName": "Singular Focus",
+        "simcKey": "singular_focus",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125140,
+        "displayName": "Death's Arrival",
+        "simcKey": "deaths_arrival",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125140,
+            "displayName": "Death's Arrival",
+            "simcKey": "deaths_arrival"
+          },
+          {
+            "talentId": 117727,
+            "displayName": "Inexorable March",
+            "simcKey": "inexorable_march"
+          }
+        ]
+      },
+      {
+        "talentId": 136020,
+        "displayName": "Precise Killer",
+        "simcKey": "precise_killer",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136025,
+        "displayName": "Sometimes Lucky",
+        "simcKey": "sometimes_lucky",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117704,
+        "displayName": "Deal Fate",
+        "simcKey": "deal_fate",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117732,
+        "displayName": "Unshakeable Drive",
+        "simcKey": "unshakeable_drive",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117705,
+        "displayName": "Corrupt the Blood",
+        "simcKey": "corrupt_the_blood",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117736,
+        "displayName": "Fate Intertwined",
+        "simcKey": "fate_intertwined",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117717,
+        "displayName": "Edge Case",
+        "simcKey": "edge_case",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 126030,
+        "displayName": "Symbolic Victory",
+        "simcKey": "symbolic_victory",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 126030,
+            "displayName": "Symbolic Victory",
+            "simcKey": "symbolic_victory"
+          },
+          {
+            "talentId": 117706,
+            "displayName": "Lingering Darkness",
+            "simcKey": "lingering_darkness"
+          }
+        ]
+      },
+      {
+        "talentId": 136019,
+        "displayName": "Quietus Celeris",
+        "simcKey": "quietus_celeris",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136026,
+        "displayName": "Controlled Chaos",
+        "simcKey": "controlled_chaos",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117716,
+        "displayName": "Delivered Doom",
+        "simcKey": "delivered_doom",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 126029,
+        "displayName": "Bait and Switch",
+        "simcKey": "bait_and_switch",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 126029,
+            "displayName": "Bait and Switch",
+            "simcKey": "bait_and_switch"
+          },
+          {
+            "talentId": 117703,
+            "displayName": "Ethereal Cloak",
+            "simcKey": "ethereal_cloak"
+          }
+        ]
+      },
+      {
+        "talentId": 125139,
+        "displayName": "Destiny Defined",
+        "simcKey": "destiny_defined",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125139,
+            "displayName": "Destiny Defined",
+            "simcKey": "destiny_defined"
+          },
+          {
+            "talentId": 117711,
+            "displayName": "Overflowing Purse",
+            "simcKey": "overflowing_purse"
+          }
+        ]
+      },
+      {
+        "talentId": 126028,
+        "displayName": "Follow the Blood",
+        "simcKey": "follow_the_blood",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 126028,
+            "displayName": "Follow the Blood",
+            "simcKey": "follow_the_blood"
+          },
+          {
+            "talentId": 117728,
+            "displayName": "Momentum of Despair",
+            "simcKey": "momentum_of_despair"
+          }
+        ]
+      },
+      {
+        "talentId": 117726,
+        "displayName": "Rush to the Inevitable",
+        "simcKey": "rush_to_the_inevitable",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 126027,
+        "displayName": "Shroud of Night",
+        "simcKey": "shroud_of_night",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 126027,
+            "displayName": "Shroud of Night",
+            "simcKey": "shroud_of_night"
+          },
+          {
+            "talentId": 117720,
+            "displayName": "Shadewalker",
+            "simcKey": "shadewalker"
+          }
+        ]
+      },
+      {
+        "talentId": 136018,
+        "displayName": "Mass Casualty",
+        "simcKey": "mass_casualty",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136024,
+        "displayName": "Ravenholdt Mint",
+        "simcKey": "ravenholdt_mint",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117724,
+        "displayName": "Lucky Coin",
+        "simcKey": "lucky_coin",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117739,
+        "displayName": "Darkest Night",
+        "simcKey": "darkest_night",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      }
+    ],
+    "streamNodes": [
+      {
+        "nodeId": 90622,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112507,
+            "displayName": "Avulsion",
+            "simcKey": "avulsion"
+          }
+        ]
+      },
+      {
+        "nodeId": 90624,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112509,
+            "displayName": "Lethal Dose",
+            "simcKey": "lethal_dose"
+          }
+        ]
+      },
+      {
+        "nodeId": 90625,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112510,
+            "displayName": "Improved Garrote",
+            "simcKey": "improved_garrote"
+          }
+        ]
+      },
+      {
+        "nodeId": 90626,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112511,
+            "displayName": "Finish the Job",
+            "simcKey": "finish_the_job"
+          }
+        ]
+      },
+      {
+        "nodeId": 90628,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112513,
+            "displayName": "Motivated Murderer",
+            "simcKey": "motivated_murderer"
+          }
+        ]
+      },
+      {
+        "nodeId": 90630,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112515,
+            "displayName": "Thrown Precision",
+            "simcKey": "thrown_precision"
+          }
+        ]
+      },
+      {
+        "nodeId": 90633,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112518,
+            "displayName": "Bloody Mess",
+            "simcKey": "bloody_mess"
+          }
+        ]
+      },
+      {
+        "nodeId": 90634,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134840,
+            "displayName": "Internal Bleeding",
+            "simcKey": "internal_bleeding"
+          },
+          {
+            "entryId": 112519,
+            "displayName": "Canny Strikes",
+            "simcKey": "canny_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 90635,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112520,
+            "displayName": "Improved Poisons",
+            "simcKey": "improved_poisons"
+          }
+        ]
+      },
+      {
+        "nodeId": 90636,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112521,
+            "displayName": "Master Poisoner",
+            "simcKey": "master_poisoner"
+          }
+        ]
+      },
+      {
+        "nodeId": 90637,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112522,
+            "displayName": "Improved Wound Poison",
+            "simcKey": "improved_wound_poison"
+          }
+        ]
+      },
+      {
+        "nodeId": 90638,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 112523,
+            "displayName": "Forced Induction",
+            "simcKey": "forced_induction"
+          },
+          {
+            "entryId": 112524,
+            "displayName": "Echoing Reprimand",
+            "simcKey": "echoing_reprimand"
+          }
+        ]
+      },
+      {
+        "nodeId": 90639,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112525,
+            "displayName": "Supercharger",
+            "simcKey": "supercharger"
+          }
+        ]
+      },
+      {
+        "nodeId": 90640,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112526,
+            "displayName": "Recuperator",
+            "simcKey": "recuperator"
+          }
+        ]
+      },
+      {
+        "nodeId": 90641,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112527,
+            "displayName": "Audacity",
+            "simcKey": "audacity"
+          }
+        ]
+      },
+      {
+        "nodeId": 90643,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112529,
+            "displayName": "Deadly Pursuit",
+            "simcKey": "deadly_pursuit"
+          }
+        ]
+      },
+      {
+        "nodeId": 90644,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112530,
+            "displayName": "Fast Action",
+            "simcKey": "fast_action"
+          }
+        ]
+      },
+      {
+        "nodeId": 90645,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112531,
+            "displayName": "Expert Duelist",
+            "simcKey": "expert_duelist"
+          }
+        ]
+      },
+      {
+        "nodeId": 90647,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112533,
+            "displayName": "Deft Maneuvers",
+            "simcKey": "deft_maneuvers"
+          }
+        ]
+      },
+      {
+        "nodeId": 90648,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112534,
+            "displayName": "Combat Potency",
+            "simcKey": "combat_potency"
+          }
+        ]
+      },
+      {
+        "nodeId": 90649,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112535,
+            "displayName": "Blade Rush",
+            "simcKey": "blade_rush"
+          }
+        ]
+      },
+      {
+        "nodeId": 90651,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112537,
+            "displayName": "Sleight of Hand",
+            "simcKey": "sleight_of_hand"
+          }
+        ]
+      },
+      {
+        "nodeId": 90652,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112538,
+            "displayName": "Keep It Rolling",
+            "simcKey": "keep_it_rolling"
+          }
+        ]
+      },
+      {
+        "nodeId": 90653,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112539,
+            "displayName": "Dragon-Bone Dice",
+            "simcKey": "dragon_bone_dice"
+          }
+        ]
+      },
+      {
+        "nodeId": 90654,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112540,
+            "displayName": "Improved Adrenaline Rush",
+            "simcKey": "improved_adrenaline_rush"
+          }
+        ]
+      },
+      {
+        "nodeId": 90655,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135732,
+            "displayName": "Menacing Rush",
+            "simcKey": "menacing_rush"
+          },
+          {
+            "entryId": 112541,
+            "displayName": "Heightened Rush",
+            "simcKey": "heightened_rush"
+          }
+        ]
+      },
+      {
+        "nodeId": 90656,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112542,
+            "displayName": "Loaded Dice",
+            "simcKey": "loaded_dice"
+          }
+        ]
+      },
+      {
+        "nodeId": 90659,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112545,
+            "displayName": "Adrenaline Rush",
+            "simcKey": "adrenaline_rush"
+          }
+        ]
+      },
+      {
+        "nodeId": 90661,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112547,
+            "displayName": "Crescendo of Violence",
+            "simcKey": "crescendo_of_violence"
+          }
+        ]
+      },
+      {
+        "nodeId": 90662,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112548,
+            "displayName": "Fatal Flourish",
+            "simcKey": "fatal_flourish"
+          }
+        ]
+      },
+      {
+        "nodeId": 90663,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112549,
+            "displayName": "Quick Draw",
+            "simcKey": "quick_draw"
+          }
+        ]
+      },
+      {
+        "nodeId": 90664,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112551,
+            "displayName": "Acrobatic Strikes",
+            "simcKey": "acrobatic_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 90665,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112552,
+            "displayName": "Preparation",
+            "simcKey": "preparation"
+          }
+        ]
+      },
+      {
+        "nodeId": 90666,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112553,
+            "displayName": "Fan the Hammer",
+            "simcKey": "fan_the_hammer"
+          }
+        ]
+      },
+      {
+        "nodeId": 90667,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112554,
+            "displayName": "Grand Melee",
+            "simcKey": "grand_melee"
+          }
+        ]
+      },
+      {
+        "nodeId": 90668,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112555,
+            "displayName": "Ace Up Your Sleeve",
+            "simcKey": "ace_up_your_sleeve"
+          }
+        ]
+      },
+      {
+        "nodeId": 90669,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112556,
+            "displayName": "Dancing Steel",
+            "simcKey": "dancing_steel"
+          }
+        ]
+      },
+      {
+        "nodeId": 90670,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112557,
+            "displayName": "Zero In",
+            "simcKey": "zero_in"
+          }
+        ]
+      },
+      {
+        "nodeId": 90671,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135731,
+            "displayName": "Flickering Steel",
+            "simcKey": "flickering_steel"
+          },
+          {
+            "entryId": 112558,
+            "displayName": "Thief's Versatility",
+            "simcKey": "thiefs_versatility"
+          }
+        ]
+      },
+      {
+        "nodeId": 90673,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135733,
+            "displayName": "Blinding Powder",
+            "simcKey": "blinding_powder"
+          },
+          {
+            "entryId": 112560,
+            "displayName": "Retractable Hook",
+            "simcKey": "retractable_hook"
+          }
+        ]
+      },
+      {
+        "nodeId": 90675,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112562,
+            "displayName": "Hidden Opportunity",
+            "simcKey": "hidden_opportunity"
+          }
+        ]
+      },
+      {
+        "nodeId": 90676,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112563,
+            "displayName": "Summarily Dispatched",
+            "simcKey": "summarily_dispatched"
+          }
+        ]
+      },
+      {
+        "nodeId": 90677,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112565,
+            "displayName": "Find an Opening",
+            "simcKey": "find_an_opening"
+          }
+        ]
+      },
+      {
+        "nodeId": 90678,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112566,
+            "displayName": "Heavy Hitter",
+            "simcKey": "heavy_hitter"
+          }
+        ]
+      },
+      {
+        "nodeId": 90679,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112567,
+            "displayName": "Devious Stratagem",
+            "simcKey": "devious_stratagem"
+          }
+        ]
+      },
+      {
+        "nodeId": 90680,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112568,
+            "displayName": "Ruthlessness",
+            "simcKey": "ruthlessness"
+          }
+        ]
+      },
+      {
+        "nodeId": 90681,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135734,
+            "displayName": "Combat Stamina",
+            "simcKey": "combat_stamina"
+          },
+          {
+            "entryId": 112569,
+            "displayName": "Hit and Run",
+            "simcKey": "hit_and_run"
+          }
+        ]
+      },
+      {
+        "nodeId": 90683,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112571,
+            "displayName": "Opportunity",
+            "simcKey": "opportunity"
+          }
+        ]
+      },
+      {
+        "nodeId": 90684,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112572,
+            "displayName": "Blind",
+            "simcKey": "blind"
+          }
+        ]
+      },
+      {
+        "nodeId": 90686,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 117143,
+            "displayName": "Blackjack",
+            "simcKey": "blackjack"
+          },
+          {
+            "entryId": 112574,
+            "displayName": "Tricks of the Trade",
+            "simcKey": "tricks_of_the_trade"
+          }
+        ]
+      },
+      {
+        "nodeId": 90687,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112575,
+            "displayName": "Improved Sprint",
+            "simcKey": "improved_sprint"
+          }
+        ]
+      },
+      {
+        "nodeId": 90688,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112576,
+            "displayName": "Subterfuge",
+            "simcKey": "subterfuge"
+          }
+        ]
+      },
+      {
+        "nodeId": 90690,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112578,
+            "displayName": "Find Weakness",
+            "simcKey": "find_weakness"
+          }
+        ]
+      },
+      {
+        "nodeId": 90691,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112579,
+            "displayName": "Soothing Darkness",
+            "simcKey": "soothing_darkness"
+          }
+        ]
+      },
+      {
+        "nodeId": 90692,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 117152,
+            "displayName": "Tight Spender",
+            "simcKey": "tight_spender"
+          },
+          {
+            "entryId": 112580,
+            "displayName": "Improved Ambush",
+            "simcKey": "improved_ambush"
+          }
+        ]
+      },
+      {
+        "nodeId": 90695,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112583,
+            "displayName": "Thrill Seeking",
+            "simcKey": "thrill_seeking"
+          }
+        ]
+      },
+      {
+        "nodeId": 90697,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112585,
+            "displayName": "Cloak of Shadows",
+            "simcKey": "cloak_of_shadows"
+          }
+        ]
+      },
+      {
+        "nodeId": 90698,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112586,
+            "displayName": "Shrouded in Darkness",
+            "simcKey": "shrouded_in_darkness"
+          }
+        ]
+      },
+      {
+        "nodeId": 90699,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112587,
+            "displayName": "Gloomblade",
+            "simcKey": "gloomblade"
+          }
+        ]
+      },
+      {
+        "nodeId": 90700,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112588,
+            "displayName": "Premeditation",
+            "simcKey": "premeditation"
+          }
+        ]
+      },
+      {
+        "nodeId": 90701,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136807,
+            "displayName": "Exhilarating Execution",
+            "simcKey": "exhilarating_execution"
+          },
+          {
+            "entryId": 112589,
+            "displayName": "Shot in the Dark",
+            "simcKey": "shot_in_the_dark"
+          }
+        ]
+      },
+      {
+        "nodeId": 90703,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 117172,
+            "displayName": "Warning Signs",
+            "simcKey": "warning_signs"
+          },
+          {
+            "entryId": 112591,
+            "displayName": "Planned Execution",
+            "simcKey": "planned_execution"
+          }
+        ]
+      },
+      {
+        "nodeId": 90704,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112592,
+            "displayName": "Improved Find Weakness",
+            "simcKey": "improved_find_weakness"
+          }
+        ]
+      },
+      {
+        "nodeId": 90705,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112593,
+            "displayName": "The Rotten",
+            "simcKey": "the_rotten"
+          }
+        ]
+      },
+      {
+        "nodeId": 90706,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112594,
+            "displayName": "Death Perception",
+            "simcKey": "death_perception"
+          }
+        ]
+      },
+      {
+        "nodeId": 90707,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112595,
+            "displayName": "Perforated Veins",
+            "simcKey": "perforated_veins"
+          }
+        ]
+      },
+      {
+        "nodeId": 90709,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112597,
+            "displayName": "Relentless Strikes",
+            "simcKey": "relentless_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 90710,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112598,
+            "displayName": "Improved Shuriken Storm",
+            "simcKey": "improved_shuriken_storm"
+          }
+        ]
+      },
+      {
+        "nodeId": 90713,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112601,
+            "displayName": "Veiltouched",
+            "simcKey": "veiltouched"
+          }
+        ]
+      },
+      {
+        "nodeId": 90714,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136488,
+            "displayName": "Terrifying Pace",
+            "simcKey": "terrifying_pace"
+          },
+          {
+            "entryId": 112602,
+            "displayName": "Night Terrors",
+            "simcKey": "night_terrors"
+          }
+        ]
+      },
+      {
+        "nodeId": 90715,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112603,
+            "displayName": "Improved Secret Technique",
+            "simcKey": "improved_secret_technique"
+          }
+        ]
+      },
+      {
+        "nodeId": 90716,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112604,
+            "displayName": "Replicating Shadows",
+            "simcKey": "replicating_shadows"
+          }
+        ]
+      },
+      {
+        "nodeId": 90717,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112605,
+            "displayName": "Shuriken Tornado",
+            "simcKey": "shuriken_tornado"
+          }
+        ]
+      },
+      {
+        "nodeId": 90718,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112606,
+            "displayName": "Potent Powder",
+            "simcKey": "potent_powder"
+          }
+        ]
+      },
+      {
+        "nodeId": 90719,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112607,
+            "displayName": "Dark Brew",
+            "simcKey": "dark_brew"
+          }
+        ]
+      },
+      {
+        "nodeId": 90720,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112608,
+            "displayName": "Finality",
+            "simcKey": "finality"
+          }
+        ]
+      },
+      {
+        "nodeId": 90721,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112609,
+            "displayName": "Deeper Daggers",
+            "simcKey": "deeper_daggers"
+          }
+        ]
+      },
+      {
+        "nodeId": 90722,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112610,
+            "displayName": "Secret Stratagem",
+            "simcKey": "secret_stratagem"
+          }
+        ]
+      },
+      {
+        "nodeId": 90723,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112611,
+            "displayName": "Shadowed Finishers",
+            "simcKey": "shadowed_finishers"
+          }
+        ]
+      },
+      {
+        "nodeId": 90724,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112612,
+            "displayName": "Deepening Shadows",
+            "simcKey": "deepening_shadows"
+          }
+        ]
+      },
+      {
+        "nodeId": 90726,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112614,
+            "displayName": "Shadow Blades",
+            "simcKey": "shadow_blades"
+          }
+        ]
+      },
+      {
+        "nodeId": 90727,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112615,
+            "displayName": "Master of Shadows",
+            "simcKey": "master_of_shadows"
+          }
+        ]
+      },
+      {
+        "nodeId": 90728,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136808,
+            "displayName": "Ephemeral Bond",
+            "simcKey": "ephemeral_bond"
+          },
+          {
+            "entryId": 112616,
+            "displayName": "Quick Decisions",
+            "simcKey": "quick_decisions"
+          }
+        ]
+      },
+      {
+        "nodeId": 90730,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112618,
+            "displayName": "Danse Macabre",
+            "simcKey": "danse_macabre"
+          }
+        ]
+      },
+      {
+        "nodeId": 90731,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112619,
+            "displayName": "Lingering Shadow",
+            "simcKey": "lingering_shadow"
+          }
+        ]
+      },
+      {
+        "nodeId": 90732,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112620,
+            "displayName": "Dark Shadow",
+            "simcKey": "dark_shadow"
+          }
+        ]
+      },
+      {
+        "nodeId": 90733,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 112621,
+            "displayName": "Fade to Nothing",
+            "simcKey": "fade_to_nothing"
+          },
+          {
+            "entryId": 112622,
+            "displayName": "Cloaked in Shadows",
+            "simcKey": "cloaked_in_shadows"
+          }
+        ]
+      },
+      {
+        "nodeId": 90734,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112623,
+            "displayName": "Shadow Focus",
+            "simcKey": "shadow_focus"
+          }
+        ]
+      },
+      {
+        "nodeId": 90735,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112625,
+            "displayName": "The First Dance",
+            "simcKey": "the_first_dance"
+          }
+        ]
+      },
+      {
+        "nodeId": 90737,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112627,
+            "displayName": "Weaponmaster",
+            "simcKey": "weaponmaster"
+          }
+        ]
+      },
+      {
+        "nodeId": 90738,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112628,
+            "displayName": "Umbral Edge",
+            "simcKey": "umbral_edge"
+          }
+        ]
+      },
+      {
+        "nodeId": 90739,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112629,
+            "displayName": "Improved Backstab",
+            "simcKey": "improved_backstab"
+          }
+        ]
+      },
+      {
+        "nodeId": 90740,
+        "maxRank": 1,
+        "grantedRanks": 1,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112630,
+            "displayName": "Shiv",
+            "simcKey": "shiv"
+          }
+        ]
+      },
+      {
+        "nodeId": 90741,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 117740,
+            "displayName": "Airborne Irritant",
+            "simcKey": "airborne_irritant"
+          },
+          {
+            "entryId": 112631,
+            "displayName": "Gouge",
+            "simcKey": "gouge"
+          }
+        ]
+      },
+      {
+        "nodeId": 90742,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 114737,
+            "displayName": "Cheat Death",
+            "simcKey": "cheat_death"
+          },
+          {
+            "entryId": 112632,
+            "displayName": "Elusiveness",
+            "simcKey": "elusiveness"
+          }
+        ]
+      },
+      {
+        "nodeId": 90743,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112633,
+            "displayName": "Deadly Precision",
+            "simcKey": "deadly_precision"
+          }
+        ]
+      },
+      {
+        "nodeId": 90744,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112634,
+            "displayName": "Iron Stomach",
+            "simcKey": "iron_stomach"
+          }
+        ]
+      },
+      {
+        "nodeId": 90745,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112635,
+            "displayName": "Nimble Fingers",
+            "simcKey": "nimble_fingers"
+          }
+        ]
+      },
+      {
+        "nodeId": 90746,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112636,
+            "displayName": "Quick Fingers",
+            "simcKey": "quick_fingers"
+          }
+        ]
+      },
+      {
+        "nodeId": 90747,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112638,
+            "displayName": "Virulent Poisons",
+            "simcKey": "virulent_poisons"
+          }
+        ]
+      },
+      {
+        "nodeId": 90748,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112639,
+            "displayName": "Cold Blooded Killer",
+            "simcKey": "cold_blooded_killer"
+          }
+        ]
+      },
+      {
+        "nodeId": 90749,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112640,
+            "displayName": "Lethality",
+            "simcKey": "lethality"
+          }
+        ]
+      },
+      {
+        "nodeId": 90750,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112642,
+            "displayName": "Deeper Stratagem",
+            "simcKey": "deeper_stratagem"
+          }
+        ]
+      },
+      {
+        "nodeId": 90751,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112643,
+            "displayName": "Alacrity",
+            "simcKey": "alacrity"
+          }
+        ]
+      },
+      {
+        "nodeId": 90752,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112644,
+            "displayName": "Swift Slasher",
+            "simcKey": "swift_slasher"
+          }
+        ]
+      },
+      {
+        "nodeId": 90753,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112645,
+            "displayName": "Improved Between the Eyes",
+            "simcKey": "improved_between_the_eyes"
+          }
+        ]
+      },
+      {
+        "nodeId": 90754,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112646,
+            "displayName": "Graceful Guile",
+            "simcKey": "graceful_guile"
+          }
+        ]
+      },
+      {
+        "nodeId": 90755,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112647,
+            "displayName": "Precision Shot",
+            "simcKey": "precision_shot"
+          }
+        ]
+      },
+      {
+        "nodeId": 90756,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112648,
+            "displayName": "Thistle Tea",
+            "simcKey": "thistle_tea"
+          }
+        ]
+      },
+      {
+        "nodeId": 90757,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112649,
+            "displayName": "Seal Fate",
+            "simcKey": "seal_fate"
+          }
+        ]
+      },
+      {
+        "nodeId": 90758,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112650,
+            "displayName": "Leeching Poison",
+            "simcKey": "leeching_poison"
+          }
+        ]
+      },
+      {
+        "nodeId": 90759,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112651,
+            "displayName": "Vigor",
+            "simcKey": "vigor"
+          }
+        ]
+      },
+      {
+        "nodeId": 90760,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112652,
+            "displayName": "Danger Sense",
+            "simcKey": "danger_sense"
+          }
+        ]
+      },
+      {
+        "nodeId": 90762,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112654,
+            "displayName": "Evasion",
+            "simcKey": "evasion"
+          }
+        ]
+      },
+      {
+        "nodeId": 90763,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 112655,
+            "displayName": "Atrophic Poison",
+            "simcKey": "atrophic_poison"
+          },
+          {
+            "entryId": 112656,
+            "displayName": "Numbing Poison",
+            "simcKey": "numbing_poison"
+          }
+        ]
+      },
+      {
+        "nodeId": 90764,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112657,
+            "displayName": "Fleet Footed",
+            "simcKey": "fleet_footed"
+          }
+        ]
+      },
+      {
+        "nodeId": 90766,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112659,
+            "displayName": "Rapid Injection",
+            "simcKey": "rapid_injection"
+          }
+        ]
+      },
+      {
+        "nodeId": 90767,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134835,
+            "displayName": "Poisoner's Drive",
+            "simcKey": "poisoners_drive"
+          },
+          {
+            "entryId": 112660,
+            "displayName": "Inspiring Strike",
+            "simcKey": "inspiring_strike"
+          }
+        ]
+      },
+      {
+        "nodeId": 90768,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112661,
+            "displayName": "Venomous Wounds",
+            "simcKey": "venomous_wounds"
+          }
+        ]
+      },
+      {
+        "nodeId": 90769,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112662,
+            "displayName": "Deathmark",
+            "simcKey": "deathmark"
+          }
+        ]
+      },
+      {
+        "nodeId": 90770,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112663,
+            "displayName": "Kingsbane",
+            "simcKey": "kingsbane"
+          }
+        ]
+      },
+      {
+        "nodeId": 90771,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112664,
+            "displayName": "Systemic Failure",
+            "simcKey": "systemic_failure"
+          }
+        ]
+      },
+      {
+        "nodeId": 90772,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112665,
+            "displayName": "Fatal Concoction",
+            "simcKey": "fatal_concoction"
+          }
+        ]
+      },
+      {
+        "nodeId": 90774,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112667,
+            "displayName": "Deadly Momentum",
+            "simcKey": "deadly_momentum"
+          }
+        ]
+      },
+      {
+        "nodeId": 90775,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112668,
+            "displayName": "Scent of Blood",
+            "simcKey": "scent_of_blood"
+          }
+        ]
+      },
+      {
+        "nodeId": 90776,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112669,
+            "displayName": "Shrouded Suffocation",
+            "simcKey": "shrouded_suffocation"
+          }
+        ]
+      },
+      {
+        "nodeId": 90777,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112670,
+            "displayName": "Amplifying Poison",
+            "simcKey": "amplifying_poison"
+          }
+        ]
+      },
+      {
+        "nodeId": 90779,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112672,
+            "displayName": "Caustic Spatter",
+            "simcKey": "caustic_spatter"
+          }
+        ]
+      },
+      {
+        "nodeId": 90780,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112673,
+            "displayName": "Razor Wire",
+            "simcKey": "razor_wire"
+          }
+        ]
+      },
+      {
+        "nodeId": 90783,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112676,
+            "displayName": "Deadly Poison",
+            "simcKey": "deadly_poison"
+          }
+        ]
+      },
+      {
+        "nodeId": 90784,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112677,
+            "displayName": "Dashing Scoundrel",
+            "simcKey": "dashing_scoundrel"
+          }
+        ]
+      },
+      {
+        "nodeId": 90785,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112678,
+            "displayName": "Zoldyck Recipe",
+            "simcKey": "zoldyck_recipe"
+          }
+        ]
+      },
+      {
+        "nodeId": 90786,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 112679,
+            "displayName": "Blindside",
+            "simcKey": "blindside"
+          }
+        ]
+      },
+      {
+        "nodeId": 94536,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117106,
+            "displayName": "Path of Blood",
+            "simcKey": "path_of_blood"
+          }
+        ]
+      },
+      {
+        "nodeId": 94551,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117129,
+            "displayName": "Sudden Demise",
+            "simcKey": "sudden_demise"
+          }
+        ]
+      },
+      {
+        "nodeId": 94552,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117130,
+            "displayName": "Regicide's Reward",
+            "simcKey": "regicides_reward"
+          }
+        ]
+      },
+      {
+        "nodeId": 94553,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117131,
+            "displayName": "Dragon-Tempered Blades",
+            "simcKey": "dragon_tempered_blades"
+          }
+        ]
+      },
+      {
+        "nodeId": 94554,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117133,
+            "displayName": "Sanguine Stratagem",
+            "simcKey": "sanguine_stratagem"
+          }
+        ]
+      },
+      {
+        "nodeId": 94555,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117135,
+            "displayName": "Poison Bomb",
+            "simcKey": "poison_bomb"
+          }
+        ]
+      },
+      {
+        "nodeId": 94556,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117137,
+            "displayName": "Doomblade",
+            "simcKey": "doomblade"
+          }
+        ]
+      },
+      {
+        "nodeId": 94557,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117139,
+            "displayName": "Crimson Tempest",
+            "simcKey": "crimson_tempest"
+          }
+        ]
+      },
+      {
+        "nodeId": 94561,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117144,
+            "displayName": "Unbreakable Stride",
+            "simcKey": "unbreakable_stride"
+          }
+        ]
+      },
+      {
+        "nodeId": 94562,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117145,
+            "displayName": "Deep Cuts",
+            "simcKey": "deep_cuts"
+          }
+        ]
+      },
+      {
+        "nodeId": 94563,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117146,
+            "displayName": "Stillshroud",
+            "simcKey": "stillshroud"
+          }
+        ]
+      },
+      {
+        "nodeId": 94565,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117148,
+            "displayName": "Killing Spree",
+            "simcKey": "killing_spree"
+          }
+        ]
+      },
+      {
+        "nodeId": 94567,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117151,
+            "displayName": "Superior Mixture",
+            "simcKey": "superior_mixture"
+          }
+        ]
+      },
+      {
+        "nodeId": 94580,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117168,
+            "displayName": "Shadowcraft",
+            "simcKey": "shadowcraft"
+          }
+        ]
+      },
+      {
+        "nodeId": 94581,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117169,
+            "displayName": "Goremaw's Bite",
+            "simcKey": "goremaws_bite"
+          }
+        ]
+      },
+      {
+        "nodeId": 94582,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117170,
+            "displayName": "Silent Storm",
+            "simcKey": "silent_storm"
+          }
+        ]
+      },
+      {
+        "nodeId": 95106,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 126029,
+            "displayName": "Bait and Switch",
+            "simcKey": "bait_and_switch"
+          },
+          {
+            "entryId": 117703,
+            "displayName": "Ethereal Cloak",
+            "simcKey": "ethereal_cloak"
+          }
+        ]
+      },
+      {
+        "nodeId": 95107,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117704,
+            "displayName": "Deal Fate",
+            "simcKey": "deal_fate"
+          }
+        ]
+      },
+      {
+        "nodeId": 95108,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117705,
+            "displayName": "Corrupt the Blood",
+            "simcKey": "corrupt_the_blood"
+          }
+        ]
+      },
+      {
+        "nodeId": 95109,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 126030,
+            "displayName": "Symbolic Victory",
+            "simcKey": "symbolic_victory"
+          },
+          {
+            "entryId": 117706,
+            "displayName": "Lingering Darkness",
+            "simcKey": "lingering_darkness"
+          }
+        ]
+      },
+      {
+        "nodeId": 95110,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117707,
+            "displayName": "Clear the Witnesses",
+            "simcKey": "clear_the_witnesses"
+          }
+        ]
+      },
+      {
+        "nodeId": 95111,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117708,
+            "displayName": "Flawless Form",
+            "simcKey": "flawless_form"
+          }
+        ]
+      },
+      {
+        "nodeId": 95114,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125139,
+            "displayName": "Destiny Defined",
+            "simcKey": "destiny_defined"
+          },
+          {
+            "entryId": 117711,
+            "displayName": "Overflowing Purse",
+            "simcKey": "overflowing_purse"
+          }
+        ]
+      },
+      {
+        "nodeId": 95115,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117712,
+            "displayName": "Coup de Grace",
+            "simcKey": "coup_de_grace"
+          }
+        ]
+      },
+      {
+        "nodeId": 95116,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 120132,
+            "displayName": "No Scruples",
+            "simcKey": "no_scruples"
+          },
+          {
+            "entryId": 117713,
+            "displayName": "Cloud Cover",
+            "simcKey": "cloud_cover"
+          }
+        ]
+      },
+      {
+        "nodeId": 95117,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117714,
+            "displayName": "Singular Focus",
+            "simcKey": "singular_focus"
+          }
+        ]
+      },
+      {
+        "nodeId": 95118,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117715,
+            "displayName": "Disorienting Strikes",
+            "simcKey": "disorienting_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 95119,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117716,
+            "displayName": "Delivered Doom",
+            "simcKey": "delivered_doom"
+          }
+        ]
+      },
+      {
+        "nodeId": 95120,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117717,
+            "displayName": "Edge Case",
+            "simcKey": "edge_case"
+          }
+        ]
+      },
+      {
+        "nodeId": 95121,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117718,
+            "displayName": "Surprising Strikes",
+            "simcKey": "surprising_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 95122,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117719,
+            "displayName": "Mean Streak",
+            "simcKey": "mean_streak"
+          }
+        ]
+      },
+      {
+        "nodeId": 95123,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 126027,
+            "displayName": "Shroud of Night",
+            "simcKey": "shroud_of_night"
+          },
+          {
+            "entryId": 117720,
+            "displayName": "Shadewalker",
+            "simcKey": "shadewalker"
+          }
+        ]
+      },
+      {
+        "nodeId": 95125,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117722,
+            "displayName": "Hand of Fate",
+            "simcKey": "hand_of_fate"
+          }
+        ]
+      },
+      {
+        "nodeId": 95127,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117724,
+            "displayName": "Lucky Coin",
+            "simcKey": "lucky_coin"
+          }
+        ]
+      },
+      {
+        "nodeId": 95128,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117725,
+            "displayName": "Nimble Flurry",
+            "simcKey": "nimble_flurry"
+          }
+        ]
+      },
+      {
+        "nodeId": 95129,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117726,
+            "displayName": "Rush to the Inevitable",
+            "simcKey": "rush_to_the_inevitable"
+          }
+        ]
+      },
+      {
+        "nodeId": 95130,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125140,
+            "displayName": "Death's Arrival",
+            "simcKey": "deaths_arrival"
+          },
+          {
+            "entryId": 117727,
+            "displayName": "Inexorable March",
+            "simcKey": "inexorable_march"
+          }
+        ]
+      },
+      {
+        "nodeId": 95131,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 126028,
+            "displayName": "Follow the Blood",
+            "simcKey": "follow_the_blood"
+          },
+          {
+            "entryId": 117728,
+            "displayName": "Momentum of Despair",
+            "simcKey": "momentum_of_despair"
+          }
+        ]
+      },
+      {
+        "nodeId": 95132,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117729,
+            "displayName": "Hunt Them Down",
+            "simcKey": "hunt_them_down"
+          }
+        ]
+      },
+      {
+        "nodeId": 95133,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117730,
+            "displayName": "Devious Distractions",
+            "simcKey": "devious_distractions"
+          }
+        ]
+      },
+      {
+        "nodeId": 95134,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 120133,
+            "displayName": "Don't Be Suspicious",
+            "simcKey": "dont_be_suspicious"
+          },
+          {
+            "entryId": 117731,
+            "displayName": "So Tricky",
+            "simcKey": "so_tricky"
+          }
+        ]
+      },
+      {
+        "nodeId": 95135,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117732,
+            "displayName": "Unshakeable Drive",
+            "simcKey": "unshakeable_drive"
+          }
+        ]
+      },
+      {
+        "nodeId": 95136,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117733,
+            "displayName": "Deathstalker's Mark",
+            "simcKey": "deathstalkers_mark"
+          }
+        ]
+      },
+      {
+        "nodeId": 95137,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 120131,
+            "displayName": "Flickerstrike",
+            "simcKey": "flickerstrike"
+          },
+          {
+            "entryId": 117734,
+            "displayName": "Thousand Cuts",
+            "simcKey": "thousand_cuts"
+          }
+        ]
+      },
+      {
+        "nodeId": 95138,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125132,
+            "displayName": "Tempted Fate",
+            "simcKey": "tempted_fate"
+          },
+          {
+            "entryId": 117735,
+            "displayName": "Chosen's Revelry",
+            "simcKey": "chosens_revelry"
+          }
+        ]
+      },
+      {
+        "nodeId": 95139,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117736,
+            "displayName": "Fate Intertwined",
+            "simcKey": "fate_intertwined"
+          }
+        ]
+      },
+      {
+        "nodeId": 95140,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117737,
+            "displayName": "Unseen Blade",
+            "simcKey": "unseen_blade"
+          }
+        ]
+      },
+      {
+        "nodeId": 95141,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 120130,
+            "displayName": "Mirrors",
+            "simcKey": "mirrors"
+          },
+          {
+            "entryId": 117738,
+            "displayName": "Smoke",
+            "simcKey": "smoke"
+          }
+        ]
+      },
+      {
+        "nodeId": 95142,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117739,
+            "displayName": "Darkest Night",
+            "simcKey": "darkest_night"
+          }
+        ]
+      },
+      {
+        "nodeId": 99842,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 123370,
+            "displayName": "0",
+            "subTreeId": 51
+          },
+          {
+            "entryId": 123373,
+            "displayName": "0",
+            "subTreeId": 53
+          }
+        ]
+      },
+      {
+        "nodeId": 99843,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 123372,
+            "displayName": "0",
+            "subTreeId": 51
+          },
+          {
+            "entryId": 123374,
+            "displayName": "0",
+            "subTreeId": 52
+          }
+        ]
+      },
+      {
+        "nodeId": 99844,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 123371,
+            "displayName": "0",
+            "subTreeId": 52
+          },
+          {
+            "entryId": 123375,
+            "displayName": "0",
+            "subTreeId": 53
+          }
+        ]
+      },
+      {
+        "nodeId": 101713,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125614,
+            "displayName": "Without a Trace",
+            "simcKey": "without_a_trace"
+          }
+        ]
+      },
+      {
+        "nodeId": 101714,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125615,
+            "displayName": "Featherfoot",
+            "simcKey": "featherfoot"
+          }
+        ]
+      },
+      {
+        "nodeId": 101715,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 125619,
+            "displayName": "Double Dance",
+            "simcKey": "double_dance"
+          }
+        ]
+      },
+      {
+        "nodeId": 109003,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134836,
+            "displayName": "Secondary Poisoning",
+            "simcKey": "secondary_poisoning"
+          },
+          {
+            "entryId": 134837,
+            "displayName": "Flying Daggers",
+            "simcKey": "flying_daggers"
+          }
+        ]
+      },
+      {
+        "nodeId": 109004,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 134838,
+            "displayName": "Iron Wire",
+            "simcKey": "iron_wire"
+          },
+          {
+            "entryId": 134839,
+            "displayName": "Intent to Kill",
+            "simcKey": "intent_to_kill"
+          }
+        ]
+      },
+      {
+        "nodeId": 109760,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136018,
+            "displayName": "Mass Casualty",
+            "simcKey": "mass_casualty"
+          }
+        ]
+      },
+      {
+        "nodeId": 109761,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136019,
+            "displayName": "Quietus Celeris",
+            "simcKey": "quietus_celeris"
+          }
+        ]
+      },
+      {
+        "nodeId": 109762,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136020,
+            "displayName": "Precise Killer",
+            "simcKey": "precise_killer"
+          }
+        ]
+      },
+      {
+        "nodeId": 109763,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136021,
+            "displayName": "Clever Combatant",
+            "simcKey": "clever_combatant"
+          }
+        ]
+      },
+      {
+        "nodeId": 109764,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136022,
+            "displayName": "Flashing Steel",
+            "simcKey": "flashing_steel"
+          }
+        ]
+      },
+      {
+        "nodeId": 109765,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136023,
+            "displayName": "Hoodwink",
+            "simcKey": "hoodwink"
+          }
+        ]
+      },
+      {
+        "nodeId": 109766,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136024,
+            "displayName": "Ravenholdt Mint",
+            "simcKey": "ravenholdt_mint"
+          }
+        ]
+      },
+      {
+        "nodeId": 109767,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136025,
+            "displayName": "Sometimes Lucky",
+            "simcKey": "sometimes_lucky"
+          }
+        ]
+      },
+      {
+        "nodeId": 109768,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136026,
+            "displayName": "Controlled Chaos",
+            "simcKey": "controlled_chaos"
+          }
+        ]
+      },
+      {
+        "nodeId": 110323,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136881,
+            "displayName": "Deadened Nerves",
+            "simcKey": "deadened_nerves"
+          }
+        ]
+      },
+      {
+        "nodeId": 110324,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136882,
+            "displayName": "Shadowrunner",
+            "simcKey": "shadowrunner"
+          }
+        ]
+      },
+      {
+        "nodeId": 110325,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136883,
+            "displayName": "Toxic Stiletto",
+            "simcKey": "toxic_stiletto"
+          }
+        ]
+      },
+      {
+        "nodeId": 110432,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 137062,
+            "displayName": "Ancient Arts",
+            "simcKey": "ancient_arts"
+          }
+        ]
+      },
+      {
+        "nodeId": 110433,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 137065,
+            "displayName": "Implacable",
+            "simcKey": "implacable"
+          }
+        ]
+      },
+      {
+        "nodeId": 110434,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 137068,
+            "displayName": "Gravedigger",
+            "simcKey": "gravedigger"
+          }
+        ]
+      }
+    ]
+  }
+}

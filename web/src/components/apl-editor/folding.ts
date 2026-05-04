@@ -1,10 +1,27 @@
-import { EditorState, type Extension } from "@codemirror/state";
-import { keymap } from "@codemirror/view";
+import {
+  EditorState,
+  RangeSet,
+  RangeSetBuilder,
+  type Extension,
+} from "@codemirror/state";
+import {
+  gutter,
+  GutterMarker,
+  keymap,
+  ViewPlugin,
+  type BlockInfo,
+  type EditorView,
+  type ViewUpdate,
+} from "@codemirror/view";
 import {
   codeFolding,
-  foldGutter,
+  foldEffect,
   foldKeymap,
   foldService,
+  foldState,
+  foldable,
+  foldedRanges,
+  unfoldEffect,
 } from "@codemirror/language";
 
 const ACTION_CATEGORY_RE =
@@ -76,6 +93,26 @@ function createFoldMarker(open: boolean): HTMLElement {
   marker.title = open ? "Collapse section" : "Expand section";
   return marker;
 }
+
+class AplFoldMarker extends GutterMarker {
+  private readonly open: boolean;
+
+  constructor(open: boolean) {
+    super();
+    this.open = open;
+  }
+
+  override eq(other: GutterMarker): boolean {
+    return other instanceof AplFoldMarker && other.open === this.open;
+  }
+
+  override toDOM(): HTMLElement {
+    return createFoldMarker(this.open);
+  }
+}
+
+const canFoldMarker = new AplFoldMarker(true);
+const canUnfoldMarker = new AplFoldMarker(false);
 
 function hasPreviousLineInSameGroup(
   state: EditorState,
@@ -185,15 +222,111 @@ function findAplFold(
   );
 }
 
+function isMultiLineRange(
+  state: EditorState,
+  range: { from: number; to: number },
+): boolean {
+  return state.doc.lineAt(range.to).number > state.doc.lineAt(range.from).number;
+}
+
+function findFoldOnLine(
+  state: EditorState,
+  line: BlockInfo,
+): { from: number; to: number } | null {
+  let found: { from: number; to: number } | null = null;
+  foldedRanges(state).between(line.from, line.to, (from, to) => {
+    if (!found || found.from > from) {
+      found = { from, to };
+    }
+  });
+  return found;
+}
+
+function buildFoldMarkers(view: EditorView): RangeSet<GutterMarker> {
+  const builder = new RangeSetBuilder<GutterMarker>();
+
+  for (const line of view.viewportLineBlocks) {
+    const foldedRange = findFoldOnLine(view.state, line);
+    const marker =
+      foldedRange && isMultiLineRange(view.state, foldedRange)
+        ? canUnfoldMarker
+        : null;
+    const foldRange =
+      marker === null ? foldable(view.state, line.from, line.to) : null;
+    const nextMarker =
+      marker ??
+      (foldRange && isMultiLineRange(view.state, foldRange)
+        ? canFoldMarker
+        : null);
+
+    if (nextMarker) {
+      builder.add(line.from, line.from, nextMarker);
+    }
+  }
+
+  return builder.finish();
+}
+
+function createAplFoldGutter(): Extension {
+  const markers = ViewPlugin.fromClass(
+    class {
+      markers: RangeSet<GutterMarker>;
+
+      constructor(view: EditorView) {
+        this.markers = buildFoldMarkers(view);
+      }
+
+      update(update: ViewUpdate): void {
+        if (
+          update.docChanged ||
+          update.viewportChanged ||
+          update.startState.field(foldState, false) !==
+            update.state.field(foldState, false)
+        ) {
+          this.markers = buildFoldMarkers(update.view);
+        }
+      }
+    },
+  );
+
+  return [
+    markers,
+    gutter({
+      class: "cm-foldGutter",
+      markers(view) {
+        return view.plugin(markers)?.markers ?? RangeSet.empty;
+      },
+      initialSpacer() {
+        return canUnfoldMarker;
+      },
+      domEventHandlers: {
+        click(view, line) {
+          const foldedRange = findFoldOnLine(view.state, line);
+          if (foldedRange && isMultiLineRange(view.state, foldedRange)) {
+            view.dispatch({ effects: unfoldEffect.of(foldedRange) });
+            return true;
+          }
+
+          const foldRange = foldable(view.state, line.from, line.to);
+          if (foldRange && isMultiLineRange(view.state, foldRange)) {
+            view.dispatch({ effects: foldEffect.of(foldRange) });
+            return true;
+          }
+
+          return false;
+        },
+      },
+    }),
+  ];
+}
+
 export function createAplFoldingExtension(): Extension[] {
   return [
     foldService.of(findAplFold),
     codeFolding({
       placeholderText: "...",
     }),
-    foldGutter({
-      markerDOM: createFoldMarker,
-    }),
+    createAplFoldGutter(),
     keymap.of(foldKeymap),
   ];
 }

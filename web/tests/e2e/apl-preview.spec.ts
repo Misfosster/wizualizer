@@ -26,12 +26,30 @@ const VARIABLE_JUMP_APL = [
   "actions+=/stormstrike,if=variable.aoe_threshold>1",
 ].join("\n");
 
+const ACTION_LIST_JUMP_APL = [
+  'monk="Demo Profile"',
+  "actions+=/call_action_list,name=trinket",
+  "actions+=/run_action_list,name=finish",
+  "actions.trinket=tiger_palm",
+  "actions.finish=blackout_kick",
+].join("\n");
+
 const MULTIPLE_VARIABLE_DEFINITION_APL = [
   'shaman="Demo Profile"',
   "actions+=/variable,name=foo,value=1",
   "actions+=/stormstrike,if=variable.foo>0",
   "actions+=/variable,name=foo,value=2",
   "actions+=/lava_lash,if=variable.foo>0",
+].join("\n");
+
+const COPY_FOCUS_APL = [
+  'monk="Base Profile"',
+  ...Array.from(
+    { length: 60 },
+    (_, index) => `actions+=/tiger_palm,if=variable.profile_anchor_${String(index)}=0`,
+  ),
+  'copy="Default"',
+  "actions+=/rising_sun_kick",
 ].join("\n");
 
 const FOLDING_APL = [
@@ -196,17 +214,24 @@ test("remembers the last active editor tab", async ({ page }) => {
   );
 });
 
-test("keeps the warmed preview canvas hidden while writing", async ({ page }) => {
+test("does not mount the preview canvas while writing", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VALID_APL);
 
+  await expect(
+    page.getByRole("tabpanel", {
+      name: "Preview",
+      includeHidden: true,
+    }),
+  ).toHaveCount(0);
+  await expect(page.locator(".react-flow")).toHaveCount(0);
+
+  await page.getByRole("tab", { name: "Preview" }).click();
   const previewPanel = page.getByRole("tabpanel", {
     name: "Preview",
-    includeHidden: true,
   });
-  await expect(previewPanel).toHaveAttribute("aria-hidden", "true");
-  await expect(previewPanel).toHaveCSS("opacity", "0");
-  await expect(previewPanel).toHaveCSS("pointer-events", "none");
+  await expect(previewPanel).toBeVisible();
+  await expect(page.locator(".react-flow")).toBeVisible();
 });
 
 test("keeps editor undo history across a Write Preview Write roundtrip", async ({
@@ -233,6 +258,63 @@ test("keeps editor undo history across a Write Preview Write roundtrip", async (
   await expect(editor).not.toContainText("bloodlust");
   await page.getByRole("tab", { name: "Preview" }).click();
   await expect(page.getByTestId("rf__node-action__0__actions__1")).toHaveCount(0);
+});
+
+test("keeps editor scroll position across a Write Preview Write roundtrip", async ({
+  page,
+}) => {
+  const longApl = [
+    'monk="Demo Profile"',
+    ...Array.from(
+      { length: 90 },
+      (_, index) => `actions+=/spell_${String(index)}`,
+    ),
+  ].join("\n");
+  await page.goto("/");
+  await fillAplEditor(page, longApl);
+
+  const scroller = page.locator(".cm-scroller");
+  await scroller.evaluate((element) => {
+    element.scrollTop = element.scrollHeight;
+    element.dispatchEvent(new Event("scroll"));
+  });
+  const scrollBefore = await scroller.evaluate((element) => element.scrollTop);
+  expect(scrollBefore).toBeGreaterThan(0);
+
+  await page.getByRole("tab", { name: "Preview" }).click();
+  await expect(page.locator(".react-flow")).toBeVisible();
+  await page.getByRole("tab", { name: "Write" }).click();
+
+  await expect
+    .poll(() => scroller.evaluate((element) => element.scrollTop))
+    .toBeGreaterThan(0);
+});
+
+test("preview starts focused on the editor's current copy profile", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await fillAplEditor(page, COPY_FOCUS_APL);
+
+  const scroller = page.locator(".cm-scroller");
+  await scroller.evaluate((element) => {
+    element.scrollTop = element.scrollHeight;
+    element.dispatchEvent(new Event("scroll"));
+  });
+  await expect(
+    page.getByTestId("apl-code-editor-input").getByText('copy="Default"'),
+  ).toBeVisible();
+  await page
+    .getByTestId("apl-code-editor-input")
+    .getByText('copy="Default"')
+    .evaluate((element) => {
+      element.scrollIntoView({ block: "start" });
+    });
+  await page.waitForTimeout(50);
+  await page.getByRole("tab", { name: "Preview" }).click();
+
+  await expect(page.getByTestId("rf__node-root__1")).toContainText("Default");
+  await expect(page.getByTestId("rf__node-root__0")).toHaveCount(0);
 });
 
 test("saves named APLs and switches between them", async ({ page }) => {
@@ -582,6 +664,19 @@ test("folding a section keeps trailing comments and blank lines for the next sec
   await expect(editor.getByText("blood_fury")).toBeVisible();
 });
 
+test("single-line sequence actions do not show a working fold gutter marker", async ({ page }) => {
+  const sequenceLine =
+    "actions.opening=sequence,tiger_palm:zenith:rising_sun_kick:fists_of_fury";
+  await page.goto("/");
+  await fillAplEditor(
+    page,
+    ['monk="Demo Profile"', sequenceLine].join("\n"),
+  );
+
+  await clickFoldMarkerForLine(page, sequenceLine);
+  await expect(page.locator(".cm-foldPlaceholder")).toHaveCount(0);
+});
+
 test("variable references are emphasized and show ctrl-hover affordance", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VARIABLE_JUMP_APL);
@@ -610,6 +705,32 @@ test("ctrl-clicking a variable reference jumps to its definition", async ({ page
 
   await expect(page.locator(".lc-apl-editor-jump-target-line")).toContainText(
     "name=aoe_threshold",
+  );
+});
+
+test("ctrl-clicking a call_action_list target jumps to its action list", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, ACTION_LIST_JUMP_APL);
+  const editor = page.getByTestId("apl-code-editor-input");
+  const target = editor.locator(".lc-apl-editor-action-list-ref", {
+    hasText: "trinket",
+  });
+
+  await expect(target).toHaveText("trinket");
+
+  await page.keyboard.down("Control");
+  await target.hover();
+  await expect(
+    editor.locator(".lc-apl-editor-action-list-ref--hover"),
+  ).toContainText("trinket");
+  await page.keyboard.up("Control");
+
+  await target.click({
+    modifiers: ["Control"],
+  });
+
+  await expect(page.locator(".lc-apl-editor-jump-target-line")).toContainText(
+    "actions.trinket=tiger_palm",
   );
 });
 

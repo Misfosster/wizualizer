@@ -5,18 +5,19 @@ import type {
 
 export type SemanticCatalogFetcher = (
   classSlug: string,
+  specSlug?: string,
 ) => Promise<SemanticCatalog | null>;
 
 export type SemanticCatalogLoadListener = (classSlug: string) => void;
 
 export interface SemanticCatalogLoader {
-  ensure(classSlug: string): Promise<SemanticCatalog | null>;
+  ensure(classSlug: string, specSlug?: string): Promise<SemanticCatalog | null>;
   peek(classSlug: string): SemanticCatalog | null | undefined;
   lookupSpec(
     classSlug: string,
     specSlug: string,
   ): SemanticCatalogLookupResult;
-  isLoading(classSlug: string): boolean;
+  isLoading(classSlug: string, specSlug?: string): boolean;
   onLoaded(listener: SemanticCatalogLoadListener): () => void;
 }
 
@@ -31,6 +32,10 @@ export function createSemanticCatalogLoader(
   const inflight = new Map<string, Promise<SemanticCatalog | null>>();
   const listeners = new Set<SemanticCatalogLoadListener>();
 
+  function cacheKey(classSlug: string, specSlug?: string): string {
+    return specSlug ? `${classSlug}/${specSlug}` : classSlug;
+  }
+
   function notify(classSlug: string): void {
     for (const listener of listeners) {
       listener(classSlug);
@@ -41,36 +46,40 @@ export function createSemanticCatalogLoader(
     return cache.get(classSlug)?.catalog;
   }
 
-  async function ensure(classSlug: string): Promise<SemanticCatalog | null> {
-    const cached = cache.get(classSlug);
+  async function ensure(
+    classSlug: string,
+    specSlug?: string,
+  ): Promise<SemanticCatalog | null> {
+    const key = cacheKey(classSlug, specSlug);
+    const cached = cache.get(key);
     if (cached) {
       return cached.catalog;
     }
 
-    const existing = inflight.get(classSlug);
+    const existing = inflight.get(key);
     if (existing) {
       return existing;
     }
 
-    const promise = fetcher(classSlug)
+    const promise = fetcher(classSlug, specSlug)
       .then((catalog) => {
-        cache.set(classSlug, { catalog });
-        inflight.delete(classSlug);
+        cache.set(key, { catalog });
+        inflight.delete(key);
         notify(classSlug);
         return catalog;
       })
       .catch((error: unknown) => {
-        cache.set(classSlug, { catalog: null });
-        inflight.delete(classSlug);
+        cache.set(key, { catalog: null });
+        inflight.delete(key);
         notify(classSlug);
         console.warn(
-          `semantic-catalog-loader: failed to load class "${classSlug}":`,
+          `semantic-catalog-loader: failed to load "${key}":`,
           error,
         );
         return null;
       });
 
-    inflight.set(classSlug, promise);
+    inflight.set(key, promise);
     return promise;
   }
 
@@ -78,6 +87,24 @@ export function createSemanticCatalogLoader(
     classSlug: string,
     specSlug: string,
   ): SemanticCatalogLookupResult {
+    const key = `${classSlug}/${specSlug}`;
+    const cachedSpec = cache.get(key);
+    if (cachedSpec) {
+      if (!cachedSpec.catalog) {
+        return { status: "unsupported-spec" };
+      }
+      if (!Object.hasOwn(cachedSpec.catalog.byClassSpec, key)) {
+        return { status: "unsupported-spec" };
+      }
+      return {
+        status: "loaded",
+        catalog: cachedSpec.catalog.byClassSpec[key],
+      };
+    }
+    if (inflight.has(key)) {
+      return { status: "loading" };
+    }
+
     const cached = cache.get(classSlug);
     if (!cached) {
       return inflight.has(classSlug)
@@ -87,15 +114,21 @@ export function createSemanticCatalogLoader(
     if (!cached.catalog) {
       return { status: "unknown-class" };
     }
-    const key = `${classSlug}/${specSlug}`;
-    if (!(key in cached.catalog.byClassSpec)) {
+    if (!Object.hasOwn(cached.catalog.byClassSpec, key)) {
       return { status: "unsupported-spec" };
     }
     return { status: "loaded", catalog: cached.catalog.byClassSpec[key] };
   }
 
-  function isLoading(classSlug: string): boolean {
-    return inflight.has(classSlug);
+  function isLoading(classSlug: string, specSlug?: string): boolean {
+    if (specSlug) {
+      return inflight.has(cacheKey(classSlug, specSlug));
+    }
+    if (inflight.has(classSlug)) {
+      return true;
+    }
+    const prefix = `${classSlug}/`;
+    return Array.from(inflight.keys()).some((key) => key.startsWith(prefix));
   }
 
   function onLoaded(listener: SemanticCatalogLoadListener): () => void {

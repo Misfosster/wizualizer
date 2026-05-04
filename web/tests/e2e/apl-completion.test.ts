@@ -77,6 +77,41 @@ test("APL autocomplete ranks action names by local APL popularity", () => {
   );
 });
 
+test("APL autocomplete offers action names inside sequence entries", () => {
+  const text = [
+    'monk="A"',
+    "spec=windwalker",
+    "actions.opening=sequence,tiger_palm:ris",
+  ].join("\n");
+  const result = getAplCompletionsForLine({
+    text,
+    lineNumber: 3,
+    column: "actions.opening=sequence,tiger_palm:ris".length,
+    document: parseOrThrow(text),
+    lookupSemanticSpec: () => ({
+      status: "loaded",
+      catalog: {
+        actions: ["rising_sun_kick", "roll", "tiger_palm"],
+        buffs: [],
+        debuffs: [],
+        cooldowns: [],
+        dots: [],
+        talents: [],
+        trinkets: [],
+        equipped: [],
+        setBonuses: [],
+        options: [],
+      },
+    }),
+  });
+
+  expect(result?.from).toBe(
+    ['monk="A"', "spec=windwalker"].join("\n").length +
+      "\nactions.opening=sequence,tiger_palm:".length,
+  );
+  expect(labels(result)).toContain("rising_sun_kick");
+});
+
 test("APL autocomplete offers segment keys after commas", () => {
   const result = getAplCompletionsForLine({
     text: "actions+=/stormstrike,",

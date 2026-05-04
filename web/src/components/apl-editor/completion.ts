@@ -152,6 +152,13 @@ export function getAplCompletionsForLine({
     );
   }
 
+  if (isSequenceEntryContext(lineBefore)) {
+    return completionResult(
+      from,
+      getActionNameCompletions(text, lineNumber, semanticCatalog),
+    );
+  }
+
   if (isActionListNameContext(lineBefore)) {
     return completionResult(
       from,
@@ -317,6 +324,19 @@ function isActionNameContext(lineBefore: string): boolean {
   return /actions(?:\.[A-Za-z0-9_.-]+)?(?:=|\+=\/)[A-Za-z0-9_.-]*$/.test(
     lineBefore.trimStart(),
   );
+}
+
+function isSequenceEntryContext(lineBefore: string): boolean {
+  const payload =
+    /^\s*actions(?:\.[A-Za-z0-9_.-]+)?(?:=|\+=\/)(?:sequence|strict_sequence),(.*)$/.exec(
+      lineBefore,
+    )?.[1];
+  if (payload === undefined) {
+    return false;
+  }
+
+  const currentEntry = payload.slice(payload.lastIndexOf(":") + 1);
+  return /^[A-Za-z0-9_.-]*$/.test(currentEntry);
 }
 
 function isSegmentKeyContext(lineBefore: string): boolean {

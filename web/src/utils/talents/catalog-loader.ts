@@ -1,14 +1,13 @@
 import type { TalentCatalog, TalentSpecCatalog } from "./types";
 
 /**
- * Fetches one per-class `TalentCatalog`, e.g. by dynamic-importing
- * `src/data/talents/<slug>.json`. Failures are expected (a profile may
- * use an unknown class slug, or we may have no catalog committed yet) -
- * return `null` rather than throwing so the loader can cache the
- * "nothing to find" outcome and not retry forever.
+ * Fetches a `TalentCatalog`. Browser code passes both class and spec so it
+ * can dynamic-import a single-spec chunk. Tests and legacy helpers may still
+ * pass only class and return a per-class catalog.
  */
 export type CatalogFetcher = (
   classSlug: string,
+  specSlug?: string,
 ) => Promise<TalentCatalog | null>;
 
 /**
@@ -41,10 +40,10 @@ export interface CatalogLookupResult {
  * tests (`createCatalogLoader(async () => FIXTURE)`).
  */
 export interface CatalogLoader {
-  ensure(classSlug: string): Promise<TalentCatalog | null>;
+  ensure(classSlug: string, specSlug?: string): Promise<TalentCatalog | null>;
   peek(classSlug: string): TalentCatalog | null | undefined;
   lookupSpec(classSlug: string, specSlug: string): CatalogLookupResult;
-  isLoading(classSlug: string): boolean;
+  isLoading(classSlug: string, specSlug?: string): boolean;
   onLoaded(listener: CatalogLoadListener): () => void;
 }
 
@@ -56,6 +55,10 @@ export function createCatalogLoader(fetcher: CatalogFetcher): CatalogLoader {
   const cache = new Map<string, CacheEntry>();
   const inflight = new Map<string, Promise<TalentCatalog | null>>();
   const listeners = new Set<CatalogLoadListener>();
+
+  function cacheKey(classSlug: string, specSlug?: string): string {
+    return specSlug ? `${classSlug}/${specSlug}` : classSlug;
+  }
 
   function peek(classSlug: string): TalentCatalog | null | undefined {
     const hit = cache.get(classSlug);
@@ -70,36 +73,38 @@ export function createCatalogLoader(fetcher: CatalogFetcher): CatalogLoader {
 
   async function ensure(
     classSlug: string,
+    specSlug?: string,
   ): Promise<TalentCatalog | null> {
-    const cached = cache.get(classSlug);
+    const key = cacheKey(classSlug, specSlug);
+    const cached = cache.get(key);
     if (cached) {
       return cached.catalog;
     }
 
-    const existing = inflight.get(classSlug);
+    const existing = inflight.get(key);
     if (existing) {
       return existing;
     }
 
-    const promise = fetcher(classSlug)
+    const promise = fetcher(classSlug, specSlug)
       .then((catalog) => {
-        cache.set(classSlug, { catalog });
-        inflight.delete(classSlug);
+        cache.set(key, { catalog });
+        inflight.delete(key);
         notify(classSlug);
         return catalog;
       })
       .catch((error: unknown) => {
-        cache.set(classSlug, { catalog: null });
-        inflight.delete(classSlug);
+        cache.set(key, { catalog: null });
+        inflight.delete(key);
         notify(classSlug);
         console.warn(
-          `catalog-loader: failed to load class "${classSlug}":`,
+          `catalog-loader: failed to load "${key}":`,
           error,
         );
         return null;
       });
 
-    inflight.set(classSlug, promise);
+    inflight.set(key, promise);
     return promise;
   }
 
@@ -107,6 +112,24 @@ export function createCatalogLoader(fetcher: CatalogFetcher): CatalogLoader {
     classSlug: string,
     specSlug: string,
   ): CatalogLookupResult {
+    const key = `${classSlug}/${specSlug}`;
+    const cachedSpec = cache.get(key);
+    if (cachedSpec) {
+      if (!cachedSpec.catalog) {
+        return { status: "unsupported-spec" };
+      }
+      if (!Object.hasOwn(cachedSpec.catalog.byClassSpec, key)) {
+        return { status: "unsupported-spec" };
+      }
+      return {
+        status: "loaded",
+        catalog: cachedSpec.catalog.byClassSpec[key],
+      };
+    }
+    if (inflight.has(key)) {
+      return { status: "loading" };
+    }
+
     const cached = cache.get(classSlug);
     if (!cached) {
       return inflight.has(classSlug)
@@ -116,16 +139,21 @@ export function createCatalogLoader(fetcher: CatalogFetcher): CatalogLoader {
     if (!cached.catalog) {
       return { status: "unknown-class" };
     }
-    const key = `${classSlug}/${specSlug}`;
-    const { byClassSpec } = cached.catalog;
-    if (!(key in byClassSpec)) {
+    if (!Object.hasOwn(cached.catalog.byClassSpec, key)) {
       return { status: "unsupported-spec" };
     }
-    return { status: "loaded", catalog: byClassSpec[key] };
+    return { status: "loaded", catalog: cached.catalog.byClassSpec[key] };
   }
 
-  function isLoading(classSlug: string): boolean {
-    return inflight.has(classSlug);
+  function isLoading(classSlug: string, specSlug?: string): boolean {
+    if (specSlug) {
+      return inflight.has(cacheKey(classSlug, specSlug));
+    }
+    if (inflight.has(classSlug)) {
+      return true;
+    }
+    const prefix = `${classSlug}/`;
+    return Array.from(inflight.keys()).some((key) => key.startsWith(prefix));
   }
 
   function onLoaded(listener: CatalogLoadListener): () => void {

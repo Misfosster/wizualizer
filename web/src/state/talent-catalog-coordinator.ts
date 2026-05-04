@@ -21,10 +21,13 @@ export function prefetchCatalogsFor(document: AplDocument | null): void {
   const seen = new Set<string>();
   for (const profile of document.profiles) {
     const slug = profile.className;
-    if (!slug || slug === "unknown" || seen.has(slug)) continue;
-    seen.add(slug);
-    void catalogLoader.ensure(slug);
-    void semanticCatalogLoader.ensure(slug);
+    const spec = profile.specName;
+    if (!slug || slug === "unknown" || !spec) continue;
+    const key = `${slug}/${spec}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    void catalogLoader.ensure(slug, spec);
+    void semanticCatalogLoader.ensure(slug, spec);
   }
 }
 

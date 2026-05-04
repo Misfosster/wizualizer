@@ -1,4 +1,4 @@
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 interface SourceCorpus {
@@ -69,6 +69,7 @@ const METADATA_SOURCE_PATH = path.join(
 );
 const TALENTS_DIR = path.join(ROOT, "src", "data", "talents");
 const OUTPUT_DIR = path.join(ROOT, "src", "data", "semantics");
+const SPEC_OUTPUT_DIR = path.join(OUTPUT_DIR, "specs");
 
 const STRUCTURAL_BASELINE: SemanticSpecCatalog = {
   actions: [
@@ -122,6 +123,8 @@ async function main(): Promise<void> {
   }
 
   await mkdir(OUTPUT_DIR, { recursive: true });
+  await mkdir(SPEC_OUTPUT_DIR, { recursive: true });
+  await clearGeneratedJson(SPEC_OUTPUT_DIR);
   for (const [classSlug, catalog] of byClass) {
     sortCatalog(catalog);
     await writeFile(
@@ -129,7 +132,36 @@ async function main(): Promise<void> {
       `${JSON.stringify(catalog, null, 2)}\n`,
       "utf8",
     );
+    for (const [classSpec, specCatalog] of Object.entries(catalog.byClassSpec)) {
+      const [, specSlug] = classSpec.split("/");
+      if (!specSlug) {
+        continue;
+      }
+      await writeFile(
+        path.join(SPEC_OUTPUT_DIR, `${classSlug}__${specSlug}.json`),
+        `${JSON.stringify(
+          {
+            v: catalog.v,
+            gameVersion: catalog.gameVersion,
+            classSpec,
+            catalog: specCatalog,
+          },
+          null,
+          2,
+        )}\n`,
+        "utf8",
+      );
+    }
   }
+}
+
+async function clearGeneratedJson(dir: string): Promise<void> {
+  const entries = await readdir(dir, { withFileTypes: true });
+  await Promise.all(
+    entries
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
+      .map((entry) => unlink(path.join(dir, entry.name))),
+  );
 }
 
 async function mergeMetadataSource(

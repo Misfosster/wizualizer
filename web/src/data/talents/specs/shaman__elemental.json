@@ -1,0 +1,4272 @@
+{
+  "gameVersion": "12.0.1.66838",
+  "classSpec": "shaman/elemental",
+  "catalog": {
+    "classId": 7,
+    "specId": 262,
+    "treeHash": "",
+    "classNodes": [
+      {
+        "talentId": 127861,
+        "displayName": "Chain Heal",
+        "simcKey": "chain_heal",
+        "maxRank": 1,
+        "row": 1,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127873,
+        "displayName": "Lava Burst",
+        "simcKey": "lava_burst",
+        "maxRank": 1,
+        "row": 1,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127856,
+        "displayName": "Chain Lightning",
+        "simcKey": "chain_lightning",
+        "maxRank": 1,
+        "row": 1,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127871,
+        "displayName": "Earth Shield",
+        "simcKey": "earth_shield",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127886,
+        "displayName": "Ancestral Wolf Affinity",
+        "simcKey": "ancestral_wolf_affinity",
+        "maxRank": 1,
+        "row": 2,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127880,
+        "displayName": "Fire and Ice",
+        "simcKey": "fire_and_ice",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127853,
+        "displayName": "Thunderous Paws",
+        "simcKey": "thunderous_paws",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127853,
+            "displayName": "Thunderous Paws",
+            "simcKey": "thunderous_paws"
+          },
+          {
+            "talentId": 127854,
+            "displayName": "Spirit Wolf",
+            "simcKey": "spirit_wolf"
+          }
+        ]
+      },
+      {
+        "talentId": 135718,
+        "displayName": "Frost Shock",
+        "simcKey": "frost_shock",
+        "maxRank": 1,
+        "row": 2,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127877,
+        "displayName": "Elemental Orbit",
+        "simcKey": "elemental_orbit",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127864,
+        "displayName": "Gust of Wind",
+        "simcKey": "gust_of_wind",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127864,
+            "displayName": "Gust of Wind",
+            "simcKey": "gust_of_wind"
+          },
+          {
+            "talentId": 127865,
+            "displayName": "Spirit Walk",
+            "simcKey": "spirit_walk"
+          }
+        ]
+      },
+      {
+        "talentId": 127893,
+        "displayName": "Astral Shift",
+        "simcKey": "astral_shift",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127890,
+        "displayName": "Nature's Guardian",
+        "simcKey": "natures_guardian",
+        "maxRank": 1,
+        "row": 3,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135717,
+        "displayName": "Arctic Snowstorm",
+        "simcKey": "arctic_snowstorm",
+        "maxRank": 1,
+        "row": 3,
+        "col": 7,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 135717,
+            "displayName": "Arctic Snowstorm",
+            "simcKey": "arctic_snowstorm"
+          },
+          {
+            "talentId": 135719,
+            "displayName": "Encasing Cold",
+            "simcKey": "encasing_cold"
+          }
+        ]
+      },
+      {
+        "talentId": 127863,
+        "displayName": "Healing Stream Totem",
+        "simcKey": "healing_stream_totem",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127891,
+        "displayName": "Winds of Al'Akir",
+        "simcKey": "winds_of_alakir",
+        "maxRank": 2,
+        "row": 4,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127887,
+        "displayName": "Astral Bulwark",
+        "simcKey": "astral_bulwark",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127887,
+            "displayName": "Astral Bulwark",
+            "simcKey": "astral_bulwark"
+          },
+          {
+            "talentId": 127888,
+            "displayName": "Planes Traveler",
+            "simcKey": "planes_traveler"
+          }
+        ]
+      },
+      {
+        "talentId": 127855,
+        "displayName": "Brimming with Life",
+        "simcKey": "brimming_with_life",
+        "maxRank": 2,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127892,
+        "displayName": "Wind Shear",
+        "simcKey": "wind_shear",
+        "maxRank": 1,
+        "row": 4,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127876,
+        "displayName": "Elemental Resistance",
+        "simcKey": "elemental_resistance",
+        "maxRank": 1,
+        "row": 5,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127902,
+        "displayName": "Earthgrab Totem",
+        "simcKey": "earthgrab_totem",
+        "maxRank": 1,
+        "row": 5,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127851,
+        "displayName": "Capacitor Totem",
+        "simcKey": "capacitor_totem",
+        "maxRank": 1,
+        "row": 5,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136585,
+        "displayName": "Spiritual Awakening",
+        "simcKey": "spiritual_awakening",
+        "maxRank": 1,
+        "row": 5,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127881,
+        "displayName": "Enhanced Imbues",
+        "simcKey": "enhanced_imbues",
+        "maxRank": 1,
+        "row": 5,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127910,
+        "displayName": "Windveil",
+        "simcKey": "windveil",
+        "maxRank": 1,
+        "row": 5,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127869,
+        "displayName": "Refreshing Waters",
+        "simcKey": "refreshing_waters",
+        "maxRank": 1,
+        "row": 6,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127884,
+        "displayName": "Cleanse Spirit",
+        "simcKey": "cleanse_spirit",
+        "maxRank": 1,
+        "row": 6,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127896,
+        "displayName": "Static Charge",
+        "simcKey": "static_charge",
+        "maxRank": 2,
+        "row": 6,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127909,
+        "displayName": "Wind Rush Totem",
+        "simcKey": "wind_rush_totem",
+        "maxRank": 1,
+        "row": 6,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127858,
+        "displayName": "Earth Elemental",
+        "simcKey": "earth_elemental",
+        "maxRank": 1,
+        "row": 6,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127904,
+        "displayName": "Greater Purge",
+        "simcKey": "greater_purge",
+        "maxRank": 1,
+        "row": 7,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127904,
+            "displayName": "Greater Purge",
+            "simcKey": "greater_purge"
+          },
+          {
+            "talentId": 127905,
+            "displayName": "Purge",
+            "simcKey": "purge"
+          }
+        ]
+      },
+      {
+        "talentId": 127894,
+        "displayName": "Nature's Fury",
+        "simcKey": "natures_fury",
+        "maxRank": 2,
+        "row": 7,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127882,
+        "displayName": "Jet Stream",
+        "simcKey": "jet_stream",
+        "maxRank": 1,
+        "row": 7,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127882,
+            "displayName": "Jet Stream",
+            "simcKey": "jet_stream"
+          },
+          {
+            "talentId": 127883,
+            "displayName": "Ascending Air",
+            "simcKey": "ascending_air"
+          }
+        ]
+      },
+      {
+        "talentId": 127889,
+        "displayName": "Primordial Bond",
+        "simcKey": "primordial_bond",
+        "maxRank": 1,
+        "row": 7,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127903,
+        "displayName": "Hex",
+        "simcKey": "hex",
+        "maxRank": 1,
+        "row": 7,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127857,
+        "displayName": "Spiritwalker's Grace",
+        "simcKey": "spiritwalkers_grace",
+        "maxRank": 1,
+        "row": 8,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135590,
+        "displayName": "Totemic Projection",
+        "simcKey": "totemic_projection",
+        "maxRank": 1,
+        "row": 8,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127859,
+        "displayName": "Elemental Warding",
+        "simcKey": "elemental_warding",
+        "maxRank": 1,
+        "row": 8,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127906,
+        "displayName": "Totemic Focus",
+        "simcKey": "totemic_focus",
+        "maxRank": 1,
+        "row": 8,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127907,
+        "displayName": "Spiritwalker's Aegis",
+        "simcKey": "spiritwalkers_aegis",
+        "maxRank": 1,
+        "row": 9,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127907,
+            "displayName": "Spiritwalker's Aegis",
+            "simcKey": "spiritwalkers_aegis"
+          },
+          {
+            "talentId": 127908,
+            "displayName": "Graceful Spirit",
+            "simcKey": "graceful_spirit"
+          }
+        ]
+      },
+      {
+        "talentId": 127860,
+        "displayName": "Mana Spring",
+        "simcKey": "mana_spring",
+        "maxRank": 1,
+        "row": 9,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136567,
+        "displayName": "Poison Cleansing Totem",
+        "simcKey": "poison_cleansing_totem",
+        "maxRank": 1,
+        "row": 9,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 136567,
+            "displayName": "Poison Cleansing Totem",
+            "simcKey": "poison_cleansing_totem"
+          },
+          {
+            "talentId": 127874,
+            "displayName": "Tremor Totem",
+            "simcKey": "tremor_totem"
+          }
+        ]
+      },
+      {
+        "talentId": 136584,
+        "displayName": "Reactive Warding",
+        "simcKey": "reactive_warding",
+        "maxRank": 1,
+        "row": 9,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 136584,
+            "displayName": "Reactive Warding",
+            "simcKey": "reactive_warding"
+          },
+          {
+            "talentId": 127868,
+            "displayName": "Therazane's Resilience",
+            "simcKey": "therazanes_resilience"
+          }
+        ]
+      },
+      {
+        "talentId": 127875,
+        "displayName": "Voodoo Mastery",
+        "simcKey": "voodoo_mastery",
+        "maxRank": 1,
+        "row": 9,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127899,
+        "displayName": "Nature's Swiftness",
+        "simcKey": "natures_swiftness",
+        "maxRank": 1,
+        "row": 10,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135592,
+        "displayName": "Totemic Surge",
+        "simcKey": "totemic_surge",
+        "maxRank": 1,
+        "row": 10,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135591,
+        "displayName": "Instinctive Imbuements",
+        "simcKey": "instinctive_imbuements",
+        "maxRank": 1,
+        "row": 10,
+        "col": 6,
+        "nodeType": "normal"
+      }
+    ],
+    "specNodes": [
+      {
+        "talentId": 127924,
+        "displayName": "Elemental Blast",
+        "simcKey": "elemental_blast",
+        "maxRank": 1,
+        "row": 1,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127924,
+            "displayName": "Elemental Blast",
+            "simcKey": "elemental_blast"
+          },
+          {
+            "talentId": 101854,
+            "displayName": "Earth Shock",
+            "simcKey": "earth_shock"
+          }
+        ]
+      },
+      {
+        "talentId": 127925,
+        "displayName": "Earthquake",
+        "simcKey": "earthquake",
+        "maxRank": 1,
+        "row": 2,
+        "col": 3,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 127925,
+            "displayName": "Earthquake",
+            "simcKey": "earthquake"
+          },
+          {
+            "talentId": 101855,
+            "displayName": "Earthquake",
+            "simcKey": "earthquake"
+          }
+        ]
+      },
+      {
+        "talentId": 101853,
+        "displayName": "Elemental Fury",
+        "simcKey": "elemental_fury",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101850,
+        "displayName": "Echo of the Elements",
+        "simcKey": "echo_of_the_elements",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101861,
+        "displayName": "Flash of Lightning",
+        "simcKey": "flash_of_lightning",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101873,
+        "displayName": "Aftershock",
+        "simcKey": "aftershock",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 101873,
+            "displayName": "Aftershock",
+            "simcKey": "aftershock"
+          },
+          {
+            "talentId": 101874,
+            "displayName": "Tectonic Collapse",
+            "simcKey": "tectonic_collapse"
+          }
+        ]
+      },
+      {
+        "talentId": 136714,
+        "displayName": "Master of the Elements",
+        "simcKey": "master_of_the_elements",
+        "maxRank": 1,
+        "row": 3,
+        "col": 6,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 136714,
+            "displayName": "Master of the Elements",
+            "simcKey": "master_of_the_elements"
+          },
+          {
+            "talentId": 101872,
+            "displayName": "Molten Wrath",
+            "simcKey": "molten_wrath"
+          }
+        ]
+      },
+      {
+        "talentId": 101870,
+        "displayName": "Lightning Capacitor",
+        "simcKey": "lightning_capacitor",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101859,
+        "displayName": "Stormkeeper",
+        "simcKey": "stormkeeper",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101879,
+        "displayName": "Flametongue Weapon",
+        "simcKey": "flametongue_weapon",
+        "maxRank": 1,
+        "row": 4,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127917,
+        "displayName": "Storm Frenzy",
+        "simcKey": "storm_frenzy",
+        "maxRank": 1,
+        "row": 5,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101893,
+        "displayName": "Swelling Maelstrom",
+        "simcKey": "swelling_maelstrom",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127920,
+        "displayName": "Primordial Fury",
+        "simcKey": "primordial_fury",
+        "maxRank": 1,
+        "row": 5,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 128223,
+        "displayName": "Herald of the Storms",
+        "simcKey": "herald_of_the_storms",
+        "maxRank": 1,
+        "row": 5,
+        "col": 5,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 128223,
+            "displayName": "Herald of the Storms",
+            "simcKey": "herald_of_the_storms"
+          },
+          {
+            "talentId": 101871,
+            "displayName": "Fury of the Storms",
+            "simcKey": "fury_of_the_storms"
+          }
+        ]
+      },
+      {
+        "talentId": 127912,
+        "displayName": "Flames of the Cauldron",
+        "simcKey": "flames_of_the_cauldron",
+        "maxRank": 1,
+        "row": 5,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127919,
+        "displayName": "Amped Up",
+        "simcKey": "amped_up",
+        "maxRank": 1,
+        "row": 6,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135716,
+        "displayName": "Thunderstrike Ward",
+        "simcKey": "thunderstrike_ward",
+        "maxRank": 1,
+        "row": 6,
+        "col": 3,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 135716,
+            "displayName": "Thunderstrike Ward",
+            "simcKey": "thunderstrike_ward"
+          },
+          {
+            "talentId": 127913,
+            "displayName": "Elemental Resonance",
+            "simcKey": "elemental_resonance"
+          }
+        ]
+      },
+      {
+        "talentId": 136561,
+        "displayName": "Path of the Seer",
+        "simcKey": "path_of_the_seer",
+        "maxRank": 1,
+        "row": 6,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127915,
+        "displayName": "Elemental Unity",
+        "simcKey": "elemental_unity",
+        "maxRank": 1,
+        "row": 6,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101880,
+        "displayName": "Searing Flames",
+        "simcKey": "searing_flames",
+        "maxRank": 1,
+        "row": 6,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101869,
+        "displayName": "Power of the Maelstrom",
+        "simcKey": "power_of_the_maelstrom",
+        "maxRank": 1,
+        "row": 7,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101867,
+        "displayName": "Earthshatter",
+        "simcKey": "earthshatter",
+        "maxRank": 1,
+        "row": 7,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127918,
+        "displayName": "Storm Infusion",
+        "simcKey": "storm_infusion",
+        "maxRank": 1,
+        "row": 7,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101892,
+        "displayName": "Echo Chamber",
+        "simcKey": "echo_chamber",
+        "maxRank": 1,
+        "row": 7,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127916,
+        "displayName": "Everlasting Elements",
+        "simcKey": "everlasting_elements",
+        "maxRank": 1,
+        "row": 7,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101887,
+        "displayName": "Earthen Rage",
+        "simcKey": "earthen_rage",
+        "maxRank": 1,
+        "row": 7,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136713,
+        "displayName": "Lava Flows",
+        "simcKey": "lava_flows",
+        "maxRank": 1,
+        "row": 7,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101865,
+        "displayName": "Fusion of Elements",
+        "simcKey": "fusion_of_elements",
+        "maxRank": 1,
+        "row": 8,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101877,
+        "displayName": "Eye of the Storm",
+        "simcKey": "eye_of_the_storm",
+        "maxRank": 1,
+        "row": 8,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101860,
+        "displayName": "Ascendance",
+        "simcKey": "ascendance",
+        "maxRank": 1,
+        "row": 8,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101885,
+        "displayName": "Inferno Arc",
+        "simcKey": "inferno_arc",
+        "maxRank": 1,
+        "row": 8,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127922,
+        "displayName": "Flames of the Firelord",
+        "simcKey": "flames_of_the_firelord",
+        "maxRank": 1,
+        "row": 8,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101889,
+        "displayName": "Lightning Rod",
+        "simcKey": "lightning_rod",
+        "maxRank": 1,
+        "row": 9,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101876,
+        "displayName": "Mountains Will Fall",
+        "simcKey": "mountains_will_fall",
+        "maxRank": 1,
+        "row": 9,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101864,
+        "displayName": "Call of Fire",
+        "simcKey": "call_of_fire",
+        "maxRank": 1,
+        "row": 9,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101883,
+        "displayName": "Voltaic Blaze",
+        "simcKey": "voltaic_blaze",
+        "maxRank": 1,
+        "row": 9,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101862,
+        "displayName": "Charged Conduit",
+        "simcKey": "charged_conduit",
+        "maxRank": 1,
+        "row": 10,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 128224,
+        "displayName": "Preeminence",
+        "simcKey": "preeminence",
+        "maxRank": 1,
+        "row": 10,
+        "col": 3,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 128224,
+            "displayName": "Preeminence",
+            "simcKey": "preeminence"
+          },
+          {
+            "talentId": 127921,
+            "displayName": "First Ascendant",
+            "simcKey": "first_ascendant"
+          }
+        ]
+      },
+      {
+        "talentId": 101844,
+        "displayName": "Primal Elementalist",
+        "simcKey": "primal_elementalist",
+        "maxRank": 1,
+        "row": 10,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 127914,
+        "displayName": "Crackling Fury",
+        "simcKey": "crackling_fury",
+        "maxRank": 2,
+        "row": 10,
+        "col": 6,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 101884,
+        "displayName": "Purging Flames",
+        "simcKey": "purging_flames",
+        "maxRank": 1,
+        "row": 10,
+        "col": 7,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 136972,
+        "displayName": "Feedback Loop",
+        "simcKey": "feedback_loop",
+        "maxRank": 4,
+        "row": 11,
+        "col": 4,
+        "nodeType": "normal"
+      }
+    ],
+    "heroNodes": [
+      {
+        "talentId": 117485,
+        "displayName": "Call of the Ancestors",
+        "simcKey": "call_of_the_ancestors",
+        "maxRank": 1,
+        "row": 1,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117489,
+        "displayName": "Tempest",
+        "simcKey": "tempest",
+        "maxRank": 1,
+        "row": 1,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117483,
+        "displayName": "Unlimited Power",
+        "simcKey": "unlimited_power",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 123632,
+        "displayName": "Ancient Fellowship",
+        "simcKey": "ancient_fellowship",
+        "maxRank": 1,
+        "row": 2,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 123632,
+            "displayName": "Ancient Fellowship",
+            "simcKey": "ancient_fellowship"
+          },
+          {
+            "talentId": 117459,
+            "displayName": "Latent Wisdom",
+            "simcKey": "latent_wisdom"
+          }
+        ]
+      },
+      {
+        "talentId": 117490,
+        "displayName": "Stormcaller",
+        "simcKey": "stormcaller",
+        "maxRank": 1,
+        "row": 2,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 123630,
+        "displayName": "Routine Communication",
+        "simcKey": "routine_communication",
+        "maxRank": 1,
+        "row": 2,
+        "col": 2,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 123630,
+            "displayName": "Routine Communication",
+            "simcKey": "routine_communication"
+          },
+          {
+            "talentId": 117481,
+            "displayName": "Heed My Call",
+            "simcKey": "heed_my_call"
+          }
+        ]
+      },
+      {
+        "talentId": 117466,
+        "displayName": "Elemental Reverb",
+        "simcKey": "elemental_reverb",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 128226,
+        "displayName": "Electroshock",
+        "simcKey": "electroshock",
+        "maxRank": 1,
+        "row": 2,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 128226,
+            "displayName": "Electroshock",
+            "simcKey": "electroshock"
+          },
+          {
+            "talentId": 117460,
+            "displayName": "Lightning Conduit",
+            "simcKey": "lightning_conduit"
+          }
+        ]
+      },
+      {
+        "talentId": 135987,
+        "displayName": "Stormwell",
+        "simcKey": "stormwell",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135990,
+        "displayName": "Ancestral Influence",
+        "simcKey": "ancestral_influence",
+        "maxRank": 1,
+        "row": 2,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117484,
+        "displayName": "Offering from Beyond",
+        "simcKey": "offering_from_beyond",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 128225,
+        "displayName": "Supercharge",
+        "simcKey": "supercharge",
+        "maxRank": 1,
+        "row": 3,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 128225,
+            "displayName": "Supercharge",
+            "simcKey": "supercharge"
+          },
+          {
+            "talentId": 117470,
+            "displayName": "Storm Swell",
+            "simcKey": "storm_swell"
+          }
+        ]
+      },
+      {
+        "talentId": 117457,
+        "displayName": "Primordial Capacity",
+        "simcKey": "primordial_capacity",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117482,
+        "displayName": "Arc Discharge",
+        "simcKey": "arc_discharge",
+        "maxRank": 1,
+        "row": 3,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117458,
+        "displayName": "Spiritwalker's Momentum",
+        "simcKey": "spiritwalkers_momentum",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117486,
+        "displayName": "Rolling Thunder",
+        "simcKey": "rolling_thunder",
+        "maxRank": 1,
+        "row": 3,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135986,
+        "displayName": "Natural Gift",
+        "simcKey": "natural_gift",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135989,
+        "displayName": "Windspeaker",
+        "simcKey": "windspeaker",
+        "maxRank": 1,
+        "row": 3,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117467,
+        "displayName": "Voltaic Surge",
+        "simcKey": "voltaic_surge",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 123631,
+        "displayName": "Earthen Communion",
+        "simcKey": "earthen_communion",
+        "maxRank": 1,
+        "row": 4,
+        "col": 1,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 123631,
+            "displayName": "Earthen Communion",
+            "simcKey": "earthen_communion"
+          },
+          {
+            "talentId": 117455,
+            "displayName": "Natural Harmony",
+            "simcKey": "natural_harmony"
+          }
+        ]
+      },
+      {
+        "talentId": 117465,
+        "displayName": "Conductive Energy",
+        "simcKey": "conductive_energy",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117480,
+        "displayName": "Maelstrom Supremacy",
+        "simcKey": "maelstrom_supremacy",
+        "maxRank": 1,
+        "row": 4,
+        "col": 2,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117472,
+        "displayName": "Final Calling",
+        "simcKey": "final_calling",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 125617,
+        "displayName": "Surging Currents",
+        "simcKey": "surging_currents",
+        "maxRank": 1,
+        "row": 4,
+        "col": 4,
+        "nodeType": "choice",
+        "choices": [
+          {
+            "talentId": 125617,
+            "displayName": "Surging Currents",
+            "simcKey": "surging_currents"
+          },
+          {
+            "talentId": 117477,
+            "displayName": "Nature's Protection",
+            "simcKey": "natures_protection"
+          }
+        ]
+      },
+      {
+        "talentId": 135985,
+        "displayName": "Descending Skies",
+        "simcKey": "descending_skies",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 135988,
+        "displayName": "Mystic Knowledge",
+        "simcKey": "mystic_knowledge",
+        "maxRank": 1,
+        "row": 4,
+        "col": 5,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117464,
+        "displayName": "Awakening Storms",
+        "simcKey": "awakening_storms",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      },
+      {
+        "talentId": 117491,
+        "displayName": "Ancestral Swiftness",
+        "simcKey": "ancestral_swiftness",
+        "maxRank": 1,
+        "row": 5,
+        "col": 3,
+        "nodeType": "normal"
+      }
+    ],
+    "streamNodes": [
+      {
+        "nodeId": 80938,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101801,
+            "displayName": "Overflowing Maelstrom",
+            "simcKey": "overflowing_maelstrom"
+          }
+        ]
+      },
+      {
+        "nodeId": 80939,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101802,
+            "displayName": "Raging Maelstrom",
+            "simcKey": "raging_maelstrom"
+          }
+        ]
+      },
+      {
+        "nodeId": 80941,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101804,
+            "displayName": "Maelstrom Weapon",
+            "simcKey": "maelstrom_weapon"
+          }
+        ]
+      },
+      {
+        "nodeId": 80942,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101805,
+            "displayName": "Flametongue Weapon",
+            "simcKey": "flametongue_weapon"
+          }
+        ]
+      },
+      {
+        "nodeId": 80943,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101806,
+            "displayName": "Molten Assault",
+            "simcKey": "molten_assault"
+          }
+        ]
+      },
+      {
+        "nodeId": 80944,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101808,
+            "displayName": "Overcharge",
+            "simcKey": "overcharge"
+          }
+        ]
+      },
+      {
+        "nodeId": 80945,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101809,
+            "displayName": "Hot Hand",
+            "simcKey": "hot_hand"
+          }
+        ]
+      },
+      {
+        "nodeId": 80947,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101811,
+            "displayName": "Ashen Catalyst",
+            "simcKey": "ashen_catalyst"
+          }
+        ]
+      },
+      {
+        "nodeId": 80948,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101812,
+            "displayName": "Lashing Flames",
+            "simcKey": "lashing_flames"
+          }
+        ]
+      },
+      {
+        "nodeId": 80949,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101813,
+            "displayName": "Thorim's Invocation",
+            "simcKey": "thorims_invocation"
+          }
+        ]
+      },
+      {
+        "nodeId": 80950,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101814,
+            "displayName": "Static Accumulation",
+            "simcKey": "static_accumulation"
+          }
+        ]
+      },
+      {
+        "nodeId": 80951,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101815,
+            "displayName": "Elemental Assault",
+            "simcKey": "elemental_assault"
+          }
+        ]
+      },
+      {
+        "nodeId": 80953,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101818,
+            "displayName": "Elemental Weapons",
+            "simcKey": "elemental_weapons"
+          }
+        ]
+      },
+      {
+        "nodeId": 80954,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101819,
+            "displayName": "Voltaic Blaze",
+            "simcKey": "voltaic_blaze"
+          }
+        ]
+      },
+      {
+        "nodeId": 80958,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101823,
+            "displayName": "Windfury Weapon",
+            "simcKey": "windfury_weapon"
+          }
+        ]
+      },
+      {
+        "nodeId": 80959,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101824,
+            "displayName": "Doom Winds",
+            "simcKey": "doom_winds"
+          }
+        ]
+      },
+      {
+        "nodeId": 80960,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101825,
+            "displayName": "Stormblast",
+            "simcKey": "stormblast"
+          }
+        ]
+      },
+      {
+        "nodeId": 80961,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101826,
+            "displayName": "Elemental Tempo",
+            "simcKey": "elemental_tempo"
+          }
+        ]
+      },
+      {
+        "nodeId": 80962,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101827,
+            "displayName": "Ride the Lightning",
+            "simcKey": "ride_the_lightning"
+          }
+        ]
+      },
+      {
+        "nodeId": 80963,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101828,
+            "displayName": "Primordial Storm",
+            "simcKey": "primordial_storm"
+          }
+        ]
+      },
+      {
+        "nodeId": 80964,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101829,
+            "displayName": "Surging Elements",
+            "simcKey": "surging_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 80967,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101832,
+            "displayName": "Storm's Wrath",
+            "simcKey": "storms_wrath"
+          }
+        ]
+      },
+      {
+        "nodeId": 80968,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101833,
+            "displayName": "Unruly Winds",
+            "simcKey": "unruly_winds"
+          }
+        ]
+      },
+      {
+        "nodeId": 80969,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101834,
+            "displayName": "Forceful Winds",
+            "simcKey": "forceful_winds"
+          }
+        ]
+      },
+      {
+        "nodeId": 80973,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101839,
+            "displayName": "Converging Storms",
+            "simcKey": "converging_storms"
+          }
+        ]
+      },
+      {
+        "nodeId": 80974,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101840,
+            "displayName": "Crash Lightning",
+            "simcKey": "crash_lightning"
+          }
+        ]
+      },
+      {
+        "nodeId": 80975,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101841,
+            "displayName": "Sundering",
+            "simcKey": "sundering"
+          }
+        ]
+      },
+      {
+        "nodeId": 80976,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101842,
+            "displayName": "Primal Tide Core",
+            "simcKey": "primal_tide_core"
+          }
+        ]
+      },
+      {
+        "nodeId": 80978,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101844,
+            "displayName": "Primal Elementalist",
+            "simcKey": "primal_elementalist"
+          }
+        ]
+      },
+      {
+        "nodeId": 80981,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101850,
+            "displayName": "Echo of the Elements",
+            "simcKey": "echo_of_the_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 80983,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101853,
+            "displayName": "Elemental Fury",
+            "simcKey": "elemental_fury"
+          }
+        ]
+      },
+      {
+        "nodeId": 80984,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127924,
+            "displayName": "Elemental Blast",
+            "simcKey": "elemental_blast"
+          },
+          {
+            "entryId": 101854,
+            "displayName": "Earth Shock",
+            "simcKey": "earth_shock"
+          }
+        ]
+      },
+      {
+        "nodeId": 80985,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127925,
+            "displayName": "Earthquake",
+            "simcKey": "earthquake"
+          },
+          {
+            "entryId": 101855,
+            "displayName": "Earthquake",
+            "simcKey": "earthquake"
+          }
+        ]
+      },
+      {
+        "nodeId": 80988,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101859,
+            "displayName": "Stormkeeper",
+            "simcKey": "stormkeeper"
+          }
+        ]
+      },
+      {
+        "nodeId": 80989,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101860,
+            "displayName": "Ascendance",
+            "simcKey": "ascendance"
+          }
+        ]
+      },
+      {
+        "nodeId": 80990,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101861,
+            "displayName": "Flash of Lightning",
+            "simcKey": "flash_of_lightning"
+          }
+        ]
+      },
+      {
+        "nodeId": 80991,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101862,
+            "displayName": "Charged Conduit",
+            "simcKey": "charged_conduit"
+          }
+        ]
+      },
+      {
+        "nodeId": 80992,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101864,
+            "displayName": "Call of Fire",
+            "simcKey": "call_of_fire"
+          }
+        ]
+      },
+      {
+        "nodeId": 80993,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101865,
+            "displayName": "Fusion of Elements",
+            "simcKey": "fusion_of_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 80995,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101867,
+            "displayName": "Earthshatter",
+            "simcKey": "earthshatter"
+          }
+        ]
+      },
+      {
+        "nodeId": 80996,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101869,
+            "displayName": "Power of the Maelstrom",
+            "simcKey": "power_of_the_maelstrom"
+          }
+        ]
+      },
+      {
+        "nodeId": 80997,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101870,
+            "displayName": "Lightning Capacitor",
+            "simcKey": "lightning_capacitor"
+          }
+        ]
+      },
+      {
+        "nodeId": 80998,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 128223,
+            "displayName": "Herald of the Storms",
+            "simcKey": "herald_of_the_storms"
+          },
+          {
+            "entryId": 101871,
+            "displayName": "Fury of the Storms",
+            "simcKey": "fury_of_the_storms"
+          }
+        ]
+      },
+      {
+        "nodeId": 80999,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136714,
+            "displayName": "Master of the Elements",
+            "simcKey": "master_of_the_elements"
+          },
+          {
+            "entryId": 101872,
+            "displayName": "Molten Wrath",
+            "simcKey": "molten_wrath"
+          }
+        ]
+      },
+      {
+        "nodeId": 81000,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 101873,
+            "displayName": "Aftershock",
+            "simcKey": "aftershock"
+          },
+          {
+            "entryId": 101874,
+            "displayName": "Tectonic Collapse",
+            "simcKey": "tectonic_collapse"
+          }
+        ]
+      },
+      {
+        "nodeId": 81002,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101876,
+            "displayName": "Mountains Will Fall",
+            "simcKey": "mountains_will_fall"
+          }
+        ]
+      },
+      {
+        "nodeId": 81003,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101877,
+            "displayName": "Eye of the Storm",
+            "simcKey": "eye_of_the_storm"
+          }
+        ]
+      },
+      {
+        "nodeId": 81004,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101879,
+            "displayName": "Flametongue Weapon",
+            "simcKey": "flametongue_weapon"
+          }
+        ]
+      },
+      {
+        "nodeId": 81005,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101880,
+            "displayName": "Searing Flames",
+            "simcKey": "searing_flames"
+          }
+        ]
+      },
+      {
+        "nodeId": 81007,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101883,
+            "displayName": "Voltaic Blaze",
+            "simcKey": "voltaic_blaze"
+          }
+        ]
+      },
+      {
+        "nodeId": 81008,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101885,
+            "displayName": "Inferno Arc",
+            "simcKey": "inferno_arc"
+          }
+        ]
+      },
+      {
+        "nodeId": 81010,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101887,
+            "displayName": "Earthen Rage",
+            "simcKey": "earthen_rage"
+          }
+        ]
+      },
+      {
+        "nodeId": 81012,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101889,
+            "displayName": "Lightning Rod",
+            "simcKey": "lightning_rod"
+          }
+        ]
+      },
+      {
+        "nodeId": 81015,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101892,
+            "displayName": "Echo Chamber",
+            "simcKey": "echo_chamber"
+          }
+        ]
+      },
+      {
+        "nodeId": 81016,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101893,
+            "displayName": "Swelling Maelstrom",
+            "simcKey": "swelling_maelstrom"
+          }
+        ]
+      },
+      {
+        "nodeId": 81018,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101895,
+            "displayName": "Living Stream",
+            "simcKey": "living_stream"
+          }
+        ]
+      },
+      {
+        "nodeId": 81019,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101896,
+            "displayName": "Calm Waters",
+            "simcKey": "calm_waters"
+          }
+        ]
+      },
+      {
+        "nodeId": 81021,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101899,
+            "displayName": "Water Totem Mastery",
+            "simcKey": "water_totem_mastery"
+          }
+        ]
+      },
+      {
+        "nodeId": 81022,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101900,
+            "displayName": "Healing Stream Totem",
+            "simcKey": "healing_stream_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 81024,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101902,
+            "displayName": "Resurgence",
+            "simcKey": "resurgence"
+          }
+        ]
+      },
+      {
+        "nodeId": 81027,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101905,
+            "displayName": "Riptide",
+            "simcKey": "riptide"
+          }
+        ]
+      },
+      {
+        "nodeId": 81031,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 101910,
+            "displayName": "Flow of the Tides",
+            "simcKey": "flow_of_the_tides"
+          },
+          {
+            "entryId": 101911,
+            "displayName": "Ancestral Reach",
+            "simcKey": "ancestral_reach"
+          }
+        ]
+      },
+      {
+        "nodeId": 81032,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135486,
+            "displayName": "Healing Tide Totem",
+            "simcKey": "healing_tide_totem"
+          },
+          {
+            "entryId": 101912,
+            "displayName": "Ascendance",
+            "simcKey": "ascendance"
+          }
+        ]
+      },
+      {
+        "nodeId": 81033,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135485,
+            "displayName": "Preeminence",
+            "simcKey": "preeminence"
+          },
+          {
+            "entryId": 101913,
+            "displayName": "First Ascendant",
+            "simcKey": "first_ascendant"
+          }
+        ]
+      },
+      {
+        "nodeId": 81037,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101919,
+            "displayName": "Deluge",
+            "simcKey": "deluge"
+          }
+        ]
+      },
+      {
+        "nodeId": 81038,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101920,
+            "displayName": "Current Control",
+            "simcKey": "current_control"
+          }
+        ]
+      },
+      {
+        "nodeId": 81039,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101922,
+            "displayName": "Acid Rain",
+            "simcKey": "acid_rain"
+          }
+        ]
+      },
+      {
+        "nodeId": 81040,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101923,
+            "displayName": "Healing Rain",
+            "simcKey": "healing_rain"
+          }
+        ]
+      },
+      {
+        "nodeId": 81041,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101924,
+            "displayName": "Spirit Link Totem",
+            "simcKey": "spirit_link_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 81042,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101925,
+            "displayName": "Coalescing Water",
+            "simcKey": "coalescing_water"
+          }
+        ]
+      },
+      {
+        "nodeId": 81043,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101927,
+            "displayName": "Ancestral Awakening",
+            "simcKey": "ancestral_awakening"
+          }
+        ]
+      },
+      {
+        "nodeId": 81044,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101928,
+            "displayName": "Tidal Waves",
+            "simcKey": "tidal_waves"
+          }
+        ]
+      },
+      {
+        "nodeId": 81046,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101931,
+            "displayName": "Earthweaver",
+            "simcKey": "earthweaver"
+          }
+        ]
+      },
+      {
+        "nodeId": 81047,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101932,
+            "displayName": "White Water",
+            "simcKey": "white_water"
+          }
+        ]
+      },
+      {
+        "nodeId": 81048,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101934,
+            "displayName": "Quickstream",
+            "simcKey": "quickstream"
+          }
+        ]
+      },
+      {
+        "nodeId": 81049,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101935,
+            "displayName": "Earthliving Weapon",
+            "simcKey": "earthliving_weapon"
+          }
+        ]
+      },
+      {
+        "nodeId": 81050,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101936,
+            "displayName": "Improved Earthliving Weapon",
+            "simcKey": "improved_earthliving_weapon"
+          }
+        ]
+      },
+      {
+        "nodeId": 81051,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101937,
+            "displayName": "Deeply Rooted Elements",
+            "simcKey": "deeply_rooted_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 81052,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101939,
+            "displayName": "Undercurrent",
+            "simcKey": "undercurrent"
+          }
+        ]
+      },
+      {
+        "nodeId": 81055,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101942,
+            "displayName": "Echo of the Elements",
+            "simcKey": "echo_of_the_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 81073,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101964,
+            "displayName": "Improved Purify Spirit",
+            "simcKey": "improved_purify_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 92219,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 114291,
+            "displayName": "Ascendance",
+            "simcKey": "ascendance"
+          },
+          {
+            "entryId": 101816,
+            "displayName": "Deeply Rooted Elements",
+            "simcKey": "deeply_rooted_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 92675,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 114811,
+            "displayName": "Unleash Life",
+            "simcKey": "unleash_life"
+          }
+        ]
+      },
+      {
+        "nodeId": 92677,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 114813,
+            "displayName": "Overflowing Shores",
+            "simcKey": "overflowing_shores"
+          }
+        ]
+      },
+      {
+        "nodeId": 94858,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 123631,
+            "displayName": "Earthen Communion",
+            "simcKey": "earthen_communion"
+          },
+          {
+            "entryId": 117455,
+            "displayName": "Natural Harmony",
+            "simcKey": "natural_harmony"
+          }
+        ]
+      },
+      {
+        "nodeId": 94859,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125825,
+            "displayName": "Swift Recall",
+            "simcKey": "swift_recall"
+          },
+          {
+            "entryId": 117456,
+            "displayName": "Oversized Totems",
+            "simcKey": "oversized_totems"
+          }
+        ]
+      },
+      {
+        "nodeId": 94860,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117457,
+            "displayName": "Primordial Capacity",
+            "simcKey": "primordial_capacity"
+          }
+        ]
+      },
+      {
+        "nodeId": 94861,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117458,
+            "displayName": "Spiritwalker's Momentum",
+            "simcKey": "spiritwalkers_momentum"
+          }
+        ]
+      },
+      {
+        "nodeId": 94862,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 123632,
+            "displayName": "Ancient Fellowship",
+            "simcKey": "ancient_fellowship"
+          },
+          {
+            "entryId": 117459,
+            "displayName": "Latent Wisdom",
+            "simcKey": "latent_wisdom"
+          }
+        ]
+      },
+      {
+        "nodeId": 94863,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 128226,
+            "displayName": "Electroshock",
+            "simcKey": "electroshock"
+          },
+          {
+            "entryId": 117460,
+            "displayName": "Lightning Conduit",
+            "simcKey": "lightning_conduit"
+          }
+        ]
+      },
+      {
+        "nodeId": 94866,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125824,
+            "displayName": "Supportive Imbuements",
+            "simcKey": "supportive_imbuements"
+          },
+          {
+            "entryId": 117463,
+            "displayName": "Pulse Capacitor",
+            "simcKey": "pulse_capacitor"
+          }
+        ]
+      },
+      {
+        "nodeId": 94867,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117464,
+            "displayName": "Awakening Storms",
+            "simcKey": "awakening_storms"
+          }
+        ]
+      },
+      {
+        "nodeId": 94868,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117465,
+            "displayName": "Conductive Energy",
+            "simcKey": "conductive_energy"
+          }
+        ]
+      },
+      {
+        "nodeId": 94869,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117466,
+            "displayName": "Elemental Reverb",
+            "simcKey": "elemental_reverb"
+          }
+        ]
+      },
+      {
+        "nodeId": 94870,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117467,
+            "displayName": "Voltaic Surge",
+            "simcKey": "voltaic_surge"
+          }
+        ]
+      },
+      {
+        "nodeId": 94871,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117468,
+            "displayName": "Imbuement Mastery",
+            "simcKey": "imbuement_mastery"
+          }
+        ]
+      },
+      {
+        "nodeId": 94872,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117469,
+            "displayName": "Splitstream",
+            "simcKey": "splitstream"
+          }
+        ]
+      },
+      {
+        "nodeId": 94873,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 128225,
+            "displayName": "Supercharge",
+            "simcKey": "supercharge"
+          },
+          {
+            "entryId": 117470,
+            "displayName": "Storm Swell",
+            "simcKey": "storm_swell"
+          }
+        ]
+      },
+      {
+        "nodeId": 94874,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125823,
+            "displayName": "Oversurge",
+            "simcKey": "oversurge"
+          },
+          {
+            "entryId": 117471,
+            "displayName": "Amplification Core",
+            "simcKey": "amplification_core"
+          }
+        ]
+      },
+      {
+        "nodeId": 94875,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117472,
+            "displayName": "Final Calling",
+            "simcKey": "final_calling"
+          }
+        ]
+      },
+      {
+        "nodeId": 94877,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117474,
+            "displayName": "Surging Totem",
+            "simcKey": "surging_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 94879,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117476,
+            "displayName": "Whirling Elements",
+            "simcKey": "whirling_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 94880,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125617,
+            "displayName": "Surging Currents",
+            "simcKey": "surging_currents"
+          },
+          {
+            "entryId": 117477,
+            "displayName": "Nature's Protection",
+            "simcKey": "natures_protection"
+          }
+        ]
+      },
+      {
+        "nodeId": 94881,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 125822,
+            "displayName": "Earthsurge",
+            "simcKey": "earthsurge"
+          },
+          {
+            "entryId": 117478,
+            "displayName": "Totemic Coordination",
+            "simcKey": "totemic_coordination"
+          }
+        ]
+      },
+      {
+        "nodeId": 94882,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117479,
+            "displayName": "Lively Totems",
+            "simcKey": "lively_totems"
+          }
+        ]
+      },
+      {
+        "nodeId": 94883,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117480,
+            "displayName": "Maelstrom Supremacy",
+            "simcKey": "maelstrom_supremacy"
+          }
+        ]
+      },
+      {
+        "nodeId": 94884,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 123630,
+            "displayName": "Routine Communication",
+            "simcKey": "routine_communication"
+          },
+          {
+            "entryId": 117481,
+            "displayName": "Heed My Call",
+            "simcKey": "heed_my_call"
+          }
+        ]
+      },
+      {
+        "nodeId": 94885,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117482,
+            "displayName": "Arc Discharge",
+            "simcKey": "arc_discharge"
+          }
+        ]
+      },
+      {
+        "nodeId": 94886,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117483,
+            "displayName": "Unlimited Power",
+            "simcKey": "unlimited_power"
+          }
+        ]
+      },
+      {
+        "nodeId": 94887,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117484,
+            "displayName": "Offering from Beyond",
+            "simcKey": "offering_from_beyond"
+          }
+        ]
+      },
+      {
+        "nodeId": 94888,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117485,
+            "displayName": "Call of the Ancestors",
+            "simcKey": "call_of_the_ancestors"
+          }
+        ]
+      },
+      {
+        "nodeId": 94889,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117486,
+            "displayName": "Rolling Thunder",
+            "simcKey": "rolling_thunder"
+          }
+        ]
+      },
+      {
+        "nodeId": 94890,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117487,
+            "displayName": "Totemic Rebound",
+            "simcKey": "totemic_rebound"
+          }
+        ]
+      },
+      {
+        "nodeId": 94891,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117488,
+            "displayName": "Wind Barrier",
+            "simcKey": "wind_barrier"
+          }
+        ]
+      },
+      {
+        "nodeId": 94892,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117489,
+            "displayName": "Tempest",
+            "simcKey": "tempest"
+          }
+        ]
+      },
+      {
+        "nodeId": 94893,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117490,
+            "displayName": "Stormcaller",
+            "simcKey": "stormcaller"
+          }
+        ]
+      },
+      {
+        "nodeId": 94894,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 117491,
+            "displayName": "Ancestral Swiftness",
+            "simcKey": "ancestral_swiftness"
+          }
+        ]
+      },
+      {
+        "nodeId": 99845,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 123376,
+            "displayName": "0",
+            "subTreeId": 55
+          },
+          {
+            "entryId": 123377,
+            "displayName": "0",
+            "subTreeId": 56
+          }
+        ]
+      },
+      {
+        "nodeId": 99846,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 123378,
+            "displayName": "0",
+            "subTreeId": 54
+          },
+          {
+            "entryId": 123380,
+            "displayName": "0",
+            "subTreeId": 56
+          }
+        ]
+      },
+      {
+        "nodeId": 99847,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "subtree_selection",
+        "entries": [
+          {
+            "entryId": 123379,
+            "displayName": "0",
+            "subTreeId": 54
+          },
+          {
+            "entryId": 123381,
+            "displayName": "0",
+            "subTreeId": 55
+          }
+        ]
+      },
+      {
+        "nodeId": 103427,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127671,
+            "displayName": "Wavespeaker's Blessing",
+            "simcKey": "wavespeakers_blessing"
+          }
+        ]
+      },
+      {
+        "nodeId": 103428,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127672,
+            "displayName": "Soothing Rain",
+            "simcKey": "soothing_rain"
+          }
+        ]
+      },
+      {
+        "nodeId": 103429,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127673,
+            "displayName": "Ancestral Vigor",
+            "simcKey": "ancestral_vigor"
+          }
+        ]
+      },
+      {
+        "nodeId": 103430,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127674,
+            "displayName": "Earthen Harmony",
+            "simcKey": "earthen_harmony"
+          }
+        ]
+      },
+      {
+        "nodeId": 103432,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127678,
+            "displayName": "Torrent",
+            "simcKey": "torrent"
+          }
+        ]
+      },
+      {
+        "nodeId": 103433,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127679,
+            "displayName": "Tidewaters",
+            "simcKey": "tidewaters"
+          }
+        ]
+      },
+      {
+        "nodeId": 103434,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127680,
+            "displayName": "Water Expulsion",
+            "simcKey": "water_expulsion"
+          }
+        ]
+      },
+      {
+        "nodeId": 103436,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127682,
+            "displayName": "Downpour",
+            "simcKey": "downpour"
+          }
+        ]
+      },
+      {
+        "nodeId": 103579,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127851,
+            "displayName": "Capacitor Totem",
+            "simcKey": "capacitor_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 103581,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127853,
+            "displayName": "Thunderous Paws",
+            "simcKey": "thunderous_paws"
+          },
+          {
+            "entryId": 127854,
+            "displayName": "Spirit Wolf",
+            "simcKey": "spirit_wolf"
+          }
+        ]
+      },
+      {
+        "nodeId": 103582,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127855,
+            "displayName": "Brimming with Life",
+            "simcKey": "brimming_with_life"
+          }
+        ]
+      },
+      {
+        "nodeId": 103583,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127856,
+            "displayName": "Chain Lightning",
+            "simcKey": "chain_lightning"
+          }
+        ]
+      },
+      {
+        "nodeId": 103584,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127857,
+            "displayName": "Spiritwalker's Grace",
+            "simcKey": "spiritwalkers_grace"
+          }
+        ]
+      },
+      {
+        "nodeId": 103585,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127858,
+            "displayName": "Earth Elemental",
+            "simcKey": "earth_elemental"
+          }
+        ]
+      },
+      {
+        "nodeId": 103586,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127859,
+            "displayName": "Elemental Warding",
+            "simcKey": "elemental_warding"
+          }
+        ]
+      },
+      {
+        "nodeId": 103587,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127860,
+            "displayName": "Mana Spring",
+            "simcKey": "mana_spring"
+          }
+        ]
+      },
+      {
+        "nodeId": 103588,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127861,
+            "displayName": "Chain Heal",
+            "simcKey": "chain_heal"
+          }
+        ]
+      },
+      {
+        "nodeId": 103590,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127863,
+            "displayName": "Healing Stream Totem",
+            "simcKey": "healing_stream_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 103591,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127864,
+            "displayName": "Gust of Wind",
+            "simcKey": "gust_of_wind"
+          },
+          {
+            "entryId": 127865,
+            "displayName": "Spirit Walk",
+            "simcKey": "spirit_walk"
+          }
+        ]
+      },
+      {
+        "nodeId": 103593,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136584,
+            "displayName": "Reactive Warding",
+            "simcKey": "reactive_warding"
+          },
+          {
+            "entryId": 127868,
+            "displayName": "Therazane's Resilience",
+            "simcKey": "therazanes_resilience"
+          }
+        ]
+      },
+      {
+        "nodeId": 103594,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127869,
+            "displayName": "Refreshing Waters",
+            "simcKey": "refreshing_waters"
+          }
+        ]
+      },
+      {
+        "nodeId": 103596,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127871,
+            "displayName": "Earth Shield",
+            "simcKey": "earth_shield"
+          }
+        ]
+      },
+      {
+        "nodeId": 103598,
+        "maxRank": 1,
+        "grantedRanks": 1,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127873,
+            "displayName": "Lava Burst",
+            "simcKey": "lava_burst"
+          }
+        ]
+      },
+      {
+        "nodeId": 103599,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 136567,
+            "displayName": "Poison Cleansing Totem",
+            "simcKey": "poison_cleansing_totem"
+          },
+          {
+            "entryId": 127874,
+            "displayName": "Tremor Totem",
+            "simcKey": "tremor_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 103600,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127875,
+            "displayName": "Voodoo Mastery",
+            "simcKey": "voodoo_mastery"
+          }
+        ]
+      },
+      {
+        "nodeId": 103601,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127876,
+            "displayName": "Elemental Resistance",
+            "simcKey": "elemental_resistance"
+          }
+        ]
+      },
+      {
+        "nodeId": 103602,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127877,
+            "displayName": "Elemental Orbit",
+            "simcKey": "elemental_orbit"
+          }
+        ]
+      },
+      {
+        "nodeId": 103605,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127880,
+            "displayName": "Fire and Ice",
+            "simcKey": "fire_and_ice"
+          }
+        ]
+      },
+      {
+        "nodeId": 103606,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127881,
+            "displayName": "Enhanced Imbues",
+            "simcKey": "enhanced_imbues"
+          }
+        ]
+      },
+      {
+        "nodeId": 103607,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127882,
+            "displayName": "Jet Stream",
+            "simcKey": "jet_stream"
+          },
+          {
+            "entryId": 127883,
+            "displayName": "Ascending Air",
+            "simcKey": "ascending_air"
+          }
+        ]
+      },
+      {
+        "nodeId": 103608,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127884,
+            "displayName": "Cleanse Spirit",
+            "simcKey": "cleanse_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 103610,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127886,
+            "displayName": "Ancestral Wolf Affinity",
+            "simcKey": "ancestral_wolf_affinity"
+          }
+        ]
+      },
+      {
+        "nodeId": 103611,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127887,
+            "displayName": "Astral Bulwark",
+            "simcKey": "astral_bulwark"
+          },
+          {
+            "entryId": 127888,
+            "displayName": "Planes Traveler",
+            "simcKey": "planes_traveler"
+          }
+        ]
+      },
+      {
+        "nodeId": 103612,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127889,
+            "displayName": "Primordial Bond",
+            "simcKey": "primordial_bond"
+          }
+        ]
+      },
+      {
+        "nodeId": 103613,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127890,
+            "displayName": "Nature's Guardian",
+            "simcKey": "natures_guardian"
+          }
+        ]
+      },
+      {
+        "nodeId": 103614,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127891,
+            "displayName": "Winds of Al'Akir",
+            "simcKey": "winds_of_alakir"
+          }
+        ]
+      },
+      {
+        "nodeId": 103615,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127892,
+            "displayName": "Wind Shear",
+            "simcKey": "wind_shear"
+          }
+        ]
+      },
+      {
+        "nodeId": 103616,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127893,
+            "displayName": "Astral Shift",
+            "simcKey": "astral_shift"
+          }
+        ]
+      },
+      {
+        "nodeId": 103617,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127894,
+            "displayName": "Nature's Fury",
+            "simcKey": "natures_fury"
+          }
+        ]
+      },
+      {
+        "nodeId": 103618,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127896,
+            "displayName": "Static Charge",
+            "simcKey": "static_charge"
+          }
+        ]
+      },
+      {
+        "nodeId": 103620,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127899,
+            "displayName": "Nature's Swiftness",
+            "simcKey": "natures_swiftness"
+          }
+        ]
+      },
+      {
+        "nodeId": 103622,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127902,
+            "displayName": "Earthgrab Totem",
+            "simcKey": "earthgrab_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 103623,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127903,
+            "displayName": "Hex",
+            "simcKey": "hex"
+          }
+        ]
+      },
+      {
+        "nodeId": 103624,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127904,
+            "displayName": "Greater Purge",
+            "simcKey": "greater_purge"
+          },
+          {
+            "entryId": 127905,
+            "displayName": "Purge",
+            "simcKey": "purge"
+          }
+        ]
+      },
+      {
+        "nodeId": 103625,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127906,
+            "displayName": "Totemic Focus",
+            "simcKey": "totemic_focus"
+          }
+        ]
+      },
+      {
+        "nodeId": 103626,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 127907,
+            "displayName": "Spiritwalker's Aegis",
+            "simcKey": "spiritwalkers_aegis"
+          },
+          {
+            "entryId": 127908,
+            "displayName": "Graceful Spirit",
+            "simcKey": "graceful_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 103627,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127909,
+            "displayName": "Wind Rush Totem",
+            "simcKey": "wind_rush_totem"
+          }
+        ]
+      },
+      {
+        "nodeId": 103628,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127910,
+            "displayName": "Windveil",
+            "simcKey": "windveil"
+          }
+        ]
+      },
+      {
+        "nodeId": 103630,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127912,
+            "displayName": "Flames of the Cauldron",
+            "simcKey": "flames_of_the_cauldron"
+          }
+        ]
+      },
+      {
+        "nodeId": 103631,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135716,
+            "displayName": "Thunderstrike Ward",
+            "simcKey": "thunderstrike_ward"
+          },
+          {
+            "entryId": 127913,
+            "displayName": "Elemental Resonance",
+            "simcKey": "elemental_resonance"
+          }
+        ]
+      },
+      {
+        "nodeId": 103632,
+        "maxRank": 2,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127914,
+            "displayName": "Crackling Fury",
+            "simcKey": "crackling_fury"
+          }
+        ]
+      },
+      {
+        "nodeId": 103633,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127915,
+            "displayName": "Elemental Unity",
+            "simcKey": "elemental_unity"
+          }
+        ]
+      },
+      {
+        "nodeId": 103634,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127916,
+            "displayName": "Everlasting Elements",
+            "simcKey": "everlasting_elements"
+          }
+        ]
+      },
+      {
+        "nodeId": 103635,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127917,
+            "displayName": "Storm Frenzy",
+            "simcKey": "storm_frenzy"
+          }
+        ]
+      },
+      {
+        "nodeId": 103636,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127918,
+            "displayName": "Storm Infusion",
+            "simcKey": "storm_infusion"
+          }
+        ]
+      },
+      {
+        "nodeId": 103637,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101884,
+            "displayName": "Purging Flames",
+            "simcKey": "purging_flames"
+          }
+        ]
+      },
+      {
+        "nodeId": 103638,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127919,
+            "displayName": "Amped Up",
+            "simcKey": "amped_up"
+          }
+        ]
+      },
+      {
+        "nodeId": 103639,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127920,
+            "displayName": "Primordial Fury",
+            "simcKey": "primordial_fury"
+          }
+        ]
+      },
+      {
+        "nodeId": 103640,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 128224,
+            "displayName": "Preeminence",
+            "simcKey": "preeminence"
+          },
+          {
+            "entryId": 127921,
+            "displayName": "First Ascendant",
+            "simcKey": "first_ascendant"
+          }
+        ]
+      },
+      {
+        "nodeId": 103641,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 127922,
+            "displayName": "Flames of the Firelord",
+            "simcKey": "flames_of_the_firelord"
+          }
+        ]
+      },
+      {
+        "nodeId": 103642,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 101799,
+            "displayName": "Flurry",
+            "simcKey": "flurry"
+          }
+        ]
+      },
+      {
+        "nodeId": 103871,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 128270,
+            "displayName": "Stormflurry",
+            "simcKey": "stormflurry"
+          }
+        ]
+      },
+      {
+        "nodeId": 103915,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 128332,
+            "displayName": "Spouting Spirits",
+            "simcKey": "spouting_spirits"
+          }
+        ]
+      },
+      {
+        "nodeId": 104124,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 128703,
+            "displayName": "Double Dip",
+            "simcKey": "double_dip"
+          }
+        ]
+      },
+      {
+        "nodeId": 109190,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135252,
+            "displayName": "Thunder Capacitor",
+            "simcKey": "thunder_capacitor"
+          }
+        ]
+      },
+      {
+        "nodeId": 109191,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135253,
+            "displayName": "Stormbind",
+            "simcKey": "stormbind"
+          }
+        ]
+      },
+      {
+        "nodeId": 109192,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135254,
+            "displayName": "Chaining Storms",
+            "simcKey": "chaining_storms"
+          }
+        ]
+      },
+      {
+        "nodeId": 109193,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135255,
+            "displayName": "Lightning Strikes",
+            "simcKey": "lightning_strikes"
+          }
+        ]
+      },
+      {
+        "nodeId": 109194,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 128236,
+            "displayName": "Feral Spirit",
+            "simcKey": "feral_spirit"
+          }
+        ]
+      },
+      {
+        "nodeId": 109301,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135487,
+            "displayName": "Rip Current",
+            "simcKey": "rip_current"
+          }
+        ]
+      },
+      {
+        "nodeId": 109386,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135590,
+            "displayName": "Totemic Projection",
+            "simcKey": "totemic_projection"
+          }
+        ]
+      },
+      {
+        "nodeId": 109387,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135591,
+            "displayName": "Instinctive Imbuements",
+            "simcKey": "instinctive_imbuements"
+          }
+        ]
+      },
+      {
+        "nodeId": 109388,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135592,
+            "displayName": "Totemic Surge",
+            "simcKey": "totemic_surge"
+          }
+        ]
+      },
+      {
+        "nodeId": 109389,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135593,
+            "displayName": "Lava Lash",
+            "simcKey": "lava_lash"
+          }
+        ]
+      },
+      {
+        "nodeId": 109492,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135718,
+            "displayName": "Frost Shock",
+            "simcKey": "frost_shock"
+          }
+        ]
+      },
+      {
+        "nodeId": 109493,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "choice",
+        "entries": [
+          {
+            "entryId": 135717,
+            "displayName": "Arctic Snowstorm",
+            "simcKey": "arctic_snowstorm"
+          },
+          {
+            "entryId": 135719,
+            "displayName": "Encasing Cold",
+            "simcKey": "encasing_cold"
+          }
+        ]
+      },
+      {
+        "nodeId": 109724,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135982,
+            "displayName": "Primal Catalyst",
+            "simcKey": "primal_catalyst"
+          }
+        ]
+      },
+      {
+        "nodeId": 109725,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135983,
+            "displayName": "Elemental Attunement",
+            "simcKey": "elemental_attunement"
+          }
+        ]
+      },
+      {
+        "nodeId": 109726,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135984,
+            "displayName": "Totemic Momentum",
+            "simcKey": "totemic_momentum"
+          }
+        ]
+      },
+      {
+        "nodeId": 109727,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135985,
+            "displayName": "Descending Skies",
+            "simcKey": "descending_skies"
+          }
+        ]
+      },
+      {
+        "nodeId": 109728,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135986,
+            "displayName": "Natural Gift",
+            "simcKey": "natural_gift"
+          }
+        ]
+      },
+      {
+        "nodeId": 109729,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135987,
+            "displayName": "Stormwell",
+            "simcKey": "stormwell"
+          }
+        ]
+      },
+      {
+        "nodeId": 109730,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135988,
+            "displayName": "Mystic Knowledge",
+            "simcKey": "mystic_knowledge"
+          }
+        ]
+      },
+      {
+        "nodeId": 109731,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135989,
+            "displayName": "Windspeaker",
+            "simcKey": "windspeaker"
+          }
+        ]
+      },
+      {
+        "nodeId": 109732,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 135990,
+            "displayName": "Ancestral Influence",
+            "simcKey": "ancestral_influence"
+          }
+        ]
+      },
+      {
+        "nodeId": 109909,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136176,
+            "displayName": "Fire Nova",
+            "simcKey": "fire_nova"
+          }
+        ]
+      },
+      {
+        "nodeId": 110066,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136561,
+            "displayName": "Path of the Seer",
+            "simcKey": "path_of_the_seer"
+          }
+        ]
+      },
+      {
+        "nodeId": 110083,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136582,
+            "displayName": "Earthen Accord",
+            "simcKey": "earthen_accord"
+          }
+        ]
+      },
+      {
+        "nodeId": 110084,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136583,
+            "displayName": "Crashing Waves",
+            "simcKey": "crashing_waves"
+          }
+        ]
+      },
+      {
+        "nodeId": 110085,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136585,
+            "displayName": "Spiritual Awakening",
+            "simcKey": "spiritual_awakening"
+          }
+        ]
+      },
+      {
+        "nodeId": 110186,
+        "maxRank": 1,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136713,
+            "displayName": "Lava Flows",
+            "simcKey": "lava_flows"
+          }
+        ]
+      },
+      {
+        "nodeId": 110401,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136969,
+            "displayName": "Storm Unleashed",
+            "simcKey": "storm_unleashed"
+          }
+        ]
+      },
+      {
+        "nodeId": 110402,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136972,
+            "displayName": "Feedback Loop",
+            "simcKey": "feedback_loop"
+          }
+        ]
+      },
+      {
+        "nodeId": 110403,
+        "maxRank": 4,
+        "grantedRanks": 0,
+        "nodeType": "normal",
+        "entries": [
+          {
+            "entryId": 136975,
+            "displayName": "Stormstream Totem",
+            "simcKey": "stormstream_totem"
+          }
+        ]
+      }
+    ]
+  }
+}

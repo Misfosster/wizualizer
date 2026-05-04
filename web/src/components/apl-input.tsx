@@ -1,19 +1,29 @@
 import "@styles/tailwind.css";
-import { useEffect, useMemo, useState } from "react";
-import { Tabs, TabsContent } from "@components/ui/tabs";
-import { cn } from "@/lib/utils";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Tabs } from "@components/ui/tabs";
 import { useShallow } from "zustand/react/shallow";
 import { AplCodeEditor } from "@components/apl-editor/AplCodeEditor";
-import type { AplEditorLineJumpRequest } from "@components/apl-editor/types";
+import type {
+  AplEditorLineJumpRequest,
+  AplEditorPosition,
+} from "@components/apl-editor/types";
 import { AplModeDock } from "@components/apl-shell/AplModeDock";
 import { AplToolbar } from "@components/apl-shell/AplToolbar";
 import { EditorSaveIndicator } from "@components/apl-shell/EditorSaveIndicator";
 import Canvas from "@components/canvas";
 import { useEditorStore } from "@/state/editorStore";
+import { getGraphNodeIdForSourceViewport } from "@/utils/apl-parser/source-node";
 import { semanticCatalogLoader } from "@/utils/semantics/catalog-loader-browser";
 
 const ACTIVE_TAB_STORAGE_KEY = "logiccraft.activeAplTab";
 type AplInputTab = "write" | "preview";
+type WindowWithIdleCallback = Window & {
+  requestIdleCallback?: (
+    callback: () => void,
+    options?: { timeout?: number },
+  ) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
 
 function isAplInputTab(value: string | null): value is AplInputTab {
   return value === "write" || value === "preview";
@@ -28,10 +38,38 @@ function readStoredActiveTab(): AplInputTab {
   return isAplInputTab(storedTab) ? storedTab : "write";
 }
 
+function scheduleIdleGraphBuild(callback: () => void): () => void {
+  const win = window as unknown as WindowWithIdleCallback;
+  const requestIdleCallback = win.requestIdleCallback;
+  const cancelIdleCallback = win.cancelIdleCallback;
+  if (
+    typeof requestIdleCallback === "function" &&
+    typeof cancelIdleCallback === "function"
+  ) {
+    const handle = requestIdleCallback(callback, { timeout: 1200 });
+    return () => {
+      cancelIdleCallback(handle);
+    };
+  }
+
+  const handle = window.setTimeout(callback, 600);
+  return () => {
+    window.clearTimeout(handle);
+  };
+}
+
 function AplInput() {
   const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
+  const [previewFocusNodeId, setPreviewFocusNodeId] = useState<string | null>(
+    null,
+  );
   const [lineJumpRequest, setLineJumpRequest] =
     useState<AplEditorLineJumpRequest | null>(null);
+  const editorPositionRef = useRef<AplEditorPosition>({
+    lineNumber: 1,
+    viewportFromLineNumber: 1,
+    viewportToLineNumber: 1,
+  });
   const {
     savedApls,
     activeAplId,
@@ -42,7 +80,11 @@ function AplInput() {
     parseErrorLineNumber,
     diagnostics,
     document,
+    collapsedBlocks,
+    graphBuildStatus,
+    graphBuildVersion,
     applyAplText,
+    buildGraphCache,
     saveActiveApl,
     setAutoSaveEnabled,
     switchApl,
@@ -61,7 +103,11 @@ function AplInput() {
       parseErrorLineNumber: state.parseErrorLineNumber,
       diagnostics: state.diagnostics,
       document: state.document,
+      collapsedBlocks: state.collapsedBlocks,
+      graphBuildStatus: state.graphBuildStatus,
+      graphBuildVersion: state.graphBuildVersion,
       applyAplText: state.applyAplText,
+      buildGraphCache: state.buildGraphCache,
       saveActiveApl: state.saveActiveApl,
       setAutoSaveEnabled: state.setAutoSaveEnabled,
       switchApl: state.switchApl,
@@ -90,6 +136,21 @@ function AplInput() {
   }, [activeTab]);
 
   useEffect(() => {
+    if (graphBuildStatus !== "stale") {
+      return;
+    }
+
+    if (activeTab === "preview") {
+      const handle = window.setTimeout(buildGraphCache, 0);
+      return () => {
+        window.clearTimeout(handle);
+      };
+    }
+
+    return scheduleIdleGraphBuild(buildGraphCache);
+  }, [activeTab, buildGraphCache, graphBuildStatus, graphBuildVersion]);
+
+  useEffect(() => {
     function handleKeyDown(event: KeyboardEvent): void {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
@@ -115,16 +176,44 @@ function AplInput() {
     }));
   }
 
+  const handleEditorPositionChange = useCallback((position: AplEditorPosition) => {
+    editorPositionRef.current = position;
+  }, []);
+
+  const handleTabChange = useCallback(
+    (value: string) => {
+      if (!isAplInputTab(value)) {
+        return;
+      }
+
+      if (value === "preview") {
+        const targetNodeId = getGraphNodeIdForSourceViewport(
+          document,
+          aplText,
+          editorPositionRef.current.viewportFromLineNumber,
+          editorPositionRef.current.viewportToLineNumber,
+          collapsedBlocks,
+        );
+        setPreviewFocusNodeId(targetNodeId);
+      }
+
+      setActiveTab(value);
+    },
+    [aplText, collapsedBlocks, document],
+  );
+
   const isPreviewActive = activeTab === "preview";
+  const writePanelClassName = [
+    "m-0 rounded-lg",
+    isPreviewActive
+      ? "pointer-events-none absolute inset-x-0 top-0 z-0 opacity-0"
+      : "relative z-10",
+  ].join(" ");
 
   return (
     <Tabs
       value={activeTab}
-      onValueChange={(value) => {
-        if (isAplInputTab(value)) {
-          setActiveTab(value);
-        }
-      }}
+      onValueChange={handleTabChange}
     >
       <div>
         <AplToolbar
@@ -143,13 +232,20 @@ function AplInput() {
         <AplModeDock />
       </div>
       <div className="relative mt-2">
-        <TabsContent value="write" forceMount className="m-0 rounded-lg">
+        <div
+          role="tabpanel"
+          aria-label="Write"
+          aria-hidden={isPreviewActive}
+          inert={isPreviewActive}
+          className={writePanelClassName}
+        >
           <div className="relative">
             <AplCodeEditor
               value={aplText}
               parseErrorLineNumber={parseErrorLineNumber}
               lineJumpRequest={lineJumpRequest}
               completionContext={completionContext}
+              onPositionChange={handleEditorPositionChange}
               onChange={applyAplText}
             />
             <EditorSaveIndicator
@@ -198,27 +294,19 @@ function AplInput() {
               </ul>
             </div>
           ) : null}
-        </TabsContent>
-        <div
-          role="tabpanel"
-          aria-label="Preview"
-          aria-hidden={!isPreviewActive}
-          className={cn(
-            "m-0 rounded-lg",
-            isPreviewActive
-              ? "relative"
-              : "pointer-events-none absolute inset-x-0 top-0 overflow-hidden opacity-0",
-          )}
-          style={
-            isPreviewActive
-              ? undefined
-              : { transform: "translateX(-200vw)" }
-          }
-        >
-          <div className="h-[72vh] w-full overflow-hidden rounded-md border border-gray-200 dark:border-white/10">
-            <Canvas />
-          </div>
         </div>
+        {isPreviewActive ? (
+          <div
+            role="tabpanel"
+            aria-label="Preview"
+            aria-hidden="false"
+            className="m-0 rounded-lg"
+          >
+            <div className="h-[72vh] w-full overflow-hidden rounded-md border border-gray-200 dark:border-white/10">
+              <Canvas initialFocusNodeId={previewFocusNodeId} />
+            </div>
+          </div>
+        ) : null}
       </div>
     </Tabs>
   );

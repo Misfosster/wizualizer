@@ -124,6 +124,14 @@ export const aplEditorTheme = EditorView.theme(
       color: "#A7C7FF",
       fontWeight: "650",
     },
+    ".lc-apl-editor-action-list-ref": {
+      color: "#F6C76B",
+      fontWeight: "650",
+    },
+    ".lc-apl-editor-action-list-ref *": {
+      color: "#F6C76B",
+      fontWeight: "650",
+    },
     ".lc-apl-editor-variable-ref--hover": {
       position: "relative",
       zIndex: "2",
@@ -139,6 +147,24 @@ export const aplEditorTheme = EditorView.theme(
       textUnderlineOffset: "0.18em",
     },
     ".lc-apl-editor-variable-ref--hover *": {
+      color: "#F8FAFC",
+      fontWeight: "700",
+    },
+    ".lc-apl-editor-action-list-ref--hover": {
+      position: "relative",
+      zIndex: "2",
+      borderRadius: "4px",
+      backgroundColor: "rgba(251, 191, 36, 0.16)",
+      boxShadow:
+        "0 0 0 1px rgba(251, 191, 36, 0.26), 0 8px 18px rgba(2, 8, 23, 0.32)",
+      color: "#F8FAFC",
+      cursor: "pointer",
+      fontWeight: "700",
+      textDecoration: "underline",
+      textDecorationColor: "rgba(251, 191, 36, 0.9)",
+      textUnderlineOffset: "0.18em",
+    },
+    ".lc-apl-editor-action-list-ref--hover *": {
       color: "#F8FAFC",
       fontWeight: "700",
     },

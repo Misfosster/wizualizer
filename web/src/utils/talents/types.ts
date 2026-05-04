@@ -93,6 +93,12 @@ export interface TalentCatalog {
   byClassSpec: Record<string, TalentSpecCatalog>;
 }
 
+export interface TalentSpecCatalogModule {
+  gameVersion: string;
+  classSpec: string;
+  catalog: TalentSpecCatalog;
+}
+
 export interface TalentSelectionResult {
   status: TalentStatus;
   selections: Record<string, number>;

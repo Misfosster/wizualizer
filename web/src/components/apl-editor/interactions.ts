@@ -1,8 +1,15 @@
 import {
   Compartment,
   EditorSelection,
+  type Extension,
 } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
+import {
+  findActionListDefinition,
+  findActionListReferenceAtPosition,
+  type ActionListReference,
+} from "./action-list-jump";
+import { createActionListReferenceHoverExtension } from "./action-list-reference-mark";
 import { createJumpTargetLineExtension } from "./jump-target";
 import {
   findNearestVariableDefinition,
@@ -28,10 +35,34 @@ interface VariableHoverOptions {
   variableHoverCompartment: Compartment;
 }
 
-interface VariableHoverState {
+interface ActionListHoverOptions {
+  view: EditorView;
+  actionListHoverCompartment: Compartment;
+}
+
+interface ReferenceHoverState {
   isModifierPressed: boolean;
   lastMouseCoords: { x: number; y: number } | null;
   hoveredReferenceKey: string | null;
+}
+
+interface ReferenceHoverHandlers {
+  handleKeyDown: (event: KeyboardEvent) => void;
+  handleKeyUp: (event: KeyboardEvent) => void;
+  handleMouseLeave: () => void;
+  handleMouseMove: (event: MouseEvent) => void;
+  reset: () => void;
+}
+
+interface ReferenceHoverHandlerOptions<TReference> {
+  view: EditorView;
+  hoverCompartment: Compartment;
+  createHoverExtension: (reference: TReference | null) => Extension;
+  findReferenceAtCoords: (
+    view: EditorView,
+    coords: { x: number; y: number },
+  ) => TReference | null;
+  getReferenceKey: (reference: TReference | null) => string | null;
 }
 
 function isPrimaryClick(event: MouseEvent): boolean {
@@ -52,6 +83,14 @@ function getVariableReferenceKey(reference: VariableReference | null): string | 
     : null;
 }
 
+function getActionListReferenceKey(
+  reference: ActionListReference | null,
+): string | null {
+  return reference
+    ? `${reference.name}:${String(reference.from)}:${String(reference.to)}`
+    : null;
+}
+
 function findVariableReferenceAtCoords(
   view: EditorView,
   coords: { x: number; y: number },
@@ -62,6 +101,21 @@ function findVariableReferenceAtCoords(
   }
 
   return findVariableReferenceAtPosition(view.state.doc.toString(), position);
+}
+
+function findActionListReferenceAtCoords(
+  view: EditorView,
+  coords: { x: number; y: number },
+): ActionListReference | null {
+  const position = view.posAtCoords(coords);
+  if (position === null) {
+    return null;
+  }
+
+  return findActionListReferenceAtPosition(
+    view.state.doc.toString(),
+    position,
+  );
 }
 
 function dispatchCursorToEnd(view: EditorView): void {
@@ -164,6 +218,58 @@ function tryJumpToVariableDefinition(
   return true;
 }
 
+function tryJumpToActionListDefinition(
+  event: MouseEvent,
+  {
+    view,
+    jumpTargetCompartment,
+    jumpTargetTimeoutRef,
+  }: EditorMouseDownOptions,
+): boolean {
+  if (!isPrimaryClick(event) || !isJumpModifierPressed(event)) {
+    return false;
+  }
+
+  const position = view.posAtCoords({
+    x: event.clientX,
+    y: event.clientY,
+  });
+  if (position === null) {
+    return false;
+  }
+
+  const text = view.state.doc.toString();
+  const reference = findActionListReferenceAtPosition(text, position);
+  if (!reference) {
+    return false;
+  }
+
+  const definition = findActionListDefinition(text, reference);
+  if (!definition) {
+    return false;
+  }
+
+  const targetLine = view.state.doc.line(definition.lineNumber);
+  event.preventDefault();
+  event.stopPropagation();
+  view.focus();
+  view.dispatch({
+    selection: EditorSelection.cursor(targetLine.from),
+    effects: [
+      EditorView.scrollIntoView(targetLine.from, { y: "center" }),
+      jumpTargetCompartment.reconfigure(
+        createJumpTargetLineExtension(definition.lineNumber),
+      ),
+    ],
+  });
+  clearJumpTargetLater(
+    view,
+    jumpTargetCompartment,
+    jumpTargetTimeoutRef,
+  );
+  return true;
+}
+
 function trySnapEmptyAreaToDocumentEnd(
   event: MouseEvent,
   view: EditorView,
@@ -186,37 +292,36 @@ export function createEditorMouseDownHandler(
       return;
     }
 
+    if (tryJumpToActionListDefinition(event, options)) {
+      return;
+    }
+
     trySnapEmptyAreaToDocumentEnd(event, options.view);
   };
 }
 
-export function createVariableHoverHandlers({
+function createReferenceHoverHandlers<TReference>({
   view,
-  variableHoverCompartment,
-}: VariableHoverOptions): {
-  handleKeyDown: (event: KeyboardEvent) => void;
-  handleKeyUp: (event: KeyboardEvent) => void;
-  handleMouseLeave: () => void;
-  handleMouseMove: (event: MouseEvent) => void;
-  reset: () => void;
-} {
-  const state: VariableHoverState = {
+  hoverCompartment,
+  createHoverExtension,
+  findReferenceAtCoords,
+  getReferenceKey,
+}: ReferenceHoverHandlerOptions<TReference>): ReferenceHoverHandlers {
+  const state: ReferenceHoverState = {
     isModifierPressed: false,
     lastMouseCoords: null,
     hoveredReferenceKey: null,
   };
 
-  function updateHover(reference: VariableReference | null): void {
-    const nextKey = getVariableReferenceKey(reference);
+  function updateHover(reference: TReference | null): void {
+    const nextKey = getReferenceKey(reference);
     if (nextKey === state.hoveredReferenceKey) {
       return;
     }
 
     state.hoveredReferenceKey = nextKey;
     view.dispatch({
-      effects: variableHoverCompartment.reconfigure(
-        createVariableReferenceHoverExtension(reference),
-      ),
+      effects: hoverCompartment.reconfigure(createHoverExtension(reference)),
     });
   }
 
@@ -226,7 +331,7 @@ export function createVariableHoverHandlers({
       return;
     }
 
-    updateHover(findVariableReferenceAtCoords(view, state.lastMouseCoords));
+    updateHover(findReferenceAtCoords(view, state.lastMouseCoords));
   }
 
   function reset(): void {
@@ -263,4 +368,30 @@ export function createVariableHoverHandlers({
     },
     reset,
   };
+}
+
+export function createVariableHoverHandlers({
+  view,
+  variableHoverCompartment,
+}: VariableHoverOptions): ReferenceHoverHandlers {
+  return createReferenceHoverHandlers({
+    view,
+    hoverCompartment: variableHoverCompartment,
+    createHoverExtension: createVariableReferenceHoverExtension,
+    findReferenceAtCoords: findVariableReferenceAtCoords,
+    getReferenceKey: getVariableReferenceKey,
+  });
+}
+
+export function createActionListHoverHandlers({
+  view,
+  actionListHoverCompartment,
+}: ActionListHoverOptions): ReferenceHoverHandlers {
+  return createReferenceHoverHandlers({
+    view,
+    hoverCompartment: actionListHoverCompartment,
+    createHoverExtension: createActionListReferenceHoverExtension,
+    findReferenceAtCoords: findActionListReferenceAtCoords,
+    getReferenceKey: getActionListReferenceKey,
+  });
 }

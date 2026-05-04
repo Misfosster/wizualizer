@@ -17,12 +17,12 @@ import {
 import type { TraitRow } from "./parse-trait-data";
 
 /**
- * Group rows from `parseTraitData` into per-class JSON catalogs and
- * write them to `web/src/data/talents/`.
+ * Group rows from `parseTraitData` into per-class legacy catalogs and
+ * per-spec runtime catalogs under `web/src/data/talents/`.
  *
  * Per-class file shape matches `TalentCatalog` with a single class in
- * `byClassSpec`, so the runtime loader can dynamic-import one file per
- * class and keep the initial bundle small.
+ * `byClassSpec`. The browser runtime uses the `specs/` files so opening one
+ * spec does not import the whole class catalog.
  */
 
 export interface EmitCatalogOptions {
@@ -51,6 +51,8 @@ export function emitCatalog(
   options: EmitCatalogOptions,
 ): EmitCatalogResult {
   clearGeneratedCatalogs(options.outDir);
+  const specOutDir = join(options.outDir, "specs");
+  clearGeneratedCatalogs(specOutDir);
 
   const warnings: string[] = [];
   const classesWritten: string[] = [];
@@ -70,6 +72,19 @@ export function emitCatalog(
       const { catalog, nodes } = buildSpecCatalog(classRows, specEntry.id, warnings);
       const key = `${classEntry.slug}/${specEntry.slug}`;
       byClassSpec[key] = catalog;
+      writeFileSync(
+        join(specOutDir, `${classEntry.slug}__${specEntry.slug}.json`),
+        `${JSON.stringify(
+          {
+            gameVersion: options.gameVersion,
+            classSpec: key,
+            catalog,
+          },
+          null,
+          2,
+        )}\n`,
+        "utf8",
+      );
       specCount++;
       nodeCount += nodes;
     }

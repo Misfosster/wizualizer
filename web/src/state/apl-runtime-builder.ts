@@ -30,6 +30,10 @@ export interface RuntimeEditorState {
   collapsedActions: Set<string>;
   nodes: GraphFlowNode[];
   edges: Edge[];
+  graphBuildStatus: "ready" | "stale";
+  graphBuildVersion: number;
+  graphBuiltVersion: number;
+  shouldAutoCollapseOnNextGraphBuild: boolean;
   talentRenderMode: TalentRenderMode;
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   talentSummary: TalentRenderSummary | null;
@@ -85,6 +89,7 @@ export function buildRuntimeStateForApl(
     talentRenderMode,
     EMPTY_SELECTIONS,
     conditionOverrides,
+    { buildGraph: false },
   );
 
   const initialSelections = decodeSelections(initialState.document);
@@ -98,13 +103,19 @@ export function buildRuntimeStateForApl(
         initialSelections,
         conditionOverrides,
         initialState.diagnostics,
+        { buildGraph: false },
       )
     : initialState;
+  const initialGraphStatus = initialDerived.document ? "stale" : "ready";
 
   if (!initialDerived.parseError || !lastGoodText) {
     return withSemanticDiagnostics({
       aplText,
       ...initialDerived,
+      graphBuildStatus: initialGraphStatus,
+      graphBuildVersion: initialDerived.document ? 1 : 0,
+      graphBuiltVersion: 0,
+      shouldAutoCollapseOnNextGraphBuild: true,
       talentRenderMode,
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
@@ -120,11 +131,16 @@ export function buildRuntimeStateForApl(
     talentRenderMode,
     EMPTY_SELECTIONS,
     conditionOverrides,
+    { buildGraph: false },
   );
   if (fallbackState.parseError) {
     return withSemanticDiagnostics({
       aplText,
       ...initialDerived,
+      graphBuildStatus: initialGraphStatus,
+      graphBuildVersion: initialDerived.document ? 1 : 0,
+      graphBuiltVersion: 0,
+      shouldAutoCollapseOnNextGraphBuild: true,
       talentRenderMode,
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
@@ -143,6 +159,7 @@ export function buildRuntimeStateForApl(
         fallbackSelections,
         conditionOverrides,
         fallbackState.diagnostics,
+        { buildGraph: false },
       )
     : fallbackState;
 
@@ -152,6 +169,10 @@ export function buildRuntimeStateForApl(
     lastGoodText,
     parseError: initialDerived.parseError,
     parseErrorLineNumber: initialDerived.parseErrorLineNumber,
+    graphBuildStatus: fallbackDerived.document ? "stale" : "ready",
+    graphBuildVersion: fallbackDerived.document ? 1 : 0,
+    graphBuiltVersion: 0,
+    shouldAutoCollapseOnNextGraphBuild: true,
     talentRenderMode,
     talentSelectionsByProfile: fallbackSelections,
     conditionOverrides,
@@ -171,6 +192,10 @@ export function snapshotFallback(
     | "collapsedActions"
     | "nodes"
     | "edges"
+    | "graphBuildStatus"
+    | "graphBuildVersion"
+    | "graphBuiltVersion"
+    | "shouldAutoCollapseOnNextGraphBuild"
     | "talentSummary"
   >,
 ): DerivedEditorState {

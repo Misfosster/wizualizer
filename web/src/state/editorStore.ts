@@ -71,6 +71,7 @@ interface EditorState extends RuntimeEditorState {
   duplicateApl: (aplId: string) => void;
   renameApl: (aplId: string, name: string) => void;
   deleteApl: (aplId: string) => void;
+  buildGraphCache: () => void;
   toggleActionCollapse: (actionId: string) => void;
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
@@ -90,6 +91,7 @@ type EditorActions =
   | "duplicateApl"
   | "renameApl"
   | "deleteApl"
+  | "buildGraphCache"
   | "toggleActionCollapse"
   | "toggleBlockCollapse"
   | "toggleAllBlocksCollapse"
@@ -124,6 +126,49 @@ function buildRuntimeStateForAplWithOverrideMigration(
     talentRenderMode,
     migratedOverrides,
   );
+}
+
+const INITIAL_AUTO_COLLAPSE_ACTION_THRESHOLD = 160;
+
+function countDocumentActions(document: NonNullable<RuntimeEditorState["document"]>): number {
+  return document.profiles.reduce(
+    (profileTotal, profile) =>
+      profileTotal +
+      profile.blocks.reduce(
+        (blockTotal, block) => blockTotal + block.actions.length,
+        0,
+      ),
+    0,
+  );
+}
+
+function shouldAutoCollapseInitialGraph(
+  document: NonNullable<RuntimeEditorState["document"]>,
+): boolean {
+  return countDocumentActions(document) >= INITIAL_AUTO_COLLAPSE_ACTION_THRESHOLD;
+}
+
+function markGraphStale(
+  state: EditorState,
+  document: RuntimeEditorState["document"],
+): Pick<
+  RuntimeEditorState,
+  | "nodes"
+  | "edges"
+  | "talentSummary"
+  | "graphBuildStatus"
+  | "graphBuildVersion"
+  | "graphBuiltVersion"
+> {
+  const nextVersion = state.graphBuildVersion + 1;
+  return {
+    nodes: [],
+    edges: [],
+    talentSummary: null,
+    graphBuildStatus: document ? "stale" : "ready",
+    graphBuildVersion: nextVersion,
+    graphBuiltVersion: document ? state.graphBuiltVersion : nextVersion,
+  };
 }
 
 /**
@@ -172,6 +217,14 @@ export const useEditorStore = create<EditorState>((set, get) => {
     if (selectionsEqual(state.talentSelectionsByProfile, nextSelections)) {
       return;
     }
+    if (state.graphBuildStatus !== "ready") {
+      set({
+        talentSelectionsByProfile: nextSelections,
+        graphBuildStatus: "stale",
+        graphBuildVersion: state.graphBuildVersion + 1,
+      });
+      return;
+    }
     const rebuilt = rebuildGraph(state.document, {
       collapsedBlocks: state.collapsedBlocks,
       collapsedActions: state.collapsedActions,
@@ -182,6 +235,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
     set({
       ...rebuilt,
       talentSelectionsByProfile: nextSelections,
+      graphBuildStatus: "ready",
+      graphBuildVersion: state.graphBuildVersion + 1,
+      graphBuiltVersion: state.graphBuildVersion + 1,
     });
   });
 
@@ -199,6 +255,14 @@ export const useEditorStore = create<EditorState>((set, get) => {
       (classSlug, specSlug) =>
         semanticCatalogLoader.lookupSpec(classSlug, specSlug),
     );
+    if (state.graphBuildStatus !== "ready") {
+      set({
+        diagnostics: [...syntaxDiagnostics, ...semanticDiagnostics],
+        graphBuildStatus: "stale",
+        graphBuildVersion: state.graphBuildVersion + 1,
+      });
+      return;
+    }
     const rebuilt = rebuildGraph(state.document, {
       collapsedBlocks: state.collapsedBlocks,
       collapsedActions: state.collapsedActions,
@@ -209,6 +273,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
     set({
       ...rebuilt,
       diagnostics: [...syntaxDiagnostics, ...semanticDiagnostics],
+      graphBuildStatus: "ready",
+      graphBuildVersion: state.graphBuildVersion + 1,
+      graphBuiltVersion: state.graphBuildVersion + 1,
     });
   });
 
@@ -227,12 +294,18 @@ export const useEditorStore = create<EditorState>((set, get) => {
           // produced a fresh document.
           state.talentSelectionsByProfile,
           state.conditionOverrides,
+          { buildGraph: false },
         );
 
         if (!derived.document || derived.document === state.document) {
+          const graphState =
+            derived.parseError === null
+              ? markGraphStale(state, derived.document)
+              : {};
           const nextState = {
             aplText: text,
             ...derived,
+            ...graphState,
           };
           if (!state.autoSaveEnabled) {
             return {
@@ -277,6 +350,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
             nextSelections,
             nextConditionOverrides,
             derived.diagnostics,
+            { buildGraph: false },
           ),
         );
         const nextState = {
@@ -284,6 +358,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           ...rebuilt,
           talentSelectionsByProfile: nextSelections,
           conditionOverrides: nextConditionOverrides,
+          ...markGraphStale(state, rebuilt.document),
         };
         if (!state.autoSaveEnabled) {
           return {
@@ -473,6 +548,48 @@ export const useEditorStore = create<EditorState>((set, get) => {
         };
       });
     },
+    buildGraphCache: () => {
+      set((state) => {
+        if (
+          state.graphBuildStatus === "ready" &&
+          state.graphBuiltVersion === state.graphBuildVersion
+        ) {
+          return {};
+        }
+        if (!state.document) {
+          return {
+            nodes: [],
+            edges: [],
+            talentSummary: null,
+            graphBuildStatus: "ready",
+            graphBuiltVersion: state.graphBuildVersion,
+            shouldAutoCollapseOnNextGraphBuild: false,
+          };
+        }
+
+        const shouldAutoCollapse =
+          state.shouldAutoCollapseOnNextGraphBuild &&
+          shouldAutoCollapseInitialGraph(state.document);
+        const collapsedBlocks = shouldAutoCollapse
+          ? getDocumentBlockIds(state.document)
+          : state.collapsedBlocks;
+        const graph = rebuildGraph(state.document, {
+          collapsedBlocks,
+          collapsedActions: state.collapsedActions,
+          talentRenderMode: state.talentRenderMode,
+          talentSelectionsByProfile: state.talentSelectionsByProfile,
+          conditionOverrides: state.conditionOverrides,
+        });
+
+        return {
+          collapsedBlocks,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuiltVersion: state.graphBuildVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
+      });
+    },
     toggleActionCollapse: (actionId) => {
       set((state) => {
         const collapsedActions = new Set(state.collapsedActions);
@@ -493,7 +610,15 @@ export const useEditorStore = create<EditorState>((set, get) => {
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
-        return { collapsedActions, ...graph };
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          collapsedActions,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
       });
     },
     toggleBlockCollapse: (blockId) => {
@@ -526,7 +651,16 @@ export const useEditorStore = create<EditorState>((set, get) => {
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
-        return { collapsedBlocks, collapsedActions, ...graph };
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          collapsedBlocks,
+          collapsedActions,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
       });
     },
     toggleAllBlocksCollapse: () => {
@@ -554,7 +688,16 @@ export const useEditorStore = create<EditorState>((set, get) => {
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
-        return { collapsedBlocks, collapsedActions, ...graph };
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          collapsedBlocks,
+          collapsedActions,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
       });
     },
     setTalentRenderMode: (mode) => {
@@ -573,7 +716,15 @@ export const useEditorStore = create<EditorState>((set, get) => {
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
-        return { talentRenderMode: mode, ...graph };
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          talentRenderMode: mode,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
       });
     },
     setConditionOverrides: (overrides) => {
@@ -595,7 +746,15 @@ export const useEditorStore = create<EditorState>((set, get) => {
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: nextOverrides,
         });
-        return { conditionOverrides: nextOverrides, ...graph };
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          conditionOverrides: nextOverrides,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
       });
     },
     requestGraphJumpToNode: (nodeId) => {

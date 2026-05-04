@@ -25,14 +25,19 @@ import {
 import { createErrorLineExtension } from "./error-line";
 import { createAplFoldingExtension } from "./folding";
 import {
+  createActionListHoverHandlers,
   clearJumpTargetLater,
   createEditorMouseDownHandler,
   createVariableHoverHandlers,
 } from "./interactions";
+import {
+  createActionListReferenceHoverExtension,
+  createActionListReferenceMarksExtension,
+} from "./action-list-reference-mark";
 import { createJumpTargetLineExtension } from "./jump-target";
 import { aplLanguage } from "./language";
 import { aplEditorTheme, aplHighlightStyle } from "./theme";
-import type { AplCodeEditorProps } from "./types";
+import type { AplCodeEditorProps, AplEditorPosition } from "./types";
 import {
   createVariableReferenceHoverExtension,
   createVariableReferenceMarksExtension,
@@ -42,12 +47,49 @@ interface ChangeRef {
   current: (value: string) => void;
 }
 
+interface PositionChangeRef {
+  current: ((position: AplEditorPosition) => void) | undefined;
+}
+
+function getEditorPosition(view: EditorView): AplEditorPosition {
+  const selectionLineNumber = view.state.doc.lineAt(
+    view.state.selection.main.head,
+  ).number;
+  const firstVisibleLine = view.viewportLineBlocks[0];
+  const lastVisibleLine =
+    view.viewportLineBlocks[view.viewportLineBlocks.length - 1];
+  const viewportFromLineNumber = view.state.doc.lineAt(
+    firstVisibleLine.from,
+  ).number;
+  const viewportToLineNumber = view.state.doc.lineAt(lastVisibleLine.to).number;
+  const lineNumber =
+    selectionLineNumber >= viewportFromLineNumber &&
+    selectionLineNumber <= viewportToLineNumber
+      ? selectionLineNumber
+      : viewportFromLineNumber;
+
+  return {
+    lineNumber,
+    viewportFromLineNumber,
+    viewportToLineNumber,
+  };
+}
+
+function notifyEditorPosition(
+  view: EditorView,
+  onPositionChange: PositionChangeRef["current"],
+): void {
+  onPositionChange?.(getEditorPosition(view));
+}
+
 function createEditorExtensions(
   errorLineCompartment: Compartment,
   jumpTargetCompartment: Compartment,
   variableHoverCompartment: Compartment,
+  actionListHoverCompartment: Compartment,
   completionContextCompartment: Compartment,
   onChangeRef: ChangeRef,
+  onPositionChangeRef: PositionChangeRef,
   parseErrorLineNumber: number | null,
   completionContext: AplCodeEditorProps["completionContext"],
 ): Extension[] {
@@ -66,6 +108,7 @@ function createEditorExtensions(
     createAplCompletionExtension(),
     createAplFoldingExtension(),
     createVariableReferenceMarksExtension(),
+    createActionListReferenceMarksExtension(),
     placeholder("Paste APL..."),
     EditorState.tabSize.of(2),
     EditorView.contentAttributes.of({
@@ -79,6 +122,9 @@ function createEditorExtensions(
       if (update.docChanged) {
         onChangeRef.current(update.state.doc.toString());
       }
+      if (update.docChanged || update.selectionSet || update.viewportChanged) {
+        notifyEditorPosition(update.view, onPositionChangeRef.current);
+      }
     }),
     keymap.of([...defaultKeymap, ...historyKeymap]),
     errorLineCompartment.of(
@@ -87,6 +133,9 @@ function createEditorExtensions(
     jumpTargetCompartment.of(createJumpTargetLineExtension(null)),
     variableHoverCompartment.of(
       createVariableReferenceHoverExtension(null),
+    ),
+    actionListHoverCompartment.of(
+      createActionListReferenceHoverExtension(null),
     ),
     completionContextCompartment.of(
       createAplCompletionContextExtension(completionContext),
@@ -99,6 +148,7 @@ export function AplCodeEditor({
   parseErrorLineNumber,
   lineJumpRequest,
   completionContext,
+  onPositionChange,
   onChange,
 }: AplCodeEditorProps) {
   const parentRef = useRef<HTMLDivElement | null>(null);
@@ -106,16 +156,22 @@ export function AplCodeEditor({
   const initialValueRef = useRef(value);
   const initialCompletionContextRef = useRef(completionContext);
   const onChangeRef = useRef(onChange);
+  const onPositionChangeRef = useRef(onPositionChange);
   const parseErrorLineNumberRef = useRef(parseErrorLineNumber);
   const jumpTargetTimeoutRef = useRef<number | null>(null);
   const errorLineCompartment = useMemo(() => new Compartment(), []);
   const jumpTargetCompartment = useMemo(() => new Compartment(), []);
   const variableHoverCompartment = useMemo(() => new Compartment(), []);
+  const actionListHoverCompartment = useMemo(() => new Compartment(), []);
   const completionContextCompartment = useMemo(() => new Compartment(), []);
 
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
+
+  useEffect(() => {
+    onPositionChangeRef.current = onPositionChange;
+  }, [onPositionChange]);
 
   useEffect(() => {
     parseErrorLineNumberRef.current = parseErrorLineNumber;
@@ -135,8 +191,10 @@ export function AplCodeEditor({
           errorLineCompartment,
           jumpTargetCompartment,
           variableHoverCompartment,
+          actionListHoverCompartment,
           completionContextCompartment,
           onChangeRef,
+          onPositionChangeRef,
           parseErrorLineNumberRef.current,
           initialCompletionContextRef.current,
         ),
@@ -151,14 +209,30 @@ export function AplCodeEditor({
       view,
       variableHoverCompartment,
     });
+    const actionListHoverHandlers = createActionListHoverHandlers({
+      view,
+      actionListHoverCompartment,
+    });
     view.dom.addEventListener("mousedown", handleMouseDown);
     view.dom.addEventListener("mouseleave", variableHoverHandlers.handleMouseLeave);
+    view.dom.addEventListener(
+      "mouseleave",
+      actionListHoverHandlers.handleMouseLeave,
+    );
     view.dom.addEventListener("mousemove", variableHoverHandlers.handleMouseMove);
+    view.dom.addEventListener(
+      "mousemove",
+      actionListHoverHandlers.handleMouseMove,
+    );
     window.addEventListener("blur", variableHoverHandlers.reset);
+    window.addEventListener("blur", actionListHoverHandlers.reset);
     window.addEventListener("keydown", variableHoverHandlers.handleKeyDown);
+    window.addEventListener("keydown", actionListHoverHandlers.handleKeyDown);
     window.addEventListener("keyup", variableHoverHandlers.handleKeyUp);
+    window.addEventListener("keyup", actionListHoverHandlers.handleKeyUp);
 
     viewRef.current = view;
+    notifyEditorPosition(view, onPositionChangeRef.current);
 
     return () => {
       view.dom.removeEventListener("mousedown", handleMouseDown);
@@ -167,12 +241,26 @@ export function AplCodeEditor({
         variableHoverHandlers.handleMouseLeave,
       );
       view.dom.removeEventListener(
+        "mouseleave",
+        actionListHoverHandlers.handleMouseLeave,
+      );
+      view.dom.removeEventListener(
         "mousemove",
         variableHoverHandlers.handleMouseMove,
       );
+      view.dom.removeEventListener(
+        "mousemove",
+        actionListHoverHandlers.handleMouseMove,
+      );
       window.removeEventListener("blur", variableHoverHandlers.reset);
+      window.removeEventListener("blur", actionListHoverHandlers.reset);
       window.removeEventListener("keydown", variableHoverHandlers.handleKeyDown);
+      window.removeEventListener(
+        "keydown",
+        actionListHoverHandlers.handleKeyDown,
+      );
       window.removeEventListener("keyup", variableHoverHandlers.handleKeyUp);
+      window.removeEventListener("keyup", actionListHoverHandlers.handleKeyUp);
       if (jumpTargetTimeoutRef.current !== null) {
         window.clearTimeout(jumpTargetTimeoutRef.current);
         jumpTargetTimeoutRef.current = null;
@@ -182,6 +270,7 @@ export function AplCodeEditor({
     };
   }, [
     completionContextCompartment,
+    actionListHoverCompartment,
     errorLineCompartment,
     jumpTargetCompartment,
     variableHoverCompartment,
