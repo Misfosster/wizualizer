@@ -22,12 +22,14 @@ const CLASS_KEYWORDS = [
   "evoker",
 ] as const;
 
-// e.g. shaman="MyProfile", mage="Fire Mage", etc.
+const PROFILE_NAME_RE_SOURCE = String.raw`(?:"([^"]+)"|(\S+))`;
+
+// e.g. shaman="MyProfile", mage="Fire Mage", rogue=Default, etc.
 const CLASS_PROFILE_RE = new RegExp(
-  `^(${CLASS_KEYWORDS.join("|")})="([^"]+)"$`,
+  `^(${CLASS_KEYWORDS.join("|")})=${PROFILE_NAME_RE_SOURCE}$`,
 );
-// copy="Name" starts a new profile cloned from the previous one
-const COPY_PROFILE_RE = /^copy="([^"]+)"$/;
+// copy="Name" or copy=Name starts a new profile cloned from the previous one
+const COPY_PROFILE_RE = new RegExp(`^copy=${PROFILE_NAME_RE_SOURCE}$`);
 // spec=<spec_name>, e.g. spec=enhancement
 const SPEC_LINE_RE = /^spec=(\S+)$/;
 // talents=<export_string>, e.g. talents=CIcAAAAA...
@@ -123,7 +125,7 @@ function parseProfileDefinition(line: string): AplProfile | null {
   }
 
   const className = match[1];
-  const profileName = match[2];
+  const profileName = getProfileName(match, 2, 3);
   if (!className || !profileName) {
     return null;
   }
@@ -131,12 +133,26 @@ function parseProfileDefinition(line: string): AplProfile | null {
   return createProfile(profileName, className, false);
 }
 
+function getProfileName(
+  match: RegExpExecArray,
+  quotedIndex: number,
+  unquotedIndex: number,
+): string | null {
+  const quotedName = match[quotedIndex];
+  if (quotedName) {
+    return quotedName;
+  }
+
+  const unquotedName = match[unquotedIndex];
+  return unquotedName || null;
+}
+
 function parseCopyDefinition(
   line: string,
   previousProfile: AplProfile | null,
 ): AplProfile | null {
   const match = COPY_PROFILE_RE.exec(line);
-  const profileName = match?.[1];
+  const profileName = match ? getProfileName(match, 1, 2) : null;
   if (!profileName) {
     return null;
   }

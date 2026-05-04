@@ -585,13 +585,14 @@ function buildActionGraph(
   let didAlignActionToCondition = false;
   const shouldBuildChildren =
     actionNodeData.hasChildren && !actionNodeData.isCollapsed;
+  const expressionLaneX = gridPoint("expression", 0).x;
   const firstConditionEntryX =
-    renderedConditionDetails.length > 0
+    renderedTargetRankingDetails.length > 0 && renderedConditionDetails.length > 0
       ? getConditionEntryX(
           renderedConditionDetails[0].segment,
-          gridPoint("expression", 0).x,
+          expressionLaneX,
         )
-      : gridPoint("expression", 0).x;
+      : expressionLaneX;
 
   function alignActionToDetailEntry(
     detailOrigin: Point,

@@ -196,6 +196,45 @@ test("remembers the last active editor tab", async ({ page }) => {
   );
 });
 
+test("keeps the warmed preview canvas hidden while writing", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, VALID_APL);
+
+  const previewPanel = page.getByRole("tabpanel", {
+    name: "Preview",
+    includeHidden: true,
+  });
+  await expect(previewPanel).toHaveAttribute("aria-hidden", "true");
+  await expect(previewPanel).toHaveCSS("opacity", "0");
+  await expect(previewPanel).toHaveCSS("pointer-events", "none");
+});
+
+test("keeps editor undo history across a Write Preview Write roundtrip", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await fillAplEditor(page, VALID_APL);
+
+  const editor = page.getByTestId("apl-code-editor-input");
+  await editor.click();
+  await page.keyboard.press("Control+End");
+  await page.keyboard.type("\nactions+=/bloodlust");
+  await expect(editor).toContainText("bloodlust");
+
+  await page.getByRole("tab", { name: "Preview" }).click();
+  await expect(page.getByTestId("rf__node-action__0__actions__1")).toContainText(
+    "bloodlust",
+  );
+
+  await page.getByRole("tab", { name: "Write" }).click();
+  await editor.click();
+  await page.keyboard.press("Control+Z");
+
+  await expect(editor).not.toContainText("bloodlust");
+  await page.getByRole("tab", { name: "Preview" }).click();
+  await expect(page.getByTestId("rf__node-action__0__actions__1")).toHaveCount(0);
+});
+
 test("saves named APLs and switches between them", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VALID_APL);
@@ -498,60 +537,63 @@ test("highlights a restored parse error when a saved fallback graph exists", asy
 test("folds action blocks and copied profile sections in the editor", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, FOLDING_APL);
+  const editor = page.getByTestId("apl-code-editor-input");
 
   await clickFoldMarkerForLine(page, "actions.precombat=windfury_weapon");
-  await expect(page.getByText("flametongue_weapon")).toHaveCount(0);
+  await expect(editor.getByText("flametongue_weapon")).toHaveCount(0);
   await expect(page.locator(".cm-foldPlaceholder")).toBeVisible();
 
   await clickFoldMarkerForLine(page, "actions.precombat=windfury_weapon");
-  await expect(page.getByText("flametongue_weapon")).toBeVisible();
+  await expect(editor.getByText("flametongue_weapon")).toBeVisible();
 
   await clickFoldMarkerForLine(
     page,
     "head=locus_of_the_primal_core,id=249979",
   );
-  await expect(page.getByText("amulet_of_the_abyssal_hymn")).toHaveCount(0);
-  await expect(page.getByText("gaze_of_the_alnseer")).toHaveCount(0);
+  await expect(editor.getByText("amulet_of_the_abyssal_hymn")).toHaveCount(0);
+  await expect(editor.getByText("gaze_of_the_alnseer")).toHaveCount(0);
 
   await clickFoldMarkerForLine(
     page,
     'profileset."AoE"+=talents=example_aoe',
   );
-  await expect(page.getByText("example_trinket")).toHaveCount(0);
+  await expect(editor.getByText("example_trinket")).toHaveCount(0);
 
   await clickFoldMarkerForLine(page, 'copy="Second Profile"');
-  await expect(page.getByText("stormstrike")).toHaveCount(0);
-  await expect(page.getByText("lava_lash")).toHaveCount(0);
+  await expect(editor.getByText("stormstrike")).toHaveCount(0);
+  await expect(editor.getByText("lava_lash")).toHaveCount(0);
 });
 
 test("folding a section keeps trailing comments and blank lines for the next section visible", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, FOLDING_APL_WITH_COMMENTS);
+  const editor = page.getByTestId("apl-code-editor-input");
 
   await clickFoldMarkerForLine(page, "actions.aoe=voltaic_blaze,if=active_enemies>1");
 
   // The other action inside the aoe block is hidden and a placeholder is shown.
-  await expect(page.getByText("surging_totem")).toHaveCount(0);
+  await expect(editor.getByText("surging_totem")).toHaveCount(0);
   await expect(page.locator(".cm-foldPlaceholder")).toBeVisible();
 
   // The header comment for the next section and the next section's actions
   // belong to that next section, not to the folded one, so they remain visible.
-  await expect(page.getByText("# Buff action priority list")).toBeVisible();
-  await expect(page.getByText("algethar_puzzle_box")).toBeVisible();
-  await expect(page.getByText("blood_fury")).toBeVisible();
+  await expect(editor.getByText("# Buff action priority list")).toBeVisible();
+  await expect(editor.getByText("algethar_puzzle_box")).toBeVisible();
+  await expect(editor.getByText("blood_fury")).toBeVisible();
 });
 
 test("variable references are emphasized and show ctrl-hover affordance", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VARIABLE_JUMP_APL);
+  const editor = page.getByTestId("apl-code-editor-input");
 
-  await expect(page.locator(".lc-apl-editor-variable-ref")).toContainText(
+  await expect(editor.locator(".lc-apl-editor-variable-ref")).toContainText(
     "variable.aoe_threshold",
   );
 
   await page.keyboard.down("Control");
-  await page.getByText("variable.aoe_threshold").hover();
-  await expect(page.locator(".lc-apl-editor-variable-ref--hover")).toContainText(
+  await editor.getByText("variable.aoe_threshold").hover();
+  await expect(editor.locator(".lc-apl-editor-variable-ref--hover")).toContainText(
     "variable.aoe_threshold",
   );
   await page.keyboard.up("Control");
@@ -560,8 +602,9 @@ test("variable references are emphasized and show ctrl-hover affordance", async 
 test("ctrl-clicking a variable reference jumps to its definition", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VARIABLE_JUMP_APL);
+  const editor = page.getByTestId("apl-code-editor-input");
 
-  await page.getByText("variable.aoe_threshold").click({
+  await editor.getByText("variable.aoe_threshold").click({
     modifiers: ["Control"],
   });
 
@@ -573,8 +616,9 @@ test("ctrl-clicking a variable reference jumps to its definition", async ({ page
 test("ctrl-clicking a variable reference uses the nearest earlier definition", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, MULTIPLE_VARIABLE_DEFINITION_APL);
+  const editor = page.getByTestId("apl-code-editor-input");
 
-  await page.getByText("variable.foo").nth(1).click({
+  await editor.getByText("variable.foo").nth(1).click({
     modifiers: ["Control"],
   });
 
@@ -589,8 +633,9 @@ test("ctrl-clicking an unresolved variable reference does not jump", async ({ pa
     page,
     'shaman="Demo Profile"\nactions+=/stormstrike,if=variable.missing>0',
   );
+  const editor = page.getByTestId("apl-code-editor-input");
 
-  await page.getByText("variable.missing").click({
+  await editor.getByText("variable.missing").click({
     modifiers: ["Control"],
   });
 

@@ -1,6 +1,7 @@
 import "@styles/tailwind.css";
 import { useEffect, useMemo, useState } from "react";
 import { Tabs, TabsContent } from "@components/ui/tabs";
+import { cn } from "@/lib/utils";
 import { useShallow } from "zustand/react/shallow";
 import { AplCodeEditor } from "@components/apl-editor/AplCodeEditor";
 import type { AplEditorLineJumpRequest } from "@components/apl-editor/types";
@@ -114,6 +115,8 @@ function AplInput() {
     }));
   }
 
+  const isPreviewActive = activeTab === "preview";
+
   return (
     <Tabs
       value={activeTab}
@@ -139,8 +142,8 @@ function AplInput() {
         />
         <AplModeDock />
       </div>
-      <div className="mt-2">
-        <TabsContent value="write" className="m-0 rounded-lg">
+      <div className="relative mt-2">
+        <TabsContent value="write" forceMount className="m-0 rounded-lg">
           <div className="relative">
             <AplCodeEditor
               value={aplText}
@@ -196,11 +199,26 @@ function AplInput() {
             </div>
           ) : null}
         </TabsContent>
-        <TabsContent value="preview" className="m-0 rounded-lg">
+        <div
+          role="tabpanel"
+          aria-label="Preview"
+          aria-hidden={!isPreviewActive}
+          className={cn(
+            "m-0 rounded-lg",
+            isPreviewActive
+              ? "relative"
+              : "pointer-events-none absolute inset-x-0 top-0 overflow-hidden opacity-0",
+          )}
+          style={
+            isPreviewActive
+              ? undefined
+              : { transform: "translateX(-200vw)" }
+          }
+        >
           <div className="h-[72vh] w-full overflow-hidden rounded-md border border-gray-200 dark:border-white/10">
             <Canvas />
           </div>
-        </TabsContent>
+        </div>
       </div>
     </Tabs>
   );

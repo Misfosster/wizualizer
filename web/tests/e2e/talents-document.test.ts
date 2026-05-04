@@ -32,6 +32,23 @@ test("document parser captures spec= for the current profile", () => {
   });
 });
 
+test("document parser accepts unquoted class profile names", () => {
+  const doc = parseOrThrow(
+    [
+      "rogue=Default",
+      "spec=subtlety",
+      "actions+=/backstab",
+    ].join("\n"),
+  );
+
+  expect(doc.profiles).toHaveLength(1);
+  expect(doc.profiles[0]).toMatchObject({
+    name: "Default",
+    className: "rogue",
+    specName: "subtlety",
+  });
+});
+
 test("document parser captures talents= export string verbatim", () => {
   const doc = parseOrThrow(
     [
@@ -85,6 +102,23 @@ test("copy= snapshots className, specName, and talentExport from the previous pr
     className: "shaman",
     specName: "enhancement",
     talentExport: "ORIGINAL",
+  });
+});
+
+test("copy= accepts unquoted profile names", () => {
+  const doc = parseOrThrow(
+    [
+      "rogue=Default",
+      "spec=subtlety",
+      "copy=Custom",
+    ].join("\n"),
+  );
+
+  expect(doc.profiles).toHaveLength(2);
+  expect(doc.profiles[1]).toMatchObject({
+    name: "Custom",
+    className: "rogue",
+    specName: "subtlety",
   });
 });
 

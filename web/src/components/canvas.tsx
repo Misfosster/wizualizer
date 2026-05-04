@@ -24,8 +24,10 @@ const defaultEdgeOptions = {
     offset: 20,
   },
 } as const;
+const initialFitViewOptions = { padding: 0.35, maxZoom: 1 } as const;
 const bulkToggleFitViewOptions = { padding: 0.35, maxZoom: 1 } as const;
 const firstNodeViewportAnchor = { x: 0.33, y: 0.25 } as const;
+const INITIAL_FIT_VIEW_NODE_LIMIT = 1000;
 const canvasBackground =
   "radial-gradient(circle at 35% 10%, #3b414f 0%, #2d313c 38%, #222733 78%)";
 const reactFlowStyle = {
@@ -34,6 +36,38 @@ const reactFlowStyle = {
   background: canvasBackground,
 } as const;
 const reactFlowProOptions = { hideAttribution: true } as const;
+
+function focusFirstNode(
+  flow: ReactFlowInstance<GraphFlowNode>,
+  canvas: HTMLDivElement | null,
+): void {
+  const firstNode = flow.getNodes()[0];
+  if (!canvas) {
+    void flow.fitView(initialFitViewOptions);
+    return;
+  }
+
+  const anchorX = canvas.clientWidth * firstNodeViewportAnchor.x;
+  const anchorY = canvas.clientHeight * firstNodeViewportAnchor.y;
+  void flow.setViewport({
+    x: anchorX - firstNode.position.x,
+    y: anchorY - firstNode.position.y,
+    zoom: 1,
+  });
+}
+
+function applyInitialViewport(
+  flow: ReactFlowInstance<GraphFlowNode>,
+  canvas: HTMLDivElement | null,
+  nodeCount: number,
+): void {
+  if (nodeCount > INITIAL_FIT_VIEW_NODE_LIMIT) {
+    focusFirstNode(flow, canvas);
+    return;
+  }
+
+  void flow.fitView(initialFitViewOptions);
+}
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
@@ -63,6 +97,7 @@ export default function Canvas() {
       document: state.document,
     })),
   );
+  const previousDocumentRef = useRef(document);
   const { blockCount, shouldExpandAll } = useMemo(() => {
     let nextBlockCount = 0;
     let nextCollapsedBlockCount = 0;
@@ -117,6 +152,15 @@ export default function Canvas() {
   }, [setTalentRenderMode]);
 
   useEffect(() => {
+    if (previousDocumentRef.current === document) {
+      return;
+    }
+
+    previousDocumentRef.current = document;
+    didInitialFitRef.current = false;
+  }, [document]);
+
+  useEffect(() => {
     if (!shouldFitAfterBulkToggleRef.current) {
       return;
     }
@@ -158,7 +202,7 @@ export default function Canvas() {
       return;
     }
     didInitialFitRef.current = true;
-    void flow.fitView({ padding: 0.35, maxZoom: 1 });
+    applyInitialViewport(flow, canvasRef.current, nodes.length);
   }, [nodes]);
 
   useEffect(() => {
@@ -232,7 +276,7 @@ export default function Canvas() {
           flowRef.current = instance;
           if (!didInitialFitRef.current && nodes.length > 0) {
             didInitialFitRef.current = true;
-            void instance.fitView({ padding: 0.35, maxZoom: 1 });
+            applyInitialViewport(instance, canvasRef.current, nodes.length);
           }
         }}
         connectionLineType={ConnectionLineType.Step}

@@ -16,6 +16,13 @@ const SHAMAN_WITH_TALENTS = [
   "actions+=/auto_attack",
 ].join("\n");
 
+const ROGUE_SUBTLETY_WITH_UNQUOTED_PROFILE = [
+  "rogue=Default",
+  "spec=subtlety",
+  "talents=!",
+  "actions+=/backstab",
+].join("\n");
+
 const TWO_PROFILES = [
   'shaman="Enhance Profile"',
   "spec=enhancement",
@@ -111,6 +118,23 @@ test("a profile without a talents= line surfaces the absent info row", async ({
   await expect(row).toContainText("Demo Profile");
   await expect(row).toContainText("no talents= line");
   await expect(row).toHaveAttribute("data-talent-row-tone", "info");
+});
+
+test("unquoted class profile names drive the talent row heading and catalog lookup", async ({
+  page,
+}) => {
+  await gotoPreview(page, ROGUE_SUBTLETY_WITH_UNQUOTED_PROFILE);
+
+  const row = page
+    .locator("[data-talent-status-list]")
+    .getByRole("listitem")
+    .first();
+
+  await expect(row).toContainText("Default");
+  await expect(row).toContainText("could not decode the talents= string");
+  await expect(row).not.toContainText("Untitled");
+  await expect(row).not.toContainText("talent catalog not yet generated");
+  await expect(row).toHaveAttribute("data-talent-row-tone", "warning");
 });
 
 test("a profile whose class has a committed catalog decodes its talents string", async ({
