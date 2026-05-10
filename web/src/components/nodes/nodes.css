@@ -494,7 +494,7 @@
    * Talent-render Dim mode marks impossible actions via `.lc-node-card--impossible`.
    *
    * The condition-filter toggle marks provably true *condition leaves* via
-   * `.lc-node-card--resolvedTrue` (lighter de-emphasis so they read as settled).
+   * `.lc-node-card--resolvedTrue` (subtle green ring; badge reinforces meaning).
    *
    * Notes for impossible actions:
    *   - The "filtered" pill carries the meaning textually so the state
@@ -505,7 +505,7 @@
    *   - `pointer-events: none` is intentionally NOT set - the user can
    *     still collapse / expand dimmed branches to inspect them.
    */
-  /* Provably true (condition filter): icon reinforces meaning beside reduced opacity */
+  /* Provably true (condition filter): check badge pairs with the soft ring on the card */
   .lc-condition-resolved-true-badge {
     position: absolute;
     top: 0.38rem;
@@ -539,13 +539,49 @@
     flex-shrink: 0;
   }
 
-  .lc-node-card--condition.lc-node-card--resolvedTrue {
+  .lc-condition-proved-false-badge {
+    position: absolute;
+    top: 0.38rem;
+    right: 0.5rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 999px;
+    pointer-events: none;
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.28),
+      0 1px 0 rgba(255, 255, 255, 0.22) inset;
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+    color: #fef2f2;
+    outline: 1px solid rgba(185, 28, 28, 0.55);
+    outline-offset: -1px;
+  }
+
+  .lc-condition-proved-false-badge--targetIf {
+    background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%);
+    outline-color: rgba(159, 18, 57, 0.45);
+  }
+
+  .lc-condition-proved-false-badge__icon {
+    width: 0.8125rem;
+    height: 0.8125rem;
+    stroke-width: 2.75px;
+    flex-shrink: 0;
+  }
+
+  .lc-node-card--condition.lc-node-card--resolvedTrue,
+  .lc-node-card--condition.lc-node-card--decodeProvedFalse {
     padding-right: 2.35rem;
   }
 
-  .lc-node-card--resolvedTrue {
-    opacity: 0.55;
-    filter: saturate(0.72);
+  .lc-node-card--condition.lc-node-card--resolvedTrue {
+    box-shadow:
+      var(--lc-node-shadow),
+      0 0 0 1px rgba(22, 163, 74, 0.4),
+      0 0 14px rgba(34, 197, 94, 0.16);
   }
 
   .lc-node-card--impossible {

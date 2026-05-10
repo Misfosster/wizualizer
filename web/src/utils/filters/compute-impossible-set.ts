@@ -87,6 +87,27 @@ export function emptyImpossibleSet(): ImpossibleSetResult {
   return EMPTY_RESULT;
 }
 
+/**
+ * Action IDs the condition filter marks as hidden specifically because an
+ * override made a referenced atom false ("forced off by override"). Used to
+ * auto-collapse those rows on the graph without hiding unrelated filtered actions.
+ */
+export function getActionIdsForcedOffByOverride(
+  document: AplDocument,
+  options: ComputeImpossibleSetOptions = {},
+): Set<string> {
+  const { hiddenActionsByProfile } = computeImpossibleSet(document, options);
+  const ids = new Set<string>();
+  for (const summaries of hiddenActionsByProfile.values()) {
+    for (const row of summaries) {
+      if (row.reasonLabel === "forced off by override") {
+        ids.add(row.actionId);
+      }
+    }
+  }
+  return ids;
+}
+
 export function computeImpossibleSet(
   document: AplDocument,
   options: ComputeImpossibleSetOptions = {},

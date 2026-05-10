@@ -16,10 +16,12 @@ interface NodeCardProps {
    */
   talentState?: TalentState;
   talentReason?: string;
-  /** De-emphasize condition leaves that already resolve true (condition filter). */
+  /** Provably true (condition filter): subtle ring + badge, not faded like false branches. */
   resolvedAsTrue?: boolean;
-  /** Subgraph provably false under decode while action may still remain (talent Dim). */
+  /** Subgraph or leaf provably false (talent Dim decode and/or condition filter). */
   decodeProvedFalse?: boolean;
+  /** Leaf-only: provably false from condition-filter resolver (paired with resolvedAsTrue). */
+  resolvedAsFalse?: boolean;
 }
 
 interface HandleProps {
@@ -41,17 +43,16 @@ export function NodeCard({
   talentReason,
   resolvedAsTrue,
   decodeProvedFalse,
+  resolvedAsFalse,
 }: NodeCardProps) {
   const impossibleClass =
     talentState === "impossible" ? "lc-node-card--impossible" : undefined;
-  const decodeFalseClass =
-    talentState !== "impossible" && decodeProvedFalse
-      ? "lc-node-card--decodeProvedFalse"
-      : undefined;
-  const resolvedTrueClass =
+  const provedFalseLeaf =
     talentState !== "impossible" &&
-    !decodeProvedFalse &&
-    resolvedAsTrue
+    (decodeProvedFalse === true || resolvedAsFalse === true);
+  const decodeFalseClass = provedFalseLeaf ? "lc-node-card--decodeProvedFalse" : undefined;
+  const resolvedTrueClass =
+    talentState !== "impossible" && !provedFalseLeaf && resolvedAsTrue
       ? "lc-node-card--resolvedTrue"
       : undefined;
   const reasonLabel =
@@ -61,7 +62,9 @@ export function NodeCard({
       data-talent-state={talentState ?? "normal"}
       data-talent-reason={reasonLabel}
       data-resolved-condition={resolvedAsTrue ? "true" : undefined}
-      data-decode-proved-false={decodeProvedFalse ? "true" : undefined}
+      data-decode-proved-false={
+        decodeProvedFalse || resolvedAsFalse ? "true" : undefined
+      }
       className={cn(
         "lc-node-card",
         className,

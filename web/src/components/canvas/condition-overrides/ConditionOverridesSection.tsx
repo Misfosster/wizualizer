@@ -179,7 +179,7 @@ export function ConditionOverridesSection() {
           {displayedAtoms.length > 0 ? (
             <div
               data-condition-overrides-active-list=""
-              className="mt-2 max-h-72 overflow-y-auto pr-1"
+              className="mt-2 max-h-72 min-h-0 overflow-y-auto overscroll-contain pr-1"
             >
               <AtomOverrideTree
                 groups={displayedGroups}

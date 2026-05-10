@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Check } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Position, type NodeProps } from "@xyflow/react";
 import { CONDITION_HANDLE_IDS, type ConditionFlowNode } from "./types";
 import { NodeCard, SourceHandle, TargetHandle } from "./shared";
@@ -11,10 +11,13 @@ function ConditionNode({
 }: NodeProps<ConditionFlowNode>) {
   const handleUsage = data.handleUsage ?? {};
   const isTargetIf = data.segmentKind === "target_if";
+  const provedFalseBadge =
+    data.talentState !== "impossible" &&
+    (data.decodeProvedFalse === true || data.resolvedAsFalse === true);
   const showResolvedTrue =
     data.resolvedAsTrue === true &&
     data.talentState !== "impossible" &&
-    data.decodeProvedFalse !== true;
+    !provedFalseBadge;
 
   return (
     <NodeCard
@@ -26,6 +29,7 @@ function ConditionNode({
       talentReason={data.talentReason}
       resolvedAsTrue={data.resolvedAsTrue}
       decodeProvedFalse={data.decodeProvedFalse}
+      resolvedAsFalse={data.resolvedAsFalse}
     >
       {handleUsage.targetLeft ? (
         <TargetHandle
@@ -64,6 +68,18 @@ function ConditionNode({
           data-condition-resolves-true-badge
         >
           <Check className="lc-condition-resolved-true-badge__icon" aria-hidden />
+        </span>
+      ) : null}
+      {provedFalseBadge ? (
+        <span
+          className={cn(
+            "lc-condition-proved-false-badge",
+            isTargetIf && "lc-condition-proved-false-badge--targetIf",
+          )}
+          aria-label="This condition resolves false with the current talent decode and overrides"
+          data-condition-proved-false-badge
+        >
+          <X className="lc-condition-proved-false-badge__icon" aria-hidden />
         </span>
       ) : null}
 

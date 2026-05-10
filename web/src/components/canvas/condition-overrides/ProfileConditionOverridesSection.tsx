@@ -175,7 +175,7 @@ export function ProfileConditionOverridesSection({
       {displayedAtoms.length > 0 ? (
         <div
           data-profile-condition-overrides-active-list=""
-          className="mt-2"
+          className="mt-2 max-h-72 min-h-0 overflow-y-auto overscroll-contain pr-1"
         >
           <AtomOverrideTree
             groups={displayedGroups}

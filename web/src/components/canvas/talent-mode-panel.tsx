@@ -106,10 +106,10 @@ export function TalentModePanel({
           event.stopPropagation();
         }}
       >
-        <span>Dim proven-true conditions</span>
+        <span>Mark proven-true conditions</span>
         <input
           type="checkbox"
-          aria-label="Dim proven-true conditions"
+          aria-label="Mark proven-true conditions with badge and ring; false branches stay dimmed"
           data-hide-true-conditions-toggle
           checked={hideTrueConditions}
           className="h-4 w-4 rounded border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500"

@@ -115,8 +115,13 @@ export interface ConditionNodeData extends Record<string, unknown> {
   segmentKind?: ConditionSegmentKind;
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
-  /** Provably true under talents + overrides while "dim resolved-true" is on. */
+  /** Provably true under talents + overrides when the condition-filter toggle is on (ring + badge, not faded). */
   resolvedAsTrue?: boolean;
+  /**
+   * Single leaf provably false under the same resolver as resolved-true (condition
+   * filter), when talent-branch decode is not the one marking this node.
+   */
+  resolvedAsFalse?: boolean;
   /**
    * Provably false under decode/overrides while talent Dim mode is on; action
    * may still exist (e.g. sibling OR arm still viable).

@@ -137,9 +137,8 @@ export interface BuildGraphOptions {
   talentRenderMode?: TalentRenderMode;
   /**
    * When enabled and the graph has atom resolution from talents/overrides,
-   * condition leaf nodes provably true under that resolver are visibly
-   * de-emphasized instead of omitted. False branches stay prominent so
-   * impossible routes remain easy to scan.
+   * provably true condition leaves get a badge + subtle ring; provably false
+   * leaves and decode-false subgraphs are dimmed. Unknown branches stay full strength.
    */
   hideTrueConditions?: boolean;
   talentSelectionsByProfile?: ReadonlyMap<number, TalentSelectionResult>;
@@ -556,6 +555,7 @@ function buildActionGraph(
   resolveAtomForRender: AtomResolver | undefined,
   dimResolvedTrueLeaves: boolean,
   annotateDecodeFalseUnderTalentDim: boolean,
+  hideProvablyFalseSubtrees: boolean,
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
@@ -564,7 +564,8 @@ function buildActionGraph(
       ? resolveAtomForRender
       : undefined;
   const decodeFalseBranchResolver =
-    annotateDecodeFalseUnderTalentDim && resolveAtomForRender !== undefined
+    (annotateDecodeFalseUnderTalentDim || hideProvablyFalseSubtrees) &&
+    resolveAtomForRender !== undefined
       ? resolveAtomForRender
       : undefined;
   const conditionAtomAnnotations: ConditionGraphAtomAnnotations | undefined =
@@ -572,6 +573,9 @@ function buildActionGraph(
       ? {
           dimTrueLeafResolver,
           decodeFalseBranchResolver,
+          ...(hideProvablyFalseSubtrees
+            ? { hideProvablyFalseSubtrees: true as const }
+            : {}),
         }
       : undefined;
   const renderedDetails = getConditionSegments(actionLine.action.segments)
@@ -756,6 +760,11 @@ function buildActionGraph(
       0,
       conditionAtomAnnotations,
     );
+    if (conditionGraph.nodes.length === 0) {
+      detailIndex += 1;
+      continue;
+    }
+
     alignActionToDetailEntry(detailOrigin, conditionGraph);
 
     nodes.push(
@@ -835,6 +844,7 @@ function buildBlockGraph(
   const resolveAtomForRender = context.profileAtomResolvers.get(profileIndex);
   const annotateDecodeFalseUnderTalentDim =
     context.mode === "dim" && resolveAtomForRender !== undefined;
+  const hideProvablyFalseSubtrees = context.mode === "hide";
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;
   for (let i = 0; i < survivingIndices.length; i++) {
@@ -862,6 +872,7 @@ function buildBlockGraph(
       resolveAtomForRender,
       dimResolvedTrueLeaves,
       annotateDecodeFalseUnderTalentDim,
+      hideProvablyFalseSubtrees,
     );
 
     nodes.push(...actionGraph.nodes);

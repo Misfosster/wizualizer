@@ -220,7 +220,7 @@ test("Hide mode reports per-profile hidden counts in talentSummary", () => {
   expect(result.talentSummary?.hiddenActionCountByProfile.get(0)).toBe(1);
 });
 
-test("Hide mode keeps mixed OR action and preserves both branches for context", () => {
+test("Hide mode keeps mixed OR action but omits provably-false OR operands", () => {
   const apl = [
     'shaman="Demo"',
     "actions=crash_lightning,if=!buff.crash_lightning.up|talent.storm_unleashed.enabled",
@@ -243,10 +243,49 @@ test("Hide mode keeps mixed OR action and preserves both branches for context", 
     .map((node) => (node.data as { label?: string }).label ?? "");
   expect(
     conditionLabels.some((label) => label.includes("buff.crash_lightning.up")),
-  ).toBe(true);
+  ).toBe(false);
   expect(
     conditionLabels.some((label) => label.includes("talent.storm_unleashed.enabled")),
   ).toBe(true);
+});
+
+test("Hide mode omits a provably-false AND group under OR while the action stays viable", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=stormstrike,if=(talent.dead_branch_talent&buff.maelstrom_weapon.stack>=3)|buff.hot_hand.up",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "hide",
+    talentSelectionsByProfile: new Map([
+      [0, { status: { kind: "decoder_pending" }, selections: {} }],
+    ]),
+    conditionOverrides: {
+      global: { "talent.dead_branch_talent": false },
+      byProfile: {},
+    },
+  });
+
+  const action = nodeById(result, getActionNodeId(0, "actions", 0));
+  expect(action).toBeTruthy();
+  expect(actionTalentState(result, action!.id)).not.toBe("impossible");
+
+  expect(
+    result.nodes.some(
+      (n) =>
+        n.type === "condition" &&
+        ((n.data as ConditionNodeData).label ?? "").includes(
+          "talent.dead_branch_talent",
+        ),
+    ),
+  ).toBe(false);
+
+  const hotHandNode = result.nodes.find(
+    (n) =>
+      n.type === "condition" &&
+      ((n.data as ConditionNodeData).label ?? "").includes("buff.hot_hand"),
+  );
+  expect(hotHandNode).toBeTruthy();
 });
 
 test("Dim mode dims a decode-false AND arm under OR while the action stays viable", () => {
@@ -317,7 +356,7 @@ test("Dim mode keeps both OR branches visible for context", () => {
   ).toBe(true);
 });
 
-test("hideTrueConditions dims resolved-true AND leaves but keeps unknown branches readable", () => {
+test("hideTrueConditions marks resolved-true AND leaves but keeps unknown branches readable", () => {
   const apl = [
     'shaman="Demo"',
     "actions=stormstrike,if=buff.hot_hand.up&cooldown.doom_winds.remains>0",

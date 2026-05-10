@@ -30,13 +30,16 @@ import {
   deriveStateFromText,
   rebuildGraph,
 } from "./derivation";
+import { getActionIdsForcedOffByOverride } from "@/utils/filters/compute-impossible-set";
 import {
   catalogLoader,
   decodeSelections,
+  lookupLoadedSemanticCatalogs,
   prefetchCatalogsFor,
   selectionsEqual,
   semanticCatalogLoader,
 } from "./talent-catalog-coordinator";
+import { ForcedOverrideCollapseCoordinator } from "./forced-override-collapse-coordinator";
 import {
   readStoredAplAutoSave,
   readStoredAplLibrary,
@@ -156,6 +159,36 @@ function shouldAutoCollapseInitialGraph(
   return countDocumentActions(document) >= INITIAL_AUTO_COLLAPSE_ACTION_THRESHOLD;
 }
 
+function mergeForcedOverrideCollapse(
+  state: Pick<
+    EditorState,
+    | "document"
+    | "collapsedActions"
+    | "lastForcedOffByOverrideActionIds"
+    | "userExpandedForcedOffActionIds"
+    | "talentSelectionsByProfile"
+    | "conditionOverrides"
+  >,
+  conditionOverrides: ConditionOverrides,
+) {
+  if (!state.document) {
+    return null;
+  }
+  return ForcedOverrideCollapseCoordinator.merge(
+    state.document,
+    {
+      collapsedActions: state.collapsedActions,
+      lastForcedOffActionIds: state.lastForcedOffByOverrideActionIds,
+      userExpandedForcedOffActionIds: state.userExpandedForcedOffActionIds,
+    },
+    {
+      talentSelectionsByProfile: state.talentSelectionsByProfile,
+      conditionOverrides,
+      semanticCatalogsByProfile: lookupLoadedSemanticCatalogs(state.document),
+    },
+  );
+}
+
 function markGraphStale(
   state: EditorState,
   document: RuntimeEditorState["document"],
@@ -235,9 +268,13 @@ export const useEditorStore = create<EditorState>((set, get) => {
       });
       return;
     }
+    const forced = mergeForcedOverrideCollapse(
+      { ...state, talentSelectionsByProfile: nextSelections },
+      state.conditionOverrides,
+    )!;
     const rebuilt = rebuildGraph(state.document, {
       collapsedBlocks: state.collapsedBlocks,
-      collapsedActions: state.collapsedActions,
+      collapsedActions: forced.collapsedActions,
       talentRenderMode: state.talentRenderMode,
       hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: nextSelections,
@@ -246,6 +283,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
     set({
       ...rebuilt,
       talentSelectionsByProfile: nextSelections,
+      collapsedActions: forced.collapsedActions,
+      lastForcedOffByOverrideActionIds: forced.lastForcedOffActionIds,
+      userExpandedForcedOffActionIds: forced.userExpandedForcedOffActionIds,
       graphBuildStatus: "ready",
       graphBuildVersion: state.graphBuildVersion + 1,
       graphBuiltVersion: state.graphBuildVersion + 1,
@@ -274,9 +314,10 @@ export const useEditorStore = create<EditorState>((set, get) => {
       });
       return;
     }
+    const forced = mergeForcedOverrideCollapse(state, state.conditionOverrides)!;
     const rebuilt = rebuildGraph(state.document, {
       collapsedBlocks: state.collapsedBlocks,
-      collapsedActions: state.collapsedActions,
+      collapsedActions: forced.collapsedActions,
       talentRenderMode: state.talentRenderMode,
       hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: state.talentSelectionsByProfile,
@@ -285,6 +326,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
     set({
       ...rebuilt,
       diagnostics: [...syntaxDiagnostics, ...semanticDiagnostics],
+      collapsedActions: forced.collapsedActions,
+      lastForcedOffByOverrideActionIds: forced.lastForcedOffActionIds,
+      userExpandedForcedOffActionIds: forced.userExpandedForcedOffActionIds,
       graphBuildStatus: "ready",
       graphBuildVersion: state.graphBuildVersion + 1,
       graphBuiltVersion: state.graphBuildVersion + 1,
@@ -579,6 +623,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
             graphBuildStatus: "ready",
             graphBuiltVersion: state.graphBuildVersion,
             shouldAutoCollapseOnNextGraphBuild: false,
+            lastForcedOffByOverrideActionIds: new Set<string>(),
+            userExpandedForcedOffActionIds: new Set<string>(),
           };
         }
 
@@ -588,9 +634,13 @@ export const useEditorStore = create<EditorState>((set, get) => {
         const collapsedBlocks = shouldAutoCollapse
           ? getDocumentBlockIds(state.document)
           : state.collapsedBlocks;
+        const forced = mergeForcedOverrideCollapse(
+          state,
+          state.conditionOverrides,
+        )!;
         const graph = rebuildGraph(state.document, {
           collapsedBlocks,
-          collapsedActions: state.collapsedActions,
+          collapsedActions: forced.collapsedActions,
           talentRenderMode: state.talentRenderMode,
           hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
@@ -599,6 +649,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
 
         return {
           collapsedBlocks,
+          collapsedActions: forced.collapsedActions,
+          lastForcedOffByOverrideActionIds: forced.lastForcedOffActionIds,
+          userExpandedForcedOffActionIds: forced.userExpandedForcedOffActionIds,
           ...graph,
           graphBuildStatus: "ready",
           graphBuiltVersion: state.graphBuildVersion,
@@ -608,15 +661,34 @@ export const useEditorStore = create<EditorState>((set, get) => {
     },
     toggleActionCollapse: (actionId) => {
       set((state) => {
+        const wasCollapsed = state.collapsedActions.has(actionId);
         const collapsedActions = new Set(state.collapsedActions);
         if (collapsedActions.has(actionId)) {
           collapsedActions.delete(actionId);
         } else {
           collapsedActions.add(actionId);
         }
+        let userExpandedForcedOffActionIds = new Set(
+          state.userExpandedForcedOffActionIds,
+        );
+        if (state.document) {
+          const nextForced = getActionIdsForcedOffByOverride(state.document, {
+            talentSelectionsByProfile: state.talentSelectionsByProfile,
+            conditionOverrides: state.conditionOverrides,
+            semanticCatalogsByProfile:
+              lookupLoadedSemanticCatalogs(state.document),
+          });
+          if (wasCollapsed && !collapsedActions.has(actionId)) {
+            if (nextForced.has(actionId)) {
+              userExpandedForcedOffActionIds.add(actionId);
+            }
+          } else if (!wasCollapsed && collapsedActions.has(actionId)) {
+            userExpandedForcedOffActionIds.delete(actionId);
+          }
+        }
 
         if (!state.document) {
-          return { collapsedActions };
+          return { collapsedActions, userExpandedForcedOffActionIds };
         }
 
         const graph = rebuildGraph(state.document, {
@@ -630,6 +702,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         const nextVersion = state.graphBuildVersion + 1;
         return {
           collapsedActions,
+          userExpandedForcedOffActionIds,
           ...graph,
           graphBuildStatus: "ready",
           graphBuildVersion: nextVersion,
@@ -655,9 +728,21 @@ export const useEditorStore = create<EditorState>((set, get) => {
         const collapsedActions = isExpandingBlock
           ? new Set(state.collapsedActions)
           : state.collapsedActions;
+        let userExpandedForcedOffActionIds = new Set(
+          state.userExpandedForcedOffActionIds,
+        );
         if (isExpandingBlock) {
+          const nextForced = getActionIdsForcedOffByOverride(state.document, {
+            talentSelectionsByProfile: state.talentSelectionsByProfile,
+            conditionOverrides: state.conditionOverrides,
+            semanticCatalogsByProfile:
+              lookupLoadedSemanticCatalogs(state.document),
+          });
           for (const actionId of getBlockActionIds(state.document, blockId)) {
             collapsedActions.delete(actionId);
+            if (nextForced.has(actionId)) {
+              userExpandedForcedOffActionIds.add(actionId);
+            }
           }
         }
 
@@ -673,6 +758,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         return {
           collapsedBlocks,
           collapsedActions,
+          userExpandedForcedOffActionIds,
           ...graph,
           graphBuildStatus: "ready",
           graphBuildVersion: nextVersion,
@@ -696,9 +782,24 @@ export const useEditorStore = create<EditorState>((set, get) => {
         const collapsedBlocks = shouldExpandAll
           ? new Set<string>()
           : new Set(blockIds);
-        const collapsedActions = shouldExpandAll
-          ? new Set<string>()
-          : state.collapsedActions;
+        let userExpandedForcedOffActionIds = new Set(
+          state.userExpandedForcedOffActionIds,
+        );
+        let collapsedActions: Set<string>;
+        if (shouldExpandAll) {
+          collapsedActions = new Set<string>();
+          const nextForced = getActionIdsForcedOffByOverride(state.document, {
+            talentSelectionsByProfile: state.talentSelectionsByProfile,
+            conditionOverrides: state.conditionOverrides,
+            semanticCatalogsByProfile:
+              lookupLoadedSemanticCatalogs(state.document),
+          });
+          for (const id of nextForced) {
+            userExpandedForcedOffActionIds.add(id);
+          }
+        } else {
+          collapsedActions = state.collapsedActions;
+        }
         const graph = rebuildGraph(state.document, {
           collapsedBlocks,
           collapsedActions,
@@ -711,6 +812,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         return {
           collapsedBlocks,
           collapsedActions,
+          userExpandedForcedOffActionIds,
           ...graph,
           graphBuildStatus: "ready",
           graphBuildVersion: nextVersion,
@@ -787,9 +889,13 @@ export const useEditorStore = create<EditorState>((set, get) => {
         if (!state.document) {
           return { conditionOverrides: nextOverrides };
         }
+        const forced = mergeForcedOverrideCollapse(
+          { ...state, conditionOverrides: nextOverrides },
+          nextOverrides,
+        )!;
         const graph = rebuildGraph(state.document, {
           collapsedBlocks: state.collapsedBlocks,
-          collapsedActions: state.collapsedActions,
+          collapsedActions: forced.collapsedActions,
           talentRenderMode: state.talentRenderMode,
           hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
@@ -798,6 +904,9 @@ export const useEditorStore = create<EditorState>((set, get) => {
         const nextVersion = state.graphBuildVersion + 1;
         return {
           conditionOverrides: nextOverrides,
+          collapsedActions: forced.collapsedActions,
+          lastForcedOffByOverrideActionIds: forced.lastForcedOffActionIds,
+          userExpandedForcedOffActionIds: forced.userExpandedForcedOffActionIds,
           ...graph,
           graphBuildStatus: "ready",
           graphBuildVersion: nextVersion,

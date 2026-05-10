@@ -27,6 +27,120 @@ export interface ConditionGraphAtomAnnotations {
    * (e.g. dead AND arm under a top-level OR).
    */
   decodeFalseBranchResolver?: AtomResolver;
+  /**
+   * Talent-render Hide mode: omit provably-false subtrees (same resolver as
+   * decode) instead of drawing them faded.
+   */
+  hideProvablyFalseSubtrees?: boolean;
+}
+
+function emptyElidedConditionGraph(): ConditionGraphResult {
+  return {
+    nodes: [],
+    edges: [],
+    size: { width: 0, height: 0 },
+    rowsUsed: 0,
+    entryNodeId: "",
+    entryCenterY: 0,
+  };
+}
+
+/**
+ * Rewrites the condition AST for Hide layout so measurements and placement
+ * match visible nodes only (provably false branches removed).
+ */
+function applyHideLayoutPrune(
+  condition: Condition,
+  annotations: ConditionGraphAtomAnnotations | undefined,
+): Condition | null {
+  if (
+    !annotations?.hideProvablyFalseSubtrees ||
+    !annotations.decodeFalseBranchResolver
+  ) {
+    return condition;
+  }
+  const r = annotations.decodeFalseBranchResolver;
+
+  if (condition.kind === "paren") {
+    const inner = applyHideLayoutPrune(condition.expr, annotations);
+    if (inner === null) {
+      return null;
+    }
+    return { kind: "paren", expr: inner };
+  }
+
+  if (condition.kind === "binary" && BOOLEAN_CHAIN_OPS.has(condition.op)) {
+    if (condition.op === "|" || condition.op === "^") {
+      const chainOp = condition.op;
+      const operands = flattenBooleanChain(condition);
+      const kept: Condition[] = [];
+      for (const operand of operands) {
+        if (getProvableTruthiness(operand, r) === "false") {
+          continue;
+        }
+        const prunedOp = applyHideLayoutPrune(operand, annotations);
+        if (prunedOp !== null) {
+          kept.push(prunedOp);
+        }
+      }
+      if (kept.length === 0) {
+        return null;
+      }
+      if (kept.length === 1) {
+        return kept[0]!;
+      }
+      return rebuildBooleanChainOperands(kept, chainOp);
+    }
+
+    if (condition.op === "&") {
+      if (getProvableTruthiness(condition, r) === "false") {
+        return null;
+      }
+      const operands = flattenBooleanChain(condition);
+      const kept: Condition[] = [];
+      for (const operand of operands) {
+        const prunedOp = applyHideLayoutPrune(operand, annotations);
+        if (prunedOp === null) {
+          return null;
+        }
+        kept.push(prunedOp);
+      }
+      if (kept.length === 0) {
+        return null;
+      }
+      if (kept.length === 1) {
+        return kept[0]!;
+      }
+      return rebuildBooleanChainOperands(kept, "&");
+    }
+  }
+
+  if (getProvableTruthiness(condition, r) === "false") {
+    return null;
+  }
+  return condition;
+}
+
+function rebuildBooleanChainOperands(
+  operands: readonly Condition[],
+  op: "&" | "|" | "^",
+): Condition {
+  if (operands.length === 0) {
+    throw new Error("rebuildBooleanChainOperands: empty operands");
+  }
+  if (operands.length === 1) {
+    return operands[0];
+  }
+  let acc: Condition = operands[0];
+  for (let i = 1; i < operands.length; i++) {
+    acc = {
+      kind: "binary",
+      op,
+      left: acc,
+      right: operands[i],
+    };
+  }
+  return acc;
 }
 
 function withDecodeFalseIfProvedSubtree(
@@ -35,11 +149,16 @@ function withDecodeFalseIfProvedSubtree(
   annotations: ConditionGraphAtomAnnotations | undefined,
 ): ConditionGraphResult {
   const resolver = annotations?.decodeFalseBranchResolver;
+  if (!resolver) {
+    return result;
+  }
   if (
-    !resolver ||
     getProvableTruthiness(subtreeRootCondition, resolver) !== "false"
   ) {
     return result;
+  }
+  if (annotations?.hideProvablyFalseSubtrees) {
+    return emptyElidedConditionGraph();
   }
 
   return {
@@ -179,26 +298,40 @@ function measureCondition(
   condition: Condition,
   wrapAndInContainer = false,
   elideOrGroup = false,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionMeasure {
+  const pruned = applyHideLayoutPrune(condition, atomAnnotations);
+  if (pruned === null) {
+    return { width: 0, height: 0 };
+  }
+
+  const skipCache = atomAnnotations?.hideProvablyFalseSubtrees === true;
   const cacheKey = getConditionMeasureCacheKey(
     wrapAndInContainer,
     elideOrGroup,
   );
-  const cachedMeasure = conditionMeasureCache.get(condition)?.get(cacheKey);
-  if (cachedMeasure) {
-    return cachedMeasure;
+  if (!skipCache) {
+    const cachedMeasure =
+      conditionMeasureCache.get(pruned)?.get(cacheKey);
+    if (cachedMeasure) {
+      return cachedMeasure;
+    }
   }
 
   const measured = measureConditionUncached(
-    condition,
+    pruned,
     wrapAndInContainer,
     elideOrGroup,
+    atomAnnotations,
   );
-  const cachedMeasures =
-    conditionMeasureCache.get(condition) ??
-    new Map<ConditionMeasureCacheKey, ConditionMeasure>();
-  cachedMeasures.set(cacheKey, measured);
-  conditionMeasureCache.set(condition, cachedMeasures);
+
+  if (!skipCache) {
+    const cachedMeasures =
+      conditionMeasureCache.get(pruned) ??
+      new Map<ConditionMeasureCacheKey, ConditionMeasure>();
+    cachedMeasures.set(cacheKey, measured);
+    conditionMeasureCache.set(pruned, cachedMeasures);
+  }
 
   return measured;
 }
@@ -207,6 +340,7 @@ function measureConditionUncached(
   condition: Condition,
   wrapAndInContainer: boolean,
   elideOrGroup: boolean,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionMeasure {
   if (condition.kind === "paren") {
     if (
@@ -220,10 +354,16 @@ function measureConditionUncached(
         condition.expr,
         wrapAndInContainer,
         elideOrGroup,
+        atomAnnotations,
       );
     }
 
-    const inner = measureCondition(condition.expr);
+    const inner = measureCondition(
+      condition.expr,
+      false,
+      false,
+      atomAnnotations,
+    );
     return {
       width: inner.width + CONTAINER_PADDING * 2,
       height: inner.height + CONTAINER_PADDING * 2,
@@ -235,7 +375,7 @@ function measureConditionUncached(
 
     if (condition.op === "&") {
       const childMeasures = operands.map((operand) =>
-        measureCondition(operand),
+        measureCondition(operand, false, false, atomAnnotations),
       );
       const totalWidth =
         childMeasures.reduce((sum, m) => sum + m.width, 0) +
@@ -251,7 +391,7 @@ function measureConditionUncached(
     }
 
     const childMeasures = operands.map((operand) =>
-      measureCondition(operand, true),
+      measureCondition(operand, true, false, atomAnnotations),
     );
     const maxChildWidth = Math.max(...childMeasures.map((m) => m.width));
     const totalHeight =
@@ -421,12 +561,14 @@ function placeLeaf(
   const size = measureLeafCondition(condition);
   const data = createLeafNodeData(condition, leafKind);
   const dimTrueLeafResolver = atomAnnotations?.dimTrueLeafResolver;
-  if (
-    leafKind === "condition" &&
-    dimTrueLeafResolver &&
-    getProvableTruthiness(condition, dimTrueLeafResolver) === "true"
-  ) {
-    (data as ConditionNodeData).resolvedAsTrue = true;
+  if (leafKind === "condition" && dimTrueLeafResolver) {
+    const leafTruth = getProvableTruthiness(condition, dimTrueLeafResolver);
+    if (leafTruth === "true") {
+      (data as ConditionNodeData).resolvedAsTrue = true;
+    }
+    if (leafTruth === "false") {
+      (data as ConditionNodeData).resolvedAsFalse = true;
+    }
   }
 
   const node = createGraphNode(
@@ -511,6 +653,7 @@ function placeGroupContainer(
     condition,
     false,
     false,
+    atomAnnotations,
   );
 
   const containerData: ContainerNodeData = {
@@ -569,10 +712,35 @@ function placeOrChain(
   atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   const operands = flattenBooleanChain(condition);
+
+  if (operands.length === 0) {
+    return emptyElidedConditionGraph();
+  }
+
+  if (operands.length === 1) {
+    return placeCondition(
+      operands[0]!,
+      nodeId,
+      globalX,
+      globalY,
+      depth,
+      parentId,
+      true,
+      false,
+      leafKind,
+      atomAnnotations,
+    );
+  }
+
   const childMeasures = operands.map((operand) =>
-    measureCondition(operand, true),
+    measureCondition(operand, true, false, atomAnnotations),
   );
-  const totalMeasure = measureCondition(condition);
+  const totalMeasure = measureCondition(
+    condition,
+    false,
+    false,
+    atomAnnotations,
+  );
 
   const nodes: GraphFlowNode[] = [];
   const edges: Edge[] = [];
@@ -585,7 +753,7 @@ function placeOrChain(
     const childId = `${nodeId}__${String(i)}`;
     const childX = globalX + (totalMeasure.width - childMeasures[i].width) / 2;
     const childResult = placeCondition(
-      operands[i],
+      operands[i]!,
       childId,
       childX,
       globalY + childY,
@@ -647,12 +815,13 @@ function placeAndChain(
 ): ConditionGraphResult {
   const operands = flattenBooleanChain(condition);
   const childMeasures = operands.map((operand) =>
-    measureCondition(operand),
+    measureCondition(operand, false, false, atomAnnotations),
   );
   const totalMeasure = measureCondition(
     condition,
     wrapInContainer,
     false,
+    atomAnnotations,
   );
 
   if (!wrapInContainer) {
@@ -799,6 +968,12 @@ function placeCondition(
   leafKind: ExpressionLeafKind = "condition",
   atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
+  const prunedCondition = applyHideLayoutPrune(condition, atomAnnotations);
+  if (prunedCondition === null) {
+    return emptyElidedConditionGraph();
+  }
+  condition = prunedCondition;
+
   if (condition.kind === "paren") {
     return placeGroupContainer(
       condition,

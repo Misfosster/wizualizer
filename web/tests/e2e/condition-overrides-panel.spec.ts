@@ -220,7 +220,7 @@ test("per-profile override dims the matching action and persists across reload",
   ).toBeVisible();
 });
 
-test("dim proven-true conditions toggle de-emphasises resolved condition nodes", async ({
+test("dim proven-true conditions toggle shows resolved badge on proven-true nodes", async ({
   page,
 }) => {
   await gotoPreview(page, PROFILE_WITH_CONDITIONS);

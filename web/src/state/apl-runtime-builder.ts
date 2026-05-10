@@ -40,6 +40,10 @@ export interface RuntimeEditorState {
   talentSummary: TalentRenderSummary | null;
   conditionOverrides: ConditionOverrides;
   graphJumpTarget: { nodeId: string; nonce: number } | null;
+  /** Snapshot from the last override/talent merge (used to auto-expand when override stops forcing off). */
+  lastForcedOffByOverrideActionIds: Set<string>;
+  /** User expanded a row that is still "forced off by override"; do not re-collapse until override changes. */
+  userExpandedForcedOffActionIds: Set<string>;
 }
 
 export function withSemanticDiagnostics<T extends Pick<
@@ -123,6 +127,8 @@ export function buildRuntimeStateForApl(
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
       graphJumpTarget: null,
+      lastForcedOffByOverrideActionIds: new Set<string>(),
+      userExpandedForcedOffActionIds: new Set<string>(),
     });
   }
 
@@ -149,6 +155,8 @@ export function buildRuntimeStateForApl(
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
       graphJumpTarget: null,
+      lastForcedOffByOverrideActionIds: new Set<string>(),
+      userExpandedForcedOffActionIds: new Set<string>(),
     });
   }
 
@@ -182,6 +190,8 @@ export function buildRuntimeStateForApl(
     talentSelectionsByProfile: fallbackSelections,
     conditionOverrides,
     graphJumpTarget: null,
+    lastForcedOffByOverrideActionIds: new Set<string>(),
+    userExpandedForcedOffActionIds: new Set<string>(),
   });
 }
 
