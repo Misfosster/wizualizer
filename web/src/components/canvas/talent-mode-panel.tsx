@@ -85,7 +85,7 @@ export function TalentModePanel({
       ariaLabel="Condition filter"
       title="Condition filter"
       isCollapsed={isCollapsed}
-      expandedClassName="h-auto max-h-full overflow-y-auto"
+      expandedClassName=""
       onToggle={() => {
         if (onToggleCollapsed) {
           onToggleCollapsed();
@@ -106,10 +106,10 @@ export function TalentModePanel({
           event.stopPropagation();
         }}
       >
-        <span>Hide true conditions</span>
+        <span>Dim proven-true conditions</span>
         <input
           type="checkbox"
-          aria-label="Hide true conditions"
+          aria-label="Dim proven-true conditions"
           data-hide-true-conditions-toggle
           checked={hideTrueConditions}
           className="h-4 w-4 rounded border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500"

@@ -3,6 +3,8 @@ import { getConditionSource } from "./condition-source";
 import { prettyCond } from "./pretty-log";
 import type { BinOp, Condition } from "./types";
 import { BOOLEAN_CHAIN_OPS, flattenBooleanChain } from "./action-data";
+import type { AtomResolver } from "@/utils/talents/evaluate-condition";
+import { getProvableTruthiness } from "@/utils/talents/simplify-condition";
 import { ROW_HEIGHT } from "./grid-layout";
 import type {
   ConditionExpressionKind,
@@ -14,6 +16,57 @@ import type {
 } from "@/components/nodes/types";
 import { CONDITION_HANDLE_IDS } from "@/components/nodes/types";
 import type { Size } from "./grid-layout";
+
+/** Optional atom-driven styling while placing a condition subgraph. */
+export interface ConditionGraphAtomAnnotations {
+  /** Condition-filter toggle: marks leaves provably true. */
+  dimTrueLeafResolver?: AtomResolver;
+  /**
+   * Talent-render Dim mode: fades subgraphs whose root expression is provably
+   * false under decode/overrides while the enclosing action may still survive
+   * (e.g. dead AND arm under a top-level OR).
+   */
+  decodeFalseBranchResolver?: AtomResolver;
+}
+
+function withDecodeFalseIfProvedSubtree(
+  result: ConditionGraphResult,
+  subtreeRootCondition: Condition,
+  annotations: ConditionGraphAtomAnnotations | undefined,
+): ConditionGraphResult {
+  const resolver = annotations?.decodeFalseBranchResolver;
+  if (
+    !resolver ||
+    getProvableTruthiness(subtreeRootCondition, resolver) !== "false"
+  ) {
+    return result;
+  }
+
+  return {
+    ...result,
+    nodes: result.nodes.map((node) =>
+      annotateDecodeFalseOnGraphNode(node),
+    ),
+  };
+}
+
+function annotateDecodeFalseOnGraphNode(node: GraphFlowNode): GraphFlowNode {
+  if (
+    node.type !== "condition" &&
+    node.type !== "container" &&
+    node.type !== "valueExpression"
+  ) {
+    return node;
+  }
+
+  return {
+    ...node,
+    data: {
+      ...node.data,
+      decodeProvedFalse: true,
+    },
+  } as GraphFlowNode;
+}
 
 const CONDITION_MIN_WIDTH = 220;
 const CONDITION_CELL: Readonly<Size> = {
@@ -363,9 +416,18 @@ function placeLeaf(
   globalY: number,
   parentId: string | undefined,
   leafKind: ExpressionLeafKind,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   const size = measureLeafCondition(condition);
   const data = createLeafNodeData(condition, leafKind);
+  const dimTrueLeafResolver = atomAnnotations?.dimTrueLeafResolver;
+  if (
+    leafKind === "condition" &&
+    dimTrueLeafResolver &&
+    getProvableTruthiness(condition, dimTrueLeafResolver) === "true"
+  ) {
+    (data as ConditionNodeData).resolvedAsTrue = true;
+  }
 
   const node = createGraphNode(
     nodeId,
@@ -377,14 +439,18 @@ function placeLeaf(
     },
   );
 
-  return {
-    nodes: [node],
-    edges: [],
-    size,
-    rowsUsed: 1,
-    entryNodeId: nodeId,
-    entryCenterY: size.height / 2,
-  };
+  return withDecodeFalseIfProvedSubtree(
+    {
+      nodes: [node],
+      edges: [],
+      size,
+      rowsUsed: 1,
+      entryNodeId: nodeId,
+      entryCenterY: size.height / 2,
+    },
+    condition,
+    atomAnnotations,
+  );
 }
 
 function createLeafNodeData(
@@ -418,6 +484,7 @@ function placeGroupContainer(
   wrapAndInContainer: boolean,
   elideOrGroup: boolean,
   leafKind: ExpressionLeafKind,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   if (
     shouldElideGroupContainer(
@@ -436,6 +503,7 @@ function placeGroupContainer(
       wrapAndInContainer,
       elideOrGroup,
       leafKind,
+      atomAnnotations,
     );
   }
 
@@ -472,16 +540,21 @@ function placeGroupContainer(
     false,
     false,
     leafKind,
+    atomAnnotations,
   );
 
-  return {
-    nodes: [containerNode, ...innerResult.nodes],
-    edges: innerResult.edges,
-    size: { width: containerMeasure.width, height: containerMeasure.height },
-    rowsUsed: Math.max(1, Math.ceil(containerMeasure.height / ROW_HEIGHT)),
-    entryNodeId: nodeId,
-    entryCenterY: containerMeasure.height / 2,
-  };
+  return withDecodeFalseIfProvedSubtree(
+    {
+      nodes: [containerNode, ...innerResult.nodes],
+      edges: innerResult.edges,
+      size: { width: containerMeasure.width, height: containerMeasure.height },
+      rowsUsed: Math.max(1, Math.ceil(containerMeasure.height / ROW_HEIGHT)),
+      entryNodeId: nodeId,
+      entryCenterY: containerMeasure.height / 2,
+    },
+    condition,
+    atomAnnotations,
+  );
 }
 
 function placeOrChain(
@@ -493,6 +566,7 @@ function placeOrChain(
   parentId: string | undefined,
   operator: "OR" | "XOR",
   leafKind: ExpressionLeafKind,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   const operands = flattenBooleanChain(condition);
   const childMeasures = operands.map((operand) =>
@@ -520,6 +594,7 @@ function placeOrChain(
       true,
       false,
       leafKind,
+      atomAnnotations,
     );
 
     nodes.push(...childResult.nodes);
@@ -545,14 +620,18 @@ function placeOrChain(
     childY += childMeasures[i].height + OR_GAP;
   }
 
-  return {
-    nodes,
-    edges,
-    size: { width: totalMeasure.width, height: totalMeasure.height },
-    rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
-    entryNodeId,
-    entryCenterY,
-  };
+  return withDecodeFalseIfProvedSubtree(
+    {
+      nodes,
+      edges,
+      size: { width: totalMeasure.width, height: totalMeasure.height },
+      rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
+      entryNodeId,
+      entryCenterY,
+    },
+    condition,
+    atomAnnotations,
+  );
 }
 
 function placeAndChain(
@@ -564,6 +643,7 @@ function placeAndChain(
   parentId: string | undefined,
   wrapInContainer: boolean,
   leafKind: ExpressionLeafKind,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   const operands = flattenBooleanChain(condition);
   const childMeasures = operands.map((operand) =>
@@ -596,6 +676,7 @@ function placeAndChain(
         false,
         false,
         leafKind,
+        atomAnnotations,
       );
 
       nodes.push(...childResult.nodes);
@@ -621,14 +702,18 @@ function placeAndChain(
       childX += childMeasures[i].width + AND_GAP;
     }
 
-    return {
-      nodes,
-      edges,
-      size: { width: totalMeasure.width, height: totalMeasure.height },
-      rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
-      entryNodeId,
-      entryCenterY,
-    };
+    return withDecodeFalseIfProvedSubtree(
+      {
+        nodes,
+        edges,
+        size: { width: totalMeasure.width, height: totalMeasure.height },
+        rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
+        entryNodeId,
+        entryCenterY,
+      },
+      condition,
+      atomAnnotations,
+    );
   }
 
   const containerData: ContainerNodeData = {
@@ -667,6 +752,7 @@ function placeAndChain(
       false,
       false,
       leafKind,
+      atomAnnotations,
     );
 
     nodes.push(...childResult.nodes);
@@ -687,14 +773,18 @@ function placeAndChain(
     childX += childMeasures[i].width + AND_GAP;
   }
 
-  return {
-    nodes,
-    edges,
-    size: { width: totalMeasure.width, height: totalMeasure.height },
-    rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
-    entryNodeId: nodeId,
-    entryCenterY: totalMeasure.height / 2,
-  };
+  return withDecodeFalseIfProvedSubtree(
+    {
+      nodes,
+      edges,
+      size: { width: totalMeasure.width, height: totalMeasure.height },
+      rowsUsed: Math.max(1, Math.ceil(totalMeasure.height / ROW_HEIGHT)),
+      entryNodeId: nodeId,
+      entryCenterY: totalMeasure.height / 2,
+    },
+    condition,
+    atomAnnotations,
+  );
 }
 
 function placeCondition(
@@ -707,6 +797,7 @@ function placeCondition(
   wrapAndInContainer = false,
   elideOrGroup = false,
   leafKind: ExpressionLeafKind = "condition",
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   if (condition.kind === "paren") {
     return placeGroupContainer(
@@ -719,6 +810,7 @@ function placeCondition(
       wrapAndInContainer,
       elideOrGroup,
       leafKind,
+      atomAnnotations,
     );
   }
 
@@ -733,6 +825,7 @@ function placeCondition(
         parentId,
         wrapAndInContainer,
         leafKind,
+        atomAnnotations,
       );
     }
     return placeOrChain(
@@ -744,10 +837,19 @@ function placeCondition(
       parentId,
       condition.op === "^" ? "XOR" : "OR",
       leafKind,
+      atomAnnotations,
     );
   }
 
-  return placeLeaf(condition, nodeId, globalX, globalY, parentId, leafKind);
+  return placeLeaf(
+    condition,
+    nodeId,
+    globalX,
+    globalY,
+    parentId,
+    leafKind,
+    atomAnnotations,
+  );
 }
 
 export function placeConditionGraph(
@@ -756,6 +858,7 @@ export function placeConditionGraph(
   globalX: number,
   globalY: number,
   depth = 0,
+  atomAnnotations?: ConditionGraphAtomAnnotations,
 ): ConditionGraphResult {
   return placeCondition(
     condition,
@@ -767,6 +870,7 @@ export function placeConditionGraph(
     false,
     true,
     "condition",
+    atomAnnotations,
   );
 }
 

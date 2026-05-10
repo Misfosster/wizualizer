@@ -1,5 +1,5 @@
 import { Minus, Plus } from "lucide-react";
-import { useId, useRef, type ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 
 interface CollapsiblePanelShellProps {
   dataPanelAttr: string;
@@ -24,7 +24,6 @@ export function CollapsiblePanelShell({
   expandedClassName,
   children,
 }: CollapsiblePanelShellProps) {
-  const panelRef = useRef<HTMLElement | null>(null);
   const contentId = useId();
   const toggleLabel = isCollapsed ? `Expand ${ariaLabel}` : `Collapse ${ariaLabel}`;
   const dataAttrs: Record<string, string> = {
@@ -37,21 +36,8 @@ export function CollapsiblePanelShell({
 
   return (
     <section
-      ref={panelRef}
       {...dataAttrs}
       aria-label={ariaLabel}
-      onWheel={(event) => {
-        const element = panelRef.current;
-        if (!element) {
-          return;
-        }
-        if (element.scrollHeight <= element.clientHeight) {
-          return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        element.scrollTop += event.deltaY;
-      }}
       className={`nodrag nopan flex w-72 max-w-xs flex-col rounded-md border border-gray-300 bg-white/95 p-3 text-gray-700 shadow-sm ${
         isCollapsed ? "h-auto overflow-hidden" : expandedClassName
       }`}

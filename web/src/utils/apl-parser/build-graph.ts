@@ -26,7 +26,6 @@ import type {
 import type { ConditionOverrides } from "@/utils/conditions/types";
 import type { SemanticSpecCatalog } from "@/utils/semantics/types";
 import type { AtomResolver } from "@/utils/talents/evaluate-condition";
-import { simplifyConditionForRender } from "@/utils/talents/simplify-condition";
 import {
   EXPRESSION_NODE_BOUNDS,
   PROFILE_PADDING_ROWS,
@@ -47,6 +46,7 @@ import {
 import {
   placeConditionGraph,
   placeValueExpressionGraph,
+  type ConditionGraphAtomAnnotations,
   type ConditionGraphResult,
 } from "./condition-layout";
 import {
@@ -136,10 +136,10 @@ export interface GraphResult {
 export interface BuildGraphOptions {
   talentRenderMode?: TalentRenderMode;
   /**
-   * When enabled, condition branches that already resolve true under the
-   * active talent/override context are omitted from surviving actions.
-   * Branches that resolve false stay visible so impossible actions still
-   * explain why they were dimmed or hidden.
+   * When enabled and the graph has atom resolution from talents/overrides,
+   * condition leaf nodes provably true under that resolver are visibly
+   * de-emphasized instead of omitted. False branches stay prominent so
+   * impossible routes remain easy to scan.
    */
   hideTrueConditions?: boolean;
   talentSelectionsByProfile?: ReadonlyMap<number, TalentSelectionResult>;
@@ -554,27 +554,30 @@ function buildActionGraph(
   talentState: TalentState | undefined,
   talentReason: string | undefined,
   resolveAtomForRender: AtomResolver | undefined,
-  simplifyConditionsForRender: boolean,
+  dimResolvedTrueLeaves: boolean,
+  annotateDecodeFalseUnderTalentDim: boolean,
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
+  const dimTrueLeafResolver =
+    dimResolvedTrueLeaves && resolveAtomForRender !== undefined
+      ? resolveAtomForRender
+      : undefined;
+  const decodeFalseBranchResolver =
+    annotateDecodeFalseUnderTalentDim && resolveAtomForRender !== undefined
+      ? resolveAtomForRender
+      : undefined;
+  const conditionAtomAnnotations: ConditionGraphAtomAnnotations | undefined =
+    dimTrueLeafResolver || decodeFalseBranchResolver
+      ? {
+          dimTrueLeafResolver,
+          decodeFalseBranchResolver,
+        }
+      : undefined;
   const renderedDetails = getConditionSegments(actionLine.action.segments)
     .flatMap<RenderedActionDetail>((segment) => {
       if (isTargetRankingSegment(segment)) {
         return [{ kind: "targetRanking", segment }];
-      }
-
-      if (simplifyConditionsForRender && resolveAtomForRender !== undefined) {
-        const simplified = simplifyConditionForRender(
-          segment.expr,
-          resolveAtomForRender,
-        );
-        if (!simplified) {
-          return [];
-        }
-        return [
-          { kind: "condition", segment: { ...segment, expr: simplified } },
-        ];
       }
 
       return [{ kind: "condition", segment }];
@@ -750,6 +753,8 @@ function buildActionGraph(
       conditionId,
       detailOrigin.x,
       detailOrigin.y,
+      0,
+      conditionAtomAnnotations,
     );
     alignActionToDetailEntry(detailOrigin, conditionGraph);
 
@@ -793,7 +798,7 @@ function buildBlockGraph(
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
   context: TalentRenderContext,
-  hideTrueConditions: boolean,
+  dimResolvedTrueLeaves: boolean,
 ): GraphSectionResult | null {
   const survivingIndices = getSurvivingActionIndices(
     block,
@@ -828,9 +833,8 @@ function buildBlockGraph(
   }
 
   const resolveAtomForRender = context.profileAtomResolvers.get(profileIndex);
-  const simplifyConditionsForRender =
-    hideTrueConditions && resolveAtomForRender !== undefined;
-
+  const annotateDecodeFalseUnderTalentDim =
+    context.mode === "dim" && resolveAtomForRender !== undefined;
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;
   for (let i = 0; i < survivingIndices.length; i++) {
@@ -856,7 +860,8 @@ function buildBlockGraph(
       talentState,
       talentReason,
       resolveAtomForRender,
-      simplifyConditionsForRender,
+      dimResolvedTrueLeaves,
+      annotateDecodeFalseUnderTalentDim,
     );
 
     nodes.push(...actionGraph.nodes);
@@ -888,7 +893,7 @@ function buildProfileGraph(
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
   context: TalentRenderContext,
-  hideTrueConditions: boolean,
+  dimResolvedTrueLeaves: boolean,
 ): GraphSectionResult | null {
   // Build blocks first; in Hide mode some may be skipped entirely. We need to
   // know that before deciding whether the profile root should appear at all.
@@ -904,7 +909,7 @@ function buildProfileGraph(
       collapsedBlocks,
       collapsedActions,
       context,
-      hideTrueConditions,
+      dimResolvedTrueLeaves,
     );
     if (!blockGraph) {
       continue;
@@ -952,7 +957,7 @@ export function buildGraph(
   options: BuildGraphOptions = {},
 ): GraphResult {
   const mode: TalentRenderMode = options.talentRenderMode ?? "off";
-  const hideTrueConditions = options.hideTrueConditions ?? false;
+  const dimResolvedTrueLeaves = options.hideTrueConditions ?? false;
   const context = buildTalentRenderContext(
     document,
     mode,
@@ -974,7 +979,7 @@ export function buildGraph(
       collapsedBlocks,
       collapsedActions,
       context,
-      hideTrueConditions,
+      dimResolvedTrueLeaves,
     );
 
     if (!profileGraph) {

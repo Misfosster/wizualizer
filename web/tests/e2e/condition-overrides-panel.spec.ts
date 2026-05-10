@@ -220,7 +220,7 @@ test("per-profile override dims the matching action and persists across reload",
   ).toBeVisible();
 });
 
-test("hide true conditions toggle removes resolved condition nodes", async ({
+test("dim proven-true conditions toggle de-emphasises resolved condition nodes", async ({
   page,
 }) => {
   await gotoPreview(page, PROFILE_WITH_CONDITIONS);
@@ -250,7 +250,10 @@ test("hide true conditions toggle removes resolved condition nodes", async ({
 
   await expect(lavaLashCondition).toBeVisible();
   await page.locator("[data-hide-true-conditions-toggle]").check();
-  await expect(lavaLashCondition).toHaveCount(0);
+  await expect(lavaLashCondition).toBeVisible();
+  await expect(
+    lavaLashCondition.locator('[data-condition-resolves-true-badge]'),
+  ).toBeVisible();
   await page.waitForFunction(
     () =>
       window.localStorage.getItem("logiccraft.hideTrueConditions") === "1",

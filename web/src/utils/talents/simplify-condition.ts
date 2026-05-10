@@ -2,7 +2,9 @@ import { flattenBooleanChain } from "@/utils/apl-parser/action-data";
 import type { BinExpr, Condition, IdentRef } from "@/utils/apl-parser/types";
 import { evaluateConditionWith, type AtomResolver } from "./evaluate-condition";
 
-type Truthiness = "true" | "false" | "unknown";
+export type ProvableTruthiness = "true" | "false" | "unknown";
+
+type Truthiness = ProvableTruthiness;
 
 interface SimplifiedCondition {
   truthiness: Truthiness;
@@ -125,6 +127,17 @@ function simplifyAnd(condition: BinExpr, resolveAtom: AtomResolver): SimplifiedC
     truthiness: "unknown",
     expr: rebuildBooleanChain("&", unknownOperands),
   };
+}
+
+/**
+ * Reports whether `condition` is provably true / false given `resolveAtom`,
+ * or still unknown under that partial resolver.
+ */
+export function getProvableTruthiness(
+  condition: Condition,
+  resolveAtom: AtomResolver,
+): ProvableTruthiness {
+  return evaluateTruthiness(condition, resolveAtom);
 }
 
 function evaluateTruthiness(condition: Condition, resolveAtom: AtomResolver): Truthiness {

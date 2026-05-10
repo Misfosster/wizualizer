@@ -491,11 +491,12 @@
   }
 
   /*
-   * Dim-mode treatment for actions (and their descendant condition /
-   * value / container nodes) that the condition filter has proved
-   * impossible.
+   * Talent-render Dim mode marks impossible actions via `.lc-node-card--impossible`.
    *
-   * Notes:
+   * The condition-filter toggle marks provably true *condition leaves* via
+   * `.lc-node-card--resolvedTrue` (lighter de-emphasis so they read as settled).
+   *
+   * Notes for impossible actions:
    *   - The "filtered" pill carries the meaning textually so the state
    *     does not depend on colour or opacity alone (WCAG 1.4.1).
    *   - 0.42 / saturate(0.55) were picked empirically to stay readable
@@ -504,6 +505,49 @@
    *   - `pointer-events: none` is intentionally NOT set - the user can
    *     still collapse / expand dimmed branches to inspect them.
    */
+  /* Provably true (condition filter): icon reinforces meaning beside reduced opacity */
+  .lc-condition-resolved-true-badge {
+    position: absolute;
+    top: 0.38rem;
+    right: 0.5rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 999px;
+    pointer-events: none;
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.28),
+      0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+    color: #f0fdf4;
+    outline: 1px solid rgba(21, 128, 61, 0.55);
+    outline-offset: -1px;
+  }
+
+  .lc-condition-resolved-true-badge--targetIf {
+    background: linear-gradient(180deg, #4ade80 0%, #22c55e 100%);
+    outline-color: rgba(20, 83, 45, 0.45);
+  }
+
+  .lc-condition-resolved-true-badge__icon {
+    width: 0.8125rem;
+    height: 0.8125rem;
+    stroke-width: 2.75px;
+    flex-shrink: 0;
+  }
+
+  .lc-node-card--condition.lc-node-card--resolvedTrue {
+    padding-right: 2.35rem;
+  }
+
+  .lc-node-card--resolvedTrue {
+    opacity: 0.55;
+    filter: saturate(0.72);
+  }
+
   .lc-node-card--impossible {
     opacity: 0.42;
     filter: saturate(0.55);
@@ -554,6 +598,20 @@
   }
 
   .lc-node-container--impossible {
+    opacity: 0.42;
+    filter: saturate(0.55);
+  }
+
+  /*
+   * Decode-proved false branch (talent Dim): same fade as impossible nodes
+   * but no "filtered" pill on cards — the action can still be viable.
+   */
+  .lc-node-card--decodeProvedFalse {
+    opacity: 0.42;
+    filter: saturate(0.55);
+  }
+
+  .lc-node-container--decodeProvedFalse {
     opacity: 0.42;
     filter: saturate(0.55);
   }

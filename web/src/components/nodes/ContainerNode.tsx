@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { Position, type NodeProps } from "@xyflow/react";
+import { cn } from "@/lib/utils";
 import { CONDITION_HANDLE_IDS, type ContainerFlowNode } from "./types";
 import { SourceHandle, TargetHandle } from "./shared";
 
@@ -14,15 +15,18 @@ function ContainerNode({ data, isConnectable }: NodeProps<ContainerFlowNode>) {
   const borderColor = DEPTH_COLORS[data.depth % DEPTH_COLORS.length];
   const handleUsage = data.handleUsage ?? {};
   const isImpossible = data.talentState === "impossible";
+  const decodeDeadBranch =
+    !isImpossible && data.decodeProvedFalse === true;
 
   return (
     <div
-      className={
-        isImpossible
-          ? "lc-node-container lc-node-container--impossible"
-          : "lc-node-container"
-      }
+      className={cn(
+        "lc-node-container",
+        isImpossible && "lc-node-container--impossible",
+        decodeDeadBranch && "lc-node-container--decodeProvedFalse",
+      )}
       data-talent-state={data.talentState ?? "normal"}
+      data-decode-proved-false={decodeDeadBranch ? "true" : undefined}
       data-talent-reason={
         isImpossible ? (data.talentReason ?? "filtered") : undefined
       }

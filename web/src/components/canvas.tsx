@@ -36,6 +36,9 @@ const reactFlowStyle = {
   background: canvasBackground,
 } as const;
 const reactFlowProOptions = { hideAttribution: true } as const;
+/** Top-right stacks: clipped height + internal scroll only (no chaining into the pane). */
+const canvasTopRightStackLayout =
+  "flex h-[calc(100%-1.5rem)] max-h-[calc(100%-1.5rem)] flex-col gap-2 overflow-hidden";
 
 interface InitialViewportResult {
   focusedNodeId: string | null;
@@ -135,9 +138,13 @@ function CanvasLoading({ showControls }: { showControls: boolean }) {
       style={{ background: canvasBackground }}
     >
       {showControls ? (
-        <div className="absolute right-3 top-3 z-20 h-[calc(100%-1.5rem)] overflow-y-auto">
-          <div className="flex flex-col gap-2 pb-[10px]">
+        <div
+          className={`pointer-events-auto absolute right-3 top-3 z-20 ${canvasTopRightStackLayout}`}
+        >
+          <div className="shrink-0">
             <GraphSearchBox />
+          </div>
+          <div className="nodrag nopan min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2">
             <TalentModePanel />
           </div>
         </div>
@@ -529,10 +536,12 @@ function CanvasFlow({ initialFocusNodeId = null }: CanvasProps) {
         </Panel>
         <Panel
           position="top-right"
-          className="m-3 h-[calc(100%-1.5rem)] overflow-y-auto"
+          className={`pointer-events-auto m-3 ${canvasTopRightStackLayout}`}
         >
-          <div className="flex flex-col gap-2 pb-[10px]">
+          <div className="shrink-0">
             <GraphSearchBox />
+          </div>
+          <div className="nodrag nopan min-h-0 flex-1 overflow-y-auto overscroll-contain pb-2">
             <TalentModePanel />
           </div>
         </Panel>

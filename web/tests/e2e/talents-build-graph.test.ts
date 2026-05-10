@@ -11,7 +11,11 @@ import type {
   TalentSelectionResult,
   TalentState,
 } from "../../src/utils/talents/types";
-import type { BlockNodeData, RootNodeData } from "../../src/components/nodes/types";
+import type {
+  BlockNodeData,
+  ConditionNodeData,
+  RootNodeData,
+} from "../../src/components/nodes/types";
 
 function parseOrThrow(text: string): AplDocument {
   const result = parseDocument(text);
@@ -245,6 +249,46 @@ test("Hide mode keeps mixed OR action and preserves both branches for context", 
   ).toBe(true);
 });
 
+test("Dim mode dims a decode-false AND arm under OR while the action stays viable", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=stormstrike,if=(talent.dead_branch_talent&buff.maelstrom_weapon.stack>=3)|buff.hot_hand.up",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "dim",
+    talentSelectionsByProfile: new Map([
+      [0, { status: { kind: "decoder_pending" }, selections: {} }],
+    ]),
+    conditionOverrides: {
+      global: { "talent.dead_branch_talent": false },
+      byProfile: {},
+    },
+  });
+
+  const action = nodeById(result, getActionNodeId(0, "actions", 0));
+  expect(action).toBeTruthy();
+  expect(actionTalentState(result, action!.id)).not.toBe("impossible");
+
+  const deadTalentNode = result.nodes.find(
+    (n) =>
+      n.type === "condition" &&
+      ((n.data as ConditionNodeData).label ?? "").includes(
+        "talent.dead_branch_talent",
+      ),
+  );
+  expect(deadTalentNode?.data).toMatchObject({ decodeProvedFalse: true });
+
+  const hotHandNode = result.nodes.find(
+    (n) =>
+      n.type === "condition" &&
+      ((n.data as ConditionNodeData).label ?? "").includes("buff.hot_hand"),
+  );
+  expect(
+    (hotHandNode?.data as ConditionNodeData | undefined)?.decodeProvedFalse,
+  ).not.toBe(true);
+});
+
 test("Dim mode keeps both OR branches visible for context", () => {
   const apl = [
     'shaman="Demo"',
@@ -273,7 +317,7 @@ test("Dim mode keeps both OR branches visible for context", () => {
   ).toBe(true);
 });
 
-test("hideTrueConditions removes resolved-true AND branches from surviving actions", () => {
+test("hideTrueConditions dims resolved-true AND leaves but keeps unknown branches readable", () => {
   const apl = [
     'shaman="Demo"',
     "actions=stormstrike,if=buff.hot_hand.up&cooldown.doom_winds.remains>0",
@@ -289,13 +333,20 @@ test("hideTrueConditions removes resolved-true AND branches from surviving actio
   });
 
   expect(nodeById(result, getActionNodeId(0, "actions", 0))).toBeTruthy();
-  const conditionLabels = result.nodes
-    .filter((node) => node.type === "condition")
-    .map((node) => (node.data as { label?: string }).label ?? "");
-  expect(conditionLabels).toEqual(["cooldown.doom_winds.remains>0"]);
+  const conditionNodes = result.nodes.filter((node) => node.type === "condition");
+  const hotHandNode = conditionNodes.find((node) =>
+    ((node.data as ConditionNodeData).label ?? "").includes("buff.hot_hand"),
+  );
+  const doomNode = conditionNodes.find((node) =>
+    ((node.data as ConditionNodeData).label ?? "").includes("cooldown.doom_winds"),
+  );
+  expect(hotHandNode?.data).toMatchObject({
+    resolvedAsTrue: true,
+  });
+  expect((doomNode?.data as ConditionNodeData).resolvedAsTrue).not.toBe(true);
 });
 
-test("hideTrueConditions hides a condition segment that fully resolves true", () => {
+test("hideTrueConditions keeps a fully-true segment visible and marks it resolved", () => {
   const apl = [
     'shaman="Demo"',
     "actions=stormstrike,if=buff.hot_hand.up",
@@ -313,12 +364,16 @@ test("hideTrueConditions hides a condition segment that fully resolves true", ()
   const action = nodeById(result, getActionNodeId(0, "actions", 0));
   expect(action).toBeTruthy();
   expect(action?.data).toMatchObject({
-    hasChildren: false,
-    hasCondition: false,
+    hasChildren: true,
+    hasCondition: true,
   });
   expect(result.nodes.filter((node) => node.type === "condition")).toHaveLength(
-    0,
+    1,
   );
+  const cond = result.nodes.find((node) => node.type === "condition");
+  expect(cond?.data).toMatchObject({
+    resolvedAsTrue: true,
+  });
 });
 
 test("Hide mode drops empty unreferenced block and its profile root", () => {

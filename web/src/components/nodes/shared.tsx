@@ -11,11 +11,15 @@ interface NodeCardProps {
    * renders in a subdued, low-contrast treatment (applied via
    * `.lc-node-card--impossible` in CSS) so the user can scan which actions
    * the active filter considers unreachable without losing graph context.
-   * Only meaningful in Dim mode; in Hide mode the node isn't rendered, and
-   * in Off mode the value is undefined.
+   * Only meaningful in Dim mode for actions; in Hide mode the node isn't
+   * rendered for filtered actions; in Off mode the value is undefined.
    */
   talentState?: TalentState;
   talentReason?: string;
+  /** De-emphasize condition leaves that already resolve true (condition filter). */
+  resolvedAsTrue?: boolean;
+  /** Subgraph provably false under decode while action may still remain (talent Dim). */
+  decodeProvedFalse?: boolean;
 }
 
 interface HandleProps {
@@ -35,16 +39,36 @@ export function NodeCard({
   children,
   talentState,
   talentReason,
+  resolvedAsTrue,
+  decodeProvedFalse,
 }: NodeCardProps) {
   const impossibleClass =
     talentState === "impossible" ? "lc-node-card--impossible" : undefined;
+  const decodeFalseClass =
+    talentState !== "impossible" && decodeProvedFalse
+      ? "lc-node-card--decodeProvedFalse"
+      : undefined;
+  const resolvedTrueClass =
+    talentState !== "impossible" &&
+    !decodeProvedFalse &&
+    resolvedAsTrue
+      ? "lc-node-card--resolvedTrue"
+      : undefined;
   const reasonLabel =
     talentState === "impossible" ? (talentReason ?? "filtered") : undefined;
   return (
     <div
       data-talent-state={talentState ?? "normal"}
       data-talent-reason={reasonLabel}
-      className={cn("lc-node-card", className, impossibleClass)}
+      data-resolved-condition={resolvedAsTrue ? "true" : undefined}
+      data-decode-proved-false={decodeProvedFalse ? "true" : undefined}
+      className={cn(
+        "lc-node-card",
+        className,
+        impossibleClass,
+        decodeFalseClass,
+        resolvedTrueClass,
+      )}
     >
       {children}
     </div>

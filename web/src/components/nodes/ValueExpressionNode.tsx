@@ -17,6 +17,7 @@ function ValueExpressionNode({
       className="lc-node-card--valueExpression"
       talentState={data.talentState}
       talentReason={data.talentReason}
+      decodeProvedFalse={data.decodeProvedFalse}
     >
       {handleUsage.targetLeft ? (
         <TargetHandle

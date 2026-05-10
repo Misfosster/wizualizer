@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { Check } from "lucide-react";
 import { Position, type NodeProps } from "@xyflow/react";
 import { CONDITION_HANDLE_IDS, type ConditionFlowNode } from "./types";
 import { NodeCard, SourceHandle, TargetHandle } from "./shared";
@@ -10,6 +11,10 @@ function ConditionNode({
 }: NodeProps<ConditionFlowNode>) {
   const handleUsage = data.handleUsage ?? {};
   const isTargetIf = data.segmentKind === "target_if";
+  const showResolvedTrue =
+    data.resolvedAsTrue === true &&
+    data.talentState !== "impossible" &&
+    data.decodeProvedFalse !== true;
 
   return (
     <NodeCard
@@ -19,6 +24,8 @@ function ConditionNode({
       )}
       talentState={data.talentState}
       talentReason={data.talentReason}
+      resolvedAsTrue={data.resolvedAsTrue}
+      decodeProvedFalse={data.decodeProvedFalse}
     >
       {handleUsage.targetLeft ? (
         <TargetHandle
@@ -45,6 +52,19 @@ function ConditionNode({
           id={CONDITION_HANDLE_IDS.sourceBottom}
           position={Position.Bottom}
         />
+      ) : null}
+
+      {showResolvedTrue ? (
+        <span
+          className={cn(
+            "lc-condition-resolved-true-badge",
+            isTargetIf && "lc-condition-resolved-true-badge--targetIf",
+          )}
+          aria-label="This condition resolves true with the current talent decode and overrides"
+          data-condition-resolves-true-badge
+        >
+          <Check className="lc-condition-resolved-true-badge__icon" aria-hidden />
+        </span>
       ) : null}
 
       <div className="lc-node-header">

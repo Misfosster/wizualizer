@@ -115,6 +115,13 @@ export interface ConditionNodeData extends Record<string, unknown> {
   segmentKind?: ConditionSegmentKind;
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
+  /** Provably true under talents + overrides while "dim resolved-true" is on. */
+  resolvedAsTrue?: boolean;
+  /**
+   * Provably false under decode/overrides while talent Dim mode is on; action
+   * may still exist (e.g. sibling OR arm still viable).
+   */
+  decodeProvedFalse?: boolean;
   talentState?: TalentState;
   talentReason?: string;
 }
@@ -132,6 +139,7 @@ export interface ValueExpressionNodeData extends Record<string, unknown> {
   kind: "valueExpression";
   expressionKind?: ConditionExpressionKind;
   handleUsage?: ConditionHandleUsage;
+  decodeProvedFalse?: boolean;
   talentState?: TalentState;
   talentReason?: string;
 }
@@ -142,6 +150,7 @@ export interface ContainerNodeData extends Record<string, unknown> {
   depth: number;
   operator: string;
   handleUsage?: ConditionHandleUsage;
+  decodeProvedFalse?: boolean;
   talentState?: TalentState;
   talentReason?: string;
 }
