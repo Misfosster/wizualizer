@@ -131,18 +131,11 @@ async function clickFoldMarkerForLine(
   page: Page,
   lineText: string,
 ): Promise<void> {
-  const lineBox = await page.getByText(lineText).boundingBox();
-  const gutterBox = await page.locator(".cm-foldGutter").boundingBox();
-  expect(lineBox).toBeTruthy();
-  expect(gutterBox).toBeTruthy();
-  if (!lineBox || !gutterBox) {
-    throw new Error(`Expected fold marker for line: ${lineText}`);
-  }
-
-  await page.mouse.click(
-    gutterBox.x + gutterBox.width / 2,
-    lineBox.y + lineBox.height / 2,
-  );
+  const editor = page.getByTestId("apl-code-editor");
+  const line = editor.locator(".cm-line").filter({ hasText: lineText }).first();
+  const marker = line.locator(".lc-apl-editor-fold-marker").first();
+  await expect(marker).toBeVisible();
+  await marker.click();
 }
 
 test("renders parsed APL text in the preview graph", async ({ page }) => {
@@ -715,7 +708,12 @@ test("single-line sequence actions do not show a working fold gutter marker", as
     ['monk="Demo Profile"', sequenceLine].join("\n"),
   );
 
-  await clickFoldMarkerForLine(page, sequenceLine);
+  const editor = page.getByTestId("apl-code-editor");
+  const sequenceRow = editor
+    .locator(".cm-line")
+    .filter({ hasText: sequenceLine })
+    .first();
+  await expect(sequenceRow.locator(".lc-apl-editor-fold-marker")).toHaveCount(0);
   await expect(page.locator(".cm-foldPlaceholder")).toHaveCount(0);
 });
 

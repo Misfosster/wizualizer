@@ -1,15 +1,11 @@
+import { EditorState, type Extension, Range } from "@codemirror/state";
 import {
-  EditorState,
-  RangeSet,
-  RangeSetBuilder,
-  type Extension,
-} from "@codemirror/state";
-import {
-  gutter,
-  GutterMarker,
-  keymap,
+  Decoration,
   ViewPlugin,
+  WidgetType,
+  keymap,
   type BlockInfo,
+  type DecorationSet,
   type EditorView,
   type ViewUpdate,
 } from "@codemirror/view";
@@ -93,26 +89,6 @@ function createFoldMarker(open: boolean): HTMLElement {
   marker.title = open ? "Collapse section" : "Expand section";
   return marker;
 }
-
-class AplFoldMarker extends GutterMarker {
-  private readonly open: boolean;
-
-  constructor(open: boolean) {
-    super();
-    this.open = open;
-  }
-
-  override eq(other: GutterMarker): boolean {
-    return other instanceof AplFoldMarker && other.open === this.open;
-  }
-
-  override toDOM(): HTMLElement {
-    return createFoldMarker(this.open);
-  }
-}
-
-const canFoldMarker = new AplFoldMarker(true);
-const canUnfoldMarker = new AplFoldMarker(false);
 
 function hasPreviousLineInSameGroup(
   state: EditorState,
@@ -242,38 +218,130 @@ function findFoldOnLine(
   return found;
 }
 
-function buildFoldMarkers(view: EditorView): RangeSet<GutterMarker> {
-  const builder = new RangeSetBuilder<GutterMarker>();
+type FoldLineControl = "fold" | "unfold";
 
-  for (const line of view.viewportLineBlocks) {
-    const foldedRange = findFoldOnLine(view.state, line);
-    const marker =
-      foldedRange && isMultiLineRange(view.state, foldedRange)
-        ? canUnfoldMarker
-        : null;
-    const foldRange =
-      marker === null ? foldable(view.state, line.from, line.to) : null;
-    const nextMarker =
-      marker ??
-      (foldRange && isMultiLineRange(view.state, foldRange)
-        ? canFoldMarker
-        : null);
-
-    if (nextMarker) {
-      builder.add(line.from, line.from, nextMarker);
-    }
+/**
+ * Fold chevrons belong only on the header / parent line of a fold (the line
+ * {@link findAplFold} starts from). Continuation lines such as `actions.*+=`
+ * must not get a widget or they shift the code in and look misaligned.
+ */
+function isFoldBlockParentLine(state: EditorState, line: BlockInfo): boolean {
+  const text = state.doc.sliceString(line.from, line.to);
+  if (isProfileHeader(text)) {
+    return true;
   }
 
-  return builder.finish();
+  const group = getFoldGroup(text);
+  if (!group) {
+    return false;
+  }
+
+  return !hasPreviousLineInSameGroup(state, line.number, group);
 }
 
-function createAplFoldGutter(): Extension {
-  const markers = ViewPlugin.fromClass(
+function getFoldControlForLine(
+  view: EditorView,
+  line: BlockInfo,
+): FoldLineControl | null {
+  const foldedRange = findFoldOnLine(view.state, line);
+  const unfolded =
+    foldedRange && isMultiLineRange(view.state, foldedRange)
+      ? ("unfold" as const)
+      : null;
+  if (unfolded) {
+    return "unfold";
+  }
+
+  const foldRange = foldable(view.state, line.from, line.to);
+  if (foldRange && isMultiLineRange(view.state, foldRange)) {
+    return isFoldBlockParentLine(view.state, line) ? "fold" : null;
+  }
+
+  return null;
+}
+
+function dispatchFoldClick(view: EditorView, lineFrom: number): boolean {
+  const lineBlock = view.lineBlockAt(lineFrom);
+  const foldedRange = findFoldOnLine(view.state, lineBlock);
+  if (foldedRange && isMultiLineRange(view.state, foldedRange)) {
+    view.dispatch({ effects: unfoldEffect.of(foldedRange) });
+    return true;
+  }
+
+  const foldRange = foldable(view.state, lineBlock.from, lineBlock.to);
+  if (foldRange && isMultiLineRange(view.state, foldRange)) {
+    view.dispatch({ effects: foldEffect.of(foldRange) });
+    return true;
+  }
+
+  return false;
+}
+
+class FoldLeadWidget extends WidgetType {
+  constructor(
+    private readonly lineFrom: number,
+    private readonly foldOpenChevron: boolean,
+  ) {
+    super();
+  }
+
+  override eq(other: WidgetType): boolean {
+    return (
+      other instanceof FoldLeadWidget &&
+      other.lineFrom === this.lineFrom &&
+      other.foldOpenChevron === this.foldOpenChevron
+    );
+  }
+
+  override toDOM(view: EditorView): HTMLElement {
+    const wrap = document.createElement("span");
+    wrap.className = "lc-apl-editor-fold-lead-wrap";
+
+    const marker = createFoldMarker(this.foldOpenChevron);
+    marker.classList.add("lc-apl-editor-fold-marker--lead-strip");
+    marker.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      void dispatchFoldClick(view, this.lineFrom);
+    });
+    wrap.appendChild(marker);
+    return wrap;
+  }
+
+  override ignoreEvent(): boolean {
+    return false;
+  }
+}
+
+function buildFoldLeadDecorations(view: EditorView): DecorationSet {
+  const ranges: Range<Decoration>[] = [];
+
+  for (const line of view.viewportLineBlocks) {
+    const control = getFoldControlForLine(view, line);
+    if (!control) {
+      continue;
+    }
+
+    const foldOpenChevron = control === "fold";
+    ranges.push(
+      Decoration.widget({
+        widget: new FoldLeadWidget(line.from, foldOpenChevron),
+        side: -1,
+      }).range(line.from),
+    );
+  }
+
+  ranges.sort((a, b) => a.from - b.from);
+  return Decoration.set(ranges, true);
+}
+
+function createFoldLeadDecorations(): Extension {
+  const plugin = ViewPlugin.fromClass(
     class {
-      markers: RangeSet<GutterMarker>;
+      decorations: DecorationSet;
 
       constructor(view: EditorView) {
-        this.markers = buildFoldMarkers(view);
+        this.decorations = buildFoldLeadDecorations(view);
       }
 
       update(update: ViewUpdate): void {
@@ -283,41 +351,14 @@ function createAplFoldGutter(): Extension {
           update.startState.field(foldState, false) !==
             update.state.field(foldState, false)
         ) {
-          this.markers = buildFoldMarkers(update.view);
+          this.decorations = buildFoldLeadDecorations(update.view);
         }
       }
     },
+    { decorations: (value) => value.decorations },
   );
 
-  return [
-    markers,
-    gutter({
-      class: "cm-foldGutter",
-      markers(view) {
-        return view.plugin(markers)?.markers ?? RangeSet.empty;
-      },
-      initialSpacer() {
-        return canUnfoldMarker;
-      },
-      domEventHandlers: {
-        click(view, line) {
-          const foldedRange = findFoldOnLine(view.state, line);
-          if (foldedRange && isMultiLineRange(view.state, foldedRange)) {
-            view.dispatch({ effects: unfoldEffect.of(foldedRange) });
-            return true;
-          }
-
-          const foldRange = foldable(view.state, line.from, line.to);
-          if (foldRange && isMultiLineRange(view.state, foldRange)) {
-            view.dispatch({ effects: foldEffect.of(foldRange) });
-            return true;
-          }
-
-          return false;
-        },
-      },
-    }),
-  ];
+  return plugin;
 }
 
 export function createAplFoldingExtension(): Extension[] {
@@ -326,7 +367,7 @@ export function createAplFoldingExtension(): Extension[] {
     codeFolding({
       placeholderText: "...",
     }),
-    createAplFoldGutter(),
+    createFoldLeadDecorations(),
     keymap.of(foldKeymap),
   ];
 }
