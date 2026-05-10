@@ -14,13 +14,14 @@ import { semanticCatalogLoader } from "@/utils/semantics/catalog-loader-browser"
 
 const ACTIVE_TAB_STORAGE_KEY = "logiccraft.activeAplTab";
 type AplInputTab = "write" | "preview";
-type WindowWithIdleCallback = Window & {
-  requestIdleCallback?: (
-    callback: () => void,
-    options?: { timeout?: number },
-  ) => number;
-  cancelIdleCallback?: (handle: number) => void;
-};
+
+/**
+ * Time we wait after the last edit before kicking off a background graph
+ * rebuild. Short enough that quickly switching to Preview after typing
+ * usually finds the cache warm; long enough that bursts of keystrokes
+ * collapse into a single rebuild. Tune via empirical feel.
+ */
+const EAGER_GRAPH_BUILD_DEBOUNCE_MS = 250;
 
 function isAplInputTab(value: string | null): value is AplInputTab {
   return value === "write" || value === "preview";
@@ -35,21 +36,19 @@ function readStoredActiveTab(): AplInputTab {
   return isAplInputTab(storedTab) ? storedTab : "write";
 }
 
-function scheduleIdleGraphBuild(callback: () => void): () => void {
-  const win = window as unknown as WindowWithIdleCallback;
-  const requestIdleCallback = win.requestIdleCallback;
-  const cancelIdleCallback = win.cancelIdleCallback;
-  if (
-    typeof requestIdleCallback === "function" &&
-    typeof cancelIdleCallback === "function"
-  ) {
-    const handle = requestIdleCallback(callback, { timeout: 1200 });
-    return () => {
-      cancelIdleCallback(handle);
-    };
-  }
-
-  const handle = window.setTimeout(callback, 600);
+/**
+ * Eager-debounced graph build on the Write tab.
+ *
+ * The previous behaviour leaned on `requestIdleCallback` with a 1.2s
+ * timeout, which created a punishing failure mode: edit → immediately
+ * switch to Preview → idle had not fired yet → full rebuild ran
+ * synchronously on the tab transition. A 250ms debounced timeout instead
+ * means each keystroke resets the timer, then a single rebuild fires
+ * shortly after the user pauses — well before they typically reach for
+ * the Preview tab.
+ */
+function scheduleEagerGraphBuild(callback: () => void): () => void {
+  const handle = window.setTimeout(callback, EAGER_GRAPH_BUILD_DEBOUNCE_MS);
   return () => {
     window.clearTimeout(handle);
   };
@@ -149,7 +148,7 @@ function AplInput() {
       return scheduleAfterNextPaint(buildGraphCache);
     }
 
-    return scheduleIdleGraphBuild(buildGraphCache);
+    return scheduleEagerGraphBuild(buildGraphCache);
   }, [activeTab, buildGraphCache, graphBuildStatus, graphBuildVersion]);
 
   useEffect(() => {

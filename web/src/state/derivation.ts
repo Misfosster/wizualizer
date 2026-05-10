@@ -1,5 +1,4 @@
 import type { Edge } from "@xyflow/react";
-import { buildGraph } from "@/utils/apl-parser/build-graph";
 import {
   parseDocument,
   type AplDocument,
@@ -21,7 +20,7 @@ import {
   pruneCollapsedActions,
   pruneCollapsedBlocks,
 } from "./document-ids";
-import { lookupLoadedSemanticCatalogs } from "./talent-catalog-coordinator";
+import { graphBuildCache } from "./graph-build-cache";
 
 type ParseFailure = Exclude<ParseDocumentResult, { ok: true }>;
 
@@ -48,7 +47,6 @@ export interface RebuildInputs {
   collapsedBlocks: ReadonlySet<string>;
   collapsedActions: ReadonlySet<string>;
   talentRenderMode: TalentRenderMode;
-  hideTrueConditions?: boolean;
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   conditionOverrides?: ConditionOverrides;
   semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>;
@@ -63,7 +61,6 @@ function formatParseError(result: ParseFailure): string {
 
 export interface BuildDerivedStateOptions {
   buildGraph?: boolean;
-  hideTrueConditions?: boolean;
 }
 
 /**
@@ -81,28 +78,14 @@ export function rebuildGraph(
   edges: Edge[];
   talentSummary: TalentRenderSummary | null;
 } {
-  const {
-    collapsedBlocks,
-    collapsedActions,
-    talentRenderMode,
-    hideTrueConditions,
-    talentSelectionsByProfile,
-    conditionOverrides,
-  } = inputs;
-  const result = buildGraph(document, collapsedBlocks, collapsedActions, {
-    talentRenderMode,
-    hideTrueConditions: hideTrueConditions ?? false,
-    talentSelectionsByProfile,
-    conditionOverrides: conditionOverrides ?? EMPTY_CONDITION_OVERRIDES,
-    semanticCatalogsByProfile:
-      inputs.semanticCatalogsByProfile ??
-      lookupLoadedSemanticCatalogs(document),
+  return graphBuildCache.rebuild(document, {
+    collapsedBlocks: inputs.collapsedBlocks,
+    collapsedActions: inputs.collapsedActions,
+    talentRenderMode: inputs.talentRenderMode,
+    talentSelectionsByProfile: inputs.talentSelectionsByProfile,
+    conditionOverrides: inputs.conditionOverrides,
+    semanticCatalogsByProfile: inputs.semanticCatalogsByProfile,
   });
-  return {
-    nodes: result.nodes,
-    edges: result.edges,
-    talentSummary: result.talentSummary ?? null,
-  };
 }
 
 export function buildDerivedState(
@@ -124,7 +107,6 @@ export function buildDerivedState(
         collapsedBlocks: nextCollapsedBlocks,
         collapsedActions: nextCollapsedActions,
         talentRenderMode,
-        hideTrueConditions: options.hideTrueConditions ?? false,
         talentSelectionsByProfile,
         conditionOverrides,
       })

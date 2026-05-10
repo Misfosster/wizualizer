@@ -220,9 +220,12 @@ test("per-profile override dims the matching action and persists across reload",
   ).toBeVisible();
 });
 
-test("dim proven-true conditions toggle shows resolved badge on proven-true nodes", async ({
+test("proven-true conditions are always marked with the resolved badge", async ({
   page,
 }) => {
+  // Resolved-true / resolved-false annotation is now always-on (no toggle):
+  // setting an override that proves a condition true should immediately
+  // reveal the badge without any extra UI affordance.
   await gotoPreview(page, PROFILE_WITH_CONDITIONS);
 
   const lavaLashCondition = page.getByTestId(
@@ -249,15 +252,9 @@ test("dim proven-true conditions toggle shows resolved badge on proven-true node
     .click();
 
   await expect(lavaLashCondition).toBeVisible();
-  await page.locator("[data-hide-true-conditions-toggle]").check();
-  await expect(lavaLashCondition).toBeVisible();
   await expect(
     lavaLashCondition.locator('[data-condition-resolves-true-badge]'),
   ).toBeVisible();
-  await page.waitForFunction(
-    () =>
-      window.localStorage.getItem("logiccraft.hideTrueConditions") === "1",
-  );
 });
 
 test("duplicate profile rows expose display-name and scope-key attributes", async ({

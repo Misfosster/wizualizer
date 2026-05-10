@@ -135,12 +135,6 @@ export interface GraphResult {
  */
 export interface BuildGraphOptions {
   talentRenderMode?: TalentRenderMode;
-  /**
-   * When enabled and the graph has atom resolution from talents/overrides,
-   * provably true condition leaves get a badge + subtle ring; provably false
-   * leaves and decode-false subgraphs are dimmed. Unknown branches stay full strength.
-   */
-  hideTrueConditions?: boolean;
   talentSelectionsByProfile?: ReadonlyMap<number, TalentSelectionResult>;
   /**
    * Manual override panel state. Defaults to no overrides, in which
@@ -563,26 +557,22 @@ function buildActionGraph(
   talentState: TalentState | undefined,
   talentReason: string | undefined,
   resolveAtomForRender: AtomResolver | undefined,
-  dimResolvedTrueLeaves: boolean,
-  annotateDecodeFalseUnderTalentDim: boolean,
   hideProvablyFalseSubtrees: boolean,
 ): GraphSectionResult {
   const actionId = getActionNodeId(profileIndex, blockName, actionIndex);
   const profileId = String(profileIndex);
-  const dimTrueLeafResolver =
-    dimResolvedTrueLeaves && resolveAtomForRender !== undefined
-      ? resolveAtomForRender
-      : undefined;
-  const decodeFalseBranchResolver =
-    (annotateDecodeFalseUnderTalentDim || hideProvablyFalseSubtrees) &&
-    resolveAtomForRender !== undefined
-      ? resolveAtomForRender
-      : undefined;
+  // Condition-resolution annotations (resolved-true / resolved-false leaves
+  // and decode-proved-false subtrees) are now decoupled from the talent
+  // render mode: whenever an atom resolver is available — i.e. whenever the
+  // editor has selections + overrides to evaluate atoms against — every
+  // provably resolvable condition is annotated. Talent render mode now
+  // *only* gates actual filtering ("dim" subdues impossible actions, "hide"
+  // removes provably-false subtrees).
   const conditionAtomAnnotations: ConditionGraphAtomAnnotations | undefined =
-    dimTrueLeafResolver || decodeFalseBranchResolver
+    resolveAtomForRender !== undefined
       ? {
-          dimTrueLeafResolver,
-          decodeFalseBranchResolver,
+          dimTrueLeafResolver: resolveAtomForRender,
+          decodeFalseBranchResolver: resolveAtomForRender,
           ...(hideProvablyFalseSubtrees
             ? { hideProvablyFalseSubtrees: true as const }
             : {}),
@@ -818,7 +808,6 @@ function buildBlockGraph(
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
   context: TalentRenderContext,
-  dimResolvedTrueLeaves: boolean,
 ): GraphSectionResult | null {
   const survivingIndices = getSurvivingActionIndices(
     block,
@@ -853,8 +842,9 @@ function buildBlockGraph(
   }
 
   const resolveAtomForRender = context.profileAtomResolvers.get(profileIndex);
-  const annotateDecodeFalseUnderTalentDim =
-    context.mode === "dim" && resolveAtomForRender !== undefined;
+  // Subtree-level hiding is the *only* annotation that still depends on
+  // talent render mode: "hide" actually drops provably-false subtrees from
+  // the layout, which would change graph topology if it were always on.
   const hideProvablyFalseSubtrees = context.mode === "hide";
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;
@@ -881,8 +871,6 @@ function buildBlockGraph(
       talentState,
       talentReason,
       resolveAtomForRender,
-      dimResolvedTrueLeaves,
-      annotateDecodeFalseUnderTalentDim,
       hideProvablyFalseSubtrees,
     );
 
@@ -915,7 +903,6 @@ function buildProfileGraph(
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
   context: TalentRenderContext,
-  dimResolvedTrueLeaves: boolean,
 ): GraphSectionResult | null {
   // Build blocks first; in Hide mode some may be skipped entirely. We need to
   // know that before deciding whether the profile root should appear at all.
@@ -931,7 +918,6 @@ function buildProfileGraph(
       collapsedBlocks,
       collapsedActions,
       context,
-      dimResolvedTrueLeaves,
     );
     if (!blockGraph) {
       continue;
@@ -979,7 +965,6 @@ export function buildGraph(
   options: BuildGraphOptions = {},
 ): GraphResult {
   const mode: TalentRenderMode = options.talentRenderMode ?? "off";
-  const dimResolvedTrueLeaves = options.hideTrueConditions ?? false;
   const context = buildTalentRenderContext(
     document,
     mode,
@@ -1001,7 +986,6 @@ export function buildGraph(
       collapsedBlocks,
       collapsedActions,
       context,
-      dimResolvedTrueLeaves,
     );
 
     if (!profileGraph) {

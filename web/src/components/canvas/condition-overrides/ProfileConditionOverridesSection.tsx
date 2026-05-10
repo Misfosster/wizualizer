@@ -24,6 +24,7 @@ import type {
   ConditionAtom,
 } from "@/utils/conditions/types";
 import { AtomOverrideTree } from "./AtomOverrideTree";
+import { useAttachWheelScrollChain } from "./wheel-scroll-chain";
 
 const TALENT_DISABLED_REASON =
   "Talent atoms are import-driven per profile; use global overrides to force talents.";
@@ -57,6 +58,7 @@ export function ProfileConditionOverridesSection({
   const [selectedKeys, setSelectedKeys] = useState<readonly string[]>([]);
   const inputId = useId();
   const listboxId = useId();
+  const attachProfileOverrideListScrollChain = useAttachWheelScrollChain();
 
   const scope = useMemo(
     () => ({ profile: profileScopeKey }),
@@ -174,8 +176,9 @@ export function ProfileConditionOverridesSection({
 
       {displayedAtoms.length > 0 ? (
         <div
+          ref={attachProfileOverrideListScrollChain}
           data-profile-condition-overrides-active-list=""
-          className="mt-2 max-h-72 min-h-0 overflow-y-auto overscroll-contain pr-1"
+          className="mt-2 max-h-72 min-h-0 overflow-y-auto pr-1"
         >
           <AtomOverrideTree
             groups={displayedGroups}

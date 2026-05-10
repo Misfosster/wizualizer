@@ -35,10 +35,15 @@ export interface RuntimeEditorState {
   graphBuiltVersion: number;
   shouldAutoCollapseOnNextGraphBuild: boolean;
   talentRenderMode: TalentRenderMode;
-  hideTrueConditions: boolean;
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   talentSummary: TalentRenderSummary | null;
   conditionOverrides: ConditionOverrides;
+  /**
+   * When `false`, every graph rebuild treats overrides as if none were
+   * configured — both `global` and `byProfile`. The stored override values
+   * stay intact so the user can flip back without re-entering them.
+   */
+  conditionOverridesEnabled: boolean;
   graphJumpTarget: { nodeId: string; nonce: number } | null;
   /** Snapshot from the last override/talent merge (used to auto-expand when override stops forcing off). */
   lastForcedOffByOverrideActionIds: Set<string>;
@@ -80,8 +85,8 @@ export function buildRuntimeStateForApl(
   aplText: string,
   lastGoodText: string,
   talentRenderMode: TalentRenderMode,
-  hideTrueConditions: boolean,
   conditionOverrides: ConditionOverrides,
+  conditionOverridesEnabled: boolean,
 ): RuntimeEditorState {
   const collapsedBlocks = new Set<string>();
   const collapsedActions = new Set<string>();
@@ -95,7 +100,7 @@ export function buildRuntimeStateForApl(
     talentRenderMode,
     EMPTY_SELECTIONS,
     conditionOverrides,
-    { buildGraph: false, hideTrueConditions },
+    { buildGraph: false },
   );
 
   const initialSelections = decodeSelections(initialState.document);
@@ -109,7 +114,7 @@ export function buildRuntimeStateForApl(
         initialSelections,
         conditionOverrides,
         initialState.diagnostics,
-        { buildGraph: false, hideTrueConditions },
+        { buildGraph: false },
       )
     : initialState;
   const initialGraphStatus = initialDerived.document ? "stale" : "ready";
@@ -123,9 +128,9 @@ export function buildRuntimeStateForApl(
       graphBuiltVersion: 0,
       shouldAutoCollapseOnNextGraphBuild: true,
       talentRenderMode,
-      hideTrueConditions,
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
+      conditionOverridesEnabled,
       graphJumpTarget: null,
       lastForcedOffByOverrideActionIds: new Set<string>(),
       userExpandedForcedOffActionIds: new Set<string>(),
@@ -140,7 +145,7 @@ export function buildRuntimeStateForApl(
     talentRenderMode,
     EMPTY_SELECTIONS,
     conditionOverrides,
-    { buildGraph: false, hideTrueConditions },
+    { buildGraph: false },
   );
   if (fallbackState.parseError) {
     return withSemanticDiagnostics({
@@ -151,9 +156,9 @@ export function buildRuntimeStateForApl(
       graphBuiltVersion: 0,
       shouldAutoCollapseOnNextGraphBuild: true,
       talentRenderMode,
-      hideTrueConditions,
       talentSelectionsByProfile: initialSelections,
       conditionOverrides,
+      conditionOverridesEnabled,
       graphJumpTarget: null,
       lastForcedOffByOverrideActionIds: new Set<string>(),
       userExpandedForcedOffActionIds: new Set<string>(),
@@ -171,7 +176,7 @@ export function buildRuntimeStateForApl(
         fallbackSelections,
         conditionOverrides,
         fallbackState.diagnostics,
-        { buildGraph: false, hideTrueConditions },
+        { buildGraph: false },
       )
     : fallbackState;
 
@@ -186,9 +191,9 @@ export function buildRuntimeStateForApl(
     graphBuiltVersion: 0,
     shouldAutoCollapseOnNextGraphBuild: true,
     talentRenderMode,
-    hideTrueConditions,
     talentSelectionsByProfile: fallbackSelections,
     conditionOverrides,
+    conditionOverridesEnabled,
     graphJumpTarget: null,
     lastForcedOffByOverrideActionIds: new Set<string>(),
     userExpandedForcedOffActionIds: new Set<string>(),

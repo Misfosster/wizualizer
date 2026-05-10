@@ -63,7 +63,11 @@ export function CollapsiblePanelShell({
           )}
         </span>
       </button>
-      {isCollapsed ? null : <div id={contentId} className="mt-2 pr-1 pb-[10px]">{children}</div>}
+      {isCollapsed ? null : (
+        <div id={contentId} className="mt-2 min-w-0 pr-1 pb-[10px]">
+          {children}
+        </div>
+      )}
     </section>
   );
 }

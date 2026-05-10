@@ -18,12 +18,12 @@ export const APL_LIBRARY_STORAGE_KEY = "logiccraft.aplLibrary.v1";
 export const ACTIVE_APL_ID_STORAGE_KEY = "logiccraft.activeAplId";
 export const APL_AUTO_SAVE_STORAGE_KEY = "logiccraft.aplAutoSave";
 export const TALENT_RENDER_MODE_STORAGE_KEY = "logiccraft.talentRenderMode";
-export const HIDE_TRUE_CONDITIONS_STORAGE_KEY =
-  "logiccraft.hideTrueConditions";
 export const TALENT_PANEL_COLLAPSED_STORAGE_KEY =
   "logiccraft.talentPanelCollapsed";
 export const CONDITION_OVERRIDES_STORAGE_KEY =
   "logiccraft.conditionOverrides.v1";
+export const CONDITION_OVERRIDES_ENABLED_STORAGE_KEY =
+  "logiccraft.conditionOverridesEnabled";
 
 export interface StoredApl {
   id: string;
@@ -192,15 +192,25 @@ export function writeStoredTalentRenderMode(mode: TalentRenderMode): void {
   writeStoredText(TALENT_RENDER_MODE_STORAGE_KEY, mode);
 }
 
-export function readStoredHideTrueConditions(): boolean {
+/**
+ * Whether the user's configured condition overrides should actually be
+ * applied to the rendered graph. Defaults to `true` so the feature is
+ * fully active out of the box; toggling off lets the user compare the
+ * graph "with overrides" vs "without overrides" without losing their
+ * configured override values.
+ */
+export function readStoredConditionOverridesEnabled(): boolean {
   if (typeof window === "undefined") {
-    return false;
+    return true;
   }
-  return window.localStorage.getItem(HIDE_TRUE_CONDITIONS_STORAGE_KEY) === "1";
+  const raw = window.localStorage.getItem(CONDITION_OVERRIDES_ENABLED_STORAGE_KEY);
+  // Default true on first run; only "0" turns it off. This is a one-way
+  // door to the disabled state, so corrupted values fail open.
+  return raw !== "0";
 }
 
-export function writeStoredHideTrueConditions(enabled: boolean): void {
-  writeStoredText(HIDE_TRUE_CONDITIONS_STORAGE_KEY, enabled ? "1" : "0");
+export function writeStoredConditionOverridesEnabled(enabled: boolean): void {
+  writeStoredText(CONDITION_OVERRIDES_ENABLED_STORAGE_KEY, enabled ? "1" : "0");
 }
 
 /**

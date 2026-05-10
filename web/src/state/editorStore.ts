@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import type { TalentRenderMode } from "@/utils/talents/types";
-import type { ConditionOverrides } from "@/utils/conditions/types";
+import {
+  EMPTY_CONDITION_OVERRIDES,
+  type ConditionOverrides,
+} from "@/utils/conditions/types";
 import { validateDocumentSemantics } from "@/utils/semantics/validate";
 import {
   createAplId,
@@ -44,11 +47,11 @@ import {
   readStoredAplAutoSave,
   readStoredAplLibrary,
   readStoredConditionOverrides,
-  readStoredHideTrueConditions,
+  readStoredConditionOverridesEnabled,
   readStoredTalentRenderMode,
   type StoredApl,
   writeStoredAplAutoSave,
-  writeStoredHideTrueConditions,
+  writeStoredConditionOverridesEnabled,
   writeStoredTalentRenderMode,
 } from "./storage";
 
@@ -58,7 +61,7 @@ export {
   APL_LIBRARY_STORAGE_KEY,
   APL_STORAGE_KEY,
   CONDITION_OVERRIDES_STORAGE_KEY,
-  HIDE_TRUE_CONDITIONS_STORAGE_KEY,
+  CONDITION_OVERRIDES_ENABLED_STORAGE_KEY,
   LAST_GOOD_APL_STORAGE_KEY,
   TALENT_RENDER_MODE_STORAGE_KEY,
 } from "./storage";
@@ -82,8 +85,8 @@ interface EditorState extends RuntimeEditorState {
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
   setTalentRenderMode: (mode: TalentRenderMode) => void;
-  setHideTrueConditions: (enabled: boolean) => void;
   setConditionOverrides: (overrides: ConditionOverrides) => void;
+  setConditionOverridesEnabled: (enabled: boolean) => void;
   requestGraphJumpToNode: (nodeId: string) => void;
   requestGraphJump: (actionId: string) => void;
   clearGraphJumpTarget: () => void;
@@ -103,8 +106,8 @@ type EditorActions =
   | "toggleBlockCollapse"
   | "toggleAllBlocksCollapse"
   | "setTalentRenderMode"
-  | "setHideTrueConditions"
   | "setConditionOverrides"
+  | "setConditionOverridesEnabled"
   | "requestGraphJumpToNode"
   | "requestGraphJump"
   | "clearGraphJumpTarget";
@@ -113,15 +116,15 @@ function buildRuntimeStateForAplWithOverrideMigration(
   aplText: string,
   lastGoodText: string,
   talentRenderMode: TalentRenderMode,
-  hideTrueConditions: boolean,
   conditionOverrides: ConditionOverrides,
+  conditionOverridesEnabled: boolean,
 ): RuntimeEditorState {
   const runtime = buildRuntimeStateForApl(
     aplText,
     lastGoodText,
     talentRenderMode,
-    hideTrueConditions,
     conditionOverrides,
+    conditionOverridesEnabled,
   );
   const migratedOverrides = migrateStoredOverridesForDocument(
     conditionOverrides,
@@ -134,9 +137,24 @@ function buildRuntimeStateForAplWithOverrideMigration(
     aplText,
     lastGoodText,
     talentRenderMode,
-    hideTrueConditions,
     migratedOverrides,
+    conditionOverridesEnabled,
   );
+}
+
+/**
+ * Single source of truth for "what overrides actually feed the graph?". When
+ * the user has toggled overrides off, every consumer (rebuildGraph,
+ * forced-collapse coordinator, semantic catalog lookup) reads `EMPTY_…`
+ * here while the configured `conditionOverrides` stay untouched in state
+ * for the moment they flip back on.
+ */
+function effectiveConditionOverrides<S extends Pick<EditorState, "conditionOverrides" | "conditionOverridesEnabled">>(
+  state: S,
+): ConditionOverrides {
+  return state.conditionOverridesEnabled
+    ? state.conditionOverrides
+    : EMPTY_CONDITION_OVERRIDES;
 }
 
 const INITIAL_AUTO_COLLAPSE_ACTION_THRESHOLD = 160;
@@ -224,8 +242,8 @@ function getInitialEditorState(): Omit<EditorState, EditorActions> {
     library.apls[0];
   const autoSaveEnabled = readStoredAplAutoSave();
   const talentRenderMode = readStoredTalentRenderMode();
-  const hideTrueConditions = readStoredHideTrueConditions();
   const conditionOverrides = readStoredConditionOverrides();
+  const conditionOverridesEnabled = readStoredConditionOverridesEnabled();
 
   return {
     savedApls: library.apls,
@@ -237,8 +255,8 @@ function getInitialEditorState(): Omit<EditorState, EditorActions> {
       activeApl.text,
       activeApl.lastGoodText,
       talentRenderMode,
-      hideTrueConditions,
       conditionOverrides,
+      conditionOverridesEnabled,
     ),
   };
 }
@@ -270,15 +288,14 @@ export const useEditorStore = create<EditorState>((set, get) => {
     }
     const forced = mergeForcedOverrideCollapse(
       { ...state, talentSelectionsByProfile: nextSelections },
-      state.conditionOverrides,
+      effectiveConditionOverrides(state),
     )!;
     const rebuilt = rebuildGraph(state.document, {
       collapsedBlocks: state.collapsedBlocks,
       collapsedActions: forced.collapsedActions,
       talentRenderMode: state.talentRenderMode,
-      hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: nextSelections,
-      conditionOverrides: state.conditionOverrides,
+      conditionOverrides: effectiveConditionOverrides(state),
     });
     set({
       ...rebuilt,
@@ -314,14 +331,13 @@ export const useEditorStore = create<EditorState>((set, get) => {
       });
       return;
     }
-    const forced = mergeForcedOverrideCollapse(state, state.conditionOverrides)!;
+    const forced = mergeForcedOverrideCollapse(state, effectiveConditionOverrides(state))!;
     const rebuilt = rebuildGraph(state.document, {
       collapsedBlocks: state.collapsedBlocks,
       collapsedActions: forced.collapsedActions,
       talentRenderMode: state.talentRenderMode,
-      hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: state.talentSelectionsByProfile,
-      conditionOverrides: state.conditionOverrides,
+      conditionOverrides: effectiveConditionOverrides(state),
     });
     set({
       ...rebuilt,
@@ -481,8 +497,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
-          state.hideTrueConditions,
           state.conditionOverrides,
+          state.conditionOverridesEnabled,
         );
         prefetchCatalogsFor(runtime.document);
         persistAplLibrary(state.savedApls, nextApl.id);
@@ -508,8 +524,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
-          state.hideTrueConditions,
           state.conditionOverrides,
+          state.conditionOverridesEnabled,
         );
         persistAplLibrary(savedApls, nextApl.id);
         return {
@@ -593,8 +609,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
-          state.hideTrueConditions,
           state.conditionOverrides,
+          state.conditionOverridesEnabled,
         );
         prefetchCatalogsFor(runtime.document);
         persistAplLibrary(nextApls, nextApl.id);
@@ -636,15 +652,14 @@ export const useEditorStore = create<EditorState>((set, get) => {
           : state.collapsedBlocks;
         const forced = mergeForcedOverrideCollapse(
           state,
-          state.conditionOverrides,
+          effectiveConditionOverrides(state),
         )!;
         const graph = rebuildGraph(state.document, {
           collapsedBlocks,
           collapsedActions: forced.collapsedActions,
           talentRenderMode: state.talentRenderMode,
-          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: state.conditionOverrides,
+          conditionOverrides: effectiveConditionOverrides(state),
         });
 
         return {
@@ -674,7 +689,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         if (state.document) {
           const nextForced = getActionIdsForcedOffByOverride(state.document, {
             talentSelectionsByProfile: state.talentSelectionsByProfile,
-            conditionOverrides: state.conditionOverrides,
+            conditionOverrides: effectiveConditionOverrides(state),
             semanticCatalogsByProfile:
               lookupLoadedSemanticCatalogs(state.document),
           });
@@ -695,9 +710,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions,
           talentRenderMode: state.talentRenderMode,
-          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: state.conditionOverrides,
+          conditionOverrides: effectiveConditionOverrides(state),
         });
         const nextVersion = state.graphBuildVersion + 1;
         return {
@@ -734,7 +748,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
         if (isExpandingBlock) {
           const nextForced = getActionIdsForcedOffByOverride(state.document, {
             talentSelectionsByProfile: state.talentSelectionsByProfile,
-            conditionOverrides: state.conditionOverrides,
+            conditionOverrides: effectiveConditionOverrides(state),
             semanticCatalogsByProfile:
               lookupLoadedSemanticCatalogs(state.document),
           });
@@ -750,9 +764,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks,
           collapsedActions,
           talentRenderMode: state.talentRenderMode,
-          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: state.conditionOverrides,
+          conditionOverrides: effectiveConditionOverrides(state),
         });
         const nextVersion = state.graphBuildVersion + 1;
         return {
@@ -790,7 +803,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedActions = new Set<string>();
           const nextForced = getActionIdsForcedOffByOverride(state.document, {
             talentSelectionsByProfile: state.talentSelectionsByProfile,
-            conditionOverrides: state.conditionOverrides,
+            conditionOverrides: effectiveConditionOverrides(state),
             semanticCatalogsByProfile:
               lookupLoadedSemanticCatalogs(state.document),
           });
@@ -804,9 +817,8 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks,
           collapsedActions,
           talentRenderMode: state.talentRenderMode,
-          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: state.conditionOverrides,
+          conditionOverrides: effectiveConditionOverrides(state),
         });
         const nextVersion = state.graphBuildVersion + 1;
         return {
@@ -834,41 +846,12 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions: state.collapsedActions,
           talentRenderMode: mode,
-          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: state.conditionOverrides,
+          conditionOverrides: effectiveConditionOverrides(state),
         });
         const nextVersion = state.graphBuildVersion + 1;
         return {
           talentRenderMode: mode,
-          ...graph,
-          graphBuildStatus: "ready",
-          graphBuildVersion: nextVersion,
-          graphBuiltVersion: nextVersion,
-          shouldAutoCollapseOnNextGraphBuild: false,
-        };
-      });
-    },
-    setHideTrueConditions: (enabled) => {
-      writeStoredHideTrueConditions(enabled);
-      set((state) => {
-        if (state.hideTrueConditions === enabled) {
-          return {};
-        }
-        if (!state.document) {
-          return { hideTrueConditions: enabled };
-        }
-        const graph = rebuildGraph(state.document, {
-          collapsedBlocks: state.collapsedBlocks,
-          collapsedActions: state.collapsedActions,
-          talentRenderMode: state.talentRenderMode,
-          hideTrueConditions: enabled,
-          talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: state.conditionOverrides,
-        });
-        const nextVersion = state.graphBuildVersion + 1;
-        return {
-          hideTrueConditions: enabled,
           ...graph,
           graphBuildStatus: "ready",
           graphBuildVersion: nextVersion,
@@ -889,21 +872,61 @@ export const useEditorStore = create<EditorState>((set, get) => {
         if (!state.document) {
           return { conditionOverrides: nextOverrides };
         }
+        // While overrides are toggled off, edits are still persisted to
+        // state (so they survive a future re-enable) but the rebuild fed
+        // to the graph treats them as empty — the graph stays "as if no
+        // overrides were configured".
+        const overridesForGraph = state.conditionOverridesEnabled
+          ? nextOverrides
+          : EMPTY_CONDITION_OVERRIDES;
         const forced = mergeForcedOverrideCollapse(
           { ...state, conditionOverrides: nextOverrides },
-          nextOverrides,
+          overridesForGraph,
         )!;
         const graph = rebuildGraph(state.document, {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions: forced.collapsedActions,
           talentRenderMode: state.talentRenderMode,
-          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
-          conditionOverrides: nextOverrides,
+          conditionOverrides: overridesForGraph,
         });
         const nextVersion = state.graphBuildVersion + 1;
         return {
           conditionOverrides: nextOverrides,
+          collapsedActions: forced.collapsedActions,
+          lastForcedOffByOverrideActionIds: forced.lastForcedOffActionIds,
+          userExpandedForcedOffActionIds: forced.userExpandedForcedOffActionIds,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
+      });
+    },
+    setConditionOverridesEnabled: (enabled) => {
+      writeStoredConditionOverridesEnabled(enabled);
+      set((state) => {
+        if (state.conditionOverridesEnabled === enabled) {
+          return {};
+        }
+        if (!state.document) {
+          return { conditionOverridesEnabled: enabled };
+        }
+        const overridesForGraph = enabled
+          ? state.conditionOverrides
+          : EMPTY_CONDITION_OVERRIDES;
+        const forced = mergeForcedOverrideCollapse(state, overridesForGraph)!;
+        const graph = rebuildGraph(state.document, {
+          collapsedBlocks: state.collapsedBlocks,
+          collapsedActions: forced.collapsedActions,
+          talentRenderMode: state.talentRenderMode,
+          talentSelectionsByProfile: state.talentSelectionsByProfile,
+          conditionOverrides: overridesForGraph,
+        });
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          conditionOverridesEnabled: enabled,
           collapsedActions: forced.collapsedActions,
           lastForcedOffByOverrideActionIds: forced.lastForcedOffActionIds,
           userExpandedForcedOffActionIds: forced.userExpandedForcedOffActionIds,

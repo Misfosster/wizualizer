@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Background,
   BackgroundVariant,
@@ -39,6 +39,25 @@ const reactFlowProOptions = { hideAttribution: true } as const;
 /** Top-right stacks: clipped height + internal scroll only (no chaining into the pane). */
 const canvasTopRightStackLayout =
   "flex h-[calc(100%-1.5rem)] max-h-[calc(100%-1.5rem)] flex-col gap-2 overflow-hidden";
+
+const JUMP_HIGHLIGHT_CLASS = "lc-node-jump-highlight";
+
+/**
+ * Stable, memoized background. Keeping the JSX as a module-level element
+ * prevents React Flow from re-running its background plugin work on every
+ * canvas render. Larger `gap` than the previous 24 also reduces dot paint
+ * cost across the visible viewport.
+ */
+const StableBackground = memo(function StableBackground() {
+  return (
+    <Background
+      variant={BackgroundVariant.Dots}
+      gap={32}
+      size={1}
+      color="rgba(255, 255, 255, 0.035)"
+    />
+  );
+});
 
 interface InitialViewportResult {
   focusedNodeId: string | null;
@@ -228,21 +247,22 @@ function CanvasFlow({ initialFocusNodeId = null }: CanvasProps) {
     };
   }, [nodes]);
   const toggleAllLabel = shouldExpandAll ? "Expand All" : "Collapse All";
-  const renderedNodes = useMemo(
-    () =>
-      nodes.map((node) => {
-        if (node.id !== highlightedNodeId) {
-          return node;
-        }
-        return {
-          ...node,
-          className: [node.className, "lc-node-jump-highlight"]
-            .filter(Boolean)
-            .join(" "),
-        };
-      }),
-    [highlightedNodeId, nodes],
-  );
+  const renderedNodes = useMemo(() => {
+    if (!highlightedNodeId) {
+      return nodes;
+    }
+    return nodes.map((node) => {
+      if (node.id !== highlightedNodeId) {
+        return node;
+      }
+      return {
+        ...node,
+        className: node.className
+          ? `${node.className} ${JUMP_HIGHLIGHT_CLASS}`
+          : JUMP_HIGHLIGHT_CLASS,
+      };
+    });
+  }, [highlightedNodeId, nodes]);
   const handleToggleAllBlocksCollapse = useCallback(() => {
     shouldFitAfterBulkToggleRef.current = !shouldExpandAll;
     toggleAllBlocksCollapse();
@@ -460,11 +480,13 @@ function CanvasFlow({ initialFocusNodeId = null }: CanvasProps) {
       .finally(() => {
         clearGraphJumpTarget();
       });
+    // We intentionally omit `nodes.length` here: this effect should only run in
+    // response to a fresh jump request. The latest nodes are pulled lazily via
+    // `flowRef.current.getNode(...)`, so re-running on every parse is wasted work.
   }, [
     clearGraphJumpTarget,
     graphBuildStatus,
     graphJumpTarget,
-    nodes.length,
     setTalentRenderMode,
     talentRenderMode,
   ]);
@@ -506,6 +528,8 @@ function CanvasFlow({ initialFocusNodeId = null }: CanvasProps) {
         nodesDraggable={false}
         nodesConnectable={false}
         elementsSelectable={false}
+        nodesFocusable={false}
+        edgesFocusable={false}
         proOptions={reactFlowProOptions}
       >
         <Panel position="top-left" className="m-3">
@@ -545,12 +569,7 @@ function CanvasFlow({ initialFocusNodeId = null }: CanvasProps) {
             <TalentModePanel />
           </div>
         </Panel>
-        <Background
-          variant={BackgroundVariant.Dots}
-          gap={24}
-          size={1}
-          color="rgba(255, 255, 255, 0.035)"
-        />
+        <StableBackground />
       </ReactFlow>
       {!isGraphLayerReady ? <CanvasLoadingIndicator /> : null}
       {isGraphLayerReady ? (

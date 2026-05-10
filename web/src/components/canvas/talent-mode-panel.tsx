@@ -40,20 +40,16 @@ export function TalentModePanel({
   const {
     document,
     talentRenderMode,
-    hideTrueConditions,
     talentSelectionsByProfile,
     talentSummary,
     setTalentRenderMode,
-    setHideTrueConditions,
   } = useEditorStore(
     useShallow((state) => ({
       document: state.document,
       talentRenderMode: state.talentRenderMode,
-      hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: state.talentSelectionsByProfile,
       talentSummary: state.talentSummary,
       setTalentRenderMode: state.setTalentRenderMode,
-      setHideTrueConditions: state.setHideTrueConditions,
     })),
   );
 
@@ -100,24 +96,6 @@ export function TalentModePanel({
           onChange={setTalentRenderMode}
         />
       </div>
-      <label
-        className="nodrag nopan mt-2 flex items-center justify-between gap-3 rounded-md border border-gray-200 bg-white px-2.5 py-2 text-xs font-medium text-gray-700"
-        onPointerDown={(event) => {
-          event.stopPropagation();
-        }}
-      >
-        <span>Mark proven-true conditions</span>
-        <input
-          type="checkbox"
-          aria-label="Mark proven-true conditions with badge and ring; false branches stay dimmed"
-          data-hide-true-conditions-toggle
-          checked={hideTrueConditions}
-          className="h-4 w-4 rounded border-gray-300 text-gray-800 focus:ring-2 focus:ring-blue-500"
-          onChange={(event) => {
-            setHideTrueConditions(event.currentTarget.checked);
-          }}
-        />
-      </label>
       <TalentProfileStatusList
         profiles={profiles}
         selectionsByProfile={talentSelectionsByProfile}

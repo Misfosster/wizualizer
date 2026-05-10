@@ -74,11 +74,25 @@ export function buildTalentRenderContext(
   conditionOverrides?: ConditionOverrides,
   semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>,
 ): TalentRenderContext {
+  const mergedOverrides = conditionOverrides ?? EMPTY_CONDITION_OVERRIDES;
+  // Atom resolvers are built regardless of render mode so that condition-
+  // resolution annotations (resolved-true / resolved-false leaves and
+  // decode-proved-false subtrees) render even when the user has talent
+  // filtering set to "Off". Talent render mode now only gates *filtering*
+  // (dim impossible actions, hide provably-false subtrees), not *marking*.
+  const profileAtomResolvers = buildProfileAtomResolvers(
+    document,
+    selectionsByProfile,
+    mergedOverrides,
+  );
+
   if (mode === "off") {
-    return OFF_CONTEXT;
+    return {
+      ...OFF_CONTEXT,
+      profileAtomResolvers,
+    };
   }
 
-  const mergedOverrides = conditionOverrides ?? EMPTY_CONDITION_OVERRIDES;
   const impossible = computeImpossibleSet(document, {
     talentSelectionsByProfile: selectionsByProfile,
     conditionOverrides: mergedOverrides,
@@ -86,11 +100,6 @@ export function buildTalentRenderContext(
   });
   const hiddenActionById = indexHiddenActions(impossible.hiddenActionsByProfile);
   const copiedProfileIndices = getCopiedProfileIndices(document);
-  const profileAtomResolvers = buildProfileAtomResolvers(
-    document,
-    selectionsByProfile,
-    mergedOverrides,
-  );
 
   if (mode === "dim") {
     return {

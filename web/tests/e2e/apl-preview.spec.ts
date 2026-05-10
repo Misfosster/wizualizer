@@ -219,23 +219,22 @@ test("remembers the last active editor tab", async ({ page }) => {
   );
 });
 
-test("does not mount the preview canvas while writing", async ({ page }) => {
+test("keeps preview canvas mounted but hidden while writing", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VALID_APL);
 
-  await expect(
-    page.getByRole("tabpanel", {
-      name: "Preview",
-      includeHidden: true,
-    }),
-  ).toHaveCount(0);
-  await expect(page.locator(".react-flow")).toHaveCount(0);
-
-  await page.getByRole("tab", { name: "Preview" }).click();
   const previewPanel = page.getByRole("tabpanel", {
     name: "Preview",
+    includeHidden: true,
   });
-  await expect(previewPanel).toBeVisible();
+  await expect(previewPanel).toHaveCount(1);
+  await expect(previewPanel).toHaveAttribute("aria-hidden", "true");
+  await expect(previewPanel).toHaveAttribute("inert", "");
+  await expect(page.locator(".react-flow")).not.toBeVisible();
+
+  await page.getByRole("tab", { name: "Preview" }).click();
+  await expect(previewPanel).toHaveAttribute("aria-hidden", "false");
+  await expect(previewPanel).not.toHaveAttribute("inert");
   await expect(page.locator(".react-flow")).toBeVisible();
 });
 
@@ -471,8 +470,9 @@ test("renders custom structural node components in the preview graph", async ({ 
   await expect(page.getByTestId("rf__node-block__0__actions")).toContainText("Block");
   await expect(page.getByTestId("rf__node-block__0__actions")).toContainText("4 actions");
 
-  await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("Variable");
-  await expect(page.getByTestId("rf__node-action__0__actions__0")).toContainText("aoe_threshold");
+  const variableActionNode = page.getByTestId("rf__node-action__0__actions__0");
+  await expect(variableActionNode).toHaveClass(/react-flow__node-variable/);
+  await expect(variableActionNode).toContainText("aoe_threshold");
 
   await expect(
     page.getByTestId("rf__node-valueExpression__0__actions__0__value"),
@@ -481,14 +481,14 @@ test("renders custom structural node components in the preview graph", async ({ 
     page.getByTestId("rf__node-valueExpression__0__actions__0__value"),
   ).toContainText("active_enemies");
 
-  await expect(page.getByTestId("rf__node-action__0__actions__1")).toContainText("Call List");
-  await expect(page.getByTestId("rf__node-action__0__actions__1")).toContainText("cds");
+  const callListActionNode = page.getByTestId("rf__node-action__0__actions__1");
+  await expect(callListActionNode).toHaveClass(/react-flow__node-callActionList/);
+  await expect(callListActionNode).toContainText("cds");
 
-  await expect(page.getByTestId("rf__node-action__0__actions__2")).toContainText("Item");
-  await expect(page.getByTestId("rf__node-action__0__actions__2")).not.toContainText("If");
-  await expect(page.getByTestId("rf__node-action__0__actions__2")).toContainText(
-    "treacherous_transmitter",
-  );
+  const useItemActionNode = page.getByTestId("rf__node-action__0__actions__2");
+  await expect(useItemActionNode).toHaveClass(/react-flow__node-useItem/);
+  await expect(useItemActionNode).not.toContainText("If");
+  await expect(useItemActionNode).toContainText("treacherous_transmitter");
 
 });
 

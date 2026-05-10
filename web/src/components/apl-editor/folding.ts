@@ -236,7 +236,7 @@ function isFoldBlockParentLine(state: EditorState, line: BlockInfo): boolean {
     return false;
   }
 
-  return !hasPreviousLineInSameGroup(state, line.number, group);
+  return !hasPreviousLineInSameGroup(state, state.doc.lineAt(line.from).number, group);
 }
 
 function getFoldControlForLine(
@@ -278,11 +278,13 @@ function dispatchFoldClick(view: EditorView, lineFrom: number): boolean {
 }
 
 class FoldLeadWidget extends WidgetType {
-  constructor(
-    private readonly lineFrom: number,
-    private readonly foldOpenChevron: boolean,
-  ) {
+  private readonly lineFrom: number;
+  private readonly foldOpenChevron: boolean;
+
+  constructor(lineFrom: number, foldOpenChevron: boolean) {
     super();
+    this.lineFrom = lineFrom;
+    this.foldOpenChevron = foldOpenChevron;
   }
 
   override eq(other: WidgetType): boolean {

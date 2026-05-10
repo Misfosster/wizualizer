@@ -531,9 +531,10 @@
    * Notes for impossible actions:
    *   - The "filtered" pill carries the meaning textually so the state
    *     does not depend on colour or opacity alone (WCAG 1.4.1).
-   *   - 0.42 / saturate(0.55) were picked empirically to stay readable
-   *     while clearly separating filtered nodes from live ones; revisit
-   *     with a contrast checker if the canvas palette changes.
+   *   - opacity 0.42 was picked empirically to stay readable while clearly
+   *     separating filtered nodes from live ones; the dark canvas behind
+   *     blends through, approximating desaturation without a filter pass.
+   *     Revisit with a contrast checker if the canvas palette changes.
    *   - `pointer-events: none` is intentionally NOT set - the user can
    *     still collapse / expand dimmed branches to inspect them.
    */
@@ -616,9 +617,14 @@
       0 0 14px rgba(34, 197, 94, 0.16);
   }
 
+  /*
+   * Note: previously paired with `filter: saturate(0.55)` for desaturation.
+   * The compositor filter pass dominates paint cost during pan/zoom on
+   * large graphs, so we now lean on opacity-only fading. The dark canvas
+   * background blends through, which already approximates desaturation.
+   */
   .lc-node-card--impossible {
     opacity: 0.42;
-    filter: saturate(0.55);
   }
 
   .lc-flow .react-flow__node.lc-node-jump-highlight .lc-node-card {
@@ -667,20 +673,18 @@
 
   .lc-node-container--impossible {
     opacity: 0.42;
-    filter: saturate(0.55);
   }
 
   /*
    * Decode-proved false branch (talent Dim): same fade as impossible nodes
    * but no "filtered" pill on cards — the action can still be viable.
+   * `filter: saturate()` removed for the same paint-cost reason as above.
    */
   .lc-node-card--decodeProvedFalse {
     opacity: 0.42;
-    filter: saturate(0.55);
   }
 
   .lc-node-container--decodeProvedFalse {
     opacity: 0.42;
-    filter: saturate(0.55);
   }
 }

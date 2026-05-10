@@ -26,6 +26,8 @@ import type {
   ConditionOverrides,
 } from "@/utils/conditions/types";
 import { AtomOverrideTree } from "./AtomOverrideTree";
+import { ConditionOverridesEnabledToggle } from "./ConditionOverridesEnabledToggle";
+import { useAttachWheelScrollChain } from "./wheel-scroll-chain";
 
 const MAX_SUGGESTIONS = 12;
 
@@ -56,6 +58,7 @@ export function ConditionOverridesSection() {
   const [selectedKeys, setSelectedKeys] = useState<readonly string[]>([]);
   const inputId = useId();
   const listboxId = useId();
+  const attachOverrideListScrollChain = useAttachWheelScrollChain();
 
   const sharedAtoms = useMemo<readonly ConditionAtom[]>(() => {
     if (!document) return [];
@@ -159,8 +162,8 @@ export function ConditionOverridesSection() {
   return (
     <section
       data-condition-overrides-section=""
-      aria-label="Condition overrides"
-      className="mt-3 border-t border-gray-200 pt-2"
+      aria-label="Shared overrides"
+      className="mt-3 min-w-0 border-t border-gray-200 pt-2"
     >
       <SectionHeader
         overriddenCount={overriddenCount}
@@ -178,8 +181,9 @@ export function ConditionOverridesSection() {
         <>
           {displayedAtoms.length > 0 ? (
             <div
+              ref={attachOverrideListScrollChain}
               data-condition-overrides-active-list=""
-              className="mt-2 max-h-72 min-h-0 overflow-y-auto overscroll-contain pr-1"
+              className="mt-2 max-h-72 min-h-0 overflow-y-auto pr-1"
             >
               <AtomOverrideTree
                 groups={displayedGroups}
@@ -301,18 +305,25 @@ function SectionHeader({
   const hasAny = overriddenCount > 0;
   const hasAnyAnywhere = totalOverrideCount > 0;
   return (
-    <header className="flex items-center justify-between gap-1.5">
-      <h3 className="whitespace-nowrap text-[11px] font-semibold uppercase text-gray-500">
-        Condition overrides
-      </h3>
-      <div className="flex items-center gap-1 text-[10px] text-gray-500">
+    <header className="flex min-w-0 items-center justify-between gap-x-2 gap-y-1">
+      <div className="flex min-w-0 items-center gap-1.5">
+        <h3 className="shrink-0 text-[11px] font-semibold uppercase text-gray-500">
+          Overrides
+        </h3>
         <span
           data-condition-overrides-count=""
           aria-hidden={!hasAny}
-          className={hasAny ? "w-[4.5rem] whitespace-nowrap" : "invisible w-[4.5rem] whitespace-nowrap"}
+          className={
+            hasAny
+              ? "whitespace-nowrap tabular-nums text-[10px] font-medium text-gray-500"
+              : "invisible whitespace-nowrap tabular-nums text-[10px] font-medium text-gray-500"
+          }
         >
           {overriddenCount} active
         </span>
+      </div>
+      <div className="flex shrink-0 flex-nowrap items-center gap-0.5">
+        <ConditionOverridesEnabledToggle />
         <button
           type="button"
           data-condition-overrides-clear-all=""
@@ -320,12 +331,12 @@ function SectionHeader({
           onClick={onClearEverywhere}
           className={
             hasAnyAnywhere
-              ? "whitespace-nowrap rounded border border-gray-300 px-1.5 py-0.5 text-[10px] font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              : "whitespace-nowrap rounded border border-transparent px-1.5 py-0.5 text-[10px] font-medium text-gray-400"
+              ? "whitespace-nowrap rounded border border-gray-300 px-1 py-0.5 text-[10px] font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              : "whitespace-nowrap rounded border border-transparent px-1 py-0.5 text-[10px] font-medium text-gray-400"
           }
           aria-label="Clear all condition overrides"
         >
-          Clear all
+          Clear
         </button>
       </div>
     </header>

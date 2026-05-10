@@ -356,7 +356,7 @@ test("Dim mode keeps both OR branches visible for context", () => {
   ).toBe(true);
 });
 
-test("hideTrueConditions marks resolved-true AND leaves but keeps unknown branches readable", () => {
+test("resolved-true AND leaves are marked while unknown branches stay readable", () => {
   const apl = [
     'shaman="Demo"',
     "actions=stormstrike,if=buff.hot_hand.up&cooldown.doom_winds.remains>0",
@@ -364,7 +364,6 @@ test("hideTrueConditions marks resolved-true AND leaves but keeps unknown branch
   const document = parseOrThrow(apl);
   const result = buildGraph(document, undefined, undefined, {
     talentRenderMode: "dim",
-    hideTrueConditions: true,
     conditionOverrides: {
       global: { "buff.hot_hand.up": true },
       byProfile: {},
@@ -385,7 +384,7 @@ test("hideTrueConditions marks resolved-true AND leaves but keeps unknown branch
   expect((doomNode?.data as ConditionNodeData).resolvedAsTrue).not.toBe(true);
 });
 
-test("hideTrueConditions keeps a fully-true segment visible and marks it resolved", () => {
+test("a fully-true segment stays visible and is marked resolved", () => {
   const apl = [
     'shaman="Demo"',
     "actions=stormstrike,if=buff.hot_hand.up",
@@ -393,7 +392,6 @@ test("hideTrueConditions keeps a fully-true segment visible and marks it resolve
   const document = parseOrThrow(apl);
   const result = buildGraph(document, undefined, undefined, {
     talentRenderMode: "dim",
-    hideTrueConditions: true,
     conditionOverrides: {
       global: { "buff.hot_hand.up": true },
       byProfile: {},
