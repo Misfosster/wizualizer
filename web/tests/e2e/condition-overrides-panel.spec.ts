@@ -220,6 +220,43 @@ test("per-profile override dims the matching action and persists across reload",
   ).toBeVisible();
 });
 
+test("hide true conditions toggle removes resolved condition nodes", async ({
+  page,
+}) => {
+  await gotoPreview(page, PROFILE_WITH_CONDITIONS);
+
+  const lavaLashCondition = page.getByTestId(
+    "rf__node-condition__0__actions__1__if",
+  );
+  await expect(lavaLashCondition).toBeVisible();
+
+  await page
+    .locator('[data-profile-condition-overrides-toggle="Demo Profile"]')
+    .click();
+  const profileSection = page.locator(
+    '[data-profile-condition-overrides-section="Demo Profile"]',
+  );
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .fill("buff.hot_hand.up");
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .press("Enter");
+  await profileSection
+    .locator(
+      '[data-condition-override-pill="buff.hot_hand.up"] [data-condition-override-value="true"]',
+    )
+    .click();
+
+  await expect(lavaLashCondition).toBeVisible();
+  await page.locator("[data-hide-true-conditions-toggle]").check();
+  await expect(lavaLashCondition).toHaveCount(0);
+  await page.waitForFunction(
+    () =>
+      window.localStorage.getItem("logiccraft.hideTrueConditions") === "1",
+  );
+});
+
 test("duplicate profile rows expose display-name and scope-key attributes", async ({
   page,
 }) => {

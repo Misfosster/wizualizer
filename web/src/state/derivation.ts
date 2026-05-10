@@ -48,6 +48,7 @@ export interface RebuildInputs {
   collapsedBlocks: ReadonlySet<string>;
   collapsedActions: ReadonlySet<string>;
   talentRenderMode: TalentRenderMode;
+  hideTrueConditions?: boolean;
   talentSelectionsByProfile: ReadonlyMap<number, TalentSelectionResult>;
   conditionOverrides?: ConditionOverrides;
   semanticCatalogsByProfile?: ReadonlyMap<number, SemanticSpecCatalog>;
@@ -62,6 +63,7 @@ function formatParseError(result: ParseFailure): string {
 
 export interface BuildDerivedStateOptions {
   buildGraph?: boolean;
+  hideTrueConditions?: boolean;
 }
 
 /**
@@ -83,11 +85,13 @@ export function rebuildGraph(
     collapsedBlocks,
     collapsedActions,
     talentRenderMode,
+    hideTrueConditions,
     talentSelectionsByProfile,
     conditionOverrides,
   } = inputs;
   const result = buildGraph(document, collapsedBlocks, collapsedActions, {
     talentRenderMode,
+    hideTrueConditions: hideTrueConditions ?? false,
     talentSelectionsByProfile,
     conditionOverrides: conditionOverrides ?? EMPTY_CONDITION_OVERRIDES,
     semanticCatalogsByProfile:
@@ -120,6 +124,7 @@ export function buildDerivedState(
         collapsedBlocks: nextCollapsedBlocks,
         collapsedActions: nextCollapsedActions,
         talentRenderMode,
+        hideTrueConditions: options.hideTrueConditions ?? false,
         talentSelectionsByProfile,
         conditionOverrides,
       })

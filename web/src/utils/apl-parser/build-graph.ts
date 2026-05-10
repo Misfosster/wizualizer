@@ -135,6 +135,13 @@ export interface GraphResult {
  */
 export interface BuildGraphOptions {
   talentRenderMode?: TalentRenderMode;
+  /**
+   * When enabled, condition branches that already resolve true under the
+   * active talent/override context are omitted from surviving actions.
+   * Branches that resolve false stay visible so impossible actions still
+   * explain why they were dimmed or hidden.
+   */
+  hideTrueConditions?: boolean;
   talentSelectionsByProfile?: ReadonlyMap<number, TalentSelectionResult>;
   /**
    * Manual override panel state. Defaults to no overrides, in which
@@ -786,6 +793,7 @@ function buildBlockGraph(
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
   context: TalentRenderContext,
+  hideTrueConditions: boolean,
 ): GraphSectionResult | null {
   const survivingIndices = getSurvivingActionIndices(
     block,
@@ -820,10 +828,8 @@ function buildBlockGraph(
   }
 
   const resolveAtomForRender = context.profileAtomResolvers.get(profileIndex);
-  // Keep condition context fully visible in both Dim and Hide modes.
-  // Filtering should hide/dim impossible actions, not remove proven-true
-  // condition branches from surviving actions.
-  const simplifyConditionsForRender = false;
+  const simplifyConditionsForRender =
+    hideTrueConditions && resolveAtomForRender !== undefined;
 
   // Start placing actions one row under the block header
   let rowCursor = startRow + 1;
@@ -882,6 +888,7 @@ function buildProfileGraph(
   collapsedBlocks: ReadonlySet<string>,
   collapsedActions: ReadonlySet<string>,
   context: TalentRenderContext,
+  hideTrueConditions: boolean,
 ): GraphSectionResult | null {
   // Build blocks first; in Hide mode some may be skipped entirely. We need to
   // know that before deciding whether the profile root should appear at all.
@@ -897,6 +904,7 @@ function buildProfileGraph(
       collapsedBlocks,
       collapsedActions,
       context,
+      hideTrueConditions,
     );
     if (!blockGraph) {
       continue;
@@ -944,6 +952,7 @@ export function buildGraph(
   options: BuildGraphOptions = {},
 ): GraphResult {
   const mode: TalentRenderMode = options.talentRenderMode ?? "off";
+  const hideTrueConditions = options.hideTrueConditions ?? false;
   const context = buildTalentRenderContext(
     document,
     mode,
@@ -965,6 +974,7 @@ export function buildGraph(
       collapsedBlocks,
       collapsedActions,
       context,
+      hideTrueConditions,
     );
 
     if (!profileGraph) {

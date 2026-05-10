@@ -41,9 +41,11 @@ import {
   readStoredAplAutoSave,
   readStoredAplLibrary,
   readStoredConditionOverrides,
+  readStoredHideTrueConditions,
   readStoredTalentRenderMode,
   type StoredApl,
   writeStoredAplAutoSave,
+  writeStoredHideTrueConditions,
   writeStoredTalentRenderMode,
 } from "./storage";
 
@@ -53,6 +55,7 @@ export {
   APL_LIBRARY_STORAGE_KEY,
   APL_STORAGE_KEY,
   CONDITION_OVERRIDES_STORAGE_KEY,
+  HIDE_TRUE_CONDITIONS_STORAGE_KEY,
   LAST_GOOD_APL_STORAGE_KEY,
   TALENT_RENDER_MODE_STORAGE_KEY,
 } from "./storage";
@@ -76,6 +79,7 @@ interface EditorState extends RuntimeEditorState {
   toggleBlockCollapse: (blockId: string) => void;
   toggleAllBlocksCollapse: () => void;
   setTalentRenderMode: (mode: TalentRenderMode) => void;
+  setHideTrueConditions: (enabled: boolean) => void;
   setConditionOverrides: (overrides: ConditionOverrides) => void;
   requestGraphJumpToNode: (nodeId: string) => void;
   requestGraphJump: (actionId: string) => void;
@@ -96,6 +100,7 @@ type EditorActions =
   | "toggleBlockCollapse"
   | "toggleAllBlocksCollapse"
   | "setTalentRenderMode"
+  | "setHideTrueConditions"
   | "setConditionOverrides"
   | "requestGraphJumpToNode"
   | "requestGraphJump"
@@ -105,12 +110,14 @@ function buildRuntimeStateForAplWithOverrideMigration(
   aplText: string,
   lastGoodText: string,
   talentRenderMode: TalentRenderMode,
+  hideTrueConditions: boolean,
   conditionOverrides: ConditionOverrides,
 ): RuntimeEditorState {
   const runtime = buildRuntimeStateForApl(
     aplText,
     lastGoodText,
     talentRenderMode,
+    hideTrueConditions,
     conditionOverrides,
   );
   const migratedOverrides = migrateStoredOverridesForDocument(
@@ -124,6 +131,7 @@ function buildRuntimeStateForAplWithOverrideMigration(
     aplText,
     lastGoodText,
     talentRenderMode,
+    hideTrueConditions,
     migratedOverrides,
   );
 }
@@ -183,6 +191,7 @@ function getInitialEditorState(): Omit<EditorState, EditorActions> {
     library.apls[0];
   const autoSaveEnabled = readStoredAplAutoSave();
   const talentRenderMode = readStoredTalentRenderMode();
+  const hideTrueConditions = readStoredHideTrueConditions();
   const conditionOverrides = readStoredConditionOverrides();
 
   return {
@@ -195,6 +204,7 @@ function getInitialEditorState(): Omit<EditorState, EditorActions> {
       activeApl.text,
       activeApl.lastGoodText,
       talentRenderMode,
+      hideTrueConditions,
       conditionOverrides,
     ),
   };
@@ -229,6 +239,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
       collapsedBlocks: state.collapsedBlocks,
       collapsedActions: state.collapsedActions,
       talentRenderMode: state.talentRenderMode,
+      hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: nextSelections,
       conditionOverrides: state.conditionOverrides,
     });
@@ -267,6 +278,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
       collapsedBlocks: state.collapsedBlocks,
       collapsedActions: state.collapsedActions,
       talentRenderMode: state.talentRenderMode,
+      hideTrueConditions: state.hideTrueConditions,
       talentSelectionsByProfile: state.talentSelectionsByProfile,
       conditionOverrides: state.conditionOverrides,
     });
@@ -425,6 +437,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
+          state.hideTrueConditions,
           state.conditionOverrides,
         );
         prefetchCatalogsFor(runtime.document);
@@ -451,6 +464,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
+          state.hideTrueConditions,
           state.conditionOverrides,
         );
         persistAplLibrary(savedApls, nextApl.id);
@@ -535,6 +549,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           nextApl.text,
           nextApl.lastGoodText,
           state.talentRenderMode,
+          state.hideTrueConditions,
           state.conditionOverrides,
         );
         prefetchCatalogsFor(runtime.document);
@@ -577,6 +592,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks,
           collapsedActions: state.collapsedActions,
           talentRenderMode: state.talentRenderMode,
+          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
@@ -607,6 +623,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions,
           talentRenderMode: state.talentRenderMode,
+          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
@@ -648,6 +665,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks,
           collapsedActions,
           talentRenderMode: state.talentRenderMode,
+          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
@@ -685,6 +703,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks,
           collapsedActions,
           talentRenderMode: state.talentRenderMode,
+          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
@@ -713,12 +732,41 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions: state.collapsedActions,
           talentRenderMode: mode,
+          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: state.conditionOverrides,
         });
         const nextVersion = state.graphBuildVersion + 1;
         return {
           talentRenderMode: mode,
+          ...graph,
+          graphBuildStatus: "ready",
+          graphBuildVersion: nextVersion,
+          graphBuiltVersion: nextVersion,
+          shouldAutoCollapseOnNextGraphBuild: false,
+        };
+      });
+    },
+    setHideTrueConditions: (enabled) => {
+      writeStoredHideTrueConditions(enabled);
+      set((state) => {
+        if (state.hideTrueConditions === enabled) {
+          return {};
+        }
+        if (!state.document) {
+          return { hideTrueConditions: enabled };
+        }
+        const graph = rebuildGraph(state.document, {
+          collapsedBlocks: state.collapsedBlocks,
+          collapsedActions: state.collapsedActions,
+          talentRenderMode: state.talentRenderMode,
+          hideTrueConditions: enabled,
+          talentSelectionsByProfile: state.talentSelectionsByProfile,
+          conditionOverrides: state.conditionOverrides,
+        });
+        const nextVersion = state.graphBuildVersion + 1;
+        return {
+          hideTrueConditions: enabled,
           ...graph,
           graphBuildStatus: "ready",
           graphBuildVersion: nextVersion,
@@ -743,6 +791,7 @@ export const useEditorStore = create<EditorState>((set, get) => {
           collapsedBlocks: state.collapsedBlocks,
           collapsedActions: state.collapsedActions,
           talentRenderMode: state.talentRenderMode,
+          hideTrueConditions: state.hideTrueConditions,
           talentSelectionsByProfile: state.talentSelectionsByProfile,
           conditionOverrides: nextOverrides,
         });

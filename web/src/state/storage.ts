@@ -18,6 +18,8 @@ export const APL_LIBRARY_STORAGE_KEY = "logiccraft.aplLibrary.v1";
 export const ACTIVE_APL_ID_STORAGE_KEY = "logiccraft.activeAplId";
 export const APL_AUTO_SAVE_STORAGE_KEY = "logiccraft.aplAutoSave";
 export const TALENT_RENDER_MODE_STORAGE_KEY = "logiccraft.talentRenderMode";
+export const HIDE_TRUE_CONDITIONS_STORAGE_KEY =
+  "logiccraft.hideTrueConditions";
 export const TALENT_PANEL_COLLAPSED_STORAGE_KEY =
   "logiccraft.talentPanelCollapsed";
 export const CONDITION_OVERRIDES_STORAGE_KEY =
@@ -188,6 +190,17 @@ export function readStoredTalentRenderMode(): TalentRenderMode {
 
 export function writeStoredTalentRenderMode(mode: TalentRenderMode): void {
   writeStoredText(TALENT_RENDER_MODE_STORAGE_KEY, mode);
+}
+
+export function readStoredHideTrueConditions(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+  return window.localStorage.getItem(HIDE_TRUE_CONDITIONS_STORAGE_KEY) === "1";
+}
+
+export function writeStoredHideTrueConditions(enabled: boolean): void {
+  writeStoredText(HIDE_TRUE_CONDITIONS_STORAGE_KEY, enabled ? "1" : "0");
 }
 
 /**

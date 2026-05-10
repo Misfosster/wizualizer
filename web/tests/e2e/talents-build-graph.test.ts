@@ -273,6 +273,54 @@ test("Dim mode keeps both OR branches visible for context", () => {
   ).toBe(true);
 });
 
+test("hideTrueConditions removes resolved-true AND branches from surviving actions", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=stormstrike,if=buff.hot_hand.up&cooldown.doom_winds.remains>0",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "dim",
+    hideTrueConditions: true,
+    conditionOverrides: {
+      global: { "buff.hot_hand.up": true },
+      byProfile: {},
+    },
+  });
+
+  expect(nodeById(result, getActionNodeId(0, "actions", 0))).toBeTruthy();
+  const conditionLabels = result.nodes
+    .filter((node) => node.type === "condition")
+    .map((node) => (node.data as { label?: string }).label ?? "");
+  expect(conditionLabels).toEqual(["cooldown.doom_winds.remains>0"]);
+});
+
+test("hideTrueConditions hides a condition segment that fully resolves true", () => {
+  const apl = [
+    'shaman="Demo"',
+    "actions=stormstrike,if=buff.hot_hand.up",
+  ].join("\n");
+  const document = parseOrThrow(apl);
+  const result = buildGraph(document, undefined, undefined, {
+    talentRenderMode: "dim",
+    hideTrueConditions: true,
+    conditionOverrides: {
+      global: { "buff.hot_hand.up": true },
+      byProfile: {},
+    },
+  });
+
+  const action = nodeById(result, getActionNodeId(0, "actions", 0));
+  expect(action).toBeTruthy();
+  expect(action?.data).toMatchObject({
+    hasChildren: false,
+    hasCondition: false,
+  });
+  expect(result.nodes.filter((node) => node.type === "condition")).toHaveLength(
+    0,
+  );
+});
+
 test("Hide mode drops empty unreferenced block and its profile root", () => {
   const apl = [
     'shaman="Demo"',
