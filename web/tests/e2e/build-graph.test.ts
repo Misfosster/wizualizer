@@ -134,6 +134,7 @@ test("buildGraph emits typed structural node data and variable handles", () => {
     kind: "callActionList",
     label: "call_action_list",
     targetList: "cds",
+    targetBlockId: "block__0__actions.cds",
   });
 
   const useItemNode = getNode(graph.nodes, "action__0__actions__2");

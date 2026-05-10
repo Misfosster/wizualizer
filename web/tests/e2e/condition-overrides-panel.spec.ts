@@ -10,6 +10,7 @@ const PROFILE_WITH_CONDITIONS = [
   "actions+=/stormstrike,if=talent.storm_unleashed.enabled",
   "actions+=/blood_fury,if=cooldown.blood_fury.duration>0",
   "actions+=/fireblood,if=action.fireblood.cooldown",
+  "actions+=/chain_lightning,if=active_enemies",
 ].join("\n");
 
 const DUPLICATE_PROFILE_NAMES = [
@@ -352,6 +353,34 @@ test("numeric per-profile overrides use a number field", async ({ page }) => {
     ),
   ).toHaveCount(0);
   await expect(bloodFury.locator('[data-talent-state="normal"]')).toBeVisible();
+});
+
+test("active_enemies per-profile override uses a number field", async ({
+  page,
+}) => {
+  await gotoPreview(page, PROFILE_WITH_CONDITIONS);
+
+  await page
+    .locator('[data-profile-condition-overrides-toggle="Demo Profile"]')
+    .click();
+  const profileSection = page.locator(
+    '[data-profile-condition-overrides-section="Demo Profile"]',
+  );
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .fill("active_enemies");
+  await profileSection
+    .locator("[data-profile-condition-overrides-search]")
+    .press("Enter");
+
+  await expect(
+    profileSection.locator(
+      '[data-condition-override-number="active_enemies"]',
+    ),
+  ).toBeVisible();
+  await expect(
+    profileSection.locator('[data-condition-override-pill="active_enemies"]'),
+  ).toHaveCount(0);
 });
 
 test("hide mode removes override-impossible actions from the graph", async ({

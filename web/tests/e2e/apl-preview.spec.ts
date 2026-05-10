@@ -158,6 +158,18 @@ test("renders parsed APL text in the preview graph", async ({ page }) => {
   await expect(page.getByTestId("rf__node-condition__0__actions__0__if")).toContainText("active_enemies>1");
 });
 
+test("call list arrow jumps to the target action list block", async ({ page }) => {
+  await page.goto("/");
+  await fillAplEditor(page, ACTION_LIST_JUMP_APL);
+  await page.getByRole("tab", { name: "Preview" }).click();
+
+  const targetBlock = page.getByTestId("rf__node-block__0__actions.trinket");
+  await expect(targetBlock).toBeVisible();
+  await page.locator('[data-call-list-jump="block__0__actions.trinket"]').click();
+
+  await expect(targetBlock).toHaveClass(/lc-node-jump-highlight/);
+});
+
 test("graph search starts with matching blocks collapsed", async ({ page }) => {
   await page.goto("/");
   await fillAplEditor(page, VALID_APL);

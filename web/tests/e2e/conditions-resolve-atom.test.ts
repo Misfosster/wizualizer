@@ -58,6 +58,24 @@ test("aura up overrides resolve stack comparisons through aliases", () => {
   ).toEqual({ kind: "bool", value: true });
 });
 
+test("aura absence overrides constrain exact quantity overrides", () => {
+  const context = {
+    ...baseContext,
+    globalOverrides: {
+      "buff.invoke_xuen_the_white_tiger.up": false,
+      "buff.invoke_xuen_the_white_tiger.remains": 20,
+      "buff.invoke_xuen_the_white_tiger.stacks": 3,
+    },
+  };
+
+  expect(
+    resolveAtom(ident("buff.invoke_xuen_the_white_tiger.remains"), context),
+  ).toEqual({ kind: "number", value: 0 });
+  expect(
+    resolveAtom(ident("buff.invoke_xuen_the_white_tiger.stacks"), context),
+  ).toEqual({ kind: "number", value: 0 });
+});
+
 test("aura up and down overrides resolve as inverse aliases", () => {
   expect(
     resolveAtom(ident("buff.outcrash_lightning.down"), {
@@ -74,6 +92,18 @@ test("aura up and down overrides resolve as inverse aliases", () => {
   ).toEqual({ kind: "bool", value: false });
 });
 
+test("dot ticking false constrains exact remains overrides", () => {
+  expect(
+    resolveAtom(ident("dot.flame_shock.remains"), {
+      ...baseContext,
+      globalOverrides: {
+        "dot.flame_shock.ticking": false,
+        "dot.flame_shock.remains": 12,
+      },
+    }),
+  ).toEqual({ kind: "number", value: 0 });
+});
+
 test("cooldown remains and up/down overrides resolve through aliases", () => {
   expect(
     resolveAtom(ident("cooldown.fireblood.remains"), {
@@ -88,6 +118,28 @@ test("cooldown remains and up/down overrides resolve through aliases", () => {
       globalOverrides: { "cooldown.fireblood.remains": 0 },
     }),
   ).toEqual({ kind: "bool", value: true });
+});
+
+test("cooldown state overrides constrain exact remains overrides", () => {
+  expect(
+    resolveAtom(ident("cooldown.fireblood.remains"), {
+      ...baseContext,
+      globalOverrides: {
+        "cooldown.fireblood.up": true,
+        "cooldown.fireblood.remains": 8,
+      },
+    }),
+  ).toEqual({ kind: "number", value: 0 });
+
+  expect(
+    resolveAtom(ident("cooldown.fireblood.remains"), {
+      ...baseContext,
+      globalOverrides: {
+        "cooldown.fireblood.up": false,
+        "cooldown.fireblood.remains": 0,
+      },
+    }),
+  ).toEqual({ kind: "number", value: 1 });
 });
 
 test("talent atom resolves from decoded selections by default", () => {

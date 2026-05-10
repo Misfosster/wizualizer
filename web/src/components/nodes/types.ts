@@ -77,6 +77,7 @@ export interface CallActionListNodeData extends Record<string, unknown> {
   label: string;
   kind: "callActionList";
   targetList: string;
+  targetBlockId: string | null;
   hasCondition: boolean;
   hasChildren: boolean;
   isCollapsed: boolean;

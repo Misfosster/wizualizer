@@ -117,11 +117,43 @@ function resolveLayerOverride(
   key: string,
   overrides: AtomOverrides,
 ): EvalValue | null {
+  const constrained = resolveConstrainedExactOverride(key, overrides);
+  if (constrained) {
+    return constrained;
+  }
+
   const exact = overrides[key];
   if (isOverrideSet(exact)) {
     return toEvalValue(exact);
   }
   return resolveAliasOverride(key, overrides);
+}
+
+function resolveConstrainedExactOverride(
+  key: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  const parts = parseAtomKey(key);
+  const property = lastSegment(parts.property);
+
+  if (parts.namespace === "buff" || parts.namespace === "debuff") {
+    return resolveAuraQuantityAbsence(
+      parts.namespace,
+      parts.subject,
+      property,
+      overrides,
+    );
+  }
+
+  if (parts.namespace === "dot") {
+    return resolveDotRemainsAbsence(parts.subject, property, overrides);
+  }
+
+  if (parts.namespace === "cooldown") {
+    return resolveCooldownRemainsState(parts.subject, property, overrides);
+  }
+
+  return null;
 }
 
 function resolveAliasOverride(
@@ -197,6 +229,23 @@ function resolveAuraAlias(
   return null;
 }
 
+function resolveAuraQuantityAbsence(
+  namespace: string,
+  subject: string,
+  property: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject || !isAuraQuantityProperty(property)) return null;
+
+  const up = overrideAt(overrides, `${namespace}.${subject}.up`);
+  if (isOverrideSet(up) && !toBoolean(up)) return numberValue(0);
+
+  const down = overrideAt(overrides, `${namespace}.${subject}.down`);
+  if (isOverrideSet(down) && toBoolean(down)) return numberValue(0);
+
+  return null;
+}
+
 function resolveDotAlias(
   subject: string,
   property: string,
@@ -215,6 +264,19 @@ function resolveDotAlias(
       ? numberValue(toBoolean(ticking) ? 1 : 0)
       : null;
   }
+
+  return null;
+}
+
+function resolveDotRemainsAbsence(
+  subject: string,
+  property: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject || property !== "remains") return null;
+
+  const ticking = overrideAt(overrides, `dot.${subject}.ticking`);
+  if (isOverrideSet(ticking) && !toBoolean(ticking)) return numberValue(0);
 
   return null;
 }
@@ -272,6 +334,25 @@ function resolveActionCooldownAlias(
   if (isOverrideSet(down)) return boolValue(!toBoolean(down));
   const remains = overrideAt(overrides, `cooldown.${subject}.remains`);
   return isOverrideSet(remains) ? boolValue(toNumber(remains) <= 0) : null;
+}
+
+function resolveCooldownRemainsState(
+  subject: string,
+  property: string,
+  overrides: AtomOverrides,
+): EvalValue | null {
+  if (!subject || property !== "remains") return null;
+
+  const up = firstSetOverride(overrides, [
+    `cooldown.${subject}.up`,
+    `action.${subject}.cooldown`,
+  ]);
+  if (isOverrideSet(up)) return numberValue(toBoolean(up) ? 0 : 1);
+
+  const down = overrideAt(overrides, `cooldown.${subject}.down`);
+  if (isOverrideSet(down)) return numberValue(toBoolean(down) ? 1 : 0);
+
+  return null;
 }
 
 function overrideAt(
@@ -338,6 +419,15 @@ function isNumericComparisonOverride(
     typeof value === "object" &&
     typeof value.value === "number" &&
     Number.isFinite(value.value)
+  );
+}
+
+function isAuraQuantityProperty(property: string): boolean {
+  return (
+    property === "remains" ||
+    property === "react" ||
+    property === "stack" ||
+    property === "stacks"
   );
 }
 

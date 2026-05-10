@@ -319,6 +319,7 @@ export function getActionNodeKind(spell: string): ActionGraphNodeKind {
 
 function createActionNodeData(
   actionLine: ParsedActionLine,
+  profileIndex: number,
   conditionCount: number,
   targetRankingCount: number,
   isCollapsed: boolean,
@@ -358,14 +359,17 @@ function createActionNodeData(
         valueText: variableData.valueText,
       };
     }
-    case "callActionList":
+    case "callActionList": {
+      const targetList = extractCallTarget(action.segments);
       return {
         label: action.spell,
         kind: "callActionList",
         ...collapseData,
         ...talentData,
-        targetList: extractCallTarget(action.segments),
+        targetList,
+        targetBlockId: getCallTargetBlockId(profileIndex, targetList),
       };
+    }
     case "useItem":
       return {
         label: action.spell,
@@ -392,6 +396,20 @@ function createActionNodeData(
     default:
       return assertNever(kind);
   }
+}
+
+function getCallTargetBlockId(
+  profileIndex: number,
+  targetList: string,
+): string | null {
+  if (targetList.length === 0 || targetList.startsWith("(")) {
+    return null;
+  }
+
+  const blockName = targetList.startsWith("actions.")
+    ? targetList
+    : `actions.${targetList}`;
+  return getBlockNodeId(profileIndex, blockName);
 }
 
 function assertNever(value: never): never {
@@ -566,6 +584,7 @@ function buildActionGraph(
   );
   const actionNodeData = createActionNodeData(
     actionLine,
+    profileIndex,
     renderedConditionDetails.length,
     renderedTargetRankingDetails.length,
     collapsedActions.has(actionId),

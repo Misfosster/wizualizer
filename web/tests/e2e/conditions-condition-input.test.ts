@@ -31,3 +31,10 @@ test("custom condition input keeps non-aliased comparisons as numeric atoms", ()
     valueKind: "number",
   });
 });
+
+test("custom condition input treats active_enemies as numeric", () => {
+  expect(makeConditionAtomFromInput("active_enemies")).toMatchObject({
+    key: "active_enemies",
+    valueKind: "number",
+  });
+});

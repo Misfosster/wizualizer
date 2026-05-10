@@ -62,6 +62,17 @@ test("extractConditionAtoms identifies boolean and numeric atoms", () => {
   expect(byKey.get("cooldown.doom_winds.remains")?.valueKind).toBe("number");
 });
 
+test("extractConditionAtoms treats bare active_enemies as numeric", () => {
+  const doc = parseOrThrow(`
+shaman="Test"
+spec=enhancement
+actions=stormstrike,if=active_enemies
+`);
+  const atoms = extractConditionAtoms(doc);
+  const byKey = new Map(atoms.all.map((atom) => [atom.key, atom]));
+  expect(byKey.get("active_enemies")?.valueKind).toBe("number");
+});
+
 test("extractConditionAtoms treats bare action cooldown checks as boolean", () => {
   const doc = parseOrThrow(`
 shaman="Test"

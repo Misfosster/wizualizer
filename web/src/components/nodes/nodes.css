@@ -324,6 +324,37 @@
     flex-shrink: 0;
   }
 
+  .lc-node-inline-jump {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: -0.2rem;
+    flex-shrink: 0;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    pointer-events: all;
+    touch-action: manipulation;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease;
+  }
+
+  .lc-node-inline-jump:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  .lc-node-inline-jump:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 2px;
+  }
+
   .lc-node-toggle {
     position: relative;
     z-index: 1;

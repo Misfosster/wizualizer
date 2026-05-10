@@ -98,6 +98,25 @@ actions=crash_lightning,if=buff.outcrash_lightning.stacks>0
   ]);
 });
 
+test("aura up override can make an exact remains comparison false", () => {
+  const doc = parseOrThrow(`
+monk="Test"
+actions=invoke_xuen_the_white_tiger,if=buff.invoke_xuen_the_white_tiger.remains>15
+`);
+  const overrides: ConditionOverrides = {
+    ...EMPTY_CONDITION_OVERRIDES,
+    global: {
+      "buff.invoke_xuen_the_white_tiger.up": false,
+      "buff.invoke_xuen_the_white_tiger.remains": 20,
+    },
+  };
+  const result = computeImpossibleSet(doc, { conditionOverrides: overrides });
+  const summaries = result.hiddenActionsByProfile.get(0) ?? [];
+  expect(summaries.map((summary) => summary.spell)).toEqual([
+    "invoke_xuen_the_white_tiger",
+  ]);
+});
+
 test("aura up override hides negated-up and explicit-down checks", () => {
   const doc = parseOrThrow(`
 shaman="Test"

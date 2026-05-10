@@ -33,10 +33,16 @@ const NUMERIC_PROPERTIES = new Set([
   "value",
 ]);
 
+const BARE_NUMERIC_ATOMS = new Set(["active_enemies"]);
+
 export function inferAtomValueKind(
   key: string,
   usage: ConditionAtomValueKind = "boolean",
 ): ConditionAtomValueKind {
+  if (BARE_NUMERIC_ATOMS.has(key)) {
+    return "number";
+  }
+
   const parts = parseAtomKey(key);
   const semanticKind = inferFromParts(parts);
   return semanticKind ?? usage;

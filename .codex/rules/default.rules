@@ -1,0 +1,23 @@
+prefix_rule(
+    pattern = ["npm.cmd", "run", "build"],
+    decision = "allow",
+    justification = "Allow running the project build command.",
+)
+
+prefix_rule(
+    pattern = ["npm", "run", "build"],
+    decision = "allow",
+    justification = "Allow running the project build command.",
+)
+
+prefix_rule(
+    pattern = ["npx.cmd", "playwright", "test"],
+    decision = "allow",
+    justification = "Allow running Playwright tests for this project.",
+)
+
+prefix_rule(
+    pattern = ["npx", "playwright", "test"],
+    decision = "allow",
+    justification = "Allow running Playwright tests for this project.",
+)
