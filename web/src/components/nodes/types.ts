@@ -46,6 +46,8 @@ export interface ActionNodeData extends Record<string, unknown> {
   isCollapsed: boolean;
   talentState?: TalentState;
   talentReason?: string;
+  actionListName: string;
+  sourceLineNumber: number;
 }
 
 export interface VariableNodeData extends Record<string, unknown> {
@@ -60,6 +62,8 @@ export interface VariableNodeData extends Record<string, unknown> {
   valueText: string;
   talentState?: TalentState;
   talentReason?: string;
+  actionListName: string;
+  sourceLineNumber: number;
 }
 
 export interface UseItemNodeData extends Record<string, unknown> {
@@ -71,6 +75,8 @@ export interface UseItemNodeData extends Record<string, unknown> {
   isCollapsed: boolean;
   talentState?: TalentState;
   talentReason?: string;
+  actionListName: string;
+  sourceLineNumber: number;
 }
 
 export interface CallActionListNodeData extends Record<string, unknown> {
@@ -83,6 +89,8 @@ export interface CallActionListNodeData extends Record<string, unknown> {
   isCollapsed: boolean;
   talentState?: TalentState;
   talentReason?: string;
+  actionListName: string;
+  sourceLineNumber: number;
 }
 
 export interface SequenceNodeData extends Record<string, unknown> {
@@ -94,6 +102,8 @@ export interface SequenceNodeData extends Record<string, unknown> {
   isCollapsed: boolean;
   talentState?: TalentState;
   talentReason?: string;
+  actionListName: string;
+  sourceLineNumber: number;
 }
 
 export interface ConditionHandleUsage extends Record<string, boolean | undefined> {

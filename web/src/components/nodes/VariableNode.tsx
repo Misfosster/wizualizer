@@ -3,6 +3,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { VariableFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
 import { ActionCollapseToggle } from "./ActionCollapseToggle";
+import { ActionPlacementEyebrow } from "./ActionPlacementEyebrow";
 import { cn } from "@/lib/utils";
 
 function VariableNode({
@@ -34,7 +35,10 @@ function VariableNode({
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
-          <div className="lc-node-eyebrow">Variable</div>
+          <ActionPlacementEyebrow
+            actionListName={data.actionListName}
+            sourceLineNumber={data.sourceLineNumber}
+          />
           <div className="lc-node-title lc-node-title--mono">
             {data.variableName}
           </div>

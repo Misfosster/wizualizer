@@ -5,17 +5,12 @@ export interface AplCodeEditorProps {
   parseErrorLineNumber: number | null;
   lineJumpRequest: AplEditorLineJumpRequest | null;
   completionContext: AplCompletionRuntimeContext;
-  onPositionChange?: (position: AplEditorPosition) => void;
+  /** Ctrl/Cmd+click a line number in the gutter to focus that action on the graph preview. */
+  onCtrlClickLineNumber?: (lineNumber: number) => void;
   onChange: (value: string) => void;
 }
 
 export interface AplEditorLineJumpRequest {
   lineNumber: number;
   requestId: number;
-}
-
-export interface AplEditorPosition {
-  lineNumber: number;
-  viewportFromLineNumber: number;
-  viewportToLineNumber: number;
 }

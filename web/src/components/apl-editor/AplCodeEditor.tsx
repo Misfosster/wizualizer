@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   Compartment,
   EditorSelection,
@@ -29,6 +36,7 @@ import {
   createActionListHoverHandlers,
   clearJumpTargetLater,
   createEditorMouseDownHandler,
+  createLineNumberGutterGraphJumpHandler,
   createVariableHoverHandlers,
 } from "./interactions";
 import {
@@ -45,7 +53,7 @@ import {
   type AplSearchMatch,
 } from "./search";
 import { aplEditorTheme, aplHighlightStyle } from "./theme";
-import type { AplCodeEditorProps, AplEditorPosition } from "./types";
+import type { AplCodeEditorProps } from "./types";
 import {
   createVariableReferenceHoverExtension,
   createVariableReferenceMarksExtension,
@@ -55,43 +63,8 @@ interface ChangeRef {
   current: (value: string) => void;
 }
 
-interface PositionChangeRef {
-  current: ((position: AplEditorPosition) => void) | undefined;
-}
-
 interface OpenSearchRef {
   current: (view: EditorView) => boolean;
-}
-
-function getEditorPosition(view: EditorView): AplEditorPosition {
-  const selectionLineNumber = view.state.doc.lineAt(
-    view.state.selection.main.head,
-  ).number;
-  const firstVisibleLine = view.viewportLineBlocks[0];
-  const lastVisibleLine =
-    view.viewportLineBlocks[view.viewportLineBlocks.length - 1];
-  const viewportFromLineNumber = view.state.doc.lineAt(
-    firstVisibleLine.from,
-  ).number;
-  const viewportToLineNumber = view.state.doc.lineAt(lastVisibleLine.to).number;
-  const lineNumber =
-    selectionLineNumber >= viewportFromLineNumber &&
-    selectionLineNumber <= viewportToLineNumber
-      ? selectionLineNumber
-      : viewportFromLineNumber;
-
-  return {
-    lineNumber,
-    viewportFromLineNumber,
-    viewportToLineNumber,
-  };
-}
-
-function notifyEditorPosition(
-  view: EditorView,
-  onPositionChange: PositionChangeRef["current"],
-): void {
-  onPositionChange?.(getEditorPosition(view));
 }
 
 function createEditorExtensions(
@@ -102,7 +75,6 @@ function createEditorExtensions(
   completionContextCompartment: Compartment,
   searchHighlightCompartment: Compartment,
   onChangeRef: ChangeRef,
-  onPositionChangeRef: PositionChangeRef,
   onOpenSearchRef: OpenSearchRef,
   parseErrorLineNumber: number | null,
   completionContext: AplCodeEditorProps["completionContext"],
@@ -135,9 +107,6 @@ function createEditorExtensions(
     EditorView.updateListener.of((update) => {
       if (update.docChanged) {
         onChangeRef.current(update.state.doc.toString());
-      }
-      if (update.docChanged || update.selectionSet || update.viewportChanged) {
-        notifyEditorPosition(update.view, onPositionChangeRef.current);
       }
     }),
     keymap.of([
@@ -181,7 +150,7 @@ export function AplCodeEditor({
   parseErrorLineNumber,
   lineJumpRequest,
   completionContext,
-  onPositionChange,
+  onCtrlClickLineNumber,
   onChange,
 }: AplCodeEditorProps) {
   const parentRef = useRef<HTMLDivElement | null>(null);
@@ -190,13 +159,16 @@ export function AplCodeEditor({
   const initialValueRef = useRef(value);
   const initialCompletionContextRef = useRef(completionContext);
   const onChangeRef = useRef(onChange);
-  const onPositionChangeRef = useRef(onPositionChange);
+  const onCtrlClickLineNumberRef = useRef(onCtrlClickLineNumber);
   const onOpenSearchRef = useRef<OpenSearchRef["current"]>(() => true);
   const parseErrorLineNumberRef = useRef(parseErrorLineNumber);
   const jumpTargetTimeoutRef = useRef<number | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCurrentIndex, setSearchCurrentIndex] = useState(0);
+  const [jumpModifierHeld, setJumpModifierHeld] = useState(false);
+  const jumpModifierHeldRef = useRef(false);
+  jumpModifierHeldRef.current = jumpModifierHeld;
   const errorLineCompartment = useMemo(() => new Compartment(), []);
   const jumpTargetCompartment = useMemo(() => new Compartment(), []);
   const variableHoverCompartment = useMemo(() => new Compartment(), []);
@@ -220,8 +192,38 @@ export function AplCodeEditor({
   }, [onChange]);
 
   useEffect(() => {
-    onPositionChangeRef.current = onPositionChange;
-  }, [onPositionChange]);
+    onCtrlClickLineNumberRef.current = onCtrlClickLineNumber;
+  }, [onCtrlClickLineNumber]);
+
+  useEffect(() => {
+    function syncJumpModifier(event: KeyboardEvent): void {
+      setJumpModifierHeld(event.ctrlKey || event.metaKey);
+    }
+
+    function clearJumpModifier(): void {
+      setJumpModifierHeld(false);
+    }
+
+    window.addEventListener("keydown", syncJumpModifier, true);
+    window.addEventListener("keyup", syncJumpModifier, true);
+    window.addEventListener("blur", clearJumpModifier);
+
+    return () => {
+      window.removeEventListener("keydown", syncJumpModifier, true);
+      window.removeEventListener("keyup", syncJumpModifier, true);
+      window.removeEventListener("blur", clearJumpModifier);
+    };
+  }, []);
+
+  const gutterGraphJumpHandler = useMemo(
+    () =>
+      createLineNumberGutterGraphJumpHandler({
+        onCtrlClickLineNumber: (lineNumber) => {
+          onCtrlClickLineNumberRef.current?.(lineNumber);
+        },
+      }),
+    [],
+  );
 
   useEffect(() => {
     parseErrorLineNumberRef.current = parseErrorLineNumber;
@@ -320,7 +322,6 @@ export function AplCodeEditor({
           completionContextCompartment,
           searchHighlightCompartment,
           onChangeRef,
-          onPositionChangeRef,
           onOpenSearchRef,
           parseErrorLineNumberRef.current,
           initialCompletionContextRef.current,
@@ -340,6 +341,7 @@ export function AplCodeEditor({
       view,
       actionListHoverCompartment,
     });
+    view.dom.addEventListener("mousedown", gutterGraphJumpHandler, true);
     view.dom.addEventListener("mousedown", handleMouseDown);
     view.dom.addEventListener("mouseleave", variableHoverHandlers.handleMouseLeave);
     view.dom.addEventListener(
@@ -359,9 +361,13 @@ export function AplCodeEditor({
     window.addEventListener("keyup", actionListHoverHandlers.handleKeyUp);
 
     viewRef.current = view;
-    notifyEditorPosition(view, onPositionChangeRef.current);
+    view.dom.classList.toggle(
+      "lc-apl-editor--jump-modifier",
+      jumpModifierHeldRef.current,
+    );
 
     return () => {
+      view.dom.removeEventListener("mousedown", gutterGraphJumpHandler, true);
       view.dom.removeEventListener("mousedown", handleMouseDown);
       view.dom.removeEventListener(
         "mouseleave",
@@ -397,12 +403,21 @@ export function AplCodeEditor({
     };
   }, [
     completionContextCompartment,
+    gutterGraphJumpHandler,
     searchHighlightCompartment,
     actionListHoverCompartment,
     errorLineCompartment,
     jumpTargetCompartment,
     variableHoverCompartment,
   ]);
+
+  useLayoutEffect(() => {
+    const view = viewRef.current;
+    if (!view) {
+      return;
+    }
+    view.dom.classList.toggle("lc-apl-editor--jump-modifier", jumpModifierHeld);
+  }, [jumpModifierHeld]);
 
   useEffect(() => {
     const view = viewRef.current;

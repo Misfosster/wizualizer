@@ -226,6 +226,38 @@
     color: var(--lc-node-accent);
   }
 
+  .lc-node-eyebrow--placement {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    max-width: 100%;
+    letter-spacing: 0.06em;
+    text-transform: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
+    font-size: 10px;
+  }
+
+  .lc-node-eyebrow--placement .lc-node-eyebrow__list {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lc-node-eyebrow--placement .lc-node-eyebrow__sep {
+    flex: none;
+    opacity: 0.75;
+    letter-spacing: 0;
+  }
+
+  .lc-node-eyebrow--placement .lc-node-eyebrow__line {
+    flex: none;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
   .lc-node-title {
     margin-top: 0.25rem;
     font-size: 1rem;

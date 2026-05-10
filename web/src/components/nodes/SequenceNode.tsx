@@ -3,6 +3,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { SequenceFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
 import { ActionCollapseToggle } from "./ActionCollapseToggle";
+import { ActionPlacementEyebrow } from "./ActionPlacementEyebrow";
 
 function SequenceNode({
   id,
@@ -25,7 +26,10 @@ function SequenceNode({
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
-          <div className="lc-node-eyebrow">Sequence</div>
+          <ActionPlacementEyebrow
+            actionListName={data.actionListName}
+            sourceLineNumber={data.sourceLineNumber}
+          />
           <div className="lc-node-title lc-node-title--mono">{sequenceText}</div>
         </div>
         {data.hasChildren ? (

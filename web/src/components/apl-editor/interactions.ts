@@ -73,6 +73,48 @@ function isJumpModifierPressed(event: MouseEvent): boolean {
   return event.ctrlKey || event.metaKey;
 }
 
+interface LineNumberGutterGraphJumpOptions {
+  onCtrlClickLineNumber: (lineNumber: number) => void;
+}
+
+/**
+ * Ctrl/Cmd+primary-click on a line number jumps the preview graph to the
+ * matching action (handled by the APL input shell).
+ */
+export function createLineNumberGutterGraphJumpHandler({
+  onCtrlClickLineNumber,
+}: LineNumberGutterGraphJumpOptions): (event: MouseEvent) => void {
+  return (event: MouseEvent) => {
+    if (!isPrimaryClick(event) || !isJumpModifierPressed(event)) {
+      return;
+    }
+
+    const target = event.target as HTMLElement | null;
+    if (!target) {
+      return;
+    }
+
+    const gutterEl = target.closest(".cm-gutterElement");
+    if (!gutterEl) {
+      return;
+    }
+
+    if (!gutterEl.closest(".cm-lineNumbers")) {
+      return;
+    }
+
+    const raw = gutterEl.textContent?.trim() ?? "";
+    const lineNumber = Number.parseInt(raw, 10);
+    if (!Number.isFinite(lineNumber) || lineNumber < 1) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    onCtrlClickLineNumber(lineNumber);
+  };
+}
+
 function isJumpModifierKeyEvent(event: KeyboardEvent): boolean {
   return event.key === "Control" || event.key === "Meta";
 }

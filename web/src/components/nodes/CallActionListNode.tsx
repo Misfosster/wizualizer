@@ -4,6 +4,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { CallActionListFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
 import { ActionCollapseToggle } from "./ActionCollapseToggle";
+import { ActionPlacementEyebrow } from "./ActionPlacementEyebrow";
 import { useEditorStore } from "@/state/editorStore";
 
 function CallActionListNode({
@@ -31,7 +32,10 @@ function CallActionListNode({
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
-          <div className="lc-node-eyebrow">Call List</div>
+          <ActionPlacementEyebrow
+            actionListName={data.actionListName}
+            sourceLineNumber={data.sourceLineNumber}
+          />
           <div className="lc-node-title lc-node-title--mono lc-node-title--inline">
             {data.targetBlockId ? (
               <button

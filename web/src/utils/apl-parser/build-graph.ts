@@ -325,6 +325,7 @@ export function getActionNodeKind(spell: string): ActionGraphNodeKind {
 
 function createActionNodeData(
   actionLine: ParsedActionLine,
+  blockName: string,
   profileIndex: number,
   conditionCount: number,
   targetRankingCount: number,
@@ -350,6 +351,10 @@ function createActionNodeData(
   const talentData = talentState
     ? { talentState, ...(talentReason ? { talentReason } : {}) }
     : {};
+  const placement = {
+    actionListName: blockName,
+    sourceLineNumber: actionLine.lineNumber,
+  };
 
   switch (kind) {
     case "variable": {
@@ -359,6 +364,7 @@ function createActionNodeData(
         kind: "variable",
         ...collapseData,
         ...talentData,
+        ...placement,
         variableName: variableData.variableName,
         op: variableData.op,
         hasExplicitOp: variableData.hasExplicitOp,
@@ -372,6 +378,7 @@ function createActionNodeData(
         kind: "callActionList",
         ...collapseData,
         ...talentData,
+        ...placement,
         targetList,
         targetBlockId: getCallTargetBlockId(profileIndex, targetList),
       };
@@ -382,6 +389,7 @@ function createActionNodeData(
         kind: "useItem",
         ...collapseData,
         ...talentData,
+        ...placement,
         itemName: extractUseItemName(action.segments),
       };
     case "sequence":
@@ -390,6 +398,7 @@ function createActionNodeData(
         kind: "sequence",
         ...collapseData,
         ...talentData,
+        ...placement,
         spells: extractSequenceSpells(action.segments),
       };
     case "action":
@@ -398,6 +407,7 @@ function createActionNodeData(
         kind: "action",
         ...collapseData,
         ...talentData,
+        ...placement,
       };
     default:
       return assertNever(kind);
@@ -598,6 +608,7 @@ function buildActionGraph(
   );
   const actionNodeData = createActionNodeData(
     actionLine,
+    blockName,
     profileIndex,
     renderedConditionDetails.length,
     renderedTargetRankingDetails.length,

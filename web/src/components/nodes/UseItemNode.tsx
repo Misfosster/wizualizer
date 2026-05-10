@@ -4,6 +4,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { UseItemFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
 import { ActionCollapseToggle } from "./ActionCollapseToggle";
+import { ActionPlacementEyebrow } from "./ActionPlacementEyebrow";
 
 function UseItemNode({
   id,
@@ -23,7 +24,10 @@ function UseItemNode({
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
-          <div className="lc-node-eyebrow">Item</div>
+          <ActionPlacementEyebrow
+            actionListName={data.actionListName}
+            sourceLineNumber={data.sourceLineNumber}
+          />
           <div className="lc-node-title lc-node-title--mono lc-node-title--inline">
             <Package className="lc-node-icon" />
             <span>{data.itemName}</span>

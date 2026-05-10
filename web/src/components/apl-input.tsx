@@ -1,18 +1,15 @@
 import "@styles/tailwind.css";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Tabs } from "@components/ui/tabs";
 import { useShallow } from "zustand/react/shallow";
 import { AplCodeEditor } from "@components/apl-editor/AplCodeEditor";
-import type {
-  AplEditorLineJumpRequest,
-  AplEditorPosition,
-} from "@components/apl-editor/types";
+import type { AplEditorLineJumpRequest } from "@components/apl-editor/types";
 import { AplModeDock } from "@components/apl-shell/AplModeDock";
 import { AplToolbar } from "@components/apl-shell/AplToolbar";
 import { EditorSaveIndicator } from "@components/apl-shell/EditorSaveIndicator";
 import Canvas from "@components/canvas";
 import { useEditorStore } from "@/state/editorStore";
-import { getGraphNodeIdForSourceViewport } from "@/utils/apl-parser/source-node";
+import { getGraphNodeIdForSourceLine } from "@/utils/apl-parser/source-node";
 import { semanticCatalogLoader } from "@/utils/semantics/catalog-loader-browser";
 
 const ACTIVE_TAB_STORAGE_KEY = "logiccraft.activeAplTab";
@@ -74,17 +71,8 @@ function scheduleAfterNextPaint(callback: () => void): () => void {
 
 function AplInput() {
   const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
-  const [previewFocusNodeId, setPreviewFocusNodeId] = useState<string | null>(
-    null,
-  );
-  const [previewFocusRequestId, setPreviewFocusRequestId] = useState(0);
   const [lineJumpRequest, setLineJumpRequest] =
     useState<AplEditorLineJumpRequest | null>(null);
-  const editorPositionRef = useRef<AplEditorPosition>({
-    lineNumber: 1,
-    viewportFromLineNumber: 1,
-    viewportToLineNumber: 1,
-  });
   const {
     savedApls,
     activeAplId,
@@ -107,6 +95,7 @@ function AplInput() {
     duplicateApl,
     renameApl,
     deleteApl,
+    requestGraphJumpToNode,
   } = useEditorStore(
     useShallow((state) => ({
       savedApls: state.savedApls,
@@ -130,6 +119,7 @@ function AplInput() {
       duplicateApl: state.duplicateApl,
       renameApl: state.renameApl,
       deleteApl: state.deleteApl,
+      requestGraphJumpToNode: state.requestGraphJumpToNode,
     })),
   );
   const warningDiagnostics = parseError
@@ -149,23 +139,6 @@ function AplInput() {
   useEffect(() => {
     window.localStorage.setItem(ACTIVE_TAB_STORAGE_KEY, activeTab);
   }, [activeTab]);
-
-  useEffect(() => {
-    if (activeTab !== "preview" || previewFocusRequestId === 0) {
-      return;
-    }
-
-    return scheduleAfterNextPaint(() => {
-      const targetNodeId = getGraphNodeIdForSourceViewport(
-        document,
-        aplText,
-        editorPositionRef.current.viewportFromLineNumber,
-        editorPositionRef.current.viewportToLineNumber,
-        collapsedBlocks,
-      );
-      setPreviewFocusNodeId(targetNodeId);
-    });
-  }, [activeTab, aplText, collapsedBlocks, document, previewFocusRequestId]);
 
   useEffect(() => {
     if (graphBuildStatus !== "stale") {
@@ -205,25 +178,38 @@ function AplInput() {
     }));
   }
 
-  const handleEditorPositionChange = useCallback((position: AplEditorPosition) => {
-    editorPositionRef.current = position;
-  }, []);
-
-  const handleTabChange = useCallback(
-    (value: string) => {
-      if (!isAplInputTab(value)) {
+  const handleCtrlClickLineNumber = useCallback(
+    (lineNumber: number) => {
+      const nodeId = getGraphNodeIdForSourceLine(
+        document,
+        aplText,
+        lineNumber,
+        collapsedBlocks,
+      );
+      if (!nodeId) {
         return;
       }
 
-      if (value === "preview") {
-        setPreviewFocusNodeId(null);
-        setPreviewFocusRequestId((requestId) => requestId + 1);
-      }
-
-      setActiveTab(value);
+      setActiveTab("preview");
+      scheduleAfterNextPaint(() => {
+        requestGraphJumpToNode(nodeId);
+      });
     },
-    [],
+    [
+      aplText,
+      collapsedBlocks,
+      document,
+      requestGraphJumpToNode,
+    ],
   );
+
+  const handleTabChange = useCallback((value: string) => {
+    if (!isAplInputTab(value)) {
+      return;
+    }
+
+    setActiveTab(value);
+  }, []);
 
   const isPreviewActive = activeTab === "preview";
   const writePanelClassName = [
@@ -231,6 +217,12 @@ function AplInput() {
     isPreviewActive
       ? "pointer-events-none absolute inset-x-0 top-0 z-0 opacity-0"
       : "relative z-10",
+  ].join(" ");
+  const previewPanelClassName = [
+    "m-0 rounded-lg",
+    isPreviewActive
+      ? "relative z-10"
+      : "pointer-events-none absolute inset-x-0 top-0 z-0 opacity-0",
   ].join(" ");
 
   return (
@@ -268,7 +260,7 @@ function AplInput() {
               parseErrorLineNumber={parseErrorLineNumber}
               lineJumpRequest={lineJumpRequest}
               completionContext={completionContext}
-              onPositionChange={handleEditorPositionChange}
+              onCtrlClickLineNumber={handleCtrlClickLineNumber}
               onChange={applyAplText}
             />
             <EditorSaveIndicator
@@ -318,18 +310,17 @@ function AplInput() {
             </div>
           ) : null}
         </div>
-        {isPreviewActive ? (
-          <div
-            role="tabpanel"
-            aria-label="Preview"
-            aria-hidden="false"
-            className="m-0 rounded-lg"
-          >
-            <div className="h-[72vh] w-full overflow-hidden rounded-md border border-gray-200 dark:border-white/10">
-              <Canvas initialFocusNodeId={previewFocusNodeId} />
-            </div>
+        <div
+          role="tabpanel"
+          aria-label="Preview"
+          aria-hidden={!isPreviewActive}
+          inert={!isPreviewActive}
+          className={previewPanelClassName}
+        >
+          <div className="h-[72vh] w-full overflow-hidden rounded-md border border-gray-200 dark:border-white/10">
+            <Canvas />
           </div>
-        ) : null}
+        </div>
       </div>
     </Tabs>
   );

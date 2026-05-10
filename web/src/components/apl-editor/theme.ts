@@ -38,6 +38,8 @@ export const aplEditorTheme = EditorView.theme(
       backgroundColor: "#0F141D",
       color: "#657286",
       minHeight: "56vh",
+      transition:
+        "transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease",
     },
     ".cm-gutter": {
       minHeight: "56vh",
@@ -45,6 +47,21 @@ export const aplEditorTheme = EditorView.theme(
     ".cm-lineNumbers .cm-gutterElement": {
       minWidth: "2.5rem",
       padding: "0 0.75rem 0 0.5rem",
+      transition: "transform 140ms ease, color 140ms ease, font-weight 140ms ease",
+    },
+    "&.lc-apl-editor--jump-modifier .cm-gutters": {
+      borderRightColor: "rgba(125, 211, 252, 0.22)",
+      boxShadow:
+        "6px 0 18px rgba(0, 0, 0, 0.35), inset -1px 0 0 rgba(125, 211, 252, 0.12)",
+      transform: "translateX(4px)",
+      zIndex: "2",
+      position: "relative",
+    },
+    "&.lc-apl-editor--jump-modifier .cm-lineNumbers .cm-gutterElement": {
+      color: "#D6E3F0",
+      fontWeight: "600",
+      transform: "scale(1.04)",
+      transformOrigin: "right center",
     },
     ".cm-foldGutter .cm-gutterElement": {
       minWidth: "1.25rem",

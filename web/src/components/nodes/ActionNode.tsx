@@ -3,6 +3,7 @@ import type { NodeProps } from "@xyflow/react";
 import type { ActionFlowNode } from "./types";
 import { MetaPill, NodeCard, SourceHandle, TargetHandle } from "./shared";
 import { ActionCollapseToggle } from "./ActionCollapseToggle";
+import { ActionPlacementEyebrow } from "./ActionPlacementEyebrow";
 
 function ActionNode({
   id,
@@ -22,7 +23,10 @@ function ActionNode({
 
       <div className="lc-node-header">
         <div className="lc-node-copy">
-          <div className="lc-node-eyebrow">Action</div>
+          <ActionPlacementEyebrow
+            actionListName={data.actionListName}
+            sourceLineNumber={data.sourceLineNumber}
+          />
           <div className="lc-node-title lc-node-title--mono">{data.label}</div>
         </div>
         {data.hasChildren ? (
