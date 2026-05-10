@@ -37,19 +37,37 @@ const reactFlowStyle = {
 } as const;
 const reactFlowProOptions = { hideAttribution: true } as const;
 
+interface InitialViewportResult {
+  focusedNodeId: string | null;
+  viewportReady: Promise<unknown>;
+}
+
+function scheduleAfterNextPaint(callback: () => void): () => void {
+  let timeoutHandle: number | null = null;
+  const frameHandle = window.requestAnimationFrame(() => {
+    timeoutHandle = window.setTimeout(callback, 0);
+  });
+
+  return () => {
+    window.cancelAnimationFrame(frameHandle);
+    if (timeoutHandle !== null) {
+      window.clearTimeout(timeoutHandle);
+    }
+  };
+}
+
 function focusFirstNode(
   flow: ReactFlowInstance<GraphFlowNode>,
   canvas: HTMLDivElement | null,
-): void {
+): Promise<unknown> {
   const firstNode = flow.getNodes()[0];
   if (!canvas) {
-    void flow.fitView(initialFitViewOptions);
-    return;
+    return flow.fitView(initialFitViewOptions);
   }
 
   const anchorX = canvas.clientWidth * firstNodeViewportAnchor.x;
   const anchorY = canvas.clientHeight * firstNodeViewportAnchor.y;
-  void flow.setViewport({
+  return flow.setViewport({
     x: anchorX - firstNode.position.x,
     y: anchorY - firstNode.position.y,
     zoom: 1,
@@ -61,40 +79,102 @@ function applyInitialViewport(
   canvas: HTMLDivElement | null,
   nodeCount: number,
   initialFocusNodeId: string | null,
-): string | null {
+): InitialViewportResult {
   const initialFocusNode = initialFocusNodeId
     ? flow.getNode(initialFocusNodeId)
     : undefined;
   if (initialFocusNodeId && initialFocusNode) {
-    void flow.fitView({
-      nodes: [initialFocusNode],
-      padding: 0.45,
-      maxZoom: 0.9,
-      duration: 0,
-    });
-    return initialFocusNodeId;
+    return {
+      focusedNodeId: initialFocusNodeId,
+      viewportReady: flow.fitView({
+        nodes: [initialFocusNode],
+        padding: 0.45,
+        maxZoom: 0.9,
+        duration: 0,
+      }),
+    };
   }
 
   if (nodeCount > INITIAL_FIT_VIEW_NODE_LIMIT) {
-    focusFirstNode(flow, canvas);
-    return null;
+    return {
+      focusedNodeId: null,
+      viewportReady: focusFirstNode(flow, canvas),
+    };
   }
 
-  void flow.fitView(initialFitViewOptions);
-  return null;
+  return {
+    focusedNodeId: null,
+    viewportReady: flow.fitView(initialFitViewOptions),
+  };
 }
 
 export interface CanvasProps {
   initialFocusNodeId?: string | null;
 }
 
+function CanvasLoadingIndicator() {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 text-slate-100"
+      role="status"
+      aria-live="polite"
+      data-graph-loading
+    >
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-400 border-t-transparent" />
+      <div className="text-sm font-medium text-slate-200">
+        Loading...
+      </div>
+    </div>
+  );
+}
+
+function CanvasLoading({ showControls }: { showControls: boolean }) {
+  return (
+    <div
+      className="relative h-full min-h-[300px] w-full text-slate-100"
+      style={{ background: canvasBackground }}
+    >
+      {showControls ? (
+        <div className="absolute right-3 top-3 z-20 h-[calc(100%-1.5rem)] overflow-y-auto">
+          <div className="flex flex-col gap-2 pb-[10px]">
+            <GraphSearchBox />
+            <TalentModePanel />
+          </div>
+        </div>
+      ) : null}
+      <CanvasLoadingIndicator />
+    </div>
+  );
+}
+
 export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
+  const [canRenderFlow, setCanRenderFlow] = useState(false);
+  const graphBuildStatus = useEditorStore((state) => state.graphBuildStatus);
+
+  useEffect(() => {
+    return scheduleAfterNextPaint(() => {
+      setCanRenderFlow(true);
+    });
+  }, []);
+
+  if (!canRenderFlow || graphBuildStatus === "stale") {
+    return <CanvasLoading showControls={canRenderFlow} />;
+  }
+
+  return <CanvasFlow initialFocusNodeId={initialFocusNodeId} />;
+}
+
+function CanvasFlow({ initialFocusNodeId = null }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const flowRef = useRef<ReactFlowInstance<GraphFlowNode> | null>(null);
   const shouldFitAfterBulkToggleRef = useRef(false);
   const didInitialFitRef = useRef(false);
+  const appliedInitialFocusNodeIdRef = useRef<string | null>(null);
+  const revealGraphFrameRef = useRef<number | null>(null);
+  const revealGraphVersionRef = useRef(0);
   const jumpHighlightTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [highlightedNodeId, setHighlightedNodeId] = useState<string | null>(null);
+  const [isGraphLayerReady, setIsGraphLayerReady] = useState(false);
   const {
     nodes,
     edges,
@@ -182,6 +262,28 @@ export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
     setTalentRenderMode("dim");
   }, [setTalentRenderMode]);
 
+  const revealGraphLayerAfter = useCallback((viewportReady: Promise<unknown>) => {
+    const revealVersion = revealGraphVersionRef.current + 1;
+    revealGraphVersionRef.current = revealVersion;
+    if (revealGraphFrameRef.current !== null) {
+      cancelAnimationFrame(revealGraphFrameRef.current);
+      revealGraphFrameRef.current = null;
+    }
+
+    void viewportReady.finally(() => {
+      if (revealGraphVersionRef.current !== revealVersion) {
+        return;
+      }
+      revealGraphFrameRef.current = requestAnimationFrame(() => {
+        if (revealGraphVersionRef.current !== revealVersion) {
+          return;
+        }
+        revealGraphFrameRef.current = null;
+        setIsGraphLayerReady(true);
+      });
+    });
+  }, []);
+
   useEffect(() => {
     if (previousDocumentRef.current === document) {
       return;
@@ -189,6 +291,9 @@ export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
 
     previousDocumentRef.current = document;
     didInitialFitRef.current = false;
+    appliedInitialFocusNodeIdRef.current = null;
+    revealGraphVersionRef.current += 1;
+    setIsGraphLayerReady(false);
   }, [document]);
 
   useEffect(() => {
@@ -233,22 +338,75 @@ export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
       return;
     }
     didInitialFitRef.current = true;
-    const focusedNodeId = applyInitialViewport(
+    const { focusedNodeId, viewportReady } = applyInitialViewport(
       flow,
       canvasRef.current,
       nodes.length,
       initialFocusNodeId,
     );
+    appliedInitialFocusNodeIdRef.current = focusedNodeId;
+    revealGraphLayerAfter(viewportReady);
     if (focusedNodeId) {
       highlightNodeTemporarily(focusedNodeId);
     }
-  }, [highlightNodeTemporarily, initialFocusNodeId, nodes.length]);
+  }, [
+    highlightNodeTemporarily,
+    initialFocusNodeId,
+    nodes.length,
+    revealGraphLayerAfter,
+  ]);
+
+  useEffect(() => {
+    if (graphBuildStatus !== "ready" || nodes.length > 0) {
+      return;
+    }
+
+    setIsGraphLayerReady(true);
+  }, [graphBuildStatus, nodes.length]);
+
+  useEffect(() => {
+    if (
+      !initialFocusNodeId ||
+      graphBuildStatus === "stale" ||
+      nodes.length === 0 ||
+      appliedInitialFocusNodeIdRef.current === initialFocusNodeId
+    ) {
+      return;
+    }
+
+    const flow = flowRef.current;
+    const targetNode = flow?.getNode(initialFocusNodeId);
+    if (!flow || !targetNode) {
+      return;
+    }
+
+    didInitialFitRef.current = true;
+    appliedInitialFocusNodeIdRef.current = initialFocusNodeId;
+    const viewportReady = flow.fitView({
+      nodes: [targetNode],
+      padding: 0.45,
+      maxZoom: 0.9,
+      duration: 0,
+    });
+    revealGraphLayerAfter(viewportReady);
+    highlightNodeTemporarily(initialFocusNodeId);
+  }, [
+    graphBuildStatus,
+    highlightNodeTemporarily,
+    initialFocusNodeId,
+    nodes.length,
+    revealGraphLayerAfter,
+  ]);
 
   useEffect(() => {
     return () => {
       if (jumpHighlightTimerRef.current) {
         clearTimeout(jumpHighlightTimerRef.current);
       }
+      if (revealGraphFrameRef.current !== null) {
+        cancelAnimationFrame(revealGraphFrameRef.current);
+      }
+      revealGraphVersionRef.current += 1;
     };
   }, []);
 
@@ -304,31 +462,15 @@ export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
     talentRenderMode,
   ]);
 
-  if (graphBuildStatus === "stale") {
-    return (
-      <div
-        className="flex h-full min-h-[300px] w-full flex-col items-center justify-center gap-3 text-slate-100"
-        style={{ background: canvasBackground }}
-        role="status"
-        aria-live="polite"
-        data-graph-loading
-      >
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-400 border-t-transparent" />
-        <div className="text-sm font-medium text-slate-200">
-          Loading preview...
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       ref={canvasRef}
       className="relative h-full w-full min-h-[300px] text-slate-100"
       style={{ background: canvasBackground }}
+      aria-busy={!isGraphLayerReady}
     >
       <ReactFlow
-        className="lc-flow"
+        className={isGraphLayerReady ? "lc-flow" : "lc-flow lc-flow--booting"}
         style={reactFlowStyle}
         nodes={renderedNodes}
         edges={edges}
@@ -337,12 +479,14 @@ export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
           flowRef.current = instance;
           if (!didInitialFitRef.current && nodes.length > 0) {
             didInitialFitRef.current = true;
-            const focusedNodeId = applyInitialViewport(
+            const { focusedNodeId, viewportReady } = applyInitialViewport(
               instance,
               canvasRef.current,
               nodes.length,
               initialFocusNodeId,
             );
+            appliedInitialFocusNodeIdRef.current = focusedNodeId;
+            revealGraphLayerAfter(viewportReady);
             if (focusedNodeId) {
               highlightNodeTemporarily(focusedNodeId);
             }
@@ -399,10 +543,13 @@ export default function Canvas({ initialFocusNodeId = null }: CanvasProps) {
           color="rgba(255, 255, 255, 0.035)"
         />
       </ReactFlow>
-      <EmptyGraphPlaceholder
-        mode={isHideWipeout ? "hide" : "off"}
-        onSwitchToDim={handleSwitchToDim}
-      />
+      {!isGraphLayerReady ? <CanvasLoadingIndicator /> : null}
+      {isGraphLayerReady ? (
+        <EmptyGraphPlaceholder
+          mode={isHideWipeout ? "hide" : "off"}
+          onSwitchToDim={handleSwitchToDim}
+        />
+      ) : null}
     </div>
   );
 }

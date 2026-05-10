@@ -24,6 +24,10 @@
     will-change: transform;
   }
 
+  .lc-flow.lc-flow--booting .react-flow__viewport {
+    opacity: 0;
+  }
+
   .lc-flow .react-flow__node {
     backface-visibility: hidden;
     transform-style: flat;

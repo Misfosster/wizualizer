@@ -290,6 +290,36 @@ test("keeps editor scroll position across a Write Preview Write roundtrip", asyn
     .toBeGreaterThan(0);
 });
 
+test("editor search opens with Ctrl+F and jumps between matches", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await fillAplEditor(
+    page,
+    [
+      'shaman="Demo Profile"',
+      "actions+=/stormstrike",
+      "actions+=/lava_lash",
+      "actions+=/stormstrike",
+    ].join("\n"),
+  );
+
+  await page.getByTestId("apl-code-editor-input").click();
+  await page.keyboard.press("Control+F");
+
+  const searchInput = page.locator("[data-apl-editor-search-input]");
+  await expect(searchInput).toBeVisible();
+  await searchInput.fill("stormstrike");
+  await expect(page.locator("[data-apl-editor-search-count]")).toHaveText("1/2");
+  await expect(page.locator(".lc-apl-editor-search-match")).toHaveCount(2);
+
+  await searchInput.press("Enter");
+  await expect(page.locator("[data-apl-editor-search-count]")).toHaveText("2/2");
+  await expect(
+    page.locator(".lc-apl-editor-search-match--current"),
+  ).toHaveCount(1);
+});
+
 test("preview starts focused on the editor's current copy profile", async ({
   page,
 }) => {

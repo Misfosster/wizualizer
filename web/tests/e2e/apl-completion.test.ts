@@ -20,6 +20,14 @@ function singleLabel(
   return result?.options[0]?.label;
 }
 
+function applyText(
+  result: ReturnType<typeof getAplCompletionsForLine>,
+  label: string,
+): string | undefined {
+  const apply = result?.options.find((option) => option.label === label)?.apply;
+  return typeof apply === "string" ? apply : undefined;
+}
+
 test("APL autocomplete offers action-list starts", () => {
   const result = getAplCompletionsForLine({
     text: "act",
@@ -150,6 +158,31 @@ test("APL autocomplete suggests append assignment after the list exists", () => 
   expect(singleLabel(result)).toBe("+=/");
 });
 
+test("APL autocomplete applies replacement assignment for a new action list", () => {
+  const text = ['shaman="A"', "act"].join("\n");
+  const result = getAplCompletionsForLine({
+    text,
+    lineNumber: 2,
+    column: "act".length,
+    document: parseOrThrow('shaman="A"'),
+  });
+
+  expect(applyText(result, "actions")).toBe("actions=");
+});
+
+test("APL autocomplete applies append assignment for an existing action list", () => {
+  const parsedText = ['shaman="A"', "actions=stormstrike"].join("\n");
+  const text = [parsedText, "act"].join("\n");
+  const result = getAplCompletionsForLine({
+    text,
+    lineNumber: 3,
+    column: "act".length,
+    document: parseOrThrow(parsedText),
+  });
+
+  expect(applyText(result, "actions")).toBe("actions+=/");
+});
+
 test("APL autocomplete treats first copy override as a replacement", () => {
   const parsedText = [
     'shaman="A"',
@@ -165,6 +198,23 @@ test("APL autocomplete treats first copy override as a replacement", () => {
   });
 
   expect(singleLabel(result)).toBe("=");
+});
+
+test("APL autocomplete applies replacement assignment for first copy override", () => {
+  const parsedText = [
+    'shaman="A"',
+    "actions=stormstrike",
+    'copy="B"',
+  ].join("\n");
+  const text = [parsedText, "act"].join("\n");
+  const result = getAplCompletionsForLine({
+    text,
+    lineNumber: 4,
+    column: "act".length,
+    document: parseOrThrow(parsedText),
+  });
+
+  expect(applyText(result, "actions")).toBe("actions=");
 });
 
 test("APL autocomplete offers variables defined earlier in the same profile", () => {

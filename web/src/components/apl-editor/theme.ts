@@ -172,6 +172,16 @@ export const aplEditorTheme = EditorView.theme(
       animation: "lc-apl-jump-target-fade 1.5s ease-out forwards",
       backgroundColor: "rgba(255, 255, 255, 0.62)",
     },
+    ".lc-apl-editor-search-match": {
+      borderRadius: "3px",
+      backgroundColor: "rgba(250, 204, 21, 0.24)",
+      boxShadow: "0 0 0 1px rgba(250, 204, 21, 0.18)",
+    },
+    ".lc-apl-editor-search-match--current": {
+      backgroundColor: "rgba(34, 211, 238, 0.32)",
+      boxShadow:
+        "0 0 0 1px rgba(34, 211, 238, 0.55), 0 0 16px rgba(34, 211, 238, 0.18)",
+    },
     "@keyframes lc-apl-jump-target-fade": {
       "0%": {
         backgroundColor: "rgba(255, 255, 255, 0.62)",

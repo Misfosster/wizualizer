@@ -24,11 +24,10 @@ export const aplCompletionContextFacet =
 const MAX_COMPLETIONS = 40;
 
 const ACTION_LIST_STARTS: readonly Completion[] = [
-  { label: "actions", type: "keyword", apply: "actions" },
+  { label: "actions", type: "keyword" },
   {
     label: "actions.precombat",
     type: "keyword",
-    apply: "actions.precombat",
   },
 ];
 
@@ -67,6 +66,13 @@ const OPERATOR_COMPLETIONS: readonly Completion[] = [
 ];
 
 const ACTION_LIST_ASSIGNMENT_VALID_FOR = /^[+=/]*$/;
+const PROFILE_NAME_RE_SOURCE = String.raw`(?:"[^"]+"|\S+)`;
+const PROFILE_BOUNDARY_RE = new RegExp(
+  `^(?:warrior|paladin|hunter|rogue|priest|deathknight|death_knight|shaman|mage|warlock|monk|druid|demonhunter|demon_hunter|evoker|copy)=${PROFILE_NAME_RE_SOURCE}$`,
+);
+const PROFILE_NAME_RE = new RegExp(
+  `^(?:warrior|paladin|hunter|rogue|priest|deathknight|shaman|mage|warlock|monk|druid|demonhunter|demon_hunter|evoker|copy)=(${PROFILE_NAME_RE_SOURCE})$`,
+);
 
 interface CompletionInput {
   text: string;
@@ -125,8 +131,16 @@ export function getAplCompletionsForLine({
 
   if (/^\s*act[A-Za-z0-9_.-]*$/.test(lineBefore)) {
     return completionResult(from, [
-      ...ACTION_LIST_STARTS,
-      ...getActionListCompletions(document),
+      ...getActionListAssignmentCompletions(
+        text,
+        lineNumber,
+        ACTION_LIST_STARTS,
+      ),
+      ...getActionListAssignmentCompletions(
+        text,
+        lineNumber,
+        getActionListCompletions(document),
+      ),
     ]);
   }
 
@@ -203,13 +217,11 @@ function getActionListOperatorCompletion({
     return null;
   }
 
-  const recommendedOperator = hasPriorOwnedActionListCall(
+  const recommendedOperator = getRecommendedActionListAssignmentOperator(
     text,
     lineNumber,
     context.blockName,
-  )
-    ? "+=/"
-    : "=";
+  );
 
   return completionResult(
     documentOffset(lines, lineNumber, context.operatorStartColumn),
@@ -269,10 +281,18 @@ function hasPriorOwnedActionListCall(
   return seenInCurrentProfile.has(blockName);
 }
 
+function getRecommendedActionListAssignmentOperator(
+  text: string,
+  lineNumber: number,
+  blockName: string,
+): "=" | "+=/" {
+  return hasPriorOwnedActionListCall(text, lineNumber, blockName)
+    ? "+=/"
+    : "=";
+}
+
 function isProfileBoundary(line: string): boolean {
-  return /^(?:warrior|paladin|hunter|rogue|priest|deathknight|death_knight|shaman|mage|warlock|monk|druid|demonhunter|demon_hunter|evoker|copy)="[^"]+"$/.test(
-    line,
-  );
+  return PROFILE_BOUNDARY_RE.test(line);
 }
 
 function parseActionBlockName(line: string): string | null {
@@ -409,6 +429,21 @@ function getActionListCompletions(
   return Array.from(names)
     .sort((a, b) => a.localeCompare(b))
     .map((name) => ({ label: name, type: "keyword" }));
+}
+
+function getActionListAssignmentCompletions(
+  text: string,
+  lineNumber: number,
+  completions: readonly Completion[],
+): readonly Completion[] {
+  return completions.map((completion) => ({
+    ...completion,
+    apply: `${completion.label}${getRecommendedActionListAssignmentOperator(
+      text,
+      lineNumber,
+      completion.label,
+    )}`,
+  }));
 }
 
 function getSemanticCatalogForProfile(
@@ -631,9 +666,8 @@ function getVariableCompletions(
 }
 
 function parseProfileName(line: string): string | null {
-  return /^(?:warrior|paladin|hunter|rogue|priest|deathknight|shaman|mage|warlock|monk|druid|demonhunter|evoker|copy)="([^"]+)"$/.exec(
-    line.trim(),
-  )?.[1] ?? null;
+  const rawName = PROFILE_NAME_RE.exec(line.trim())?.[1] ?? null;
+  return rawName?.replace(/^"|"$/g, "") ?? null;
 }
 
 function parseVariableDefinitionName(line: string): string | null {

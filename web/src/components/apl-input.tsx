@@ -58,11 +58,26 @@ function scheduleIdleGraphBuild(callback: () => void): () => void {
   };
 }
 
+function scheduleAfterNextPaint(callback: () => void): () => void {
+  let timeoutHandle: number | null = null;
+  const frameHandle = window.requestAnimationFrame(() => {
+    timeoutHandle = window.setTimeout(callback, 0);
+  });
+
+  return () => {
+    window.cancelAnimationFrame(frameHandle);
+    if (timeoutHandle !== null) {
+      window.clearTimeout(timeoutHandle);
+    }
+  };
+}
+
 function AplInput() {
   const [activeTab, setActiveTab] = useState<AplInputTab>(readStoredActiveTab);
   const [previewFocusNodeId, setPreviewFocusNodeId] = useState<string | null>(
     null,
   );
+  const [previewFocusRequestId, setPreviewFocusRequestId] = useState(0);
   const [lineJumpRequest, setLineJumpRequest] =
     useState<AplEditorLineJumpRequest | null>(null);
   const editorPositionRef = useRef<AplEditorPosition>({
@@ -136,15 +151,29 @@ function AplInput() {
   }, [activeTab]);
 
   useEffect(() => {
+    if (activeTab !== "preview" || previewFocusRequestId === 0) {
+      return;
+    }
+
+    return scheduleAfterNextPaint(() => {
+      const targetNodeId = getGraphNodeIdForSourceViewport(
+        document,
+        aplText,
+        editorPositionRef.current.viewportFromLineNumber,
+        editorPositionRef.current.viewportToLineNumber,
+        collapsedBlocks,
+      );
+      setPreviewFocusNodeId(targetNodeId);
+    });
+  }, [activeTab, aplText, collapsedBlocks, document, previewFocusRequestId]);
+
+  useEffect(() => {
     if (graphBuildStatus !== "stale") {
       return;
     }
 
     if (activeTab === "preview") {
-      const handle = window.setTimeout(buildGraphCache, 0);
-      return () => {
-        window.clearTimeout(handle);
-      };
+      return scheduleAfterNextPaint(buildGraphCache);
     }
 
     return scheduleIdleGraphBuild(buildGraphCache);
@@ -187,19 +216,13 @@ function AplInput() {
       }
 
       if (value === "preview") {
-        const targetNodeId = getGraphNodeIdForSourceViewport(
-          document,
-          aplText,
-          editorPositionRef.current.viewportFromLineNumber,
-          editorPositionRef.current.viewportToLineNumber,
-          collapsedBlocks,
-        );
-        setPreviewFocusNodeId(targetNodeId);
+        setPreviewFocusNodeId(null);
+        setPreviewFocusRequestId((requestId) => requestId + 1);
       }
 
       setActiveTab(value);
     },
-    [aplText, collapsedBlocks, document],
+    [],
   );
 
   const isPreviewActive = activeTab === "preview";
