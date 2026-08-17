@@ -2,7 +2,18 @@
 
 Design documentation for upcoming features, organized by concern.
 
-## Current Plans
+## Start Here
+
+The active handoff for the next milestone is
+[11-graph-editing.md](11-graph-editing.md). It links the accepted visual direction,
+the mutation-boundary spike, implementation sequence, code entry points, and test
+matrix.
+
+Earlier plans remain useful references but some predate the current implementation.
+Verify them against `docs/05-GRAPH-FEATURE.md` and the code before treating old
+type names or module boundaries as current.
+
+## Plans
 
 | File | Topic |
 |------|-------|
@@ -16,8 +27,14 @@ Design documentation for upcoming features, organized by concern.
 | [08-ui-stack.md](08-ui-stack.md) | shadcn/ui, react-arborist, component structure |
 | [09-variable-jump-to.md](09-variable-jump-to.md) | Variable reference navigation in the graph |
 | [10-talent-aware-rendering.md](10-talent-aware-rendering.md) | Decode `talents=` and dim/hide impossible actions |
+| [11-graph-editing.md](11-graph-editing.md) | Current graph-editing implementation handoff |
 
-## Visual References
+## Accepted Visual Reference
+
+- `docs/spikes/assets/001-condition-builder.png` - accepted handle-driven condition
+  builder and connection styling
+
+## Historical Visual References
 
 - `docs/container-node-simplified.svg` - Container node layout design
 - `docs/container-node-vision.svg` - Original vision (more complex)

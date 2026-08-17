@@ -1,131 +1,132 @@
-# Edge Types
+# Edge and Handle Types
 
-Edges connect nodes in the graph canvas. Three types with distinct styling.
+Status: Accepted visual target; production tokens pending
+Updated: 2026-08-17
+
+Edges remain clean graph connections. AND/OR are labels on thin lines, not Lego
+pieces, independently placed nodes, or buttons floating away from a condition.
 
 ## Edge Types
 
-| Type | Color | Style | Direction | Use Case |
-|------|-------|-------|-----------|----------|
-| Standard | Gray | Solid | Horizontal | Parent→child connections |
-| AND | Blue | Dashed | Horizontal | Conditions chained by `&` |
-| OR | Orange | Dashed | Vertical | Conditions separated by `\|` |
+| Type | Color | Style | Direction | Meaning |
+| --- | --- | --- | --- | --- |
+| Ownership | Slate gray | Thin solid | Horizontal | Profile/block/action ownership; action stops at `IF` boundary |
+| AND | Indigo | Thin solid + compact `AND` capsule | Horizontal | Boolean `&` relationship |
+| OR | Violet | Thin solid + compact `OR` capsule | Vertical | Boolean `|` relationship |
+| XOR | Muted slate until separately specified | Thin solid + `XOR` capsule | Vertical | Existing read-only `^` relationship |
+| Draft | Operator color at reduced emphasis | Thin provisional line | AND/OR direction | Uncommitted connection to a draft condition |
+| Deleting | Muted operator color/red state cue | Fading line and capsule | Existing direction | Preview of operand/operator cleanup |
 
-## Standard Edges
+Color is never the only cue. Operator text and horizontal/vertical orientation are
+always present.
 
-Plain gray solid lines for structural parent→child relationships:
+## Ownership Edges
 
-- Root → Folder (from bottom of Root, flows down then right)
-- Root → Root-level Action (from bottom of Root)
-- Folder → Action (from bottom of Folder, flows down then right)
-- Action → first Condition/Container (horizontal, right side)
+Ownership is visually separate from boolean logic:
 
-**Style**:
-```typescript
-{ stroke: '#6b7280', strokeWidth: 1.5 }  // gray-500
+```text
+[ACTION] -- ownership --> (IF boundary)  [condition graph inside]
 ```
 
-**Root handle placement**: RootNode uses a bottom handle so edges flow downward, then branch right to column 1 items (which are stacked vertically):
+- The action edge terminates at a round handle on the outer `IF` workspace.
+- It does not continue to the first condition.
+- Root/block/action ownership remains neutral slate gray.
+- Internal AND/OR edges never cross the `IF` boundary.
 
-```
-Root (col 0)
-  │
-  │ (down)
-  │
-  ├───► Folder: precombat
-  │
-  ├───► Folder: cds
-  │
-  ├───► Action: auto_attack
-  │
-  └───► Action: rupture
-        
-        (col 1, stacked vertically)
-```
+## Condition Handles
 
-This prevents edges from crossing through the column 1 nodes.
+Conditions expose two typed creation handles:
 
-**Folder handle placement**: FolderNode also uses a bottom handle, signifying "going down a level":
+| Handle | Position | Hover/focus state | Activation |
+| --- | --- | --- | --- |
+| AND | Center-right | Enlarges and shows a centered `+` in indigo | Opens an AND draft to the right |
+| OR | Center-bottom | Enlarges and shows a centered `+` in violet | Opens an OR draft below |
 
-```
-Folder: precombat (col 1)
-  │
-  │ (down into folder)
-  │
-  ├───► Action: flask (col 2)
-  │
-  ├───► Action: potion
-  │
-  └───► Action: augment
+There is no detached `+ AND` or `+ OR` button. The add affordance appears inside
+the handle where the connection will originate.
+
+Accessible names and tooltips remain explicit:
+
+```text
+Add AND condition
+Add OR condition
 ```
 
-## AND Edges
+The visual circle may be compact, but the pointer/focus target should be larger
+than the drawn handle. Handle focus must be visible without relying on color.
 
-Blue dashed lines for horizontal AND chains:
+## Operator Connections
 
-```
-Cond: targets>=2 ──AND──> Cond: mark ──AND──> Cond: dance
-```
+AND:
 
-**Style**:
-```typescript
-{ 
-  stroke: '#3498db',  // blue
-  strokeWidth: 2,
-  strokeDasharray: '5 3'
-}
+```text
+[condition A] o------[ AND ]------o [condition B]
 ```
 
-**Label**: "AND" badge on the edge
+OR:
 
-## OR Edges
-
-Orange dashed lines for vertical OR branches:
-
-```
-Cond: option_a
-      │
-      │ OR
-      ▼
-Cond: option_b
-      │
-      │ OR
-      ▼
-Cond: option_c
+```text
+[condition A]
+       o
+       |
+     [ OR ]
+       |
+       o
+[condition B]
 ```
 
-**Style**:
-```typescript
-{ 
-  stroke: '#e67e22',  // orange
-  strokeWidth: 2,
-  strokeDasharray: '5 3'
-}
+The capsule is a small label centered on the edge. Cards retain comfortable space
+around it; no operator box touches or interlocks with a condition.
+
+Suggested token families to refine during implementation:
+
+```text
+AND: indigo (#4F6BD8 family)
+OR:  violet (#8B5CF6 family)
+Ownership: slate gray
 ```
 
-**Label**: "OR" badge on the edge
+Exact theme tokens must pass light/dark contrast checks before they are frozen.
 
-## Spatial Logic
+## Draft State
 
-From architecture docs:
-- **AND chains horizontally**: Same row, columns increment
-- **OR branches vertically**: Same column, rows increment
+Activating an add handle creates a provisional connection and a focused draft
+condition card:
 
-## Edge Labels
-
-AND and OR edges have label badges:
-
-```tsx
-// AND label
-<rect fill="#3498db" rx="4">
-  <text fill="white">AND</text>
-</rect>
-
-// OR label
-<rect fill="#e67e22" rx="4">
-  <text fill="white">OR</text>
-</rect>
+```text
+[condition] o------[ AND ]------o [Choose condition...]
 ```
 
-## Implementation Note
+- The draft edge/capsule uses the chosen operator color with reduced emphasis.
+- The draft card has focus and cancel affordances.
+- Draft state is local UI state and does not enter APL text.
+- Escape/cancel removes the draft and edge with no history entry.
+- Commit replaces the provisional graph with the derived graph after one document
+  operation.
 
-Only AND and OR edges need custom styling. Standard parent→child edges use React Flow's default edge with gray color.
+## Deletion State
+
+When deleting an operand would make an operator redundant, preview the operand,
+edge, and capsule as one cleanup unit. The operation still targets the condition
+operand; expression normalization decides whether the operator survives.
+
+Examples:
+
+```text
+A & B      delete B -> A
+A & B & C  delete B -> A & C
+```
+
+## Interaction Constraints
+
+- No proximity-based auto-connect.
+- No arbitrary edge drawing in the first graph-editing milestone.
+- No cross-action or cross-`IF` condition connection.
+- Unsupported targets do not highlight or accept a drop/click.
+- Existing parse errors and inherited source lines make mutation handles read-only.
+- Do not turn on global `nodesConnectable` as a shortcut for this workflow.
+
+## Visual Reference
+
+See [the accepted condition-builder board](../spikes/assets/001-condition-builder.png)
+and [SPK-001](../spikes/001-node-visual-language.md).

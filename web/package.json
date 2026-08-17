@@ -12,7 +12,8 @@
     "test:e2e:ui": "playwright test --ui",
     "generate:talents": "tsx scripts/generate-talents/index.ts",
     "generate:semantics": "tsx scripts/generate-semantics/index.ts",
-    "fetch:semantics-source": "tsx scripts/fetch-semantics-source/index.ts"
+    "fetch:semantics-source": "tsx scripts/fetch-semantics-source/index.ts",
+    "generate:simc-defaults": "tsx scripts/generate-simc-defaults/index.ts"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.1",

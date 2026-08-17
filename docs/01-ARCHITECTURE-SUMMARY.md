@@ -1,126 +1,168 @@
-# Wizualizer - Architecture Summary
+# LogicCraft - Architecture Summary
 
-## Core Data Flow
+Last updated: 2026-08-17
 
-```
-APL Text → parseDocument() → AplDocument → buildGraph() → React Flow Graph
-    ↑                                                          ↓
-    └──────────── printApl() ←── AplDocumentManager ←──────────┘
-                               ↑
-                graph edits →  │
-```
+## Current Data Flow
 
-## Key Architectural Decisions
+APL text is the canonical persisted state. Parsed documents and graph elements are
+derived:
 
-### 1. Single Canonical APL String
-- One source of truth: the APL text string
-- **Last-good fallback**: On parse error, keep previous valid state
-- Never let invalid edits corrupt the working state
-
-### 2. Explorer/Inspector/Graph = Editors
-- Graph canvas supports **direct edits** (add/remove/reorder/connect)
-- Explorer and Inspector remain first-class editing surfaces
-- All edits flow through AplDocumentManager → AST → regenerate graph
-
-### 3. AplDocumentManager Handles All Mutations
-```typescript
-class AplDocumentManager {
-  // State
-  private canonicalText: string;
-  private lastGoodText: string;
-  private ast: AplDocumentAst;
-  
-  // Operations (all return ApplyResult)
-  addBlock(name) / deleteBlock(name) / renameBlock(old, new)
-  addAction(block, name) / deleteAction(id) / reorderAction(id, target, idx)
-  applyFullText(text) / applyActionText(id, text) / applyBlockText(name, text)
-}
-
-type ApplyResult = 
-  | { ok: true; ast; canonicalText }
-  | { ok: false; error; lastGoodText };
+```text
+APL text
+  -> editorStore.applyAplText()
+  -> parseDocument()
+  -> AplDocument
+  -> buildGraph()
+  -> React Flow nodes and edges
+  -> Canvas
 ```
 
-### 4. Graph Mutations Are AST-First
-- Graph edits are translated into AST operations (or AST patches)
-- APL text is reprinted from AST to keep a canonical, shareable format
-- Guardrails keep round-trip stable, including GroupExpression nodes
+On invalid text, the store retains the last-good document and graph while exposing
+the current parse diagnostics. Derived graph nodes are never a second source of
+truth.
 
-### 5. Graph Editing Rules (Initial)
-- Graph edits are structural (add/remove/reorder/connect); text edits stay in Inspector
-- Connections map to AST relationships (block → action → condition)
-- Any invalid edit is rejected with last-good fallback, same as text edits
+The current Explorer already performs narrow edits by replacing or reordering
+source lines and sending the resulting text through `applyAplText()`. The React
+Flow canvas itself remains read-only.
 
-### 6. Zustand Store Mirrors AST for UI
-- Store holds `blocks[]` derived from AST via `setBlocksFromAst()`
-- Selection state: `selectedActionId`, `selectedBlockName`, `selectedNodeText`
-- Components subscribe to store slices they need
+## Planned Graph-Edit Flow
 
-## Module Structure
+The graph-editing milestone will add a guarded operation boundary without changing
+the canonical-state rule:
 
+```text
+canvas gesture
+  -> GraphEditIntent
+  -> pure document/text operation
+  -> reparse and validate
+  -> applyAplText()
+  -> graph rebuild
+  -> selection recovery
 ```
+
+The exact mutation and identity contract is the subject of
+[SPK-002](spikes/002-graph-mutation-boundary.md). There is no implemented
+`AplDocumentManager` or full-document printer today; do not build canvas editing
+around an assumed service that does not exist.
+
+## Architectural Rules
+
+### Canonical text and recovery
+
+- `aplText` is the canonical user document.
+- `lastGoodText` and the last-good parsed document protect against invalid input.
+- A graph operation must produce text that reparses before it reaches the store.
+- Failed, stale, inherited, or unsupported operations leave canonical and
+  last-good state unchanged.
+
+### Derived graph
+
+- `buildGraph()` and the deterministic layout own React Flow nodes and edges.
+- Canvas components emit intents; they do not mutate derived nodes or the parsed
+  document in place.
+- Node ids and source line numbers are deterministic locators, not permanent
+  identity across reorder/insert/delete operations.
+- A committed graph operation must return enough information to recover selection
+  after rebuilding.
+
+### History
+
+- One committed graph gesture must create one undo/redo boundary.
+- Draft UI state is not canonical and must not enter history.
+- Text and graph edits must share one observable document history rather than
+  diverging into separate stores.
+
+### Condition editing
+
+The accepted interaction is documented in
+[SPK-001](spikes/001-node-visual-language.md):
+
+- right condition handle: hover/focus reveals an in-handle `+` for AND;
+- bottom condition handle: hover/focus reveals an in-handle `+` for OR;
+- activation creates a provisional connection and draft condition;
+- commit emits one graph-edit intent; cancel emits none;
+- deletion normalizes away any operator/container that became redundant;
+- logical containers are derived scope, not persisted palette nodes.
+
+## Current Module Map
+
+```text
 web/src/
-├── utils/apl-parser/         # Core APL handling
-│   ├── document.ts            # parseDocument() → AplDocument
-│   ├── types.ts               # Action, Segment, Condition AST types
-│   ├── pretty-log.ts          # prettyCond() expression printer
-│   ├── grid-layout.ts         # GridLane, gridPoint(), LANE_WIDTH, ROW_HEIGHT
-│   └── build-graph.ts         # buildGraph() → React Flow nodes & edges
-├── components/nodes/          # Custom React Flow node components + types
-├── state/
-│   └── editorStore.ts         # Zustand store (collapsedBlocks, APL text)
-└── App.tsx                    # Root layout with canvas + input tabs
+|-- utils/apl-parser/
+|   |-- document.ts          parseDocument() and source line metadata
+|   |-- parser.ts            action/condition parsing
+|   |-- types.ts             Action, Segment, and Condition AST types
+|   |-- pretty-log.ts        prettyAction() and prettyCond()
+|   |-- build-graph.ts       document -> React Flow derivation
+|   |-- grid-layout.ts       deterministic lane/row layout
+|   `-- condition-layout.ts  logical expression and container layout
+|-- components/
+|   |-- canvas.tsx           React Flow canvas; currently read-only
+|   |-- canvas/              Explorer, search, overrides, and graph helpers
+|   |-- nodes/               custom graph node renderers
+|   `-- apl-editor/          CodeMirror editor and completion/search support
+`-- state/
+    |-- editorStore.ts       canonical text actions and derived runtime state
+    |-- derivation.ts        parse/build coordination
+    `-- apl-runtime-builder.ts
 ```
+
+## Current Editing Evidence
+
+The Explorer is the closest existing example of a graph-adjacent edit pipeline:
+
+- `graph-explorer-utils.ts` provides `replaceLineAt()` and `moveLine()`.
+- `graph-explorer-action-leaf.tsx` parses drafts and prints action/condition text.
+- `graph-explorer-section.tsx` calls `applyAplText()` with the next text.
+
+Production canvas operations should reuse the behavior that is sound, but place it
+behind pure operation-level tests rather than importing UI-local helpers into node
+components.
+
+## Deterministic Layout
+
+| Lane | Contents |
+| --- | --- |
+| `root` | Profile |
+| `block` | Action-list block |
+| `action` | Action card |
+| `expression` | Conditions, values, and logical containers |
+
+Current core metrics in `grid-layout.ts`:
+
+```text
+LANE_WIDTH = 520
+ROW_HEIGHT = 120
+PROFILE_PADDING_ROWS = 2
+```
+
+Manual offsets may be layered over this base later, but structural edits must not
+make unchanged nodes jump unpredictably.
 
 ## UI Stack
 
-- React 19 + TypeScript
-- React Flow for graph canvas
-- shadcn/ui + Tailwind for UI components (built on Radix primitives)
-- react-arborist for explorer tree
-- Zustand for state management
-- Vite for dev/build
-- Playwright for E2E tests
+- React 19 and TypeScript
+- `@xyflow/react` 12 for the graph canvas
+- CodeMirror 6 for APL text editing
+- Tailwind CSS 4 and Radix Tabs
+- Zustand 5 for application state
+- Vite for development/build
+- Playwright for operation and browser-level tests
 
-## Grid Layout System
+## Current Limitations
 
-| Column | Content |
-|--------|---------|
-| 0 | Root node ("Actions") |
-| 1 | Block nodes (Precombat, Main, CDs, Finish) |
-| 2 | Action nodes |
-| 3+ | Condition nodes |
+- React Flow uses `nodesDraggable=false`, `nodesConnectable=false`, and
+  `elementsSelectable=false`.
+- No accepted graph mutation boundary has been implemented yet.
+- There is no full-document canonical printer; only action/condition printers and
+  guarded line operations exist.
+- Selection retention and shared undo/redo for external canvas edits still need to
+  be proven.
+- The accepted visual tokens and condition-builder states are documented but not
+  implemented in production components.
 
-**Grid metrics**: `LANE_WIDTH = 400px`, `ROW_HEIGHT = 120px` (see `grid-layout.ts`)
+## Next Implementation Reference
 
-**Semantic lanes**: root (0), block (1), action (2), expression (3+)
-
-**Layout**: `gridPoint(lane, row)` maps each node to `{ x: laneIndex * 320, y: row * 80 }`
-
-## Edge Types
-
-| Type | Color | Style | Meaning |
-|------|-------|-------|---------|
-| `standard` | Gray | Solid | Parent→child (block→action, action→condition) |
-| `and` | Blue | Dashed | Horizontal AND chain |
-| `or` | Orange | Dashed | Vertical OR branch |
-| `variable` | Purple | Solid | Variable assignment |
-
-## Known Limitation: GroupExpression
-
-**Problem**: Parentheses like `(a|b)&c` are NOT preserved through graph round-trips.
-- Parser captures them as `GroupExpression`
-- `astToGraph` strips them (unwraps the inner expression)
-- `graphToAst` can't recreate them
-
-**Result**: `(a|b)&c` becomes `a|b&c` (different precedence!)
-
-**Solution**: Store GroupExpression as graph nodes and preserve them in graph↔AST conversions
-
-## What's Not Built
-
-- Graph→APL export (disabled)
-- Graph editing toolbar (disabled)
-- RuleBuilder visual condition editor
-- Semantic validation (unknown refs, type mismatches)
-- Profileset management UI
+Follow [the graph-editing plan](plans/11-graph-editing.md). The first production
+proof is one action-list-local canvas reorder that survives text update, rebuild,
+reload, undo, and redo without mutating React Flow state directly.

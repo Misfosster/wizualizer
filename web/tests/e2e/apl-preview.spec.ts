@@ -374,6 +374,7 @@ test("saves named APLs and switches between them", async ({ page }) => {
 
   await openAplLibrary(page);
   await page.getByTestId("new-apl-option").click();
+  await page.getByTestId("new-apl-empty").click();
   await expect(page.getByTestId("apl-library-button")).toContainText(
     "Untitled APL",
   );

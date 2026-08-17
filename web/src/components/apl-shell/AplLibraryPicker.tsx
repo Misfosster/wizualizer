@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { NewAplMenu } from "@components/apl-shell/NewAplMenu";
 import type { StoredApl } from "@/state/storage";
 
 const APL_ACTIONS_MENU_WIDTH = 144;
@@ -11,6 +12,7 @@ interface AplLibraryPickerProps {
   hasUnsavedChanges: boolean;
   onSwitchApl: (aplId: string) => void;
   onCreateApl: () => void;
+  onCreateAplFromText: (name: string, text: string) => void;
   onDuplicateApl: (aplId: string) => void;
   onRenameApl: (aplId: string, name: string) => void;
   onDeleteApl: (aplId: string) => void;
@@ -50,6 +52,7 @@ export function AplLibraryPicker({
   hasUnsavedChanges,
   onSwitchApl,
   onCreateApl,
+  onCreateAplFromText,
   onDuplicateApl,
   onRenameApl,
   onDeleteApl,
@@ -393,20 +396,24 @@ export function AplLibraryPicker({
               );
             })}
           </div>
-          <button
-            type="button"
-            data-testid="new-apl-option"
-            onClick={() => {
-              onCreateApl();
-              setIsOpen(false);
-              setRenamingAplId(null);
-              setOpenActionsAplId(null);
-              setActionsMenuPosition(null);
-            }}
-            className="mt-2 w-full rounded-md border border-dashed border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:border-white/15 dark:text-gray-200 dark:hover:border-blue-400/30 dark:hover:bg-blue-400/10 dark:hover:text-blue-100"
-          >
-            + New APL
-          </button>
+          <div className="mt-2">
+            <NewAplMenu
+              onCreateEmpty={() => {
+                onCreateApl();
+                setIsOpen(false);
+                setRenamingAplId(null);
+                setOpenActionsAplId(null);
+                setActionsMenuPosition(null);
+              }}
+              onCreateFromDefault={(name, text) => {
+                onCreateAplFromText(name, text);
+                setIsOpen(false);
+                setRenamingAplId(null);
+                setOpenActionsAplId(null);
+                setActionsMenuPosition(null);
+              }}
+            />
+          </div>
         </div>
       ) : null}
     </div>

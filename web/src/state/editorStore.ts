@@ -77,6 +77,7 @@ interface EditorState extends RuntimeEditorState {
   setAutoSaveEnabled: (enabled: boolean) => void;
   switchApl: (aplId: string) => void;
   createApl: () => void;
+  createAplFromText: (name: string, text: string) => void;
   duplicateApl: (aplId: string) => void;
   renameApl: (aplId: string, name: string) => void;
   deleteApl: (aplId: string) => void;
@@ -98,6 +99,7 @@ type EditorActions =
   | "setAutoSaveEnabled"
   | "switchApl"
   | "createApl"
+  | "createAplFromText"
   | "duplicateApl"
   | "renameApl"
   | "deleteApl"
@@ -527,6 +529,34 @@ export const useEditorStore = create<EditorState>((set, get) => {
           state.conditionOverrides,
           state.conditionOverridesEnabled,
         );
+        persistAplLibrary(savedApls, nextApl.id);
+        return {
+          savedApls,
+          activeAplId: nextApl.id,
+          draftAplName: nextApl.name,
+          hasUnsavedChanges: false,
+          ...runtime,
+        };
+      });
+    },
+    createAplFromText: (name, text) => {
+      set((state) => {
+        const nextApl: StoredApl = {
+          id: createAplId(),
+          name: getUniqueAplName(name, state.savedApls),
+          text,
+          lastGoodText: text,
+          updatedAt: Date.now(),
+        };
+        const savedApls = [...state.savedApls, nextApl];
+        const runtime = buildRuntimeStateForAplWithOverrideMigration(
+          nextApl.text,
+          nextApl.lastGoodText,
+          state.talentRenderMode,
+          state.conditionOverrides,
+          state.conditionOverridesEnabled,
+        );
+        prefetchCatalogsFor(runtime.document);
         persistAplLibrary(savedApls, nextApl.id);
         return {
           savedApls,

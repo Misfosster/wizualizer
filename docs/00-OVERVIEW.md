@@ -30,3 +30,5 @@ fast, reliable edits from text, tree, and graph interfaces.
 - `docs/04-ROADMAP.md`
 - `docs/05-GRAPH-FEATURE.md`
 - `docs/DECISIONS.md`
+- `docs/plans/11-graph-editing.md`
+- `docs/spikes/001-node-visual-language.md`

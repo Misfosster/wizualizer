@@ -10,6 +10,7 @@ interface AplToolbarProps {
   onAutoSaveChange: (enabled: boolean) => void;
   onSwitchApl: (aplId: string) => void;
   onCreateApl: () => void;
+  onCreateAplFromText: (name: string, text: string) => void;
   onDuplicateApl: (aplId: string) => void;
   onRenameApl: (aplId: string, name: string) => void;
   onDeleteApl: (aplId: string) => void;
@@ -24,6 +25,7 @@ export function AplToolbar({
   onAutoSaveChange,
   onSwitchApl,
   onCreateApl,
+  onCreateAplFromText,
   onDuplicateApl,
   onRenameApl,
   onDeleteApl,
@@ -38,6 +40,7 @@ export function AplToolbar({
             hasUnsavedChanges={hasUnsavedChanges}
             onSwitchApl={onSwitchApl}
             onCreateApl={onCreateApl}
+            onCreateAplFromText={onCreateAplFromText}
             onDuplicateApl={onDuplicateApl}
             onRenameApl={onRenameApl}
             onDeleteApl={onDeleteApl}

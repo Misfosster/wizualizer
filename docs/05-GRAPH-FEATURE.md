@@ -289,6 +289,30 @@ y = 25% from top
 
 This gives a better starting view than raw `fitView()` when the graph becomes compact.
 
+## Accepted Editing Direction (Not Yet Implemented)
+
+[SPK-001](spikes/001-node-visual-language.md) defines the accepted visual and
+condition-building interaction:
+
+- conditioned actions own neutral `IF` workspaces;
+- an action edge stops at the workspace boundary rather than the first condition;
+- hovering/focusing a condition's right or bottom handle reveals an in-handle `+`;
+- right creates an AND draft; bottom creates an OR draft;
+- AND remains a thin horizontal indigo connection with a compact label;
+- OR remains a thin vertical violet connection with a compact label;
+- draft conditions remain local UI state until valid and committed;
+- deleting an operand normalizes redundant operators and containers away;
+- logical containers are derived scope, not palette nodes.
+
+The accepted board is
+[`spikes/assets/001-condition-builder.png`](spikes/assets/001-condition-builder.png).
+Implementation sequencing and tests are in
+[`plans/11-graph-editing.md`](plans/11-graph-editing.md).
+
+Keep the current read-only React Flow flags until
+[SPK-002](spikes/002-graph-mutation-boundary.md) proves a canvas-to-text operation.
+Do not enable global node connecting as a shortcut for the typed handle workflow.
+
 ## Performance
 
 Graph rebuilds still happen when text or collapse state changes. This is simple and safe, but not the final performance ceiling.
@@ -352,9 +376,10 @@ Manual drag offsets can be added later on top of the deterministic base layout.
 
 ## Future Work
 
-- Search/filter actions by condition text, action text, or negative tokens like `!foo`.
+- Prove canvas-to-text action reorder through the guarded mutation boundary.
+- Implement accepted visual tokens and condition handle/draft states.
+- Add secondary marquee grouping after direct condition editing is stable.
 - Manual node drag with persisted offsets.
-- Canvas-to-APL reorder.
 - Optional expression detail mode for full AST math trees.
 - Match highlighting in filter mode.
 - Better edge routing for long labels.

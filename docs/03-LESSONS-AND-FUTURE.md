@@ -120,17 +120,26 @@
 
 ---
 
-## Questions for the Rewrite
+## Resolved and Remaining Product Questions
 
-1. **Is graph editing essential?** If not, keep canvas as visualization-only (much simpler).
+Resolved:
 
-2. **How important is GroupExpression?** If APLs rarely use explicit parentheses, maybe skip it.
+1. **Graph editing is essential.** The roadmap now targets a safe visual editing
+   milestone while retaining canonical APL text.
+2. **Logical grouping is required.** Meaningful parentheses and mixed-precedence
+   scope remain visible through derived containers; redundant groups may be
+   visually elided.
+3. **The condition-add gesture is accepted.** Right/bottom handles reveal an
+   in-handle `+` for AND/OR and open a transient draft condition.
 
-3. **Who is the primary user?** Power users want text editing. Beginners want visual guidance.
+Still open:
 
-4. **What's the deployment target?** Browser-only? Electron? Impacts persistence strategy.
-
-5. **Multi-user/collaboration?** Affects state management significantly.
+1. **Who is the primary user?** Power users want text editing; newer users need
+   visual guidance.
+2. **What is the long-term deployment target?** Browser-only versus desktop affects
+   persistence and integration choices.
+3. **Will multi-user collaboration matter?** That would materially change the
+   mutation and history architecture.
 
 ---
 
@@ -138,13 +147,14 @@
 
 | Concept | File |
 |---------|------|
-| Parser structure | `src/apl/parser.ts` |
-| AST types | `src/apl/ast.ts` |
-| State management | `src/apl/AplDocumentManager.ts` |
-| Layout algorithm | `src/layout/buildGraph.ts` |
-| Condition tree | `src/layout/conditionTree.ts` |
-| React Flow setup | `src/features/editor/EditorCanvas.tsx` |
-| Explorer tree | `src/features/editor/ExplorerTree.tsx` |
+| Document parser | `web/src/utils/apl-parser/document.ts` |
+| Action/condition parser | `web/src/utils/apl-parser/parser.ts` |
+| AST types | `web/src/utils/apl-parser/types.ts` |
+| State management | `web/src/state/editorStore.ts` |
+| Graph derivation | `web/src/utils/apl-parser/build-graph.ts` |
+| Condition layout | `web/src/utils/apl-parser/condition-layout.ts` |
+| React Flow setup | `web/src/components/canvas.tsx` |
+| Graph-editing handoff | `docs/plans/11-graph-editing.md` |
 
 ---
 

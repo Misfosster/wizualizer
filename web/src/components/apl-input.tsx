@@ -91,6 +91,7 @@ function AplInput() {
     setAutoSaveEnabled,
     switchApl,
     createApl,
+    createAplFromText,
     duplicateApl,
     renameApl,
     deleteApl,
@@ -115,6 +116,7 @@ function AplInput() {
       setAutoSaveEnabled: state.setAutoSaveEnabled,
       switchApl: state.switchApl,
       createApl: state.createApl,
+      createAplFromText: state.createAplFromText,
       duplicateApl: state.duplicateApl,
       renameApl: state.renameApl,
       deleteApl: state.deleteApl,
@@ -239,6 +241,7 @@ function AplInput() {
           onAutoSaveChange={setAutoSaveEnabled}
           onSwitchApl={switchApl}
           onCreateApl={createApl}
+          onCreateAplFromText={createAplFromText}
           onDuplicateApl={duplicateApl}
           onRenameApl={renameApl}
           onDeleteApl={deleteApl}

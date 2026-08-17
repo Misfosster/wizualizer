@@ -1,0 +1,477 @@
+{
+  "source": "simulationcraft/simc",
+  "ref": "midnight",
+  "directory": "profiles/MID1",
+  "classes": [
+    {
+      "slug": "death_knight",
+      "label": "Death Knight",
+      "specs": [
+        {
+          "slug": "blood",
+          "label": "Blood",
+          "variants": [
+            {
+              "label": "Blood",
+              "file": "MID1_Death_Knight_Blood.simc"
+            },
+            {
+              "label": "Blood (Deathbringer)",
+              "file": "MID1_Death_Knight_Blood_Deathbringer.simc"
+            }
+          ]
+        },
+        {
+          "slug": "frost",
+          "label": "Frost",
+          "variants": [
+            {
+              "label": "Frost",
+              "file": "MID1_Death_Knight_Frost.simc"
+            },
+            {
+              "label": "Frost (Rider)",
+              "file": "MID1_Death_Knight_Frost_Rider.simc"
+            }
+          ]
+        },
+        {
+          "slug": "unholy",
+          "label": "Unholy",
+          "variants": [
+            {
+              "label": "Unholy",
+              "file": "MID1_Death_Knight_Unholy.simc"
+            },
+            {
+              "label": "Unholy (San'layn)",
+              "file": "MID1_Death_Knight_Unholy_San'layn.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "demon_hunter",
+      "label": "Demon Hunter",
+      "specs": [
+        {
+          "slug": "devourer",
+          "label": "Devourer",
+          "variants": [
+            {
+              "label": "Devourer",
+              "file": "MID1_Demon_Hunter_Devourer.simc"
+            },
+            {
+              "label": "Devourer (Void Scarred)",
+              "file": "MID1_Demon_Hunter_Devourer_Void-Scarred.simc"
+            }
+          ]
+        },
+        {
+          "slug": "havoc",
+          "label": "Havoc",
+          "variants": [
+            {
+              "label": "Havoc",
+              "file": "MID1_Demon_Hunter_Havoc.simc"
+            }
+          ]
+        },
+        {
+          "slug": "vengeance",
+          "label": "Vengeance",
+          "variants": [
+            {
+              "label": "Vengeance",
+              "file": "MID1_Demon_Hunter_Vengeance.simc"
+            },
+            {
+              "label": "Vengeance (Aldrachi Reaver)",
+              "file": "MID1_Demon_Hunter_Vengeance_Aldrachi_Reaver.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "druid",
+      "label": "Druid",
+      "specs": [
+        {
+          "slug": "balance",
+          "label": "Balance",
+          "variants": [
+            {
+              "label": "Balance",
+              "file": "MID1_Druid_Balance.simc"
+            }
+          ]
+        },
+        {
+          "slug": "feral",
+          "label": "Feral",
+          "variants": [
+            {
+              "label": "Feral",
+              "file": "MID1_Druid_Feral.simc"
+            }
+          ]
+        },
+        {
+          "slug": "guardian",
+          "label": "Guardian",
+          "variants": [
+            {
+              "label": "Guardian",
+              "file": "MID1_Druid_Guardian.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "evoker",
+      "label": "Evoker",
+      "specs": [
+        {
+          "slug": "devastation",
+          "label": "Devastation",
+          "variants": [
+            {
+              "label": "Devastation",
+              "file": "MID1_Evoker_Devastation.simc"
+            },
+            {
+              "label": "Devastation (Fs)",
+              "file": "MID1_Evoker_Devastation_FS.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hunter",
+      "label": "Hunter",
+      "specs": [
+        {
+          "slug": "beast_mastery",
+          "label": "Beast Mastery",
+          "variants": [
+            {
+              "label": "Beast Mastery",
+              "file": "MID1_Hunter_Beast_Mastery.simc"
+            }
+          ]
+        },
+        {
+          "slug": "marksmanship",
+          "label": "Marksmanship",
+          "variants": [
+            {
+              "label": "Marksmanship",
+              "file": "MID1_Hunter_Marksmanship.simc"
+            }
+          ]
+        },
+        {
+          "slug": "survival",
+          "label": "Survival",
+          "variants": [
+            {
+              "label": "Survival",
+              "file": "MID1_Hunter_Survival.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "mage",
+      "label": "Mage",
+      "specs": [
+        {
+          "slug": "arcane",
+          "label": "Arcane",
+          "variants": [
+            {
+              "label": "Arcane",
+              "file": "MID1_Mage_Arcane.simc"
+            },
+            {
+              "label": "Arcane (Sunfury)",
+              "file": "MID1_Mage_Arcane_Sunfury.simc"
+            }
+          ]
+        },
+        {
+          "slug": "fire",
+          "label": "Fire",
+          "variants": [
+            {
+              "label": "Fire",
+              "file": "MID1_Mage_Fire.simc"
+            },
+            {
+              "label": "Fire (Frostfire)",
+              "file": "MID1_Mage_Fire_Frostfire.simc"
+            }
+          ]
+        },
+        {
+          "slug": "frost",
+          "label": "Frost",
+          "variants": [
+            {
+              "label": "Frost",
+              "file": "MID1_Mage_Frost.simc"
+            },
+            {
+              "label": "Frost (Frostfire)",
+              "file": "MID1_Mage_Frost_Frostfire.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "monk",
+      "label": "Monk",
+      "specs": [
+        {
+          "slug": "brewmaster",
+          "label": "Brewmaster",
+          "variants": [
+            {
+              "label": "Brewmaster",
+              "file": "MID1_Monk_Brewmaster.simc"
+            }
+          ]
+        },
+        {
+          "slug": "windwalker",
+          "label": "Windwalker",
+          "variants": [
+            {
+              "label": "Windwalker",
+              "file": "MID1_Monk_Windwalker.simc"
+            },
+            {
+              "label": "Windwalker (Conduit)",
+              "file": "MID1_Monk_Windwalker_Conduit.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "paladin",
+      "label": "Paladin",
+      "specs": [
+        {
+          "slug": "protection",
+          "label": "Protection",
+          "variants": [
+            {
+              "label": "Protection",
+              "file": "MID1_Paladin_Protection.simc"
+            },
+            {
+              "label": "Protection (Lightsmith)",
+              "file": "MID1_Paladin_Protection_Lightsmith.simc"
+            }
+          ]
+        },
+        {
+          "slug": "retribution",
+          "label": "Retribution",
+          "variants": [
+            {
+              "label": "Retribution",
+              "file": "MID1_Paladin_Retribution.simc"
+            },
+            {
+              "label": "Retribution (Herald)",
+              "file": "MID1_Paladin_Retribution_Herald.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "priest",
+      "label": "Priest",
+      "specs": [
+        {
+          "slug": "shadow",
+          "label": "Shadow",
+          "variants": [
+            {
+              "label": "Shadow",
+              "file": "MID1_Priest_Shadow.simc"
+            },
+            {
+              "label": "Shadow (Archon)",
+              "file": "MID1_Priest_Shadow_Archon.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rogue",
+      "label": "Rogue",
+      "specs": [
+        {
+          "slug": "assassination",
+          "label": "Assassination",
+          "variants": [
+            {
+              "label": "Assassination",
+              "file": "MID1_Rogue_Assassination.simc"
+            }
+          ]
+        },
+        {
+          "slug": "outlaw",
+          "label": "Outlaw",
+          "variants": [
+            {
+              "label": "Outlaw",
+              "file": "MID1_Rogue_Outlaw.simc"
+            },
+            {
+              "label": "Outlaw (Trickster)",
+              "file": "MID1_Rogue_Outlaw_Trickster.simc"
+            }
+          ]
+        },
+        {
+          "slug": "subtlety",
+          "label": "Subtlety",
+          "variants": [
+            {
+              "label": "Subtlety",
+              "file": "MID1_Rogue_Subtlety.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "shaman",
+      "label": "Shaman",
+      "specs": [
+        {
+          "slug": "elemental",
+          "label": "Elemental",
+          "variants": [
+            {
+              "label": "Elemental",
+              "file": "MID1_Shaman_Elemental.simc"
+            }
+          ]
+        },
+        {
+          "slug": "enhancement",
+          "label": "Enhancement",
+          "variants": [
+            {
+              "label": "Enhancement",
+              "file": "MID1_Shaman_Enhancement.simc"
+            },
+            {
+              "label": "Enhancement (Stormbringer)",
+              "file": "MID1_Shaman_Enhancement_Stormbringer.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "warlock",
+      "label": "Warlock",
+      "specs": [
+        {
+          "slug": "affliction",
+          "label": "Affliction",
+          "variants": [
+            {
+              "label": "Affliction",
+              "file": "MID1_Warlock_Affliction.simc"
+            },
+            {
+              "label": "Affliction (Hellcaller)",
+              "file": "MID1_Warlock_Affliction_Hellcaller.simc"
+            }
+          ]
+        },
+        {
+          "slug": "demonology",
+          "label": "Demonology",
+          "variants": [
+            {
+              "label": "Demonology",
+              "file": "MID1_Warlock_Demonology.simc"
+            }
+          ]
+        },
+        {
+          "slug": "destruction",
+          "label": "Destruction",
+          "variants": [
+            {
+              "label": "Destruction",
+              "file": "MID1_Warlock_Destruction.simc"
+            },
+            {
+              "label": "Destruction (Diabolist)",
+              "file": "MID1_Warlock_Destruction_Diabolist.simc"
+            },
+            {
+              "label": "Destruction (Hellcaller)",
+              "file": "MID1_Warlock_Destruction_Hellcaller.simc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "warrior",
+      "label": "Warrior",
+      "specs": [
+        {
+          "slug": "arms",
+          "label": "Arms",
+          "variants": [
+            {
+              "label": "Arms",
+              "file": "MID1_Warrior_Arms.simc"
+            }
+          ]
+        },
+        {
+          "slug": "fury",
+          "label": "Fury",
+          "variants": [
+            {
+              "label": "Fury",
+              "file": "MID1_Warrior_Fury.simc"
+            }
+          ]
+        },
+        {
+          "slug": "protection",
+          "label": "Protection",
+          "variants": [
+            {
+              "label": "Protection",
+              "file": "MID1_Warrior_Protection.simc"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
