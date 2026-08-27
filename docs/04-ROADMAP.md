@@ -1,6 +1,6 @@
 # Wizualizer - Roadmap
 
-Last updated: 2026-08-17
+Last updated: 2026-08-27
 
 ## How this roadmap works
 
@@ -128,8 +128,13 @@ milestone exit criteria.
 2. More robust import/export workflows and explicit recovery affordances.
 3. Profileset management.
 4. Optional manual node offsets layered over deterministic layout.
-5. Advanced condition-expression editing and detail views.
-6. Bundle splitting and repository-wide lint cleanup.
+5. Hierarchical Condition Groups that can contain ordered actions and nested
+   groups. Parent conditions are inherited with `&`, while depth-first visual
+   order remains the source of truth for the generated flat APL priority. Keep
+   these visual groups distinct from SimC `call_action_list` and
+   `run_action_list` control flow.
+6. Advanced condition-expression editing and detail views.
+7. Bundle splitting and repository-wide lint cleanup.
 
 ## Spike register
 
@@ -144,6 +149,8 @@ new uncertainty needs investigation.
 
 ## Change log
 
+- **2026-08-27:** Added hierarchical Condition Groups as a later graph-editing
+  feature, with inherited conditions and depth-first visual priority semantics.
 - **2026-08-17:** Accepted SPK-001; documented the handle-driven condition
   workflow; added the graph-editing implementation handoff and SPK-002 entry point.
 - **2026-08-17:** Replaced the phase-only roadmap with status-based Now/Next/Later

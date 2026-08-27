@@ -2,7 +2,7 @@
 
 Status: Ready after the SimC default-import work is committed or deliberately
 separated
-Updated: 2026-08-17
+Updated: 2026-08-27
 
 ## Read First
 
@@ -199,6 +199,63 @@ condition creation and deletion are stable.
 - Derived logical containers are not palette nodes and are never independently
   persisted canvas objects.
 
+### Future slice: Hierarchical Condition Groups
+
+Add a tree-level **Condition Group** after the first graph-editing milestone. It
+is a visual authoring abstraction that can contain ordered actions,
+`call_action_list` / `run_action_list` nodes, and nested Condition Groups. It is
+not the same thing as an expression-level logical container or a real SimC action
+list.
+
+```typescript
+type APLNode = ActionNode | ConditionGroupNode | ActionListCallNode;
+
+interface ConditionGroupNode {
+  condition: Expression;
+  children: APLNode[];
+}
+```
+
+Compilation recursively traverses the visual tree, accumulates every ancestor
+condition, combines inherited conditions with an action's own `if=` expression
+using `&`, and emits a flat action sequence. The traversal order is depth-first
+and follows the displayed sibling order so the visual tree remains the source of
+truth for SimC priority.
+
+```text
+IF buff.shadow_dance.up
+|- secret_technique [combo_points>=5]
+|- eviscerate [combo_points>=6]
+`- IF energy>=60
+   `- shadowstrike
+
+-> actions+=/secret_technique,if=buff.shadow_dance.up&combo_points>=5
+-> actions+=/eviscerate,if=buff.shadow_dance.up&combo_points>=6
+-> actions+=/shadowstrike,if=buff.shadow_dance.up&energy>=60
+```
+
+Requirements:
+
+- Users can create, nest, reorder, move into, and move out of Condition Groups.
+- Reordering actions or groups changes emitted priority visibly; do not preserve
+  an earlier flat position through hidden ordering metadata.
+- Moving existing actions into or out of a group may intentionally change both
+  inherited conditions and priority. Preview or explain that consequence in the
+  UI before commit.
+- Empty groups and invalid group conditions remain drafts and never print invalid
+  APL text.
+- Parent and child expressions print with precedence-preserving parentheses when
+  required; logical equivalence must not rely on string concatenation alone.
+- Actual `call_action_list` and `run_action_list` children remain emitted SimC
+  control-flow actions. A Condition Group never creates or replaces an action
+  list definition or call.
+- The document/tree model, not React Flow parentage, is canonical.
+
+Tests must cover inherited conditions across multiple nesting levels, actions
+with and without local conditions, precedence-preserving combination, depth-first
+priority after group/action reordering, moves across group boundaries, and real
+action-list calls nested inside visual groups.
+
 ## `IF` Workspace and Container Rules
 
 - The action ownership edge stops at the outer `IF` boundary handle.
@@ -251,6 +308,8 @@ Regression tests:
 - A general visual expression language for arithmetic.
 - Persisting empty placeholder conditions in APL text.
 - Treating React Flow nodes or containers as canonical state.
+- Hierarchical Condition Groups; they are the future slice described above, not
+  part of the initial reorder and condition-expression milestone.
 
 ## Handoff Definition
 

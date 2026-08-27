@@ -1,7 +1,7 @@
 # Condition Workspaces and Logical Containers
 
 Status: Accepted visual behavior; editing operations pending
-Updated: 2026-08-17
+Updated: 2026-08-27
 
 Two different boundaries appear around conditions and must not be conflated:
 
@@ -10,6 +10,11 @@ Two different boundaries appear around conditions and must not be conflated:
 
 Neither is a freely placed palette node or an independently persisted canvas
 object.
+
+A future **Condition Group** is a third, separate concept: a tree-level authoring
+group that applies one inherited condition to ordered actions and nested groups.
+It is tracked as later work in [the graph-editing plan](11-graph-editing.md) and is
+not represented by the expression containers described below.
 
 ## Action-Owned `IF` Workspace
 
@@ -48,6 +53,19 @@ Containers are elided when they add no clarity:
 
 The current implementation's elision rules in `condition-layout.ts` remain the
 source of truth until an editing operation deliberately changes them.
+
+## Planned Condition Groups Are Different
+
+Logical containers explain parentheses and operator scope inside one action's
+condition expression. Planned Condition Groups instead contain actions in a
+priority tree. Their parent conditions are inherited by descendants and flattened
+into each emitted action's `if=` expression.
+
+Condition Groups must therefore remain distinct from both logical containers and
+actual SimC `call_action_list` / `run_action_list` constructs. Reordering their
+children changes the depth-first emitted order and may change action priority;
+the UI should present that result directly rather than preserve old positions in
+hidden metadata.
 
 ## Visual Style
 
